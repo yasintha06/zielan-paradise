@@ -1,0 +1,94 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     ZEILAN PARADISE — DESTINATIONS PAGE
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- ═══════════════ PAGE HERO ═══════════════ -->
+<section class="page-hero">
+  <img class="page-hero-bg"
+    src="https://images.unsplash.com/photo-1585123388867-3bfe6dd4bdbf?w=1920&auto=format&fit=crop&q=80"
+    alt="Sigiriya Rock Fortress aerial view" />
+  <div class="page-hero-overlay"></div>
+  <div class="container">
+    <div class="page-hero-content" appScrollReveal>
+      <div class="breadcrumb">
+        <a routerLink="/">Home</a>
+        <span>/</span>
+        <span>Destinations</span>
+      </div>
+      <span class="section-label">Explore the Island</span>
+      <h1>Destinations</h1>
+      <p>From ancient kingdoms to sun-kissed coastlines — discover the places that make Sri Lanka one of the most extraordinary islands on Earth.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ INTRO ═══════════════ -->
+<section class="dest-intro bg-white">
+  <div class="container">
+    <div class="section-header center" appScrollReveal>
+      <span class="section-label">A World Within an Island</span>
+      <h2 class="section-title">Every Corner Tells a Story</h2>
+      <div class="gold-rule"></div>
+      <p class="section-subtitle">
+        Sri Lanka packs eight UNESCO World Heritage Sites, pristine national parks, 
+        misty highlands, and 1,340 km of coastline into an island smaller than Ireland. 
+        Here are the places we love most.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ DESTINATIONS GRID ═══════════════ -->
+<section class="dest-main bg-pearl">
+  <div class="container">
+    <div class="dest-full-grid" appScrollReveal>
+      <article *ngFor="let d of destinations; let i = index"
+        class="dest-full-card"
+        [class.dest-featured]="i === 0"
+        [id]="d.id">
+        <div class="dest-full-img-wrap">
+          <img [src]="d.image" [alt]="d.name" loading="lazy" />
+          <div class="dest-full-overlay"></div>
+          <div class="dest-full-region" *ngIf="d.region">{{ d.region }}</div>
+        </div>
+        <div class="dest-full-body">
+          <span class="dest-full-tagline">{{ d.tagline }}</span>
+          <h3 class="dest-full-name">{{ d.name }}</h3>
+          <p class="dest-full-desc">{{ d.description }}</p>
+          <div class="dest-full-tags" *ngIf="d.bestFor">
+            <span *ngFor="let tag of d.bestFor" class="dest-tag">{{ tag }}</span>
+          </div>
+          <a routerLink="/contact" class="dest-full-link">
+            Plan a Visit
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ CTA ═══════════════ -->
+<section class="cta-banner">
+  <img class="cta-bg"
+    src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1920&auto=format&fit=crop&q=80"
+    alt="Galle Fort sunset" loading="lazy" />
+  <div class="cta-overlay"></div>
+  <div class="container">
+    <div class="cta-content" appScrollReveal>
+      <span class="section-label">Your Dream Destination Awaits</span>
+      <h2>Ready to Explore Sri Lanka?</h2>
+      <p>Let our experts weave your favourite destinations into a seamless, luxury itinerary crafted just for you.</p>
+      <div class="cta-btns">
+        <a routerLink="/tailor-made" class="btn btn-gold btn-lg">
+          Design My Journey
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a routerLink="/round-tours" class="btn btn-outline-white btn-lg">View Round Tours</a>
+      </div>
+    </div>
+  </div>
+</section>

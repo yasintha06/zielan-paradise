@@ -1,0 +1,23 @@
+[
+  {
+    "id": "testi-1",
+    "text": "Zeilan Paradise turned our dream holiday into an absolute masterpiece. Every detail was considered — from the boutique hotels to the private guides. Sri Lanka was breathtaking, and it was all perfectly seamless.",
+    "authorName": "Sarah M.",
+    "authorLocation": "London, UK · 14-Day Grand Tour",
+    "authorImage": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&auto=format&fit=crop&q=80"
+  },
+  {
+    "id": "testi-2",
+    "text": "As a solo traveller, I felt completely safe and cared for the entire trip. The team's local knowledge was phenomenal — I discovered places no travel agent would ever know about. Truly once-in-a-lifetime.",
+    "authorName": "James T.",
+    "authorLocation": "Manchester, UK · Tailor-Made 10 Days",
+    "authorImage": "https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&h=100&auto=format&fit=crop&q=80"
+  },
+  {
+    "id": "testi-3",
+    "text": "Our family trip with Zeilan Paradise was everything we hoped for and more. The children loved the elephant sanctuary and the train through the highlands. A memory we'll cherish forever.",
+    "authorName": "Priya K.",
+    "authorLocation": "Edinburgh, UK · Southern Coast Family Tour",
+    "authorImage": "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&auto=format&fit=crop&q=80"
+  }
+]

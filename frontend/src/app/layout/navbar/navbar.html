@@ -1,0 +1,33 @@
+<nav id="main-nav" class="transparent" [ngClass]="{'scrolled': isScrolled}" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a routerLink="/" class="nav-logo" aria-label="Zeilan Paradise Home">
+      <img src="logo.png" alt="Zeilan Paradise Logo" />
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
+      <li><a routerLink="/destinations" routerLinkActive="active">Destinations</a></li>
+      <li><a routerLink="/round-tours" routerLinkActive="active">Round Tours</a></li>
+      <li><a routerLink="/day-tours" routerLinkActive="active">Day Tours</a></li>
+      <li><a routerLink="/tailor-made" routerLinkActive="active">Tailor-Made</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="tel:+441234567890" class="nav-phone" aria-label="Call us">+44 (0) 123 456 7890</a>
+      <a routerLink="/contact" class="btn btn-gold btn-sm" id="nav-enquire-btn">Enquire Now</a>
+      <button class="hamburger" aria-label="Open menu" [attr.aria-expanded]="isMenuOpen" (click)="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" [class.open]="isMenuOpen" [attr.aria-hidden]="!isMenuOpen">
+  <button class="mobile-close" aria-label="Close menu" (click)="closeMenu()">✕</button>
+  <a routerLink="/" (click)="closeMenu()">Home</a>
+  <a routerLink="/destinations" (click)="closeMenu()">Destinations</a>
+  <a routerLink="/round-tours" (click)="closeMenu()">Round Tours</a>
+  <a routerLink="/day-tours" (click)="closeMenu()">Day Tours</a>
+  <a routerLink="/tailor-made" (click)="closeMenu()">Tailor-Made</a>
+  <a routerLink="/contact" (click)="closeMenu()">Contact Us</a>
+  <a routerLink="/contact" class="btn btn-gold mt-4" (click)="closeMenu()">Begin Your Journey</a>
+</div>

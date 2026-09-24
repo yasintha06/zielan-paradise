@@ -1,0 +1,311 @@
+/* ═══════════════════════════════════════════════════════════════
+   ZEILAN PARADISE — TAILOR-MADE PAGE STYLES
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── PROCESS GRID ─────────────────────────────────────────── */
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2.5rem;
+}
+
+.process-card {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  position: relative;
+}
+
+.process-step-num {
+  font-family: var(--ff-head);
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--gold);
+  opacity: 0.25;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.process-title {
+  font-family: var(--ff-head);
+  font-size: var(--fs-md);
+  color: var(--charcoal);
+  margin-bottom: 0.75rem;
+  font-weight: 600;
+}
+
+.process-desc {
+  font-size: var(--fs-sm);
+  color: rgba(26,26,26,0.6);
+  line-height: 1.75;
+}
+
+/* ── FORM WRAPPER ─────────────────────────────────────────── */
+.tm-form-wrap {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 3.5rem;
+  box-shadow: var(--shadow-sm);
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.tm-form-header {
+  margin-bottom: 2rem;
+}
+
+/* ── STEP INDICATOR ───────────────────────────────────────── */
+.step-indicator {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+  position: relative;
+  padding: 0 1rem;
+}
+
+.step-line {
+  position: absolute;
+  top: 18px;
+  left: 3rem;
+  right: 3rem;
+  height: 3px;
+  background: var(--pearl-dark);
+  border-radius: 2px;
+  z-index: 0;
+}
+
+.step-line-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--teal));
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+
+.step-dot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 1;
+  position: relative;
+}
+
+.step-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--pearl-dark);
+  color: rgba(26,26,26,0.4);
+  font-size: 0.85rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.step-dot.active .step-num {
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: var(--white);
+  box-shadow: var(--shadow-gold);
+}
+
+.step-dot.completed .step-num {
+  background: var(--teal);
+  color: var(--white);
+}
+
+.step-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(26,26,26,0.4);
+  transition: color var(--transition);
+}
+
+.step-dot.active .step-label {
+  color: var(--gold-dark);
+}
+
+.step-dot.completed .step-label {
+  color: var(--teal);
+}
+
+/* ── FORM STEPS ───────────────────────────────────────────── */
+.form-step {
+  animation: fadeInStep 0.4s ease;
+}
+
+@keyframes fadeInStep {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-step-title {
+  font-family: var(--ff-head);
+  font-size: var(--fs-xl);
+  color: var(--charcoal);
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.form-step-subtitle {
+  font-size: var(--fs-sm);
+  color: rgba(26,26,26,0.55);
+  margin-bottom: 2rem;
+  line-height: 1.7;
+}
+
+/* ── INTEREST TAGS ────────────────────────────────────────── */
+.tm-interests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.tm-interest-tag {
+  font-family: var(--ff-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.55rem 1.15rem;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--pearl-dark);
+  background: var(--white);
+  color: rgba(26,26,26,0.6);
+  cursor: pointer;
+  transition: var(--transition);
+  letter-spacing: 0.02em;
+}
+
+.tm-interest-tag:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+}
+
+.tm-interest-tag.selected {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--white);
+  box-shadow: var(--shadow-teal);
+}
+
+/* ── FORM NAV ─────────────────────────────────────────────── */
+.form-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--pearl-dark);
+}
+
+.form-nav-spacer {
+  flex: 1;
+}
+
+/* ── SUCCESS ──────────────────────────────────────────────── */
+.tm-success {
+  text-align: center;
+  padding: 5rem 2rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.tm-success .success-icon {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+  color: var(--white);
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 2rem;
+  box-shadow: var(--shadow-teal);
+}
+
+.tm-success h2 {
+  font-family: var(--ff-head);
+  font-size: var(--fs-2xl);
+  color: var(--teal);
+  margin-bottom: 1.25rem;
+}
+
+.tm-success p {
+  font-size: var(--fs-md);
+  color: rgba(26,26,26,0.6);
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+}
+
+/* ── TRUST BAR ────────────────────────────────────────────── */
+.tm-trust {
+  padding: 4rem 0;
+}
+
+.trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  text-align: center;
+}
+
+.trust-num {
+  font-family: var(--ff-head);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--teal);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.trust-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(26,26,26,0.45);
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .process-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .tm-form-wrap {
+    padding: 2.5rem;
+  }
+  .trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .process-grid {
+    grid-template-columns: 1fr;
+  }
+  .tm-form-wrap {
+    padding: 1.5rem;
+  }
+  .step-label {
+    display: none;
+  }
+  .step-line {
+    left: 2rem;
+    right: 2rem;
+  }
+  .form-nav {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .form-nav .btn {
+    width: 100%;
+    justify-content: center;
+  }
+  .trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+}

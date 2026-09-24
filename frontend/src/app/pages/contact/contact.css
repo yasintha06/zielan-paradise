@@ -1,0 +1,192 @@
+/* ═══════════════════════════════════════════════════════════════
+   ZEILAN PARADISE — CONTACT PAGE STYLES
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── LAYOUT ───────────────────────────────────────────────── */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+/* ── FORM WRAP ────────────────────────────────────────────── */
+.contact-form-wrap {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 3rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.contact-form-header {
+  margin-bottom: 2.5rem;
+}
+
+.contact-form-header .section-subtitle {
+  max-width: 100%;
+}
+
+/* ── SUCCESS STATE ────────────────────────────────────────── */
+.contact-success {
+  text-align: center;
+  padding: 3rem 2rem;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
+  color: var(--white);
+  font-size: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow: var(--shadow-teal);
+}
+
+.contact-success h3 {
+  font-family: var(--ff-head);
+  font-size: var(--fs-2xl);
+  color: var(--teal);
+  margin-bottom: 1rem;
+}
+
+.contact-success p {
+  font-size: var(--fs-md);
+  color: rgba(26,26,26,0.6);
+  margin-bottom: 2rem;
+  line-height: 1.8;
+}
+
+/* ── SIDEBAR ──────────────────────────────────────────────── */
+.contact-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  position: sticky;
+  top: calc(var(--nav-h) + 2rem);
+}
+
+.sidebar-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.sidebar-card h4 {
+  font-family: var(--ff-head);
+  font-size: var(--fs-lg);
+  color: var(--charcoal);
+  margin-bottom: 1.75rem;
+  font-weight: 600;
+}
+
+.sidebar-card-dark {
+  background: var(--charcoal);
+}
+
+.sidebar-card-dark h4 {
+  color: var(--white);
+}
+
+/* ── SIDEBAR ITEMS ────────────────────────────────────────── */
+.sidebar-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.sidebar-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.sidebar-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.sidebar-item-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.25rem;
+}
+
+.sidebar-item-value {
+  font-size: var(--fs-sm);
+  color: var(--charcoal);
+  font-weight: 600;
+  transition: color var(--transition);
+}
+
+a.sidebar-item-value:hover {
+  color: var(--teal);
+}
+
+.sidebar-item-sub {
+  font-size: 0.75rem;
+  color: rgba(26,26,26,0.5);
+  margin-top: 0.15rem;
+}
+
+/* ── BENEFITS LIST ────────────────────────────────────────── */
+.sidebar-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sidebar-benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-size: var(--fs-sm);
+  color: rgba(255,255,255,0.75);
+  line-height: 1.5;
+}
+
+.benefit-check {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(212,175,55,0.2);
+  color: var(--gold);
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .contact-sidebar {
+    position: static;
+  }
+  .contact-form-wrap {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-form-wrap {
+    padding: 1.5rem;
+  }
+  .sidebar-card {
+    padding: 1.75rem;
+  }
+}

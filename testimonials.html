@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Testimonials | Zeilan Paradise — What Our Travellers Say</title>
+  <meta name="description" content="Read real reviews from Zeilan Paradise travellers — UK clients who experienced the best of Sri Lanka with our bespoke, luxury travel service." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .testi-full-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+    .testi-full-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+    }
+    .testi-full-card:hover { box-shadow: var(--shadow-md); transform: translateY(-6px); }
+    .testi-full-card .testi-quote { font-size: 5rem; color: var(--gold); font-family: Georgia, serif; line-height: 0.8; margin-bottom: 0.5rem; opacity: 0.4; }
+    .testi-full-card .testi-text { font-size: var(--fs-sm); color: rgba(26,26,26,0.75); line-height: 1.85; margin-bottom: 1.5rem; font-style: italic; flex: 1; }
+    .testi-full-card .testi-stars { color: var(--gold); margin-bottom: 0.5rem; letter-spacing: 2px; }
+    .testi-tour-tag {
+      font-size: var(--fs-xs);
+      font-weight: 700;
+      color: var(--teal);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      padding: 0.25rem 0.75rem;
+      background: var(--teal-light);
+      border-radius: var(--radius-full);
+      display: inline-block;
+    }
+    .testi-full-author { display: flex; align-items: center; gap: 0.75rem; }
+    .testi-full-author img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; border: 3px solid var(--gold-light); }
+    .testi-full-author .name { font-weight: 700; font-size: var(--fs-sm); color: var(--charcoal); }
+    .testi-full-author .location { font-size: var(--fs-xs); color: rgba(26,26,26,0.5); }
+
+    .trust-strip {
+      background: var(--teal);
+      padding: 3rem 0;
+      text-align: center;
+    }
+    .trust-strip p { font-size: var(--fs-lg); color: rgba(255,255,255,0.85); margin-bottom: 0.5rem; font-family: var(--ff-head); font-style: italic; }
+    .trust-strip .gold { color: var(--gold); font-weight: 700; }
+    .trust-icons { display: flex; justify-content: center; align-items: center; gap: 3rem; flex-wrap: wrap; margin-top: 2rem; }
+    .trust-icon { text-align: center; }
+    .trust-icon .big { font-size: 2.5rem; margin-bottom: 0.25rem; }
+    .trust-icon p { font-size: var(--fs-xs); color: rgba(255,255,255,0.65); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+
+    @media (max-width: 1000px) { .testi-full-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 640px) { .testi-full-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <nav id="main-nav" class="light-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="Zeilan Paradise" /></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li>
+        <li><a href="destinations.html">Destinations</a></li><li><a href="round-tours.html">Round Tours</a></li>
+        <li><a href="day-tours.html">Day Tours</a></li><li><a href="activities.html">Activities</a></li>
+        <li><a href="tailor-made.html">Tailor-Made</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="tel:+441234567890" class="nav-phone">+44 (0) 123 456 7890</a>
+        <a href="contact.html" class="btn btn-gold btn-sm">Enquire Now</a>
+        <button class="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-menu">
+    <button class="mobile-close">✕</button>
+    <a href="index.html">Home</a><a href="about.html">About Us</a><a href="destinations.html">Destinations</a>
+    <a href="round-tours.html">Round Tours</a><a href="day-tours.html">Day Tours</a>
+    <a href="activities.html">Activities</a><a href="tailor-made.html">Tailor-Made</a>
+    <a href="testimonials.html">Testimonials</a><a href="contact.html">Contact Us</a>
+    <a href="contact.html" class="btn btn-gold mt-4">Begin Your Journey</a>
+  </div>
+
+  <div class="page-hero">
+    <img class="page-hero-bg" src="https://images.unsplash.com/photo-1560807707-8cc77767d783?w=1920&auto=format&fit=crop&q=80" alt="Happy travellers Sri Lanka" loading="eager" />
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <div class="page-hero-content">
+        <nav class="breadcrumb"><a href="index.html">Home</a><span>/</span>Testimonials</nav>
+        <span class="section-label">Our Travellers</span>
+        <h1>Journeys That Changed Everything</h1>
+        <p>Don't just take our word for it — here's what UK travellers say about their Zeilan Paradise experience.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trust strip -->
+  <div class="trust-strip">
+    <div class="container">
+      <p>"Every single review we receive reminds us <span class="gold">why we do this.</span>"</p>
+      <div class="trust-icons">
+        <div class="trust-icon"><div class="big">⭐</div><p>4.9 / 5 Average Rating</p></div>
+        <div class="trust-icon"><div class="big">💬</div><p>1,200+ Happy Travellers</p></div>
+        <div class="trust-icon"><div class="big">🔁</div><p>68% Return Clients</p></div>
+        <div class="trust-icon"><div class="big">🇬🇧</div><p>100% UK-Based Support</p></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="bg-pearl">
+    <div class="container">
+      <div class="section-header center">
+        <span class="section-label">Client Stories</span>
+        <h2 class="section-title">What Our Travellers Say</h2>
+        <div class="gold-rule"></div>
+      </div>
+      <div class="testi-full-grid reveal">
+        <!-- 1 -->
+        <div class="testi-full-card">
+          <div class="testi-quote">"</div>
+          <span class="testi-tour-tag">14-Day Grand Odyssey</span>
+          <p class="testi-text">Zeilan Paradise turned our dream holiday into an absolute masterpiece. Every detail was considered — from the boutique hotels to the private guides. Sri Lanka was breathtaking, and it was all perfectly seamless from start to finish.</p>
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-full-author">
+            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&auto=format&fit=crop&q=80" alt="Sarah M." loading="lazy" />
+            <div><p class="name">Sarah M.</p><p class="location">London, UK</p></div>
+          </div>
+        </div>
+        <!-- 2 -->
+        <div class="testi-full-card">
+          <div class="testi-quote">"</div>
+          <span class="testi-tour-tag">Solo Tailor-Made 10 Days</span>
+          <p class="testi-text">As a solo traveller, I felt completely safe and cared for the entire trip. The team's local knowledge was phenomenal — I discovered places no travel agent would ever know about. Truly once-in-a-lifetime and already planning my return.</p>
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-full-author">
+            <img src="https://images.unsplash.com/photo-1527980965255-d3b416303d12?w=100&h=100&auto=format&fit=crop&q=80" alt="James T." loading="lazy" />
+            <div><p class="name">James T.</p><p class="location">Manchester, UK</p></div>
+          </div>
+        </div>
+        <!-- 3 -->
+        <div class="testi-full-card">
+          <div class="testi-quote">"</div>
+          <span class="testi-tour-tag">Family Southern Coast Tour</span>
+          <p class="testi-text">Our family trip with Zeilan Paradise was everything we hoped for and more. The children loved the elephant sanctuary and the scenic train through the highlands. A memory we'll cherish forever as a family.</p>
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-full-author">
+            <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&auto=format&fit=crop&q=80" alt="Priya K." loading="lazy" />
+            <div><p class="name">Priya K.</p><p class="location">Edinburgh, UK</p></div>
+          </div>
+        </div>
+        <!-- 4 -->
+        <div class="testi-full-card">
+          <div class="testi-quote">"</div>
+          <span class="testi-tour-tag">Honeymoon Tailor-Made</span>
+          <p class="testi-text">Our honeymoon in Sri Lanka was beyond our wildest expectations. The team arranged the most romantic villa, a private cooking class, and a sunrise Sigiriya climb — all without us lifting a finger. Pure magic.</p>
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-full-author">
+            <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=100&h=100&auto=format&fit=crop&q=80" alt="Emma &amp; David R." loading="lazy" />
+            <div><p class="name">Emma &amp; David R.</p><p class="location">Bristol, UK</p></div>
+          </div>
+        </div>
+        <!-- 5 -->
+        <div class="testi-full-card">
+          <div class="testi-quote">"</div>
+          <span class="testi-tour-tag">Cultural Triangle 7 Days</span>
+          <p class="testi-text">I've travelled extensively across Asia and Sri Lanka with Zeilan Paradise was the best-organised, most thoughtful trip I've ever experienced. Their knowledge of history and culture is unrivalled. Exceptional value.</p>
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-full-author">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&auto=format&fit=crop&q=80" alt="Michael H." loading="lazy" />
+            <div><p class="name">Michael H.</p><p class="location">Cambridge, UK</p></div>
+          </div>
+        </div>
+        <!-- 6 -->
+        <div class="testi-full-card">
+          <div class="testi-quote">"</div>
+          <span class="testi-tour-tag">Wildlife &amp; Coast 10 Days</span>
+          <p class="testi-text">The Yala safari was a bucket-list moment — we spotted four leopards in one morning! Then we relaxed on the most beautiful beaches I've ever seen. Zeilan Paradise delivered an extraordinary balance of adventure and luxury.</p>
+          <div class="testi-stars">★★★★★</div>
+          <div class="testi-full-author">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&auto=format&fit=crop&q=80" alt="Natasha L." loading="lazy" />
+            <div><p class="name">Natasha L.</p><p class="location">Leeds, UK</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta-banner">
+    <img class="cta-bg" src="https://images.unsplash.com/photo-1585123388867-3bfe6dd4bdbf?w=1920&auto=format&fit=crop&q=80" alt="Sigiriya Sri Lanka" loading="lazy" />
+    <div class="cta-overlay"></div>
+    <div class="container">
+      <div class="cta-content reveal">
+        <span class="section-label">Your Story Next?</span>
+        <h2>Join Our Family of Happy Travellers</h2>
+        <p>Let Zeilan Paradise craft the Sri Lanka journey you'll be talking about for a lifetime.</p>
+        <div class="cta-btns">
+          <a href="tailor-made.html" class="btn btn-gold btn-lg">Design My Journey</a>
+          <a href="contact.html" class="btn btn-outline-white btn-lg">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand"><img src="images/logo.png" alt="Zeilan Paradise" class="footer-logo" loading="lazy" /><p class="footer-tagline">Premium DMC for Sri Lanka — UK-Based, Island-Rooted.</p><div class="footer-socials"><a href="#" class="social-btn">f</a><a href="#" class="social-btn">in</a><a href="#" class="social-btn">li</a><a href="#" class="social-btn">w</a></div></div>
+        <div class="footer-col"><h5>Explore</h5><ul><li><a href="destinations.html">Destinations</a></li><li><a href="round-tours.html">Round Tours</a></li><li><a href="day-tours.html">Day Tours</a></li><li><a href="activities.html">Activities</a></li><li><a href="tailor-made.html">Tailor-Made</a></li></ul></div>
+        <div class="footer-col"><h5>Company</h5><ul><li><a href="about.html">About Us</a></li><li><a href="testimonials.html">Testimonials</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+        <div class="footer-col"><h5>Contact</h5><div class="footer-contact-item"><span class="icon">✉️</span><p><a href="mailto:info@zeilanparadise.com">info@zeilanparadise.com</a></p></div><div class="footer-contact-item"><span class="icon">📞</span><p><a href="tel:+441234567890">+44 (0) 123 456 7890</a></p></div></div>
+      </div>
+      <div class="footer-bottom"><p>© <span id="footer-year">2025</span> Zeilan Paradise. All rights reserved.</p><div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
+    </div>
+  </footer>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

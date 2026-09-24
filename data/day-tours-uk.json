@@ -1,0 +1,68 @@
+[
+  {
+    "category": "cultural",
+    "image": "https://images.unsplash.com/photo-1593693411515-c20261bcad6e?w=600&auto=format&fit=crop&q=80",
+    "badge": { "text": "Full Day", "class": "" },
+    "title": "Sigiriya & Dambulla Cave Temple",
+    "description": "Ascend the iconic Lion Rock fortress and explore the ancient cave murals of Dambulla — a UNESCO double-whammy in one remarkable day.",
+    "meta": ["⏱ 10–12 Hours", "📍 Central Province"],
+    "priceType": "Private Excursion",
+    "priceDisplay": "• Tailored Quotation",
+    "link": "contact.html"
+  },
+  {
+    "category": "wildlife",
+    "image": "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=600&auto=format&fit=crop&q=80",
+    "badge": { "text": "Full Day", "class": "" },
+    "title": "Yala National Park Safari",
+    "description": "Track leopards, elephants and hundreds of bird species through the grasslands and lagoons of Yala — Sri Lanka's most famous national park.",
+    "meta": ["⏱ Full Day", "📍 Southern Province"],
+    "priceType": "Private Safari",
+    "priceDisplay": "• Tailored Quotation",
+    "link": "contact.html"
+  },
+  {
+    "category": "cultural",
+    "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&auto=format&fit=crop&q=80",
+    "badge": { "text": "Half/Full Day", "class": "teal" },
+    "title": "Kandy City & Temple of the Tooth",
+    "description": "Discover Sri Lanka's cultural capital — the sacred Temple of the Tooth Relic, the beautiful Peradeniya Botanical Gardens, and a traditional Kandyan dance show.",
+    "meta": ["⏱ 6–10 Hours", "📍 Central Province"],
+    "priceType": "Heritage Tour",
+    "priceDisplay": "• Tailored Quotation",
+    "link": "contact.html"
+  },
+  {
+    "category": "coast",
+    "image": "https://images.unsplash.com/photo-1553697388-94e804e2f0f6?w=600&auto=format&fit=crop&q=80",
+    "badge": { "text": "Full Day", "class": "" },
+    "title": "Mirissa Whale Watching & Beach",
+    "description": "Set sail at dawn to encounter blue whales and spinner dolphins in the Indian Ocean, then spend the afternoon on Mirissa's golden crescent beach.",
+    "meta": ["⏱ Full Day", "📍 Southern Coast"],
+    "priceType": "Private Voyage",
+    "priceDisplay": "• Tailored Quotation",
+    "link": "contact.html"
+  },
+  {
+    "category": "highlands",
+    "image": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&auto=format&fit=crop&q=80",
+    "badge": { "text": "Full Day", "class": "teal" },
+    "title": "Nuwara Eliya Tea Plantation Trail",
+    "description": "Walk through rolling emerald tea estates, visit a working tea factory, and enjoy a world-class high tea with panoramic highland views.",
+    "meta": ["⏱ Full Day", "📍 Hill Country"],
+    "priceType": "Highland Experience",
+    "priceDisplay": "• Tailored Quotation",
+    "link": "contact.html"
+  },
+  {
+    "category": "coast",
+    "image": "https://images.unsplash.com/photo-1588416936097-41850ab3d86d?w=600&auto=format&fit=crop&q=80",
+    "badge": { "text": "Half Day", "class": "" },
+    "title": "Galle Fort Heritage Walk",
+    "description": "Stroll the Dutch colonial ramparts of Galle Fort, browse its boutique galleries and cafes, and watch the sun set over the Indian Ocean from the lighthouse.",
+    "meta": ["⏱ 4–6 Hours", "📍 Southern Province"],
+    "priceType": "Private Guide Walk",
+    "priceDisplay": "• Tailored Quotation",
+    "link": "contact.html"
+  }
+]

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us | Zeilan Paradise — Plan Your Sri Lanka Journey</title>
+  <meta name="description" content="Get in touch with Zeilan Paradise — the UK's trusted Sri Lanka Destination Management Company. Call, email or fill in our enquiry form and we'll start planning your dream trip." />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .contact-info { }
+    .contact-info h2 { font-family: var(--ff-head); font-size: var(--fs-2xl); color: var(--teal); margin-bottom: 1rem; }
+    .contact-info p { font-size: var(--fs-sm); color: rgba(26,26,26,0.65); line-height: 1.8; margin-bottom: 2rem; }
+    .contact-detail {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      padding: 1.25rem;
+      background: var(--white);
+      border-radius: var(--radius-md);
+      margin-bottom: 1rem;
+      border-left: 4px solid var(--gold);
+      transition: var(--transition);
+    }
+    .contact-detail:hover { box-shadow: var(--shadow-md); transform: translateX(4px); }
+    .contact-detail-icon { font-size: 1.5rem; flex-shrink: 0; }
+    .contact-detail h5 { font-weight: 700; font-size: var(--fs-sm); color: var(--teal); margin-bottom: 0.25rem; }
+    .contact-detail p { font-size: var(--fs-sm); color: rgba(26,26,26,0.65); margin: 0; line-height: 1.6; }
+    .contact-detail a { color: var(--teal); font-weight: 600; }
+    .contact-detail a:hover { color: var(--gold); }
+    .hours-box {
+      background: var(--teal);
+      border-radius: var(--radius-lg);
+      padding: 1.75rem;
+      margin-top: 1.5rem;
+    }
+    .hours-box h5 { font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+    .hours-box p { font-size: var(--fs-sm); color: rgba(255,255,255,0.8); margin-bottom: 0.35rem; }
+    .hours-box strong { color: var(--white); }
+
+    .contact-form-card {
+      background: var(--white);
+      border-radius: var(--radius-xl);
+      padding: 3rem;
+      box-shadow: var(--shadow-lg);
+    }
+    .contact-form-card h3 { font-family: var(--ff-head); font-size: var(--fs-2xl); color: var(--teal); margin-bottom: 0.5rem; }
+    .contact-form-card > p { font-size: var(--fs-sm); color: rgba(26,26,26,0.55); margin-bottom: 2rem; }
+
+    .faq-section { margin-top: 4rem; }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .faq-item { background: var(--white); border-radius: var(--radius-md); padding: 1.75rem; box-shadow: var(--shadow-sm); transition: var(--transition); border-top: 3px solid var(--gold); }
+    .faq-item:hover { box-shadow: var(--shadow-md); }
+    .faq-item h4 { font-family: var(--ff-head); font-size: var(--fs-md); color: var(--teal); margin-bottom: 0.5rem; }
+    .faq-item p { font-size: var(--fs-sm); color: rgba(26,26,26,0.65); line-height: 1.75; }
+
+    @media (max-width: 900px) {
+      .contact-layout { grid-template-columns: 1fr; }
+      .faq-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 580px) {
+      .contact-form-card { padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="main-nav" class="light-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo"><img src="images/logo.png" alt="Zeilan Paradise" /></a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li>
+        <li><a href="destinations.html">Destinations</a></li><li><a href="round-tours.html">Round Tours</a></li>
+        <li><a href="day-tours.html">Day Tours</a></li><li><a href="activities.html">Activities</a></li>
+        <li><a href="tailor-made.html">Tailor-Made</a></li>
+      </ul>
+      <div class="nav-right">
+        <a href="tel:+441234567890" class="nav-phone">+44 (0) 123 456 7890</a>
+        <a href="#contact-form" class="btn btn-gold btn-sm">Enquire Now</a>
+        <button class="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="mobile-menu">
+    <button class="mobile-close">✕</button>
+    <a href="index.html">Home</a><a href="about.html">About Us</a><a href="destinations.html">Destinations</a>
+    <a href="round-tours.html">Round Tours</a><a href="day-tours.html">Day Tours</a>
+    <a href="activities.html">Activities</a><a href="tailor-made.html">Tailor-Made</a>
+    <a href="testimonials.html">Testimonials</a><a href="contact.html">Contact Us</a>
+    <a href="#contact-form" class="btn btn-gold mt-4">Send Us a Message</a>
+  </div>
+
+  <div class="page-hero">
+    <img class="page-hero-bg" src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1920&auto=format&fit=crop&q=80" alt="Kandy city Sri Lanka" loading="eager" />
+    <div class="page-hero-overlay"></div>
+    <div class="container">
+      <div class="page-hero-content">
+        <nav class="breadcrumb"><a href="index.html">Home</a><span>/</span>Contact Us</nav>
+        <span class="section-label">Let's Talk</span>
+        <h1>Get in Touch</h1>
+        <p>Ready to start planning your Sri Lanka adventure? Our team is here to help — seven days a week.</p>
+      </div>
+    </div>
+  </div>
+
+  <section class="bg-pearl" id="contact-form">
+    <div class="container">
+      <div class="contact-layout">
+        <!-- Left: Contact Info -->
+        <div class="contact-info reveal">
+          <span class="section-label">How to Reach Us</span>
+          <h2>We're Here for You</h2>
+          <div class="gold-rule"></div>
+          <p>Whether you have a question about a specific tour, want to discuss a tailor-made journey, or simply want to know more about Sri Lanka — we'd love to hear from you. Our UK-based team responds within 24 hours.</p>
+
+          <div class="contact-detail">
+            <span class="contact-detail-icon">📞</span>
+            <div>
+              <h5>Call or WhatsApp</h5>
+              <p><a href="tel:+441234567890">+44 (0) 123 456 7890</a></p>
+              <p style="font-size: var(--fs-xs); color: rgba(26,26,26,0.45); margin-top: 0.25rem;">We welcome WhatsApp messages too</p>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">✉️</span>
+            <div>
+              <h5>Email Us</h5>
+              <p><a href="mailto:info@zeilanparadise.com">info@zeilanparadise.com</a></p>
+              <p style="font-size: var(--fs-xs); color: rgba(26,26,26,0.45); margin-top: 0.25rem;">We respond within 24 hours, usually sooner</p>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">🌐</span>
+            <div>
+              <h5>Website</h5>
+              <p><a href="https://www.zeilanparadise.com">www.zeilanparadise.com</a></p>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">🇬🇧</span>
+            <div>
+              <h5>UK-Based Operations</h5>
+              <p>Our advisory team is based in the United Kingdom, serving clients across all of England, Scotland, Wales and Northern Ireland.</p>
+            </div>
+          </div>
+          <div class="contact-detail">
+            <span class="contact-detail-icon">🇱🇰</span>
+            <div>
+              <h5>Sri Lanka Ground Team</h5>
+              <p>Our expert in-country team is based across Sri Lanka — ready to welcome you the moment you land.</p>
+            </div>
+          </div>
+
+          <div class="hours-box">
+            <h5>Office Hours (UK Time)</h5>
+            <p><strong>Monday – Friday:</strong> 9:00 AM – 6:00 PM</p>
+            <p><strong>Saturday:</strong> 10:00 AM – 4:00 PM</p>
+            <p><strong>Sunday:</strong> Emergency line only</p>
+            <p style="margin-top: 0.75rem; color: rgba(255,255,255,0.6); font-size: var(--fs-xs);">In-country support is available 24/7 for clients currently travelling.</p>
+          </div>
+        </div>
+
+        <!-- Right: Enquiry Form -->
+        <div class="contact-form-card reveal reveal-delay-2">
+          <h3>Send Us an Enquiry</h3>
+          <p>Tell us about your dream journey and we'll respond within 24 hours with personalised recommendations.</p>
+          <form id="enquiry-form" novalidate>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label" for="c-name">Full Name *</label>
+                <input type="text" id="c-name" name="name" class="form-input" placeholder="Your full name" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="c-email">Email Address *</label>
+                <input type="email" id="c-email" name="email" class="form-input" placeholder="your@email.com" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="c-phone">Phone / WhatsApp</label>
+                <input type="tel" id="c-phone" name="phone" class="form-input" placeholder="+44 ..." />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="c-interest">I'm Interested In *</label>
+                <select id="c-interest" name="interest" class="form-select" required>
+                  <option value="">Select topic</option>
+                  <option>Tailor-Made Journey</option>
+                  <option>Round Tour Enquiry</option>
+                  <option>Day Tour Booking</option>
+                  <option>Activities &amp; Experiences</option>
+                  <option>General Information</option>
+                  <option>Group / Corporate Travel</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="c-dates">Approx. Travel Dates</label>
+                <input type="text" id="c-dates" name="dates" class="form-input" placeholder="e.g. March 2025" />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="c-guests">Number of Travellers</label>
+                <select id="c-guests" name="guests" class="form-select">
+                  <option value="">Select</option>
+                  <option>Solo (1)</option>
+                  <option>Couple (2)</option>
+                  <option>Small Group (3–5)</option>
+                  <option>Family / Group (6–12)</option>
+                  <option>Large Group (13+)</option>
+                </select>
+              </div>
+              <div class="form-group full">
+                <label class="form-label" for="c-message">Your Message *</label>
+                <textarea id="c-message" name="message" class="form-textarea" placeholder="Tell us about your travel vision, questions, or anything else you'd like to know..." required></textarea>
+              </div>
+            </div>
+            <div class="form-submit mt-3">
+              <button type="submit" class="btn btn-gold btn-lg" style="width: 100%; justify-content: center;" id="c-submit-btn">
+                Send Message
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </button>
+            </div>
+            <p style="font-size: var(--fs-xs); color: rgba(26,26,26,0.4); text-align: center; margin-top: 1rem;">We respond within 24 hours. Your details are private and never shared.</p>
+          </form>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <div class="faq-section reveal">
+        <div class="section-header center">
+          <span class="section-label">Frequently Asked</span>
+          <h2 class="section-title">Common Questions</h2>
+          <div class="gold-rule"></div>
+        </div>
+        <div class="faq-grid">
+          <div class="faq-item">
+            <h4>When is the best time to visit Sri Lanka?</h4>
+            <p>Sri Lanka can be visited year-round. The west and south coasts are best from November to March, while the east coast shines from April to September. We'll tailor your dates to the regions you'd like to explore.</p>
+          </div>
+          <div class="faq-item">
+            <h4>How far in advance should I book?</h4>
+            <p>We recommend booking at least 3–6 months in advance, especially for peak season travel (December–March). However, we can often accommodate last-minute requests — just get in touch.</p>
+          </div>
+          <div class="faq-item">
+            <h4>Are your tours ATOL protected?</h4>
+            <p>Yes. All flight-inclusive holidays booked through Zeilan Paradise are fully ATOL protected, giving you complete peace of mind and financial security.</p>
+          </div>
+          <div class="faq-item">
+            <h4>Can you accommodate dietary requirements?</h4>
+            <p>Absolutely. Whether vegetarian, vegan, halal, gluten-free or any other requirement — we arrange everything with hotels and restaurants in advance to ensure your comfort.</p>
+          </div>
+          <div class="faq-item">
+            <h4>Do I need a visa to enter Sri Lanka?</h4>
+            <p>UK citizens require an ETA (Electronic Travel Authorisation) to enter Sri Lanka — easily obtained online before travel. We'll guide you through the process as part of your booking.</p>
+          </div>
+          <div class="faq-item">
+            <h4>What's included in your tours?</h4>
+            <p>Our tours typically include private airport transfers, accommodation, certified local guides, private transport, selected meals, and key entrance fees. Full inclusions are detailed in each itinerary.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand"><img src="images/logo.png" alt="Zeilan Paradise" class="footer-logo" loading="lazy" /><p class="footer-tagline">Premium DMC for Sri Lanka — UK-Based, Island-Rooted.</p><div class="footer-socials"><a href="#" class="social-btn">f</a><a href="#" class="social-btn">in</a><a href="#" class="social-btn">li</a><a href="#" class="social-btn">w</a></div></div>
+        <div class="footer-col"><h5>Explore</h5><ul><li><a href="destinations.html">Destinations</a></li><li><a href="round-tours.html">Round Tours</a></li><li><a href="day-tours.html">Day Tours</a></li><li><a href="activities.html">Activities</a></li><li><a href="tailor-made.html">Tailor-Made</a></li></ul></div>
+        <div class="footer-col"><h5>Company</h5><ul><li><a href="about.html">About Us</a></li><li><a href="testimonials.html">Testimonials</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+        <div class="footer-col"><h5>Contact</h5>
+          <div class="footer-contact-item"><span class="icon">✉️</span><p><a href="mailto:info@zeilanparadise.com">info@zeilanparadise.com</a></p></div>
+          <div class="footer-contact-item"><span class="icon">📞</span><p><a href="tel:+441234567890">+44 (0) 123 456 7890</a></p></div>
+          <div class="footer-contact-item"><span class="icon">🌐</span><p><a href="https://www.zeilanparadise.com">www.zeilanparadise.com</a></p></div>
+        </div>
+      </div>
+      <div class="footer-bottom"><p>© <span id="footer-year">2025</span> Zeilan Paradise. All rights reserved.</p><div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div>
+    </div>
+  </footer>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

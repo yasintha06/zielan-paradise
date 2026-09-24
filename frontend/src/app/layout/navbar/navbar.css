@@ -1,0 +1,313 @@
+/* ═══════════════════════════════════════════════════════════════
+   ZEILAN PARADISE — LUXURY NAVBAR STYLES
+   High-End Luxury Travel Standard (Aman / Abercrombie & Kent style)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── MAIN NAVBAR ──────────────────────────────────────────── */
+#main-nav {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 9999 !important;
+  height: 102px !important;
+  display: flex !important;
+  align-items: center !important;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 20, 18, 0.88) 0%,
+    rgba(0, 30, 26, 0.7) 60%,
+    rgba(0, 30, 26, 0.45) 100%
+  ) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+/* ── SCROLLED STATE ───────────────────────────────────────── */
+#main-nav.scrolled {
+  height: 102px !important;
+  background: rgba(0, 40, 36, 0.98) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3) !important;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35) !important;
+}
+
+/* ── INNER CONTAINER ──────────────────────────────────────── */
+.nav-inner {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  width: 94% !important;
+  max-width: 1440px !important;
+  margin: 0 auto !important;
+  padding: 0 1.5rem !important;
+  height: 100% !important;
+}
+
+/* ── LOGO (Prominent, Crisp, and Contained) ────────────────── */
+.nav-logo {
+  display: flex !important;
+  align-items: center !important;
+  text-decoration: none !important;
+  flex-shrink: 0 !important;
+  height: 100% !important;
+}
+
+.nav-logo img {
+  display: block !important;
+  height: 78px !important;
+  max-height: 78px !important;
+  width: auto !important;
+  max-width: 360px !important;
+  object-fit: contain !important;
+  filter: drop-shadow(0 3px 12px rgba(0, 0, 0, 0.55)) brightness(1.1) !important;
+  transition: transform 0.3s ease !important;
+}
+
+.nav-logo:hover img {
+  transform: scale(1.02) !important;
+}
+
+#main-nav.scrolled .nav-logo img {
+  height: 78px !important;
+  max-height: 78px !important;
+  filter: drop-shadow(0 3px 12px rgba(0, 0, 0, 0.55)) brightness(1.1) !important;
+}
+
+/* ── NAV LINKS ────────────────────────────────────────────── */
+.nav-links {
+  display: flex !important;
+  align-items: center !important;
+  list-style: none !important;
+  gap: 0.35rem !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.nav-links li a {
+  font-family: var(--ff-body, 'Montserrat', sans-serif) !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+  text-decoration: none !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.12em !important;
+  padding: 0.55rem 0.95rem !important;
+  border-radius: 4px !important;
+  position: relative !important;
+  transition: color 0.3s ease, background 0.3s ease !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6) !important;
+}
+
+.nav-links li a::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 50% !important;
+  right: 50% !important;
+  height: 2px !important;
+  background: linear-gradient(90deg, var(--gold, #D4AF37), #f3e5ab) !important;
+  border-radius: 2px !important;
+  transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              right 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.35s ease !important;
+  opacity: 0 !important;
+}
+
+.nav-links li a:hover::after,
+.nav-links li a.active::after {
+  left: 15% !important;
+  right: 15% !important;
+  opacity: 1 !important;
+}
+
+.nav-links li a:hover {
+  color: var(--gold, #D4AF37) !important;
+}
+
+.nav-links li a.active {
+  color: var(--gold, #D4AF37) !important;
+  font-weight: 600 !important;
+}
+
+/* ── NAV RIGHT ────────────────────────────────────────────── */
+.nav-right {
+  display: flex !important;
+  align-items: center !important;
+  gap: 1.4rem !important;
+  flex-shrink: 0 !important;
+}
+
+.nav-phone {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  font-family: var(--ff-body, 'Montserrat', sans-serif) !important;
+  font-size: 0.8rem !important;
+  font-weight: 500 !important;
+  color: rgba(255, 255, 255, 0.88) !important;
+  text-decoration: none !important;
+  letter-spacing: 0.05em !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6) !important;
+  transition: color 0.3s ease !important;
+}
+
+.nav-phone:hover {
+  color: var(--gold, #D4AF37) !important;
+}
+
+/* ── CTA BUTTON (Luxury Gold) ─────────────────────────────── */
+#nav-enquire-btn {
+  font-family: var(--ff-body, 'Montserrat', sans-serif) !important;
+  font-size: 0.78rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  padding: 0.7rem 1.6rem !important;
+  border-radius: 50px !important;
+  background: linear-gradient(135deg, #D4AF37 0%, #b8962e 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.35) !important;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+}
+
+#nav-enquire-btn:hover {
+  background: linear-gradient(135deg, #e5c158 0%, #c9a43b 100%) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 25px rgba(212, 175, 55, 0.55) !important;
+}
+
+/* ── HAMBURGER (mobile) ───────────────────────────────────── */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--white, #fff);
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* ── MOBILE MENU DRAWER ──────────────────────────────────── */
+.mobile-menu {
+  display: none !important;
+}
+
+@media (max-width: 1100px) {
+  .nav-links,
+  .nav-phone {
+    display: none !important;
+  }
+
+  .hamburger {
+    display: flex !important;
+  }
+
+  .mobile-menu {
+    display: flex !important;
+    position: fixed !important;
+    top: 0 !important;
+    right: 0 !important;
+    left: auto !important;
+    width: min(340px, 85vw) !important;
+    height: 100vh !important;
+    background: rgba(0, 36, 32, 0.98) !important;
+    backdrop-filter: blur(24px) !important;
+    -webkit-backdrop-filter: blur(24px) !important;
+    border-left: 1px solid rgba(212, 175, 55, 0.25) !important;
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5) !important;
+    z-index: 10000 !important;
+    flex-direction: column !important;
+    padding: 5rem 2rem 2rem !important;
+    gap: 1.25rem !important;
+    transform: translateX(100%) !important;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    pointer-events: none !important;
+  }
+
+  .mobile-menu.open {
+    transform: translateX(0) !important;
+    pointer-events: auto !important;
+  }
+}
+
+.mobile-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  color: var(--white, #fff);
+  font-size: 1.6rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.3s ease;
+}
+
+.mobile-close:hover {
+  color: var(--gold, #D4AF37);
+}
+
+.mobile-menu a {
+  font-family: var(--ff-body, 'Montserrat', sans-serif);
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: color 0.3s ease, padding-left 0.3s ease;
+}
+
+.mobile-menu a:hover {
+  color: var(--gold, #D4AF37);
+  padding-left: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  #main-nav {
+    height: 84px !important;
+  }
+
+  #main-nav.scrolled {
+    height: 84px !important;
+  }
+
+  .nav-logo img {
+    height: 56px !important;
+    max-height: 56px !important;
+  }
+
+  #main-nav.scrolled .nav-logo img {
+    height: 56px !important;
+    max-height: 56px !important;
+  }
+
+  #nav-enquire-btn {
+    padding: 0.55rem 1.1rem !important;
+    font-size: 0.72rem !important;
+  }
+}
+

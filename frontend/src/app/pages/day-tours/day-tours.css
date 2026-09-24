@@ -1,0 +1,165 @@
+/* ═══════════════════════════════════════════════════════════════
+   ZEILAN PARADISE — DAY TOURS PAGE STYLES
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── DAY TOUR CARDS GRID ─────────────────────────────────── */
+.dt-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.dt-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition), transform var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+
+.dt-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-6px);
+}
+
+/* ── IMAGE ────────────────────────────────────────────────── */
+.dt-card-img-wrap {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+}
+
+.dt-card-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.dt-card:hover .dt-card-img-wrap img {
+  transform: scale(1.06);
+}
+
+.dt-card-badges {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.dt-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.3rem 0.85rem;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.dt-badge-duration {
+  background: var(--teal);
+  color: var(--white);
+}
+
+/* ── BODY ─────────────────────────────────────────────────── */
+.dt-card-body {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.dt-card-title {
+  font-family: var(--ff-head);
+  font-size: var(--fs-lg);
+  color: var(--charcoal);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.dt-card-desc {
+  font-size: var(--fs-sm);
+  color: rgba(26,26,26,0.65);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+/* ── HIGHLIGHTS ───────────────────────────────────────────── */
+.dt-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+
+.dt-highlight-tag {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+  background: var(--gold-light);
+  color: var(--gold-dark);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+/* ── META ─────────────────────────────────────────────────── */
+.dt-card-meta {
+  display: flex;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.dt-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--teal);
+  font-weight: 600;
+}
+
+.dt-meta-item svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ── FOOTER ───────────────────────────────────────────────── */
+.dt-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--pearl-dark);
+}
+
+.dt-price {
+  font-size: 0.75rem;
+  color: rgba(26,26,26,0.5);
+}
+
+.dt-price strong {
+  display: block;
+  font-family: var(--ff-head);
+  font-size: var(--fs-lg);
+  color: var(--teal);
+  font-weight: 700;
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .dt-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .dt-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,40 @@
+[
+  {
+    "id": "ZP-20260922-2IXD",
+    "createdAt": "2026-09-22T21:39:05.499Z",
+    "updatedAt": "2026-09-22T21:39:05.499Z",
+    "status": "NEW",
+    "name": "Lady Eleanor Vance",
+    "email": "eleanor.vance@cotswolds-retreats.co.uk",
+    "phone": "+44 7890 123456",
+    "type": "Tailor-Made Journey",
+    "tourTitle": "",
+    "dates": "January 2027",
+    "duration": "2 Weeks (14 Days)",
+    "guests": "Couple (2)",
+    "tier": "Signature Luxury",
+    "interests": "Tea country, train journey, boutique heritage hotels, cultural temples",
+    "message": "Looking for an exclusive slow-travel experience across the cultural triangle and Ella.",
+    "notes": "",
+    "sourceUrl": ""
+  },
+  {
+    "id": "ZP-20260922-DJIU",
+    "createdAt": "2026-09-22T20:25:45.595Z",
+    "updatedAt": "2026-09-22T20:25:45.595Z",
+    "status": "NEW",
+    "name": "Lord Arthur Wellesley",
+    "email": "arthur.wellesley@london-estates.co.uk",
+    "phone": "+44 7700 900123",
+    "type": "Tailor-Made Journey",
+    "tourTitle": "",
+    "dates": "October 2026",
+    "duration": "2 Weeks (14 Days)",
+    "guests": "Couple (2)",
+    "tier": "Ultra-Luxury & Private Villas",
+    "interests": "Heritage, Tea Country, Sigiriya, Private Chauffeur",
+    "message": "We are seeking an ultra-exclusive private journey celebrating our 25th anniversary, staying at Ceylon Tea Trails and Cape Weligama.",
+    "notes": "",
+    "sourceUrl": ""
+  }
+]

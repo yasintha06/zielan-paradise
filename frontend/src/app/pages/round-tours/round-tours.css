@@ -1,0 +1,71 @@
+/* ═══════════════════════════════════════════════════════════════
+   ZEILAN PARADISE — ROUND TOURS PAGE STYLES
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── INTRO ────────────────────────────────────────────────── */
+.rt-intro {
+  padding-bottom: 0;
+}
+
+/* ── TOURS SECTION ────────────────────────────────────────── */
+.rt-tours {
+  padding-top: 2rem;
+}
+
+/* ── ROUTE LINE ───────────────────────────────────────────── */
+.tour-card-route {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  color: rgba(26,26,26,0.5);
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--pearl-dark);
+}
+
+.tour-card-route svg {
+  flex-shrink: 0;
+  color: var(--gold);
+  margin-top: 2px;
+}
+
+/* ── EMPTY STATE ──────────────────────────────────────────── */
+.rt-empty {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: rgba(26,26,26,0.5);
+  font-size: 1rem;
+}
+
+.rt-reset-link {
+  background: none;
+  border: none;
+  color: var(--teal);
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: inherit;
+  font-family: var(--ff-body);
+}
+
+.rt-reset-link:hover {
+  color: var(--gold);
+}
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .tours-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .tours-grid {
+    grid-template-columns: 1fr;
+  }
+  .filter-bar {
+    justify-content: center;
+  }
+}
