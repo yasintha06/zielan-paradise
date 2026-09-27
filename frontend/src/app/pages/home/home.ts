@@ -99,34 +99,9 @@ export class HomeComponent implements OnInit {
     }
   ];
 
-  testimonials: any[] = [
-    {
-      id: "testi-1",
-      text: "From our very first enquiry to the moment we landed back in Heathrow, the service was impeccable. Our guide, Nuwan, was exceptional.",
-      authorName: "Eleanor & James",
-      authorLocation: "London, UK",
-      authorImage: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&auto=format&fit=crop&q=80"
-    },
-    {
-      id: "testi-2",
-      text: "Zeilan Paradise arranged a private anniversary dinner for us in the tea hills that brought me to tears. Pure magic.",
-      authorName: "Sarah M.",
-      authorLocation: "Manchester, UK",
-      authorImage: "https://images.unsplash.com/photo-1508214751196-bfd141285cb6?w=200&auto=format&fit=crop&q=80"
-    },
-    {
-      id: "testi-3",
-      text: "As seasoned travellers, we expect a lot. Zeilan exceeded every standard. The boutique hotels they selected were breathtaking.",
-      authorName: "The Harrison Family",
-      authorLocation: "Surrey, UK",
-      authorImage: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&auto=format&fit=crop&q=80"
-    }
-  ];
-
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
-    // Attempt to fetch from API, but keep high-end placeholders if it fails (so the site never looks broken)
     this.apiService.getDestinations().subscribe({
       next: (data) => {
         if (data && data.length > 0) this.destinations = data.filter(d => d.featured);
@@ -137,13 +112,6 @@ export class HomeComponent implements OnInit {
     this.apiService.getFeaturedTours('uk').subscribe({
       next: (data) => {
         if (data && data.length > 0) this.tours = data;
-      },
-      error: () => console.log('API not ready yet, using luxury placeholders.')
-    });
-
-    this.apiService.getTestimonials('uk').subscribe({
-      next: (data) => {
-        if (data && data.length > 0) this.testimonials = data;
       },
       error: () => console.log('API not ready yet, using luxury placeholders.')
     });

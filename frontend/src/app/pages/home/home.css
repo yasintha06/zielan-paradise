@@ -105,40 +105,55 @@
 
 
 /* ── STATS ────────────────────────────────────────────────── */
+/* ── VALUE PILLARS ────────────────────────────────────────── */
 .section-stats {
-  padding: 6rem 0;
-  background: var(--white);
+  padding: 4.5rem 0;
+  background: #fcfbf9;
+  border-bottom: 1px solid var(--pearl-dark);
 }
 
-.section-stats .stats-grid {
+.section-stats .authentic-pillars-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 3rem;
-  text-align: center;
+  gap: 2rem;
+  text-align: left;
 }
 
-.section-stats .stat-item {
-  padding: 2rem 1rem;
+.pillar-card {
+  background: var(--white);
+  border: 1px solid var(--pearl-dark);
+  border-radius: var(--radius-md);
+  padding: 2rem 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
 }
 
-.section-stats .stat-number {
-  font-family: var(--ff-head);
-  font-size: 3rem;
-  font-weight: 400;
-  color: var(--teal);
-  display: block;
-  line-height: 1;
+.pillar-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+.pillar-icon {
+  font-size: 1.25rem;
+  color: var(--gold);
   margin-bottom: 0.75rem;
-  letter-spacing: -0.02em;
 }
 
-.section-stats .stat-label {
-  font-family: var(--ff-body);
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: rgba(26,26,26,0.5);
+.stat-pillar-title {
+  font-family: var(--ff-head);
+  font-size: 1.12rem;
+  color: var(--charcoal);
   font-weight: 600;
+  line-height: 1.35;
+  margin-bottom: 0.5rem;
+}
+
+.stat-pillar-desc {
+  font-size: 0.82rem;
+  color: rgba(26, 26, 26, 0.65);
+  line-height: 1.55;
+  margin: 0;
 }
 
 

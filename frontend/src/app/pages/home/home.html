@@ -49,25 +49,29 @@
 </div>
 
 
-<!-- ═══════════════ TRUST STATS — MINIMAL ═══════════════ -->
+<!-- ═══════════════ OPERATIONAL VALUE PILLARS ═══════════════ -->
 <section class="section-stats">
   <div class="container">
-    <div class="stats-grid">
-      <div class="stat-item" appScrollReveal>
-        <span class="stat-number">8+</span>
-        <span class="stat-label">Years of Excellence</span>
+    <div class="stats-grid authentic-pillars-grid">
+      <div class="stat-item pillar-card" appScrollReveal>
+        <div class="pillar-icon">✦</div>
+        <h4 class="stat-pillar-title">100% Tailor-Made Itineraries</h4>
+        <p class="stat-pillar-desc">Custom journeys crafted around your pace, preferences, and style.</p>
       </div>
-      <div class="stat-item" appScrollReveal>
-        <span class="stat-number">1,200+</span>
-        <span class="stat-label">Happy Travellers</span>
+      <div class="stat-item pillar-card" appScrollReveal>
+        <div class="pillar-icon">✦</div>
+        <h4 class="stat-pillar-title">ATFL Certified Expertise</h4>
+        <p class="stat-pillar-desc">Licensed, highly experienced chauffeur-guides & specialist naturalists.</p>
       </div>
-      <div class="stat-item" appScrollReveal>
-        <span class="stat-number">30+</span>
-        <span class="stat-label">Destinations</span>
+      <div class="stat-item pillar-card" appScrollReveal>
+        <div class="pillar-icon">✦</div>
+        <h4 class="stat-pillar-title">UK-Based Concierge</h4>
+        <p class="stat-pillar-desc">Dedicated consultative planning and support directly in your time zone.</p>
       </div>
-      <div class="stat-item" appScrollReveal>
-        <span class="stat-number">100%</span>
-        <span class="stat-label">Bespoke Itineraries</span>
+      <div class="stat-item pillar-card" appScrollReveal>
+        <div class="pillar-icon">✦</div>
+        <h4 class="stat-pillar-title">24/7 Local Sri Lanka Support</h4>
+        <p class="stat-pillar-desc">Direct private ground assistance and dedicated care across the island.</p>
       </div>
     </div>
   </div>
@@ -343,36 +347,7 @@
 </section>
 
 
-<!-- ═══════════════ TESTIMONIALS ═══════════════ -->
-<section class="section-testimonials bg-pearl" aria-labelledby="testimonials-heading">
-  <div class="container">
-    <div class="section-header-center">
-      <span class="section-label">What Our Travellers Say</span>
-      <h2 class="section-title" id="testimonials-heading">Journeys That Stay With You</h2>
-      <div class="gold-rule"></div>
-    </div>
-    <div class="testimonials-grid" appScrollReveal>
-      <div *ngFor="let t of testimonials" class="testi-card" [id]="t.id">
-        <div class="testi-quote">&ldquo;</div>
-        <p class="testi-text">{{ t.text }}</p>
-        <div class="testi-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <div class="testi-author">
-          <img [src]="t.authorImage" [alt]="t.authorName" class="testi-avatar" loading="lazy" />
-          <div>
-            <p class="testi-name">{{ t.authorName }}</p>
-            <p class="testi-location">{{ t.authorLocation }}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="text-center" style="margin-top: 4rem;">
-      <a routerLink="/testimonials" class="view-all" style="justify-content: center;" id="all-testi-link">
-        Read More Stories
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-  </div>
-</section>
+<!-- Testimonials temporarily hidden until authentic post-launch reviews are collected -->
 
 
 <!-- ═══════════════ CTA BANNER — CINEMATIC ═══════════════ -->
