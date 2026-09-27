@@ -27,15 +27,17 @@
 /* ── IMAGE ────────────────────────────────────────────────── */
 .dt-card-img-wrap {
   position: relative;
-  height: 220px;
+  aspect-ratio: 16 / 10;
+  width: 100%;
   overflow: hidden;
 }
 
 .dt-card-img-wrap img {
   width: 100%;
   height: 100%;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
-  transition: transform 0.7s ease;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dt-card:hover .dt-card-img-wrap img {
