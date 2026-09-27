@@ -810,7 +810,7 @@
   .editorial-split { grid-template-columns: 1fr; gap: 4rem; }
   .why-grid { grid-template-columns: repeat(2, 1fr); }
   .activities-grid { grid-template-columns: repeat(2, 1fr); }
-  .section-stats .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .section-stats .authentic-pillars-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
 }
 
 @media (max-width: 900px) {
@@ -818,20 +818,27 @@
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
   }
-  .dest-mosaic .dest-card:nth-child(1) { grid-row: span 2; }
+  .dest-mosaic .dest-card:nth-child(1) { grid-row: span 1; }
   .tour-types { grid-template-columns: 1fr; }
   .tour-type-card { height: 320px; }
   .testimonials-grid { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+  .hero-title { font-size: clamp(2.2rem, 6.5vw, 3.8rem); }
 }
 
 @media (max-width: 640px) {
+  .section-stats { padding: 3rem 0; }
+  .section-stats .authentic-pillars-grid { grid-template-columns: 1fr; gap: 1rem; }
   .dest-mosaic { grid-template-columns: 1fr; }
   .dest-mosaic .dest-card:nth-child(1) { grid-row: auto; }
   .why-grid { grid-template-columns: 1fr; }
   .activities-grid { grid-template-columns: 1fr; }
-  .section-stats .stats-grid { grid-template-columns: 1fr; }
   .pillars-grid { grid-template-columns: 1fr; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-  .hero-ctas { flex-direction: column; align-items: center; }
+  .hero-content { padding: 0 1.25rem; }
+  .hero-title { font-size: clamp(2rem, 8vw, 3.2rem); margin-bottom: 1.25rem; }
+  .hero-subtitle { font-size: 0.95rem; margin-bottom: 2rem; }
+  .hero-ctas { flex-direction: column; align-items: center; width: 100%; gap: 0.75rem; }
+  .hero-ctas .btn { width: 100%; justify-content: center; }
+  .editorial-image-badge { bottom: -1rem; right: 0; padding: 0.85rem 1.15rem; }
 }

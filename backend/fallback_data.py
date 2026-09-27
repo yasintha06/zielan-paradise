@@ -12,9 +12,10 @@ FALLBACK_DESTINATIONS = [
         "tags": ["History", "Photography", "Hiking"],
         "bestFor": ["History", "Photography", "Hiking"],
         "region": "Cultural Triangle",
-        "imageUrl": "assets/images/destinations/sigiriya.jpg",
-        "image": "images/destinations/sigiriya.jpg",
-        "isActive": True
+        "imageUrl": "https://images.unsplash.com/photo-1585123388867-3bfe6dd4bdbf?w=800&auto=format&fit=crop&q=80",
+        "image": "https://images.unsplash.com/photo-1585123388867-3bfe6dd4bdbf?w=800&auto=format&fit=crop&q=80",
+        "isActive": True,
+        "featured": True
     },
     {
         "id": "dest-anuradhapura",
@@ -24,9 +25,10 @@ FALLBACK_DESTINATIONS = [
         "tags": ["Ancient Wonders", "Spirituality", "UNESCO Heritage"],
         "bestFor": ["Ancient Wonders", "Spirituality", "UNESCO Heritage"],
         "region": "Cultural Triangle",
-        "imageUrl": "assets/images/destinations/anuradhapura.jpg",
-        "image": "images/destinations/anuradhapura.jpg",
-        "isActive": True
+        "imageUrl": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&auto=format&fit=crop&q=80",
+        "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&auto=format&fit=crop&q=80",
+        "isActive": True,
+        "featured": True
     },
     {
         "id": "dest-dambulla",
@@ -36,9 +38,10 @@ FALLBACK_DESTINATIONS = [
         "tags": ["Culture", "Spirituality", "History"],
         "bestFor": ["Culture", "Spirituality", "History"],
         "region": "Cultural Triangle",
-        "imageUrl": "assets/images/destinations/dambulla.jpg",
-        "image": "images/destinations/dambulla.jpg",
-        "isActive": True
+        "imageUrl": "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=800&auto=format&fit=crop&q=80",
+        "image": "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=800&auto=format&fit=crop&q=80",
+        "isActive": True,
+        "featured": True
     },
     {
         "id": "dest-ella",
@@ -48,9 +51,10 @@ FALLBACK_DESTINATIONS = [
         "tags": ["Nature", "Hiking", "Train Rides"],
         "bestFor": ["Nature", "Hiking", "Train Rides"],
         "region": "Hill Country",
-        "imageUrl": "assets/images/destinations/ella.jpg",
-        "image": "images/destinations/ella.jpg",
-        "isActive": True
+        "imageUrl": "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=800&auto=format&fit=crop&q=80",
+        "image": "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=800&auto=format&fit=crop&q=80",
+        "isActive": True,
+        "featured": True
     },
     {
         "id": "dest-mirissa",
@@ -60,9 +64,10 @@ FALLBACK_DESTINATIONS = [
         "tags": ["Beach", "Whale Watching", "Surfing"],
         "bestFor": ["Beach", "Whale Watching", "Surfing"],
         "region": "South Coast",
-        "imageUrl": "assets/images/destinations/mirissa.jpg",
-        "image": "images/destinations/mirissa.jpg",
-        "isActive": True
+        "imageUrl": "https://images.unsplash.com/photo-1560807707-8cc77767d783?w=800&auto=format&fit=crop&q=80",
+        "image": "https://images.unsplash.com/photo-1560807707-8cc77767d783?w=800&auto=format&fit=crop&q=80",
+        "isActive": True,
+        "featured": True
     },
     {
         "id": "dest-galle-fort",
@@ -72,9 +77,10 @@ FALLBACK_DESTINATIONS = [
         "tags": ["History", "Shopping", "Architecture"],
         "bestFor": ["History", "Shopping", "Architecture"],
         "region": "South Coast",
-        "imageUrl": "assets/images/destinations/galle.jpg",
-        "image": "images/destinations/galle.jpg",
-        "isActive": True
+        "imageUrl": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&auto=format&fit=crop&q=80",
+        "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&auto=format&fit=crop&q=80",
+        "isActive": True,
+        "featured": True
     },
     {
         "id": "dest-yala-national-park",
@@ -84,9 +90,10 @@ FALLBACK_DESTINATIONS = [
         "tags": ["Wildlife", "Photography", "Safari"],
         "bestFor": ["Wildlife", "Photography", "Safari"],
         "region": "South East",
-        "imageUrl": "assets/images/destinations/yala.jpg",
-        "image": "images/destinations/yala.jpg",
-        "isActive": True
+        "imageUrl": "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=800&auto=format&fit=crop&q=80",
+        "image": "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=800&auto=format&fit=crop&q=80",
+        "isActive": True,
+        "featured": True
     },
     {
         "id": "dest-kandy",
@@ -96,9 +103,10 @@ FALLBACK_DESTINATIONS = [
         "tags": ["Culture", "Temples", "Gardens"],
         "bestFor": ["Culture", "Temples", "Gardens"],
         "region": "Hill Country",
-        "imageUrl": "assets/images/destinations/kandy.jpg",
-        "image": "images/destinations/kandy.jpg",
-        "isActive": True
+        "imageUrl": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop&q=80",
+        "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop&q=80",
+        "isActive": True,
+        "featured": True
     },
     {
         "id": "dest-nuwara-eliya",
@@ -108,9 +116,10 @@ FALLBACK_DESTINATIONS = [
         "tags": ["Tea Tasting", "Cool Climate", "Colonial Heritage"],
         "bestFor": ["Tea Tasting", "Cool Climate", "Colonial Heritage"],
         "region": "Hill Country",
-        "imageUrl": "assets/images/destinations/nuwara-eliya.jpg",
-        "image": "images/destinations/nuwara-eliya.jpg",
-        "isActive": True
+        "imageUrl": "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=800&auto=format&fit=crop&q=80",
+        "image": "https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=800&auto=format&fit=crop&q=80",
+        "isActive": True,
+        "featured": True
     }
 ]
 

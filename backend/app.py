@@ -24,12 +24,7 @@ def create_app():
 
     # ── Extensions ─────────────────────────────────────────
     import os
-    frontend_url = os.environ.get("FRONTEND_URL", "https://www.zeilanparadise.com")
-    CORS(app, origins=[
-        "http://localhost:4200",
-        "http://127.0.0.1:4200",
-        frontend_url
-    ])
+    CORS(app, origins="*", supports_credentials=True)
     JWTManager(app)
 
     # ── Database ───────────────────────────────────────────
