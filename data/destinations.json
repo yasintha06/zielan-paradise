@@ -1,88 +1,83 @@
 [
   {
-    "id": "dest-sigiriya-page",
     "name": "Sigiriya",
-    "tagline": "The Eighth Wonder of the World",
-    "regionTag": "Cultural Triangle",
-    "category": "cultural",
-    "image": "images/destinations/sigiriya.jpg",
-    "link": "contact.html",
-    "featured": true
+    "tagline": "The Ancient Citadel",
+    "description": "Ascend the legendary Lion Rock fortress and explore the royal water gardens of this 5th-century architectural marvel.",
+    "tags": ["History", "Photography", "Hiking"],
+    "region": "Cultural Triangle",
+    "imageUrl": "assets/images/destinations/sigiriya.jpg",
+    "isActive": true
   },
   {
-    "id": "dest-anuradhapura",
     "name": "Anuradhapura",
-    "tagline": "Ancient Sacred City",
-    "regionTag": "Cultural Triangle",
-    "category": "cultural",
-    "image": "images/destinations/anuradhapura.jpg",
-    "link": "contact.html"
+    "tagline": "Sacred Ancient Wonders",
+    "description": "Marvel at towering white stupas, the sacred Sri Maha Bodhi tree, and the sprawling ruins of Sri Lanka's first ancient kingdom.",
+    "tags": ["Ancient Wonders", "Spirituality", "UNESCO Heritage"],
+    "region": "Cultural Triangle",
+    "imageUrl": "assets/images/destinations/anuradhapura.jpg",
+    "isActive": true
   },
   {
-    "id": "dest-kandy-page",
-    "name": "Kandy",
-    "tagline": "Temple of the Sacred Tooth Relic",
-    "regionTag": "Cultural Capital",
-    "category": "cultural",
-    "image": "images/destinations/kandy.jpg",
-    "link": "contact.html",
-    "featured": true
-  },
-  {
-    "id": "dest-ella-page",
-    "name": "Ella",
-    "tagline": "Nine Arch Bridge & Misty Peaks",
-    "regionTag": "Tea Highlands",
-    "category": "highlands",
-    "image": "images/destinations/ella.jpg",
-    "link": "contact.html",
-    "featured": true
-  },
-  {
-    "id": "dest-nuwara",
-    "name": "Nuwara Eliya",
-    "tagline": "Little England of Sri Lanka",
-    "regionTag": "Tea Highlands",
-    "category": "highlands",
-    "image": "images/destinations/nuwara-eliya.jpg",
-    "link": "contact.html"
-  },
-  {
-    "id": "dest-galle-page",
-    "name": "Galle",
-    "tagline": "Dutch Colonial Walled Fort City",
-    "regionTag": "South Coast",
-    "category": "coast",
-    "image": "images/destinations/galle.jpg",
-    "link": "contact.html",
-    "featured": true
-  },
-  {
-    "id": "dest-mirissa-page",
-    "name": "Mirissa",
-    "tagline": "Whale Watching & Golden Shores",
-    "regionTag": "South Coast",
-    "category": "coast",
-    "image": "images/destinations/mirissa.jpg",
-    "link": "contact.html",
-    "featured": true
-  },
-  {
-    "id": "dest-yala",
-    "name": "Yala National Park",
-    "tagline": "Highest Density of Leopards on Earth",
-    "regionTag": "Wildlife",
-    "category": "wildlife",
-    "image": "images/destinations/yala.jpg",
-    "link": "contact.html"
-  },
-  {
-    "id": "dest-dambulla",
     "name": "Dambulla",
-    "tagline": "Golden Temple Cave Complex",
-    "regionTag": "Cultural Triangle",
-    "category": "cultural",
-    "image": "images/destinations/dambulla.jpg",
-    "link": "contact.html"
+    "tagline": "Golden Cave Temples",
+    "description": "Discover centuries-old golden cave temple murals and hundreds of sacred Buddha statues carved directly into the rock face.",
+    "tags": ["Culture", "Spirituality", "History"],
+    "region": "Cultural Triangle",
+    "imageUrl": "assets/images/destinations/dambulla.jpg",
+    "isActive": true
+  },
+  {
+    "name": "Ella",
+    "tagline": "Emerald Peaks & Valleys",
+    "description": "Journey through misty tea plantations, cross the iconic Nine Arches Bridge, and hike to breathtaking viewpoints above the clouds.",
+    "tags": ["Nature", "Hiking", "Train Rides"],
+    "region": "Hill Country",
+    "imageUrl": "assets/images/destinations/ella.jpg",
+    "isActive": true
+  },
+  {
+    "name": "Mirissa",
+    "tagline": "Golden Sands & Whales",
+    "description": "Watch blue whales breach at sunrise, surf pristine waves, and dine on the freshest seafood at sunset on golden beaches.",
+    "tags": ["Beach", "Whale Watching", "Surfing"],
+    "region": "South Coast",
+    "imageUrl": "assets/images/destinations/mirissa.jpg",
+    "isActive": true
+  },
+  {
+    "name": "Galle Fort",
+    "tagline": "Colonial Charm",
+    "description": "Wander the cobblestone streets of this UNESCO fortress, where Dutch colonial architecture meets Indian Ocean sunsets and boutique galleries.",
+    "tags": ["History", "Shopping", "Architecture"],
+    "region": "South Coast",
+    "imageUrl": "assets/images/destinations/galle.jpg",
+    "isActive": true
+  },
+  {
+    "name": "Yala National Park",
+    "tagline": "Untamed Wilderness",
+    "description": "Home to the highest density of leopards in the world, alongside elephants, sloth bears, and over 200 bird species in stunning landscapes.",
+    "tags": ["Wildlife", "Photography", "Safari"],
+    "region": "South East",
+    "imageUrl": "assets/images/destinations/yala.jpg",
+    "isActive": true
+  },
+  {
+    "name": "Kandy",
+    "tagline": "Sacred Hill Capital",
+    "description": "Home to the Temple of the Tooth Relic and surrounded by lush hills, Kandy is the cultural heart of Sri Lanka — steeped in royal heritage.",
+    "tags": ["Culture", "Temples", "Gardens"],
+    "region": "Hill Country",
+    "imageUrl": "assets/images/destinations/kandy.jpg",
+    "isActive": true
+  },
+  {
+    "name": "Nuwara Eliya",
+    "tagline": "Little England in the Hills",
+    "description": "Stroll through emerald tea estates, visit historic colonial factories, and savor Ceylon high tea amidst mist-kissed hills.",
+    "tags": ["Tea Tasting", "Cool Climate", "Colonial Heritage"],
+    "region": "Hill Country",
+    "imageUrl": "assets/images/destinations/nuwara-eliya.jpg",
+    "isActive": true
   }
 ]

@@ -1,11 +1,12 @@
 <!-- ═══════════════════════════════════════════════════════════════
      ZEILAN PARADISE — DESTINATIONS PAGE
+     Live Data from MongoDB Atlas ("C-Lion Paradise")
      ═══════════════════════════════════════════════════════════════ -->
 
 <!-- ═══════════════ PAGE HERO ═══════════════ -->
 <section class="page-hero">
   <img class="page-hero-bg"
-    src="https://images.unsplash.com/photo-1585123388867-3bfe6dd4bdbf?w=1920&auto=format&fit=crop&q=80"
+    src="images/destinations/sigiriya.jpg"
     alt="Sigiriya Rock Fortress aerial view" />
   <div class="page-hero-overlay"></div>
   <div class="container">
@@ -15,9 +16,9 @@
         <span>/</span>
         <span>Destinations</span>
       </div>
-      <span class="section-label">Explore the Island</span>
-      <h1>Destinations</h1>
-      <p>From ancient kingdoms to sun-kissed coastlines — discover the places that make Sri Lanka one of the most extraordinary islands on Earth.</p>
+      <span class="section-label">Explore Sri Lanka</span>
+      <h1>Iconic Destinations</h1>
+      <p>From ancient kingdoms to sun-kissed coastlines — discover the handpicked destinations shaping our luxury, bespoke itineraries.</p>
     </div>
   </div>
 </section>
@@ -28,28 +29,63 @@
   <div class="container">
     <div class="section-header center" appScrollReveal>
       <span class="section-label">A World Within an Island</span>
-      <h2 class="section-title">Every Corner Tells a Story</h2>
+      <h2 class="section-title">Every Region Tells a Story</h2>
       <div class="gold-rule"></div>
       <p class="section-subtitle">
-        Sri Lanka packs eight UNESCO World Heritage Sites, pristine national parks, 
-        misty highlands, and 1,340 km of coastline into an island smaller than Ireland. 
-        Here are the places we love most.
+        Discover Sri Lanka's eight UNESCO World Heritage Sites, lush cloud forests, 
+        teeming wildlife parks, and pristine shores.
       </p>
     </div>
   </div>
 </section>
 
 
-<!-- ═══════════════ DESTINATIONS GRID ═══════════════ -->
+<!-- ═══════════════ FILTER + DESTINATIONS GRID ═══════════════ -->
 <section class="dest-main bg-pearl">
   <div class="container">
-    <div class="dest-full-grid" appScrollReveal>
-      <article *ngFor="let d of destinations; let i = index"
+    
+    <!-- Dynamic Tag & Theme Filter Bar -->
+    <div class="dest-filter-section" appScrollReveal>
+      <div class="filter-group">
+        <span class="filter-label">Filter by Experience / Tag:</span>
+        <div class="filter-chips">
+          <button
+            *ngFor="let tag of availableTags"
+            class="filter-chip-btn"
+            [class.active]="selectedTag === tag"
+            (click)="setTagFilter(tag)">
+            {{ tag === 'all' ? 'All Experiences' : ('✦ ' + tag) }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active Filter Indicator -->
+    <div *ngIf="selectedTag !== 'all' || selectedRegion !== 'all'" class="active-filter-banner" appScrollReveal>
+      <span>Showing destinations tagged with <strong>"{{ selectedTag !== 'all' ? selectedTag : selectedRegion }}"</strong></span>
+      <button (click)="resetFilters()" class="clear-filter-btn">✕ Clear Filter</button>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="dest-loading" appScrollReveal>
+      <div class="spinner"></div>
+      <p>Fetching curated destinations from database...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="errorMessage && !isLoading" class="dest-error" appScrollReveal>
+      <p>{{ errorMessage }}</p>
+      <button (click)="fetchDestinations()" class="btn btn-outline-teal btn-sm">Try Again</button>
+    </div>
+
+    <!-- Destinations Grid -->
+    <div *ngIf="!isLoading" class="dest-full-grid" appScrollReveal>
+      <article *ngFor="let d of filteredDestinations; let i = index"
         class="dest-full-card"
-        [class.dest-featured]="i === 0"
-        [id]="d.id">
+        [class.dest-featured]="i === 0 && selectedTag === 'all'"
+        [id]="'dest-' + (d.name | lowercase)">
         <div class="dest-full-img-wrap">
-          <img [src]="d.image" [alt]="d.name" loading="lazy" />
+          <img [src]="d.imageUrl || d.image" [alt]="d.name" loading="lazy" />
           <div class="dest-full-overlay"></div>
           <div class="dest-full-region" *ngIf="d.region">{{ d.region }}</div>
         </div>
@@ -57,24 +93,44 @@
           <span class="dest-full-tagline">{{ d.tagline }}</span>
           <h3 class="dest-full-name">{{ d.name }}</h3>
           <p class="dest-full-desc">{{ d.description }}</p>
-          <div class="dest-full-tags" *ngIf="d.bestFor">
-            <span *ngFor="let tag of d.bestFor" class="dest-tag">{{ tag }}</span>
+          
+          <!-- Clickable Tags -->
+          <div class="dest-full-tags" *ngIf="d.tags && d.tags.length > 0">
+            <button
+              *ngFor="let tag of d.tags"
+              type="button"
+              class="dest-tag-btn"
+              [class.active-tag]="selectedTag === tag"
+              (click)="setTagFilter(tag)"
+              [title]="'Filter by ' + tag">
+              {{ tag }}
+            </button>
           </div>
-          <a routerLink="/contact" class="dest-full-link">
-            Plan a Visit
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
+
+          <div class="dest-card-actions">
+            <a routerLink="/contact" [queryParams]="{ destination: d.name }" class="dest-full-link">
+              Incorporate in My Itinerary
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
         </div>
       </article>
     </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && filteredDestinations.length === 0" class="dest-empty" appScrollReveal>
+      <p>No destinations found matching this filter.</p>
+      <button (click)="resetFilters()" class="btn btn-gold btn-sm">View All Destinations</button>
+    </div>
+
   </div>
 </section>
 
 
-<!-- ═══════════════ CTA ═══════════════ -->
+<!-- ═══════════════ TAILOR-MADE CTA ═══════════════ -->
 <section class="cta-banner">
   <img class="cta-bg"
-    src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1920&auto=format&fit=crop&q=80"
+    src="images/destinations/galle.jpg"
     alt="Galle Fort sunset" loading="lazy" />
   <div class="cta-overlay"></div>
   <div class="container">

@@ -1,7 +1,7 @@
 r"""
 ═══════════════════════════════════════════════════════════════
-  ZEILAN PARADISE — MongoDB Database Seeding Script (Tours)
-  Populates live MongoDB Atlas tours collection from JSON data.
+  ZEILAN PARADISE — MongoDB Database Seeding Script
+  Populates live MongoDB Atlas 'tours' and 'destinations' collections.
   Usage:
     cd d:\Zielan_Paradise\backend
     .\venv\Scripts\python.exe seed_db.py
@@ -121,18 +121,39 @@ def normalize_day_tour(item: dict) -> dict:
     }
 
 
-def seed_tours():
-    """Main seeding logic."""
+def normalize_destination(item: dict) -> dict:
+    """Standardize a Destination document."""
+    name = item.get('name', 'Destination')
+    dest_id = item.get('id') or f"dest-{_slugify(name)}"
+    image_url = item.get('imageUrl') or item.get('image', f"images/destinations/{_slugify(name)}.jpg")
+
+    return {
+        "id": str(dest_id),
+        "name": str(name),
+        "tagline": str(item.get('tagline', '')),
+        "description": str(item.get('description', '')),
+        "tags": item.get('tags', []),
+        "bestFor": item.get('tags', item.get('bestFor', [])),
+        "region": str(item.get('region', 'Sri Lanka')),
+        "imageUrl": str(image_url),
+        "image": str(image_url),
+        "isActive": bool(item.get('isActive', True)),
+        "link": f"/destinations/{_slugify(name)}",
+        "featured": bool(item.get('featured', True))
+    }
+
+
+def seed_database():
+    """Main seeding logic for Tours and Destinations."""
     print("=" * 65)
-    print("  ZEILAN PARADISE — MongoDB Tours Seeding")
+    print("  ZEILAN PARADISE — MongoDB Atlas Database Seeding")
     print("=" * 65)
 
     # 1. Connect to MongoDB
-    print(f"\n[1/4] Connecting to MongoDB Atlas: {MONGO_URI.split('@')[-1] if '@' in MONGO_URI else MONGO_URI}")
+    print(f"\n[1/4] Connecting to MongoDB Atlas...")
     try:
         client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
         client.admin.command('ping')
-        # Extract DB name or default to 'zeilanparadise'
         db_name = MONGO_URI.split('/')[-1].split('?')[0] or 'zeilanparadise'
         db = client.get_database(db_name)
         print(f"      Connected successfully to database: '{db.name}'")
@@ -144,15 +165,7 @@ def seed_tours():
     # 2. Locate and read data files
     round_tours_path = os.path.join(PROJECT_ROOT, 'data', 'tours-uk.json')
     day_tours_path = os.path.join(PROJECT_ROOT, 'data', 'day-tours-uk.json')
-
-    if not os.path.exists(round_tours_path) or not os.path.exists(day_tours_path):
-        # Alternative search in backend/data if moved
-        round_tours_path = os.path.join(BASE_DIR, '..', 'data', 'tours-uk.json')
-        day_tours_path = os.path.join(BASE_DIR, '..', 'data', 'day-tours-uk.json')
-
-    print(f"\n[2/4] Reading source JSON datasets:")
-    print(f"      - Round Tours: {round_tours_path}")
-    print(f"      - Day Tours:   {day_tours_path}")
+    destinations_path = os.path.join(PROJECT_ROOT, 'data', 'destinations.json')
 
     with open(round_tours_path, 'r', encoding='utf-8') as f:
         raw_round = json.load(f)
@@ -160,31 +173,43 @@ def seed_tours():
     with open(day_tours_path, 'r', encoding='utf-8') as f:
         raw_day = json.load(f)
 
-    # 3. Standardize and merge
+    with open(destinations_path, 'r', encoding='utf-8') as f:
+        raw_destinations = json.load(f)
+
+    # 3. Standardize and merge tours
     normalized_tours = []
     for item in raw_round:
         normalized_tours.append(normalize_round_tour(item))
     for item in raw_day:
         normalized_tours.append(normalize_day_tour(item))
 
-    print(f"\n[3/4] Standardized Data Summary:")
-    print(f"      - Round Tours processed: {len(raw_round)}")
-    print(f"      - Day Tours processed:   {len(raw_day)}")
-    print(f"      - Total documents ready: {len(normalized_tours)}")
+    # 4. Standardize destinations
+    normalized_destinations = []
+    for item in raw_destinations:
+        normalized_destinations.append(normalize_destination(item))
 
-    # 4. Populate collection with insert_many()
-    print(f"\n[4/4] Populating 'tours' collection in MongoDB...")
-    deleted_count = db.tours.delete_many({}).deleted_count
-    print(f"      Cleared {deleted_count} existing documents.")
+    print(f"\n[2/4] Standardized Data:")
+    print(f"      - Round Tours: {len(raw_round)}")
+    print(f"      - Day Tours:   {len(raw_day)}")
+    print(f"      - Destinations: {len(normalized_destinations)}")
 
-    insert_result = db.tours.insert_many(normalized_tours)
-    print(f"      Inserted {len(insert_result.inserted_ids)} tour documents successfully!")
+    # 5. Populate tours collection
+    print(f"\n[3/4] Populating 'tours' collection...")
+    db.tours.delete_many({})
+    db.tours.insert_many(normalized_tours)
+    print(f"      Inserted {len(normalized_tours)} tour documents successfully!")
+
+    # 6. Populate destinations collection
+    print(f"\n[4/4] Populating 'destinations' collection...")
+    db.destinations.delete_many({})
+    db.destinations.insert_many(normalized_destinations)
+    print(f"      Inserted {len(normalized_destinations)} destination documents successfully!")
 
     print("\n" + "=" * 65)
-    print("  [SUCCESS] MongoDB Atlas Tours collection successfully seeded!")
+    print("  [SUCCESS] All collections successfully seeded to MongoDB Atlas!")
     print("=" * 65)
     return True
 
 
 if __name__ == '__main__':
-    seed_tours()
+    seed_database()

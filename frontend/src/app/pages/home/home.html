@@ -144,8 +144,8 @@
       </a>
     </div>
     <div class="dest-mosaic" appScrollReveal>
-      <a *ngFor="let d of destinations" [routerLink]="d.link" class="dest-card" [id]="d.id">
-        <img class="dest-card-img" [src]="d.image" [alt]="d.name" loading="lazy" />
+      <a *ngFor="let d of destinations" [routerLink]="d.link || '/destinations'" class="dest-card" [id]="d.id">
+        <img class="dest-card-img" [src]="d.imageUrl || d.image" [alt]="d.name" loading="lazy" />
         <div class="dest-card-info">
           <p class="dest-card-name">{{ d.name }}</p>
           <p class="dest-card-tagline">{{ d.tagline }}</p>
