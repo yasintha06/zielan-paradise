@@ -4,10 +4,12 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 export interface TourItineraryDay {
-  day: number | string;
+  dayNumber: number | string;
   title: string;
   location?: string;
   description: string;
+  accommodation?: string;
+  meals?: string;
 }
 
 export interface Tour {

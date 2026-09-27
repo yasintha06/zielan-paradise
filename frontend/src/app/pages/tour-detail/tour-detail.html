@@ -1,0 +1,110 @@
+<!-- ═══════════════════════════════════════════════════════════════
+     ZEILAN PARADISE — TOUR DETAIL PAGE
+     ═══════════════════════════════════════════════════════════════ -->
+<div *ngIf="isLoading" class="tour-detail-loading">
+  <div class="spinner"></div>
+</div>
+
+<div *ngIf="!isLoading && tour" class="tour-detail-wrapper">
+  
+  <!-- HERO BANNER -->
+  <section class="td-hero">
+    <img class="td-hero-bg" [src]="tour.image" [alt]="tour.title" />
+    <div class="td-hero-overlay"></div>
+    <div class="container">
+      <div class="td-hero-content">
+        <div class="breadcrumb">
+          <a routerLink="/">Home</a>
+          <span>/</span>
+          <a routerLink="/round-tours">Round Tours</a>
+          <span>/</span>
+          <span>{{ tour.title }}</span>
+        </div>
+        <span class="td-badge" *ngIf="tour.badge">{{ tour.badge.text }}</span>
+        <h1 class="td-title">{{ tour.title }}</h1>
+        <div class="td-meta">
+          <span>⏱ <strong>{{ tour.duration }}</strong></span>
+          <span>📍 <strong>{{ tour.route }}</strong></span>
+        </div>
+        <p class="td-desc">{{ tour.description }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTENT & SIDEBAR SPLIT -->
+  <section class="td-content-section bg-pearl">
+    <div class="container">
+      <div class="td-grid">
+        
+        <!-- MAIN CONTENT (Accordion) -->
+        <div class="td-main">
+          
+          <div class="td-highlights" *ngIf="tour.highlights && tour.highlights.length">
+            <h3>Journey Highlights</h3>
+            <ul>
+              <li *ngFor="let h of tour.highlights">✦ {{ h }}</li>
+            </ul>
+          </div>
+
+          <div class="td-itinerary" *ngIf="tour.itinerary && tour.itinerary.length">
+            <h3>Day-by-Day Itinerary</h3>
+            
+            <div class="itinerary-accordion">
+              <div *ngFor="let day of tour.itinerary; let i = index" class="accordion-item" [class.expanded]="expandedDayIndex === i">
+                <button class="accordion-header" (click)="toggleDay(i)" [attr.aria-expanded]="expandedDayIndex === i">
+                  <div class="accordion-header-left">
+                    <span class="day-badge">Day {{ day.dayNumber || day.day }}</span>
+                    <h4>{{ day.title }} <span class="day-location" *ngIf="day.location">({{ day.location }})</span></h4>
+                  </div>
+                  <span class="accordion-icon">{{ expandedDayIndex === i ? '−' : '+' }}</span>
+                </button>
+                <div class="accordion-content">
+                  <div class="accordion-content-inner">
+                    <p>{{ day.description }}</p>
+                    <div class="day-logistics" *ngIf="day.accommodation || day.meals">
+                      <p *ngIf="day.accommodation"><strong>🛌 Accommodation:</strong> {{ day.accommodation }}</p>
+                      <p *ngIf="day.meals"><strong>🍽️ Meals:</strong> {{ day.meals }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="td-inclusions-grid" *ngIf="tour.inclusions || tour.exclusions">
+            <div class="td-inc-box" *ngIf="tour.inclusions && tour.inclusions.length">
+              <h4>✓ What is Included</h4>
+              <ul>
+                <li *ngFor="let inc of tour.inclusions">{{ inc }}</li>
+              </ul>
+            </div>
+            <div class="td-exc-box" *ngIf="tour.exclusions && tour.exclusions.length">
+              <h4>✕ Exclusions</h4>
+              <ul>
+                <li *ngFor="let exc of tour.exclusions">{{ exc }}</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+        
+        <!-- STICKY SIDEBAR -->
+        <aside class="td-sidebar-container">
+          <div class="td-sticky-card">
+            <h3>Tailor This Journey</h3>
+            <p>Every itinerary can be customised around your exact dates, pace, and accommodation preferences.</p>
+            <div class="td-sidebar-meta">
+              <p><strong>Ideal For:</strong> {{ tour.targetAudience || 'Couples & Families' }}</p>
+              <p><strong>Style:</strong> 100% Private & Bespoke</p>
+            </div>
+            <a routerLink="/contact" [queryParams]="{ tour: tour.id, tourName: tour.title }" class="btn btn-gold btn-full">
+              Bespoke Quote / Enquire Now
+            </a>
+            <p class="td-guarantee">✦ Speak directly with our UK-based concierge</p>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+</div>

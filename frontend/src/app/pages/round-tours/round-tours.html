@@ -88,9 +88,9 @@
               <span class="luxury-tag">✦ 100% Private & Bespoke</span>
             </div>
             <div class="tour-card-actions">
-              <button (click)="openItineraryModal(t)" class="btn btn-outline-teal btn-sm" id="btn-view-itinerary">
+              <a [routerLink]="['/tours', t.id]" class="btn btn-outline-teal btn-sm" id="btn-view-itinerary">
                 View Full Itinerary
-              </button>
+              </a>
               <a routerLink="/contact" [queryParams]="{ tour: t.id, tourName: t.title }" class="btn btn-gold btn-sm" id="btn-enquire-tour">
                 Enquire
               </a>
@@ -146,7 +146,7 @@
         <div class="itinerary-timeline">
           <div *ngFor="let day of selectedTour.itinerary" class="timeline-day">
             <div class="timeline-day-marker">
-              <span class="day-number">{{ day.day }}</span>
+              <span class="day-number">{{ day.dayNumber || day.day }}</span>
             </div>
             <div class="timeline-day-content">
               <h5>{{ day.title }} <span *ngIf="day.location" class="day-location">({{ day.location }})</span></h5>

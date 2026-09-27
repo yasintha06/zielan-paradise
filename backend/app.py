@@ -23,10 +23,12 @@ def create_app():
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(seconds=Config.JWT_ACCESS_TOKEN_EXPIRES)
 
     # ── Extensions ─────────────────────────────────────────
+    import os
+    frontend_url = os.environ.get("FRONTEND_URL", "https://www.zeilanparadise.com")
     CORS(app, origins=[
         "http://localhost:4200",
         "http://127.0.0.1:4200",
-        "https://www.zeilanparadise.com"
+        frontend_url
     ])
     JWTManager(app)
 

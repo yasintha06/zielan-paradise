@@ -1199,3 +1199,14 @@ section { padding: var(--section-pad) 0; }
   .why-grid { grid-template-columns: 1fr; }
   .activities-grid { grid-template-columns: 1fr; }
 }
+
+/* -- LEGAL PAGES --------------------------------------------- */
+.legal-hero { padding: 8rem 0 3rem; background: var(--pearl); text-align: center; }
+.legal-hero h1 { font-family: var(--ff-head); font-size: 2.5rem; color: var(--charcoal); margin-bottom: 0.5rem; }
+.legal-hero p { color: var(--gold); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem; }
+.legal-content { max-width: 800px; margin: 0 auto; padding: 4rem 1.5rem; }
+.legal-content h2 { font-family: var(--ff-head); font-size: 1.5rem; color: var(--charcoal); margin: 2rem 0 1rem; border-bottom: 1px solid var(--gold-light); padding-bottom: 0.5rem; }
+.legal-content p { font-size: 0.95rem; line-height: 1.8; color: rgba(26,26,26,0.75); margin-bottom: 1.25rem; }
+.legal-content ul { padding-left: 1.2rem; margin-bottom: 1.5rem; }
+.legal-content li { font-size: 0.95rem; line-height: 1.8; color: rgba(26,26,26,0.75); margin-bottom: 0.5rem; }
+
