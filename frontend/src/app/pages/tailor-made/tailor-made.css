@@ -1,272 +1,637 @@
 /* ═══════════════════════════════════════════════════════════════
-   ZEILAN PARADISE — TAILOR-MADE PAGE STYLES
+   ZEILAN PARADISE — CONSULTATIVE TAILOR-MADE JOURNEY DESIGNER
    ═══════════════════════════════════════════════════════════════ */
 
-/* ── PROCESS GRID ─────────────────────────────────────────── */
+/* ── PROCESS ──────────────────────────────────────────────── */
+.tm-process {
+  padding: 5rem 0 3rem;
+}
+
 .process-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2.5rem;
+  gap: 2rem;
+  margin-top: 3rem;
 }
 
 .process-card {
-  text-align: center;
+  background: #fafaf8;
+  border: 1px solid var(--pearl-dark);
+  border-radius: var(--radius-md);
   padding: 2rem 1.5rem;
   position: relative;
+  transition: all 0.3s ease;
+}
+
+.process-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
 }
 
 .process-step-num {
   font-family: var(--ff-head);
-  font-size: 3rem;
+  font-size: 2.25rem;
   font-weight: 700;
   color: var(--gold);
-  opacity: 0.25;
   line-height: 1;
   margin-bottom: 1rem;
 }
 
 .process-title {
   font-family: var(--ff-head);
-  font-size: var(--fs-md);
+  font-size: 1.15rem;
   color: var(--charcoal);
-  margin-bottom: 0.75rem;
-  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
 
 .process-desc {
-  font-size: var(--fs-sm);
-  color: rgba(26,26,26,0.6);
-  line-height: 1.75;
+  font-size: 0.85rem;
+  color: rgba(26, 26, 26, 0.65);
+  line-height: 1.6;
+  margin: 0;
 }
 
-/* ── FORM WRAPPER ─────────────────────────────────────────── */
-.tm-form-wrap {
+/* ── DESIGNER CONTAINER ───────────────────────────────────── */
+.tm-form-section {
+  padding: 4rem 0 6rem;
+}
+
+.tm-designer-container {
+  max-width: 960px;
+  margin: 0 auto;
   background: var(--white);
   border-radius: var(--radius-lg);
-  padding: 3.5rem;
-  box-shadow: var(--shadow-sm);
-  max-width: 860px;
-  margin: 0 auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+  border: 1px solid var(--pearl-dark);
+  overflow: hidden;
 }
 
-.tm-form-header {
-  margin-bottom: 2rem;
+/* ── STEPPER TRACK ────────────────────────────────────────── */
+.stepper-header {
+  background: linear-gradient(180deg, #fdfbf7 0%, #ffffff 100%);
+  padding: 2.5rem 3rem 1.75rem;
+  border-bottom: 1px solid var(--pearl-dark);
 }
 
-/* ── STEP INDICATOR ───────────────────────────────────────── */
-.step-indicator {
+.stepper-track {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 3rem;
   position: relative;
-  padding: 0 1rem;
 }
 
-.step-line {
-  position: absolute;
-  top: 18px;
-  left: 3rem;
-  right: 3rem;
-  height: 3px;
-  background: var(--pearl-dark);
-  border-radius: 2px;
-  z-index: 0;
+.stepper-step {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: default;
+  transition: all 0.2s ease;
 }
 
-.step-line-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--gold), var(--teal));
-  border-radius: 2px;
-  transition: width 0.5s ease;
+.stepper-step.completed {
+  cursor: pointer;
 }
 
-.step-dot {
+.step-circle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--pearl);
+  border: 2px solid var(--pearl-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: rgba(26, 26, 26, 0.4);
+  transition: all 0.3s ease;
+}
+
+.stepper-step.active .step-circle {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--white);
+  box-shadow: 0 0 0 5px rgba(0, 91, 82, 0.15);
+}
+
+.stepper-step.completed .step-circle {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--white);
+}
+
+.step-meta {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  z-index: 1;
-  position: relative;
 }
 
-.step-num {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--pearl-dark);
-  color: rgba(26,26,26,0.4);
-  font-size: 0.85rem;
+.step-tag {
+  font-size: 0.7rem;
   font-weight: 700;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: var(--transition);
-}
-
-.step-dot.active .step-num {
-  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
-  color: var(--white);
-  box-shadow: var(--shadow-gold);
-}
-
-.step-dot.completed .step-num {
-  background: var(--teal);
-  color: var(--white);
-}
-
-.step-label {
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(26,26,26,0.4);
-  transition: color var(--transition);
+  letter-spacing: 0.08em;
+  color: var(--gold);
 }
 
-.step-dot.active .step-label {
-  color: var(--gold-dark);
-}
-
-.step-dot.completed .step-label {
-  color: var(--teal);
-}
-
-/* ── FORM STEPS ───────────────────────────────────────────── */
-.form-step {
-  animation: fadeInStep 0.4s ease;
-}
-
-@keyframes fadeInStep {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.form-step-title {
+.step-name {
   font-family: var(--ff-head);
-  font-size: var(--fs-xl);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--charcoal);
+}
+
+.stepper-divider {
+  flex: 1;
+  height: 2px;
+  background: var(--pearl-dark);
+  margin: 0 1.5rem;
+  transition: all 0.4s ease;
+}
+
+.stepper-divider.active-divider {
+  background: linear-gradient(90deg, var(--gold) 0%, var(--teal) 100%);
+}
+
+/* ── FORM CONTENT ─────────────────────────────────────────── */
+.tm-form-content {
+  padding: 2.5rem 3rem 3rem;
+}
+
+.pane-header {
+  margin-bottom: 2.25rem;
+}
+
+.pane-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--teal);
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.pane-header h3 {
+  font-family: var(--ff-head);
+  font-size: 1.75rem;
   color: var(--charcoal);
   margin-bottom: 0.5rem;
-  font-weight: 600;
 }
 
-.form-step-subtitle {
-  font-size: var(--fs-sm);
-  color: rgba(26,26,26,0.55);
-  margin-bottom: 2rem;
-  line-height: 1.7;
+.pane-header p {
+  font-size: 0.9rem;
+  color: rgba(26, 26, 26, 0.65);
+  margin: 0;
 }
 
-/* ── INTEREST TAGS ────────────────────────────────────────── */
-.tm-interests {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-}
-
-.tm-interest-tag {
-  font-family: var(--ff-body);
-  font-size: 0.78rem;
-  font-weight: 600;
-  padding: 0.55rem 1.15rem;
-  border-radius: var(--radius-full);
-  border: 2px solid var(--pearl-dark);
-  background: var(--white);
-  color: rgba(26,26,26,0.6);
-  cursor: pointer;
-  transition: var(--transition);
-  letter-spacing: 0.02em;
-}
-
-.tm-interest-tag:hover {
-  border-color: var(--teal);
-  color: var(--teal);
-}
-
-.tm-interest-tag.selected {
-  background: var(--teal);
-  border-color: var(--teal);
-  color: var(--white);
-  box-shadow: var(--shadow-teal);
-}
-
-/* ── FORM NAV ─────────────────────────────────────────────── */
-.form-nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--pearl-dark);
-}
-
-.form-nav-spacer {
-  flex: 1;
-}
-
-/* ── SUCCESS ──────────────────────────────────────────────── */
-.tm-success {
-  text-align: center;
-  padding: 5rem 2rem;
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.tm-success .success-icon {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--teal), var(--teal-dark));
-  color: var(--white);
-  font-size: 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 2rem;
-  box-shadow: var(--shadow-teal);
-}
-
-.tm-success h2 {
-  font-family: var(--ff-head);
-  font-size: var(--fs-2xl);
-  color: var(--teal);
-  margin-bottom: 1.25rem;
-}
-
-.tm-success p {
-  font-size: var(--fs-md);
-  color: rgba(26,26,26,0.6);
-  line-height: 1.8;
+/* ── SECTION BLOCKS & TITLES ──────────────────────────────── */
+.form-section-block {
   margin-bottom: 2.5rem;
 }
 
-/* ── TRUST BAR ────────────────────────────────────────────── */
-.tm-trust {
-  padding: 4rem 0;
-}
-
-.trust-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-  text-align: center;
-}
-
-.trust-num {
-  font-family: var(--ff-head);
-  font-size: 2.5rem;
+.block-title {
+  display: block;
+  font-size: 0.92rem;
   font-weight: 700;
-  color: var(--teal);
+  color: var(--charcoal);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+
+.required-note {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: rgba(26, 26, 26, 0.5);
+  text-transform: none;
+  letter-spacing: normal;
+  margin-left: 0.35rem;
+}
+
+/* ── CHOICE CARDS (CHECKBOXES) ────────────────────────────── */
+.choice-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.region-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.choice-card {
+  background: #fdfdfb;
+  border: 1px solid var(--pearl-dark);
+  border-radius: var(--radius-md);
+  padding: 1.15rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  position: relative;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.choice-card:hover {
+  border-color: var(--teal);
+  background: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+}
+
+.choice-card.selected {
+  border-color: var(--teal);
+  background: rgba(0, 91, 82, 0.04);
+  box-shadow: 0 0 0 1px var(--teal);
+}
+
+.choice-checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1.5px solid rgba(26, 26, 26, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--white);
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: all 0.2s ease;
+}
+
+.choice-card.selected .choice-checkbox {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+
+.choice-icon {
+  font-size: 1.5rem;
   line-height: 1;
+}
+
+.choice-text h5 {
+  font-family: var(--ff-head);
+  font-size: 0.95rem;
+  color: var(--charcoal);
+  margin-bottom: 0.25rem;
+}
+
+.choice-text p {
+  font-size: 0.76rem;
+  color: rgba(26, 26, 26, 0.6);
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* ── PACE & STAGE OPTIONS (RADIO CARDS) ───────────────────── */
+.pace-options-grid, .stage-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.pace-card, .stage-card {
+  background: #fdfdfb;
+  border: 1px solid var(--pearl-dark);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1rem;
+  cursor: pointer;
+  display: block;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.pace-card input, .stage-card input, .accom-card input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pace-card:hover, .stage-card:hover {
+  border-color: var(--gold);
+  background: #ffffff;
+}
+
+.pace-card.selected, .stage-card.selected {
+  border-color: var(--gold);
+  background: #fdfbf7;
+  box-shadow: 0 0 0 1px var(--gold);
+}
+
+.pace-content h5, .stage-text h5 {
+  font-family: var(--ff-head);
+  font-size: 0.95rem;
+  color: var(--charcoal);
+  margin-bottom: 0.35rem;
+}
+
+.pace-content p, .stage-text p {
+  font-size: 0.78rem;
+  color: rgba(26, 26, 26, 0.65);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ── LOGISTICS (STEP 2) ───────────────────────────────────── */
+.logistics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.form-field-wrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field-label {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--charcoal);
   margin-bottom: 0.5rem;
 }
 
-.trust-label {
-  font-size: 0.75rem;
+.form-field-label strong {
+  color: var(--teal);
+}
+
+.form-select-lux, .form-input-lux {
+  width: 100%;
+  padding: 0.85rem 1.15rem;
+  background: #ffffff;
+  border: 1px solid var(--pearl-dark);
+  border-radius: var(--radius-sm);
+  font-size: 0.92rem;
+  font-family: var(--ff-body);
+  color: var(--charcoal);
+  transition: all 0.2s ease;
+}
+
+.form-select-lux:focus, .form-input-lux:focus, .form-textarea-lux:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(0, 91, 82, 0.12);
+}
+
+.duration-slider-box {
+  background: #fdfdfb;
+  border: 1px solid var(--pearl-dark);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.15rem 0.65rem;
+}
+
+.duration-range-slider {
+  width: 100%;
+  accent-color: var(--teal);
+  cursor: pointer;
+}
+
+.duration-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: rgba(26, 26, 26, 0.5);
+  margin-top: 0.35rem;
+}
+
+/* Counter Box */
+.counter-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--pearl-dark);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: #ffffff;
+  height: 48px;
+}
+
+.counter-btn {
+  width: 48px;
+  height: 100%;
+  background: #f5f5f3;
+  border: none;
+  font-size: 1.25rem;
   font-weight: 700;
-  letter-spacing: 0.15em;
+  color: var(--charcoal);
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.counter-btn:hover {
+  background: var(--gold-light);
+  color: var(--gold-dark);
+}
+
+.counter-val {
+  flex: 1;
+  text-align: center;
+  border: none;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--charcoal);
+  font-family: var(--ff-body);
+  background: transparent;
+}
+
+/* Accommodation Styles */
+.accom-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.accom-card {
+  background: #fdfdfb;
+  border: 1px solid var(--pearl-dark);
+  border-radius: var(--radius-md);
+  padding: 1.35rem 1.15rem;
+  cursor: pointer;
+  display: block;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.accom-card:hover {
+  border-color: var(--teal);
+  background: #ffffff;
+}
+
+.accom-card.selected {
+  border-color: var(--teal);
+  background: rgba(0, 91, 82, 0.04);
+  box-shadow: 0 0 0 1px var(--teal);
+}
+
+.accom-text h5 {
+  font-family: var(--ff-head);
+  font-size: 0.98rem;
+  color: var(--charcoal);
+  margin-bottom: 0.4rem;
+}
+
+.accom-text p {
+  font-size: 0.78rem;
+  color: rgba(26, 26, 26, 0.65);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* ── CONTACT & NOTES (STEP 3) ──────────────────────────────── */
+.contact-fields-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.form-textarea-lux {
+  width: 100%;
+  padding: 1rem 1.15rem;
+  background: #ffffff;
+  border: 1px solid var(--pearl-dark);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-family: var(--ff-body);
+  color: var(--charcoal);
+  resize: vertical;
+  line-height: 1.6;
+}
+
+/* ── NAVIGATION BAR ───────────────────────────────────────── */
+.step-nav-bar {
+  display: flex;
+  align-items: center;
+  padding-top: 2rem;
+  border-top: 1px solid var(--pearl-dark);
+  margin-top: 1rem;
+}
+
+.step-nav-bar.right-align {
+  justify-content: flex-end;
+}
+
+.step-nav-bar.space-between {
+  justify-content: space-between;
+}
+
+/* ── ERROR TOAST ──────────────────────────────────────────── */
+.tm-error-toast {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  background: #fdf2f2;
+  border: 1px solid #f8b4b4;
+  color: #c0392b;
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-sm);
+  margin: 1.5rem 3rem 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* ── SUCCESS CARD ─────────────────────────────────────────── */
+.tm-success-card {
+  max-width: 760px;
+  margin: 0 auto;
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 4rem 3rem;
+  text-align: center;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--pearl-dark);
+  animation: fadeIn 0.4s ease-out;
+}
+
+.success-icon-wrap {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: var(--teal-light);
+  color: var(--teal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.success-subtitle {
+  font-size: 0.78rem;
+  font-weight: 700;
   text-transform: uppercase;
-  color: rgba(26,26,26,0.45);
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.tm-success-card h2 {
+  font-family: var(--ff-head);
+  font-size: 2.2rem;
+  color: var(--charcoal);
+  margin-bottom: 0.75rem;
+}
+
+.success-message {
+  font-size: 1.05rem;
+  color: rgba(26, 26, 26, 0.8);
+  line-height: 1.7;
+  max-width: 580px;
+  margin: 1rem auto 2rem;
+}
+
+.success-summary-box {
+  background: #fdfbf7;
+  border: 1px solid var(--gold-light);
+  border-radius: var(--radius-md);
+  padding: 1.5rem 2rem;
+  text-align: left;
+  margin-bottom: 2.5rem;
+}
+
+.success-summary-box h4 {
+  font-family: var(--ff-head);
+  font-size: 1.05rem;
+  color: var(--charcoal);
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--pearl-dark);
+  padding-bottom: 0.5rem;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.85rem;
+  font-size: 0.85rem;
+}
+
+.summary-grid span {
+  color: rgba(26, 26, 26, 0.55);
+}
+
+.summary-grid strong {
+  color: var(--charcoal);
+  display: block;
+}
+
+.success-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* ── ANIMATIONS ───────────────────────────────────────────── */
+.animate-fade {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* ── RESPONSIVE ───────────────────────────────────────────── */
@@ -274,38 +639,24 @@
   .process-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  .tm-form-wrap {
-    padding: 2.5rem;
-  }
-  .trust-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .process-grid {
+  .choice-cards-grid, .accom-cards-grid, .pace-options-grid, .stage-cards-grid {
     grid-template-columns: 1fr;
   }
-  .tm-form-wrap {
+  .region-grid {
+    grid-template-columns: 1fr;
+  }
+  .logistics-grid, .contact-fields-grid, .summary-grid {
+    grid-template-columns: 1fr;
+  }
+  .stepper-header, .tm-form-content {
     padding: 1.5rem;
   }
-  .step-label {
-    display: none;
-  }
-  .step-line {
-    left: 2rem;
-    right: 2rem;
-  }
-  .form-nav {
+  .stepper-track {
     flex-direction: column;
+    align-items: flex-start;
     gap: 1rem;
   }
-  .form-nav .btn {
-    width: 100%;
-    justify-content: center;
-  }
-  .trust-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+  .stepper-divider {
+    display: none;
   }
 }

@@ -35,7 +35,11 @@ export class ApiService {
     return this.http.post<any>(`${this.apiUrl}/enquiries`, data);
   }
 
+  submitInquiry(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/inquiries`, data);
+  }
+
   getAdminEnquiries(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/admin/enquiries`);
+    return this.http.get<any[]>(`${this.apiUrl}/admin/inquiries`);
   }
 }
