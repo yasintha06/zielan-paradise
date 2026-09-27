@@ -84,9 +84,8 @@
           </div>
 
           <div class="tour-card-footer">
-            <div class="tour-price">
-              <span>{{ t.priceType }}</span>
-              <strong>{{ t.priceDisplay }}</strong>
+            <div class="tour-card-nature">
+              <span class="luxury-tag">✦ 100% Private & Bespoke</span>
             </div>
             <div class="tour-card-actions">
               <button (click)="openItineraryModal(t)" class="btn btn-outline-teal btn-sm" id="btn-view-itinerary">
@@ -176,12 +175,12 @@
 
     <!-- Modal Footer -->
     <div class="modal-footer">
-      <div class="modal-price">
-        <span>{{ selectedTour.priceTypeFull || selectedTour.priceType }}</span>
-        <strong>{{ selectedTour.priceDisplayFull || selectedTour.priceDisplay }}</strong>
+      <div class="modal-nature">
+        <span class="luxury-label">Private Guided Journey</span>
+        <strong>Tailored Proposal on Request</strong>
       </div>
       <a routerLink="/contact" (click)="closeItineraryModal()" class="btn btn-gold btn-lg">
-        Book / Customise This Journey
+        Customise & Request Quotation
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
     </div>

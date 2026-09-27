@@ -754,6 +754,17 @@ section { padding: var(--section-pad) 0; }
   color: var(--teal);
   font-weight: 700;
 }
+.tour-card-nature {
+  display: flex;
+  align-items: center;
+}
+.luxury-tag {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--teal);
+  text-transform: uppercase;
+}
 
 /* ── WHY US ──────────────────────────────────────────────── */
 .why-grid {

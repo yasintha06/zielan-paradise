@@ -407,17 +407,53 @@
   gap: 1rem;
 }
 
-.modal-price span {
+.tour-card-nature {
+  margin-bottom: 0.75rem;
+}
+
+.luxury-tag {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--teal);
+}
+
+.tour-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.tour-card-actions .btn {
+  flex: 1;
+  text-align: center;
+  justify-content: center;
+}
+
+/* Modal Footer */
+.modal-footer {
+  padding: 1.25rem 2.25rem;
+  border-top: 1px solid var(--pearl-dark);
+  background: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.modal-nature .luxury-label {
   display: block;
   font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: rgba(26,26,26,0.5);
+  letter-spacing: 0.08em;
+  color: var(--teal);
+  font-weight: 600;
 }
 
-.modal-price strong {
-  font-size: 1.35rem;
-  font-weight: 700;
+.modal-nature strong {
+  font-size: 1.15rem;
+  font-weight: 600;
   color: var(--charcoal);
   font-family: var(--ff-head);
 }

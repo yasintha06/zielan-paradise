@@ -138,17 +138,11 @@
   border-top: 1px solid var(--pearl-dark);
 }
 
-.dt-price {
-  font-size: 0.75rem;
-  color: rgba(26,26,26,0.5);
-}
-
-.dt-price strong {
-  display: block;
-  font-family: var(--ff-head);
-  font-size: var(--fs-lg);
+.dt-nature-label {
+  font-size: 0.78rem;
+  font-weight: 600;
   color: var(--teal);
-  font-weight: 700;
+  letter-spacing: 0.03em;
 }
 
 /* ── RESPONSIVE ───────────────────────────────────────────── */
