@@ -27,7 +27,8 @@ export class HomeComponent implements OnInit {
     this.destinationService.getDestinations().subscribe({
       next: (data) => {
         if (data && data.length > 0) {
-          this.destinations = data.filter(d => d.featured).slice(0, 5);
+          const featured = data.filter(d => d.featured);
+          this.destinations = featured.length > 0 ? featured.slice(0, 5) : data.slice(0, 5);
         }
       },
       error: (err) => console.error('Error fetching home destinations:', err)
