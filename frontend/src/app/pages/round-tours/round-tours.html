@@ -1,12 +1,12 @@
 <!-- ═══════════════════════════════════════════════════════════════
      ZEILAN PARADISE — ROUND TOURS PAGE
-     Editorial Luxury Layout
+     Editorial Luxury Multi-Day Journeys
      ═══════════════════════════════════════════════════════════════ -->
 
 <!-- ═══════════════ PAGE HERO ═══════════════ -->
 <section class="page-hero">
   <img class="page-hero-bg"
-    src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=1920&auto=format&fit=crop&q=80"
+    src="images/tours/tour-grand-odyssey.jpg"
     alt="Sri Lanka aerial highlands" />
   <div class="page-hero-overlay"></div>
   <div class="container">
@@ -17,7 +17,7 @@
         <span>Round Tours</span>
       </div>
       <span class="section-label">Multi-Day Luxury Journeys</span>
-      <h1>Round Tours</h1>
+      <h1>Signature Round Tours</h1>
       <p>Curated multi-day itineraries traversing Sri Lanka's greatest wonders — each journey designed around your pace, interests, and desire for discovery.</p>
     </div>
   </div>
@@ -61,28 +61,41 @@
           <span class="tour-badge" [ngClass]="t.badge?.class">{{ t.badge?.text }}</span>
         </div>
         <div class="tour-card-body">
+          <div class="tour-duration-badge">{{ t.duration }}</div>
           <h3 class="tour-card-title">{{ t.title }}</h3>
+          
+          <p *ngIf="t.targetAudience" class="tour-target-audience">
+            <strong>Ideal For:</strong> {{ t.targetAudience }}
+          </p>
+
           <p class="tour-card-desc">{{ t.description }}</p>
-          <div class="tour-card-meta">
-            <span class="tour-meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-              {{ t.duration }}
-            </span>
-            <span class="tour-meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              {{ t.guests }}
-            </span>
-          </div>
+
           <div class="tour-card-route">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span>{{ t.route }}</span>
+            <span><strong>Route:</strong> {{ t.route }}</span>
           </div>
+
+          <!-- Highlights -->
+          <div *ngIf="t.highlights && t.highlights.length > 0" class="tour-highlights-box">
+            <h6>Key Highlights:</h6>
+            <ul class="highlights-list">
+              <li *ngFor="let h of t.highlights.slice(0, 3)">✦ {{ h }}</li>
+            </ul>
+          </div>
+
           <div class="tour-card-footer">
             <div class="tour-price">
               <span>{{ t.priceType }}</span>
               <strong>{{ t.priceDisplay }}</strong>
             </div>
-            <a [routerLink]="t.link" class="btn btn-teal btn-sm">View Journey</a>
+            <div class="tour-card-actions">
+              <button (click)="openItineraryModal(t)" class="btn btn-outline-teal btn-sm" id="btn-view-itinerary">
+                View Full Itinerary
+              </button>
+              <a routerLink="/contact" class="btn btn-gold btn-sm" id="btn-enquire-tour">
+                Enquire
+              </a>
+            </div>
           </div>
         </div>
       </article>
@@ -90,16 +103,96 @@
 
     <!-- Empty state -->
     <div *ngIf="filteredTours.length === 0" class="rt-empty" appScrollReveal>
-      <p>No tours found in this category. <button (click)="setFilter('all')" class="rt-reset-link">View all tours</button></p>
+      <p>No journeys found in this duration. <button (click)="setFilter('all')" class="rt-reset-link">View all journeys</button></p>
     </div>
   </div>
 </section>
 
 
+<!-- ═══════════════ LUXURY ITINERARY MODAL ═══════════════ -->
+<div *ngIf="selectedTour" class="itinerary-modal-overlay" (click)="closeItineraryModal()">
+  <div class="itinerary-modal-container" (click)="$event.stopPropagation()">
+    <!-- Close Button -->
+    <button class="modal-close-btn" (click)="closeItineraryModal()" aria-label="Close modal">✕</button>
+
+    <!-- Modal Header -->
+    <div class="modal-header">
+      <span class="modal-badge">{{ selectedTour.badge?.text }}</span>
+      <h2>{{ selectedTour.title }}</h2>
+      <div class="modal-meta">
+        <span>⏱ <strong>{{ selectedTour.duration }}</strong></span>
+        <span>📍 <strong>{{ selectedTour.route }}</strong></span>
+      </div>
+      <p class="modal-audience" *ngIf="selectedTour.targetAudience">
+        <strong>Target Audience:</strong> {{ selectedTour.targetAudience }}
+      </p>
+    </div>
+
+    <!-- Modal Content -->
+    <div class="modal-body">
+      <!-- Full Highlights -->
+      <div class="modal-section" *ngIf="selectedTour.highlights?.length">
+        <h4 class="modal-section-title">✨ Journey Highlights</h4>
+        <ul class="modal-highlights-grid">
+          <li *ngFor="let h of selectedTour.highlights">
+            <span class="highlight-bullet">✓</span>
+            <span>{{ h }}</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Day by Day Timeline -->
+      <div class="modal-section" *ngIf="selectedTour.itinerary?.length">
+        <h4 class="modal-section-title">🗓️ Detailed Day-by-Day Itinerary</h4>
+        <div class="itinerary-timeline">
+          <div *ngFor="let day of selectedTour.itinerary" class="timeline-day">
+            <div class="timeline-day-marker">
+              <span class="day-number">{{ day.day }}</span>
+            </div>
+            <div class="timeline-day-content">
+              <h5>{{ day.title }} <span *ngIf="day.location" class="day-location">({{ day.location }})</span></h5>
+              <p>{{ day.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inclusions & Exclusions -->
+      <div class="modal-section inclusions-exclusions-grid">
+        <div class="inc-box" *ngIf="selectedTour.inclusions?.length">
+          <h5>✓ What is Included</h5>
+          <ul>
+            <li *ngFor="let inc of selectedTour.inclusions">{{ inc }}</li>
+          </ul>
+        </div>
+        <div class="exc-box" *ngIf="selectedTour.exclusions?.length">
+          <h5>✕ Exclusions</h5>
+          <ul>
+            <li *ngFor="let exc of selectedTour.exclusions">{{ exc }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Footer -->
+    <div class="modal-footer">
+      <div class="modal-price">
+        <span>{{ selectedTour.priceTypeFull || selectedTour.priceType }}</span>
+        <strong>{{ selectedTour.priceDisplayFull || selectedTour.priceDisplay }}</strong>
+      </div>
+      <a routerLink="/contact" (click)="closeItineraryModal()" class="btn btn-gold btn-lg">
+        Book / Customise This Journey
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+
 <!-- ═══════════════ TAILOR-MADE CTA ═══════════════ -->
 <section class="cta-banner">
   <img class="cta-bg"
-    src="https://images.unsplash.com/photo-1589308078059-be1415eab4c3?w=1920&auto=format&fit=crop&q=80"
+    src="images/tours/tour-southern-coast.jpg"
     alt="Sri Lanka tropical scenery" loading="lazy" />
   <div class="cta-overlay"></div>
   <div class="container">

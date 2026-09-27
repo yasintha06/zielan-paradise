@@ -53,58 +53,166 @@ FALLBACK_DESTINATIONS = [
 
 FALLBACK_TOURS = [
     {
-        "id": "rt-essence",
-        "title": "The Essence of Zeilan",
-        "description": "A meticulously balanced 10-day journey combining ancient culture, lush highlands, and pristine southern beaches.",
-        "image": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop&q=80",
-        "duration": "10 Days",
-        "guests": "2 - 6",
-        "route": "Negombo → Sigiriya → Kandy → Ella → Yala → Galle",
-        "priceType": "From",
-        "priceDisplay": "£1,450",
-        "price": 1450,
-        "currency": "GBP",
-        "link": "/round-tours/essence",
+        "id": "tour-grand-island-odyssey",
+        "title": "The Grand Island Odyssey",
+        "duration": "14 Days / 13 Nights",
+        "durationLabel": "⏱ 14 Days / 13 Nights",
+        "targetAudience": "First-time travelers seeking a comprehensive, leisurely luxury loop",
+        "route": "Negombo → Cultural Triangle → Kandy → Hatton / Nuwara Eliya → Ella → Yala → Galle Fort → Colombo",
+        "category": "14",
         "type": "round",
-        "market": "uk",
+        "badge": {"text": "Signature 14-Day Tour", "class": "bg-gold"},
+        "image": "images/tours/tour-grand-odyssey.jpg",
+        "priceType": "Signature Luxury",
+        "priceDisplay": "Price on Request",
+        "priceTypeFull": "Signature Grand Tour",
+        "priceDisplayFull": "• Bespoke Luxury Quotation",
+        "link": "round-tours.html",
         "featured": True,
-        "badge": {"text": "Most Popular", "class": "bg-gold"}
+        "market": "uk",
+        "highlights": [
+            "Sunrise ascent of the Sigiriya Lion Rock fortress before peak midday heat",
+            "Exploration of the Polonnaruwa medieval ruins by bicycle or private buggy",
+            "Chanted evening Theva puja service at the Temple of the Sacred Tooth Relic in Kandy",
+            "The scenic hill country mainline train ride through working tea plantations",
+            "Two private leopard and elephant game drives in Yala National Park with an experienced naturalist",
+            "Leisurely walking tour across the 17th-century ramparts of UNESCO-listed Galle Fort"
+        ],
+        "inclusions": [
+            "Private air-conditioned luxury vehicle with an English-speaking Chauffeur-Guide",
+            "All entrance fees and permits for listed heritage sites and national parks",
+            "Private 4x4 safari jeeps with park tracker/naturalist",
+            "First-class reserved observation rail tickets (subject to availability)",
+            "Daily breakfast and designated gourmet meal experiences",
+            "Highway toll charges, fuel, chauffeur accommodation and meals",
+            "24/7 dedicated local concierge support"
+        ],
+        "exclusions": [
+            "International flights and Sri Lanka ETA tourist visa fees",
+            "Discretionary driver/guide gratuities",
+            "Travel insurance (mandatory for booking)",
+            "Alcoholic beverages and personal expenses"
+        ]
     },
     {
-        "id": "rt-wild",
-        "title": "Untamed Sri Lanka",
-        "description": "Venture deep into the wilderness. Safari drives, luxury tented camps, and exclusive leopard tracking experiences.",
-        "image": "https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=800&auto=format&fit=crop&q=80",
-        "duration": "12 Days",
-        "guests": "2 - 4",
-        "route": "Wilpattu → Minneriya → Gal Oya → Yala",
-        "priceType": "From",
-        "priceDisplay": "£2,100",
-        "price": 2100,
-        "currency": "GBP",
-        "link": "/round-tours/wild",
+        "id": "tour-wild-heritage-highlands",
+        "title": "Wild Heritage & Highlands",
+        "duration": "10 Days / 9 Nights",
+        "durationLabel": "⏱ 10 Days / 9 Nights",
+        "targetAudience": "Wildlife enthusiasts, active couples, and photography buffs",
+        "route": "Negombo → Wilpattu National Park → Sigiriya → Kandy → Ella → Yala → Southern Beach",
+        "category": "10",
         "type": "round",
-        "market": "uk",
+        "badge": {"text": "Wildlife & Adventure", "class": "bg-teal"},
+        "image": "images/tours/tour-cultural-triangle.jpg",
+        "priceType": "Curated Private Tour",
+        "priceDisplay": "Price on Request",
+        "priceTypeFull": "Curated Wildlife Safari",
+        "priceDisplayFull": "• Bespoke Luxury Quotation",
+        "link": "round-tours.html",
         "featured": True,
-        "badge": {"text": "Luxury Explorer", "class": "bg-teal"}
+        "market": "uk",
+        "highlights": [
+            "Remote leopard tracking in Wilpattu's undisturbed natural lake basins (Villus)",
+            "Sunset hike up Pidurangala Rock with panoramic views facing Sigiriya",
+            "Guided wildlife and bird-watching expeditions in two distinct national parks",
+            "Classic colonial rail passage through misty highland passes",
+            "Coastal relaxation on the golden beaches of Mirissa"
+        ],
+        "inclusions": [
+            "Private air-conditioned luxury vehicle with an English-speaking Chauffeur-Guide",
+            "All entrance fees and permits for listed heritage sites and national parks",
+            "Private 4x4 safari jeeps with park tracker/naturalist",
+            "First-class reserved observation rail tickets (subject to availability)",
+            "Daily breakfast and designated gourmet meal experiences",
+            "Highway toll charges, fuel, chauffeur accommodation and meals",
+            "24/7 dedicated local concierge support"
+        ],
+        "exclusions": [
+            "International flights and Sri Lanka ETA tourist visa fees",
+            "Discretionary driver/guide gratuities",
+            "Travel insurance (mandatory for booking)",
+            "Alcoholic beverages and personal expenses"
+        ]
     },
     {
-        "id": "rt-wellness",
-        "title": "Ayurveda & Wellness Retreat",
-        "description": "Rejuvenate your soul with holistic Ayurvedic treatments, daily yoga, and serene beachfront luxury.",
-        "image": "https://images.unsplash.com/photo-1521651201144-634f700b36ef?w=800&auto=format&fit=crop&q=80",
-        "duration": "14 Days",
-        "guests": "Solo or Couples",
-        "route": "Weligama → Tangalle → Bentota",
-        "priceType": "From",
-        "priceDisplay": "£1,890",
-        "price": 1890,
-        "currency": "GBP",
-        "link": "/round-tours/wellness",
+        "id": "tour-tea-trails-coastal-sanctuaries",
+        "title": "Tea Trails & Coastal Sanctuaries",
+        "duration": "8 Days / 7 Nights",
+        "durationLabel": "⏱ 8 Days / 7 Nights",
+        "targetAudience": "Travelers seeking romance, boutique relaxation, and slow travel",
+        "route": "Colombo → Tea Country (Hatton/Castlereagh) → Galle Fort → Bentota → Airport",
+        "category": "8",
         "type": "round",
-        "market": "uk",
+        "badge": {"text": "Boutique & Romance", "class": "bg-charcoal"},
+        "image": "images/tours/day-tour-tea.jpg",
+        "priceType": "Luxury Boutique",
+        "priceDisplay": "Price on Request",
+        "priceTypeFull": "Boutique Tea & Coastal Haven",
+        "priceDisplayFull": "• Bespoke Luxury Quotation",
+        "link": "round-tours.html",
         "featured": True,
-        "badge": {"text": "Wellness", "class": "bg-charcoal"}
+        "market": "uk",
+        "highlights": [
+            "Stay in heritage tea bungalows amidst rolling hills and private lakeside estates",
+            "Artisan culinary walks through Galle Fort paired with fine dining",
+            "Private ocean catamaran sailings and golden sand beaches",
+            "Gentle pace with limited drive times and maximum relaxation"
+        ],
+        "inclusions": [
+            "Private air-conditioned luxury vehicle with an English-speaking Chauffeur-Guide",
+            "All entrance fees and permits for listed heritage sites and national parks",
+            "Private 4x4 safari jeeps with park tracker/naturalist",
+            "First-class reserved observation rail tickets (subject to availability)",
+            "Daily breakfast and designated gourmet meal experiences",
+            "Highway toll charges, fuel, chauffeur accommodation and meals",
+            "24/7 dedicated local concierge support"
+        ],
+        "exclusions": [
+            "International flights and Sri Lanka ETA tourist visa fees",
+            "Discretionary driver/guide gratuities",
+            "Travel insurance (mandatory for booking)",
+            "Alcoholic beverages and personal expenses"
+        ]
+    },
+    {
+        "id": "tour-essence-of-ceylon",
+        "title": "Essence of Ceylon",
+        "duration": "7 Days / 6 Nights",
+        "durationLabel": "⏱ 7 Days / 6 Nights",
+        "targetAudience": "Short-break travelers seeking the essential cultural highlights and southern sea",
+        "route": "Airport → Sigiriya → Kandy → Galle → Airport",
+        "category": "7",
+        "type": "round",
+        "badge": {"text": "Essential Sri Lanka", "class": "bg-teal"},
+        "image": "images/tours/tour-southern-coast.jpg",
+        "priceType": "Classic Private Tour",
+        "priceDisplay": "Price on Request",
+        "priceTypeFull": "Curated Essential Highlights",
+        "priceDisplayFull": "• Bespoke Luxury Quotation",
+        "link": "round-tours.html",
+        "featured": True,
+        "market": "uk",
+        "highlights": [
+            "Direct access to the country's two most renowned UNESCO cultural monuments: Sigiriya and Kandy",
+            "Dense, high-value 7-day loop without excessive packing and unpacking",
+            "Coastal finale within the historic ramparts of Galle Fort"
+        ],
+        "inclusions": [
+            "Private air-conditioned luxury vehicle with an English-speaking Chauffeur-Guide",
+            "All entrance fees and permits for listed heritage sites and national parks",
+            "Private 4x4 safari jeeps with park tracker/naturalist",
+            "First-class reserved observation rail tickets (subject to availability)",
+            "Daily breakfast and designated gourmet meal experiences",
+            "Highway toll charges, fuel, chauffeur accommodation and meals",
+            "24/7 dedicated local concierge support"
+        ],
+        "exclusions": [
+            "International flights and Sri Lanka ETA tourist visa fees",
+            "Discretionary driver/guide gratuities",
+            "Travel insurance (mandatory for booking)",
+            "Alcoholic beverages and personal expenses"
+        ]
     }
 ]
 
