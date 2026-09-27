@@ -1,5 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://zeilan-backend.azurewebsites.net/api'
+  apiUrl: 'https://www.zeilanparadise.com' // Replace with actual production API URL
 };
-
