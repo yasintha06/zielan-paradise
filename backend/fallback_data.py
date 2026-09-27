@@ -213,6 +213,138 @@ FALLBACK_TOURS = [
             "Travel insurance (mandatory for booking)",
             "Alcoholic beverages and personal expenses"
         ]
+    },
+    {
+        "id": "day-tour-yala",
+        "title": "Yala National Park Safari",
+        "category": "wildlife",
+        "type": "day",
+        "duration": "Full Day",
+        "badge": {"text": "Full Day", "class": "teal"},
+        "image": "images/tours/day-tour-yala.jpg",
+        "description": "An exclusive private 4x4 safari through Sri Lanka's premier wildlife sanctuary, accompanied by an experienced tracker.",
+        "highlights": [
+            "Private open-top jeep",
+            "Leopard & elephant tracking",
+            "Picnic refreshment setup"
+        ],
+        "startTime": "5:30 AM (Morning) or 2:00 PM (Afternoon)",
+        "guests": "Private (1 – 6 Guests)",
+        "price": None,
+        "pricingType": "bespoke",
+        "priceType": "Bespoke Quote",
+        "priceDisplay": "Tailor-made",
+        "link": "contact.html"
+    },
+    {
+        "id": "day-tour-sigiriya",
+        "title": "Sigiriya Citadel & Dambulla Cave Temples",
+        "category": "cultural",
+        "type": "day",
+        "duration": "Full Day",
+        "badge": {"text": "Full Day", "class": ""},
+        "image": "images/tours/day-tour-sigiriya.jpg",
+        "description": "Ascend the ancient 5th-century Lion Rock fortress and explore the painted cave sanctuaries of Dambulla in a single cultural loop.",
+        "highlights": [
+            "UNESCO Sigiriya Fortress",
+            "Dambulla Cave Murals",
+            "Traditional village lunch"
+        ],
+        "startTime": "7:00 AM",
+        "guests": "Private (1 – 8 Guests)",
+        "price": None,
+        "pricingType": "bespoke",
+        "priceType": "Bespoke Quote",
+        "priceDisplay": "Tailor-made",
+        "link": "contact.html"
+    },
+    {
+        "id": "day-tour-whale",
+        "title": "Mirissa Ocean Whale Expedition",
+        "category": "coast",
+        "type": "day",
+        "duration": "Half Day",
+        "badge": {"text": "Half Day", "class": "teal"},
+        "image": "images/tours/day-tour-whale.jpg",
+        "description": "Set sail at dawn into the deep southern waters to observe migrating blue whales, sperm whales, and spinner dolphins.",
+        "highlights": [
+            "Blue whale & dolphin sightings",
+            "Marine safety equipment",
+            "Refreshments at sea"
+        ],
+        "startTime": "6:00 AM (Seasonal: Nov – Apr)",
+        "guests": "2 – 8 Guests",
+        "price": None,
+        "pricingType": "bespoke",
+        "priceType": "Bespoke Quote",
+        "priceDisplay": "Tailor-made",
+        "link": "contact.html"
+    },
+    {
+        "id": "day-tour-kandy",
+        "title": "Kandy Royal Heritage & Tea Trails",
+        "category": "cultural",
+        "type": "day",
+        "duration": "Full Day",
+        "badge": {"text": "Full Day", "class": ""},
+        "image": "images/tours/day-tour-kandy.jpg",
+        "description": "Experience the sacred rituals of the Temple of the Tooth, wander the Royal Botanic Gardens, and explore a working mountain tea estate.",
+        "highlights": [
+            "Temple of the Sacred Tooth Relic",
+            "Peradeniya Botanic Gardens",
+            "Orthodox tea factory tour & tasting"
+        ],
+        "startTime": "8:00 AM",
+        "guests": "Private (1 – 8 Guests)",
+        "price": None,
+        "pricingType": "bespoke",
+        "priceType": "Bespoke Quote",
+        "priceDisplay": "Tailor-made",
+        "link": "contact.html"
+    },
+    {
+        "id": "day-tour-galle",
+        "title": "Galle Fort & Southern Maritime Heritage",
+        "category": "coast",
+        "type": "day",
+        "duration": "Full Day",
+        "badge": {"text": "Full Day", "class": ""},
+        "image": "images/tours/day-tour-galle.jpg",
+        "description": "Stroll the 17th-century ramparts of this living Dutch citadel, cruise the coastal mangrove lagoons, and visit a sea turtle sanctuary.",
+        "highlights": [
+            "UNESCO Galle Fort walking tour",
+            "Madu Ganga river safari",
+            "Marine turtle conservation project"
+        ],
+        "startTime": "8:30 AM",
+        "guests": "Private (1 – 6 Guests)",
+        "price": None,
+        "pricingType": "bespoke",
+        "priceType": "Bespoke Quote",
+        "priceDisplay": "Tailor-made",
+        "link": "contact.html"
+    },
+    {
+        "id": "day-tour-tea",
+        "title": "Nuwara Eliya Highlands & High Tea",
+        "category": "highlands",
+        "type": "day",
+        "duration": "Full Day",
+        "badge": {"text": "Full Day", "class": "teal"},
+        "image": "images/tours/day-tour-tea.jpg",
+        "description": "Journey into the misty tea country, walk through heritage rolling estates, and experience classic Ceylon high tea.",
+        "highlights": [
+            "Colonial architecture of 'Little England'",
+            "Factory processing masterclass",
+            "Fine highland tea tasting"
+        ],
+        "startTime": "7:30 AM",
+        "guests": "Private (1 – 6 Guests)",
+        "price": None,
+        "pricingType": "bespoke",
+        "priceType": "Bespoke Quote",
+        "priceDisplay": "Tailor-made",
+        "link": "contact.html"
     }
 ]
 

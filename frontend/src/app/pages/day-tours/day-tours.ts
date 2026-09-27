@@ -16,91 +16,97 @@ export class DayTours implements OnInit {
   activeFilter = 'all';
 
   filters = [
-    { key: 'all', label: 'All' },
-    { key: 'safari', label: 'Safari' },
-    { key: 'cultural', label: 'Cultural' },
-    { key: 'coastal', label: 'Coastal' },
-    { key: 'nature', label: 'Nature' }
+    { key: 'all', label: 'All Excursions' },
+    { key: 'wildlife', label: 'Wildlife & Safari' },
+    { key: 'cultural', label: 'Cultural & Heritage' },
+    { key: 'coast', label: 'Coast & Ocean' },
+    { key: 'highlands', label: 'Highlands & Tea' }
   ];
 
   tours: any[] = [
     {
-      id: 'dt-yala',
+      id: 'day-tour-yala',
       title: 'Yala National Park Safari',
-      description: 'An exclusive private jeep safari through Sri Lanka\'s most iconic wildlife park — home to the highest leopard density on Earth.',
+      description: "An exclusive private 4x4 safari through Sri Lanka's premier wildlife sanctuary, accompanied by an experienced tracker.",
       image: 'images/tours/day-tour-yala.jpg',
       duration: 'Full Day',
-      startTime: '5:30 AM',
-      guests: '2 – 6',
-      priceType: 'From',
-      priceDisplay: '£85 pp',
-      category: 'safari',
-      highlights: ['Leopard tracking', 'Birdwatching', 'Luxury picnic lunch']
+      startTime: '5:30 AM (Morning) or 2:00 PM (Afternoon)',
+      guests: 'Private (1 – 6 Guests)',
+      category: 'wildlife',
+      badge: { text: 'Full Day', class: 'teal' },
+      priceType: 'Bespoke Quote',
+      priceDisplay: 'Tailor-made',
+      highlights: ['Private open-top jeep', 'Leopard & elephant tracking', 'Picnic refreshment setup']
     },
     {
-      id: 'dt-sigiriya',
-      title: 'Sigiriya & Dambulla Heritage',
-      description: 'Ascend the legendary Lion Rock fortress and explore the cave temples of Dambulla — two UNESCO World Heritage Sites in a single day.',
+      id: 'day-tour-sigiriya',
+      title: 'Sigiriya Citadel & Dambulla Cave Temples',
+      description: 'Ascend the ancient 5th-century Lion Rock fortress and explore the painted cave sanctuaries of Dambulla in a single cultural loop.',
       image: 'images/tours/day-tour-sigiriya.jpg',
       duration: 'Full Day',
       startTime: '7:00 AM',
-      guests: '2 – 10',
-      priceType: 'From',
-      priceDisplay: '£65 pp',
+      guests: 'Private (1 – 8 Guests)',
       category: 'cultural',
-      highlights: ['Sigiriya Rock', 'Dambulla Cave Temple', 'Expert historian guide']
+      badge: { text: 'Full Day', class: '' },
+      priceType: 'Bespoke Quote',
+      priceDisplay: 'Tailor-made',
+      highlights: ['UNESCO Sigiriya Fortress', 'Dambulla Cave Murals', 'Traditional village lunch']
     },
     {
-      id: 'dt-whale',
-      title: 'Mirissa Whale Watching',
-      description: 'Set sail at dawn for one of the best whale watching locations on the planet. Spot blue whales, sperm whales, and playful dolphins.',
+      id: 'day-tour-whale',
+      title: 'Mirissa Ocean Whale Expedition',
+      description: 'Set sail at dawn into the deep southern waters to observe migrating blue whales, sperm whales, and spinner dolphins.',
       image: 'images/tours/day-tour-whale.jpg',
       duration: 'Half Day',
-      startTime: '6:00 AM',
-      guests: '2 – 8',
-      priceType: 'From',
-      priceDisplay: '£55 pp',
-      category: 'coastal',
-      highlights: ['Blue whales', 'Dolphins', 'Sunrise at sea']
+      startTime: '6:00 AM (Seasonal: Nov – Apr)',
+      guests: '2 – 8 Guests',
+      category: 'coast',
+      badge: { text: 'Half Day', class: 'teal' },
+      priceType: 'Bespoke Quote',
+      priceDisplay: 'Tailor-made',
+      highlights: ['Blue whale & dolphin sightings', 'Marine safety equipment', 'Refreshments at sea']
     },
     {
-      id: 'dt-kandy',
-      title: 'Kandy Temple & Tea Tour',
-      description: 'Visit the sacred Temple of the Tooth Relic, stroll through the Royal Botanical Gardens, and tour a working tea factory in the highlands.',
+      id: 'day-tour-kandy',
+      title: 'Kandy Royal Heritage & Tea Trails',
+      description: 'Experience the sacred rituals of the Temple of the Tooth, wander the Royal Botanic Gardens, and explore a working mountain tea estate.',
       image: 'images/tours/day-tour-kandy.jpg',
       duration: 'Full Day',
       startTime: '8:00 AM',
-      guests: '2 – 8',
-      priceType: 'From',
-      priceDisplay: '£60 pp',
+      guests: 'Private (1 – 8 Guests)',
       category: 'cultural',
-      highlights: ['Temple of the Tooth', 'Tea plantation visit', 'Kandyan dance show']
+      badge: { text: 'Full Day', class: '' },
+      priceType: 'Bespoke Quote',
+      priceDisplay: 'Tailor-made',
+      highlights: ['Temple of the Sacred Tooth Relic', 'Peradeniya Botanic Gardens', 'Orthodox tea factory tour & tasting']
     },
     {
-      id: 'dt-galle',
-      title: 'Galle Fort & Southern Coast',
-      description: 'Wander the cobblestone streets of this Dutch colonial fortress, lunch at a boutique café, and visit stilt fishermen along the coast.',
+      id: 'day-tour-galle',
+      title: 'Galle Fort & Southern Maritime Heritage',
+      description: 'Stroll the 17th-century ramparts of this living Dutch citadel, cruise the coastal mangrove lagoons, and visit a sea turtle sanctuary.',
       image: 'images/tours/day-tour-galle.jpg',
       duration: 'Full Day',
       startTime: '8:30 AM',
-      guests: '2 – 6',
-      priceType: 'From',
-      priceDisplay: '£70 pp',
-      category: 'coastal',
-      highlights: ['UNESCO fort', 'Stilt fishermen', 'Boutique shopping']
+      guests: 'Private (1 – 6 Guests)',
+      category: 'coast',
+      badge: { text: 'Full Day', class: '' },
+      priceType: 'Bespoke Quote',
+      priceDisplay: 'Tailor-made',
+      highlights: ['UNESCO Galle Fort walking tour', 'Madu Ganga river safari', 'Marine turtle conservation project']
     },
     {
-      id: 'dt-tea',
-      title: 'Nuwara Eliya Tea Trails',
-      description: 'Walk through rolling emerald tea estates, visit a working colonial tea factory, and enjoy Ceylon high tea.',
+      id: 'day-tour-tea',
+      title: 'Nuwara Eliya Highlands & High Tea',
+      description: 'Journey into the misty tea country, walk through heritage rolling estates, and experience classic Ceylon high tea.',
       image: 'images/tours/day-tour-tea.jpg',
       duration: 'Full Day',
       startTime: '7:30 AM',
-      guests: '2 – 6',
-      priceType: 'From',
-      priceDisplay: '£75 pp',
-      category: 'nature',
-      highlights: ['Tea Factory Tour', 'High Tea', 'Scenic Hill Country']
+      guests: 'Private (1 – 6 Guests)',
+      category: 'highlands',
+      badge: { text: 'Full Day', class: 'teal' },
+      priceType: 'Bespoke Quote',
+      priceDisplay: 'Tailor-made',
+      highlights: ["Colonial architecture of 'Little England'", 'Factory processing masterclass', 'Fine highland tea tasting']
     }
   ];
 
@@ -111,7 +117,7 @@ export class DayTours implements OnInit {
       next: (data) => {
         if (data && data.length > 0) this.tours = data;
       },
-      error: () => console.log('API not ready, using luxury placeholders.')
+      error: () => console.log('API not ready, using bespoke data.')
     });
   }
 

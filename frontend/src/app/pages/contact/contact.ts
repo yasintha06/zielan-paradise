@@ -1,7 +1,7 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { RouterLink, ActivatedRoute } from '@angular/router';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal';
 import { ApiService } from '../../services/api';
 
@@ -13,7 +13,7 @@ import { ApiService } from '../../services/api';
   styleUrl: './contact.css',
   encapsulation: ViewEncapsulation.None
 })
-export class Contact {
+export class Contact implements OnInit {
   formData = {
     firstName: '',
     lastName: '',
@@ -39,7 +39,26 @@ export class Contact {
     'General Enquiry'
   ];
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      const tourId = params['tour'] || '';
+      const tourName = params['tourName'] || '';
+
+      if (tourName) {
+        this.formData.message = `I am interested in requesting a bespoke proposal for: "${tourName}" (ID: ${tourId}).\n\nPlease provide itinerary customisation options and private chauffeur availability.`;
+        if (tourId.startsWith('day-') || tourId.startsWith('dt-')) {
+          this.formData.interest = 'Day Tours';
+        } else {
+          this.formData.interest = 'Round Tours';
+        }
+      }
+    });
+  }
 
   onSubmit() {
     this.isSubmitting = true;

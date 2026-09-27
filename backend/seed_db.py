@@ -75,16 +75,6 @@ def normalize_day_tour(item: dict) -> dict:
     title = item.get('title', 'Day Tour')
     tour_id = item.get('id') or f"day-tour-{_slugify(title)}"
 
-    # Parse meta array if present: ["⏱ 10–12 Hours", "📍 Central Province"]
-    meta = item.get('meta', [])
-    duration = "Full Day"
-    route = "Central Province"
-    for m in meta:
-        if "⏱" in m or "Hour" in m or "Day" in m:
-            duration = m.replace("⏱", "").strip()
-        elif "📍" in m:
-            route = m.replace("📍", "").strip()
-
     badge = item.get('badge', {})
     if not isinstance(badge, dict):
         badge = {"text": str(badge), "class": "bg-teal"}
@@ -101,9 +91,10 @@ def normalize_day_tour(item: dict) -> dict:
         "id": str(tour_id),
         "title": str(title),
         "description": str(item.get('description', '')),
-        "duration": str(item.get('duration', duration)),
-        "guests": str(item.get('guests', '2–8 Guests')),
-        "route": str(item.get('route', route)),
+        "duration": str(item.get('duration', 'Full Day')),
+        "startTime": str(item.get('startTime', '8:00 AM')),
+        "guests": str(item.get('guests', 'Private (1 – 6 Guests)')),
+        "route": str(item.get('route', '')),
         "category": str(item.get('category', 'cultural')),
         "type": "day",
         "badge": {
@@ -111,8 +102,10 @@ def normalize_day_tour(item: dict) -> dict:
             "class": str(badge.get('class', 'bg-teal'))
         },
         "image": str(item.get('image', 'images/tours/day-tour-sigiriya.jpg')),
-        "priceType": str(item.get('priceType', 'From')),
-        "priceDisplay": str(item.get('priceDisplay', '• Tailored Quotation')),
+        "price": None,
+        "pricingType": "bespoke",
+        "priceType": str(item.get('priceType', 'Bespoke Quote')),
+        "priceDisplay": str(item.get('priceDisplay', 'Tailor-made')),
         "highlights": highlights,
         "itinerary": item.get('itinerary', []),
         "inclusions": [

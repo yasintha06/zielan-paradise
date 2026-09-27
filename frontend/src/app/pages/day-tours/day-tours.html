@@ -67,9 +67,9 @@
 
           <div class="dt-card-footer">
             <div class="dt-tag-nature">
-              <span class="dt-nature-label">✦ Private Excursion</span>
+              <span class="dt-nature-label">✦ Bespoke Quote</span>
             </div>
-            <a routerLink="/contact" class="btn btn-teal btn-sm">Enquire Now</a>
+            <a routerLink="/contact" [queryParams]="{ tour: t.id, tourName: t.title }" class="btn btn-teal btn-sm">Enquire Now</a>
           </div>
         </div>
       </article>
