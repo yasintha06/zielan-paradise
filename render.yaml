@@ -13,5 +13,14 @@ services:
       - key: JWT_SECRET_KEY
         fromSecret: JWT_SECRET_KEY
     domains:
+      - api.zeilanparadise.com
+  - type: static
+    name: zeilan-frontend
+    repo: https://github.com/yasintha06/zielan-paradise
+    branch: main
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishPath: dist/frontend
+    domains:
       - zeilanparadise.com
       - www.zeilanparadise.com
