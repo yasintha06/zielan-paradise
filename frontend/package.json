@@ -4,11 +4,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "node --max_old_space_size=4096 ./node_modules/.bin/ng build --configuration production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
   "private": true,
+  "engines": {
+    "node": "20.x"
+  },
   "packageManager": "npm@10.9.8",
   "dependencies": {
     "@angular/common": "^22.1.0",
