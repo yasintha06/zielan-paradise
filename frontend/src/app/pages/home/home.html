@@ -1,410 +1,244 @@
-<!-- ═══════════════════════════════════════════════════════════════
-     ZEILAN PARADISE — HOMEPAGE
-     Editorial Luxury Design — Aman / Black Tomato Inspired
-     ═══════════════════════════════════════════════════════════════ -->
+<div class="zp-home">
 
-<!-- ═══════════════ HERO — CINEMATIC FULLSCREEN VIDEO ═══════════════ -->
-<section id="hero" aria-label="Hero — Sri Lanka luxury travel">
-  <div class="hero-video-wrap">
-    <video
-      autoplay muted loop playsinline
-      poster="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=1920&auto=format&fit=crop&q=80"
-    >
-      <source src="https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-a-beautiful-beach-and-the-ocean-4061-large.mp4" type="video/mp4" />
-    </video>
-  </div>
-  <div class="hero-overlay"></div>
-  <div class="hero-content">
-    <p class="hero-eyebrow">UK's Trusted Sri Lanka Specialist</p>
-    <h1 class="hero-title">
-      Where Sri Lanka<br />
-      <em>Reveals Itself</em>
-    </h1>
-    <p class="hero-subtitle">
-      Bespoke luxury journeys to the Pearl of the Indian Ocean —<br />
-      crafted by a trusted local team, managed from the UK.
-    </p>
-    <div class="hero-ctas">
-      <a routerLink="/round-tours" class="btn btn-gold btn-lg" id="hero-explore-btn">
-        Explore Journeys
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-      <a routerLink="/tailor-made" class="btn btn-outline-white btn-lg" id="hero-tailor-btn">
-        Tailor My Trip
-      </a>
+  <!-- ═════════════ HERO — cinematic slideshow ═════════════ -->
+  <section class="zp-hero" aria-label="Introduction">
+    <div class="zp-hero-media" data-hero-media>
+      @for (s of slides; track s.image; let i = $index) {
+        <figure class="zp-hero-slide" [class.is-active]="i === activeSlide()">
+          <img [src]="'img/' + s.image + '-2000.webp'" [alt]="s.alt" [attr.fetchpriority]="i === 0 ? 'high' : null"
+               [attr.loading]="i === 0 ? 'eager' : 'lazy'" width="2000" height="1250" />
+        </figure>
+      }
     </div>
-  </div>
-  <div class="hero-scroll" aria-hidden="true">
-    <div class="scroll-line"></div>
-    <span>Scroll</span>
-  </div>
-</section>
+    <div class="zp-hero-shade"></div>
 
-
-<!-- ═══════════════ EDITORIAL INTRO STRIP ═══════════════ -->
-<div class="intro-strip">
-  <div class="container">
-    <p><span>Award-Winning Sri Lanka DMC</span> — UK-Based. Local Expertise. Zero Compromise.</p>
-  </div>
-</div>
-
-
-<!-- ═══════════════ OPERATIONAL VALUE PILLARS ═══════════════ -->
-<section class="section-stats">
-  <div class="container">
-    <div class="stats-grid authentic-pillars-grid">
-      <div class="stat-item pillar-card" appScrollReveal>
-        <div class="pillar-icon">✦</div>
-        <h4 class="stat-pillar-title">100% Tailor-Made Itineraries</h4>
-        <p class="stat-pillar-desc">Custom journeys crafted around your pace, preferences, and style.</p>
-      </div>
-      <div class="stat-item pillar-card" appScrollReveal>
-        <div class="pillar-icon">✦</div>
-        <h4 class="stat-pillar-title">ATFL Certified Expertise</h4>
-        <p class="stat-pillar-desc">Licensed, highly experienced chauffeur-guides & specialist naturalists.</p>
-      </div>
-      <div class="stat-item pillar-card" appScrollReveal>
-        <div class="pillar-icon">✦</div>
-        <h4 class="stat-pillar-title">UK-Based Concierge</h4>
-        <p class="stat-pillar-desc">Dedicated consultative planning and support directly in your time zone.</p>
-      </div>
-      <div class="stat-item pillar-card" appScrollReveal>
-        <div class="pillar-icon">✦</div>
-        <h4 class="stat-pillar-title">24/7 Local Sri Lanka Support</h4>
-        <p class="stat-pillar-desc">Direct private ground assistance and dedicated care across the island.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════ OUR STORY — EDITORIAL SPLIT ═══════════════ -->
-<section class="section-editorial bg-pearl" aria-labelledby="about-heading">
-  <div class="container">
-    <div class="editorial-split">
-      <div class="editorial-image" appScrollReveal>
-        <img
-          src="https://images.unsplash.com/photo-1585123388867-3bfe6dd4bdbf?w=900&auto=format&fit=crop&q=80"
-          alt="Sigiriya rock fortress rising above Sri Lanka jungle"
-          loading="lazy"
-        />
-        <div class="editorial-image-badge">
-          <span class="badge-num">5★</span>
-          <span class="badge-lbl">Luxury<br/>Rated</span>
-        </div>
-      </div>
-      <div class="editorial-text" appScrollReveal>
-        <span class="section-label">Our Story</span>
-        <h2 class="section-title" id="about-heading">
-          Bridging the UK &amp;<br />the Heart of Sri Lanka
-        </h2>
-        <div class="gold-rule"></div>
-        <p class="editorial-body">
-          Zeilan Paradise was born from a deep love for Sri Lanka and a desire to share
-          its wonders with the world. Based in the UK with an expert ground team on the
-          island, we design journeys that go far beyond sightseeing — immersive, personal,
-          and flawlessly organised from your first enquiry to your final farewell.
-        </p>
-        <div class="pillars-grid">
-          <div class="pillar-item">
-            <h5>UK-Based Contact</h5>
-            <p>A dedicated advisor you can call or WhatsApp anytime.</p>
-          </div>
-          <div class="pillar-item">
-            <h5>Expert Local Team</h5>
-            <p>On-island guides who bring Sri Lanka's stories to life.</p>
-          </div>
-          <div class="pillar-item">
-            <h5>100% Bespoke</h5>
-            <p>Every itinerary crafted around your interests and pace.</p>
-          </div>
-          <div class="pillar-item">
-            <h5>24/7 Support</h5>
-            <p>We're always reachable — before, during, and after.</p>
-          </div>
-        </div>
-        <a routerLink="/about" class="btn btn-outline-teal" id="about-more-btn">
-          Discover Our Story
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════ ICONIC DESTINATIONS — MOSAIC ═══════════════ -->
-<section class="section-destinations" aria-labelledby="destinations-heading">
-  <div class="container">
-    <div class="section-header-split">
-      <div>
-        <span class="section-label">Explore Sri Lanka</span>
-        <h2 class="section-title" id="destinations-heading">Iconic Destinations</h2>
-        <div class="gold-rule"></div>
-      </div>
-      <a routerLink="/destinations" class="view-all" id="all-dest-link">
-        View All
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-    <div class="dest-mosaic" appScrollReveal>
-      <a *ngFor="let d of destinations" [routerLink]="d.link || '/destinations'" class="dest-card" [id]="d.id">
-        <img class="dest-card-img" [src]="d.imageUrl || d.image" [alt]="d.name" loading="lazy" />
-        <div class="dest-card-info">
-          <p class="dest-card-name">{{ d.name }}</p>
-          <p class="dest-card-tagline">{{ d.tagline }}</p>
-        </div>
-        <div class="dest-card-arrow">&rarr;</div>
-      </a>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════ HOW WOULD YOU LIKE TO TRAVEL? ═══════════════ -->
-<section class="section-tour-types bg-pearl" aria-labelledby="tour-types-heading">
-  <div class="container">
-    <div class="section-header-center">
-      <span class="section-label">Journeys Designed for You</span>
-      <h2 class="section-title" id="tour-types-heading">How Would You Like to Travel?</h2>
-      <div class="gold-rule"></div>
-      <p class="section-subtitle">
-        Whether you seek a curated multi-day odyssey, a perfectly paced day out,
-        or a completely bespoke route — we have the ideal journey.
+    <div class="zp-hero-content container" data-hero-content>
+      <p class="eyebrow zp-hero-eyebrow" data-hero-fade>Private &amp; tailor-made · Sri Lanka</p>
+      <h1 class="zp-hero-title" data-hero-title>Where the island<br /><em>reveals itself</em></h1>
+      <p class="zp-hero-sub" data-hero-fade>
+        Bespoke journeys through ancient kingdoms, misty tea country and wild southern shores,
+        planned with you from the UK and guided by our own team on the island.
       </p>
-    </div>
-    <div class="tour-types" appScrollReveal>
-      <a routerLink="/round-tours" class="tour-type-card" id="round-tours-link">
-        <img src="https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&auto=format&fit=crop&q=80"
-          alt="Sri Lanka tea highlands aerial" loading="lazy" />
-        <div class="tour-type-overlay">
-          <p class="tour-type-tag">Multi-Day</p>
-          <h3 class="tour-type-title">Round Tours</h3>
-          <p class="tour-type-desc">Comprehensive itineraries traversing Sri Lanka's greatest wonders over 7 to 14 days.</p>
-          <span class="tour-type-link">Explore Tours <span>&rarr;</span></span>
-        </div>
-      </a>
-      <a routerLink="/day-tours" class="tour-type-card" id="day-tours-link">
-        <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=800&auto=format&fit=crop&q=80"
-          alt="Safari wildlife Yala National Park" loading="lazy" />
-        <div class="tour-type-overlay">
-          <p class="tour-type-tag">Single Day</p>
-          <h3 class="tour-type-title">Day Tours</h3>
-          <p class="tour-type-desc">Handpicked single-day experiences to make the most of every moment on the island.</p>
-          <span class="tour-type-link">Explore Tours <span>&rarr;</span></span>
-        </div>
-      </a>
-      <a routerLink="/tailor-made" class="tour-type-card" id="tailor-link-home">
-        <img src="https://images.unsplash.com/photo-1521651201144-634f700b36ef?w=800&auto=format&fit=crop&q=80"
-          alt="Luxury boutique resort pool Sri Lanka" loading="lazy" />
-        <div class="tour-type-overlay">
-          <p class="tour-type-tag">Fully Bespoke</p>
-          <h3 class="tour-type-title">Tailor-Made</h3>
-          <p class="tour-type-desc">Tell us your dream. We'll craft an itinerary around your interests, pace, and budget.</p>
-          <span class="tour-type-link">Start Planning <span>&rarr;</span></span>
-        </div>
-      </a>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════ FEATURED JOURNEYS ═══════════════ -->
-<section class="section-featured" aria-labelledby="featured-tours-heading">
-  <div class="container">
-    <div class="section-header-split">
-      <div>
-        <span class="section-label">Curated Round Tours</span>
-        <h2 class="section-title" id="featured-tours-heading">Featured Journeys</h2>
-        <div class="gold-rule"></div>
-      </div>
-      <a routerLink="/round-tours" class="view-all" id="all-tours-link">
-        All Journeys
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-    <div class="tours-grid" appScrollReveal>
-      <article *ngFor="let t of tours" class="tour-card" [id]="t.id">
-        <div class="tour-card-img-wrap">
-          <img class="tour-card-img" [src]="t.image" [alt]="t.title" loading="lazy" />
-          <span class="tour-badge" [ngClass]="t.badge.class">{{ t.badge.text }}</span>
-        </div>
-        <div class="tour-card-body">
-          <h3 class="tour-card-title">{{ t.title }}</h3>
-          <p class="tour-card-desc">{{ t.description }}</p>
-          <div class="tour-card-meta">
-            <span class="tour-meta-item">{{ t.duration }}</span>
-            <span class="tour-meta-item">{{ t.guests }}</span>
-            <span class="tour-meta-item">{{ t.route }}</span>
-          </div>
-          <div class="tour-card-footer">
-            <div class="tour-card-nature">
-              <span class="luxury-tag">✦ 100% Bespoke</span>
-            </div>
-            <a [routerLink]="t.link" class="btn btn-teal btn-sm">Explore Journey</a>
-          </div>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════ THE ZEILAN PROMISE ═══════════════ -->
-<section class="section-promise bg-pearl" aria-labelledby="why-us-heading">
-  <div class="container">
-    <div class="section-header-center">
-      <span class="section-label">Why Travel With Us</span>
-      <h2 class="section-title" id="why-us-heading">The Zeilan Paradise Promise</h2>
-      <div class="gold-rule"></div>
-      <p class="section-subtitle">
-        We believe every journey should be extraordinary. Here is our commitment to you.
-      </p>
-    </div>
-    <div class="why-grid" appScrollReveal>
-      <div class="why-card" id="why-uk-contact">
-        <div class="why-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="32" height="32"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        </div>
-        <h4>UK-Based Point of Contact</h4>
-        <p>Plan your dream holiday with a dedicated UK advisor. Call, WhatsApp or email — we are always here, in your time zone.</p>
-      </div>
-      <div class="why-card" id="why-local-team">
-        <div class="why-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="32" height="32"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <h4>Expert Local Ground Team</h4>
-        <p>Our passionate, SLTBDA-certified guides bring Sri Lanka's history, wildlife and culture to life.</p>
-      </div>
-      <div class="why-card" id="why-bespoke">
-        <div class="why-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="32" height="32"><path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-        </div>
-        <h4>100% Bespoke Itineraries</h4>
-        <p>No two journeys are the same. Every itinerary is handcrafted around your interests and pace.</p>
-      </div>
-      <div class="why-card" id="why-support">
-        <div class="why-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="32" height="32"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </div>
-        <h4>24/7 In-Country Support</h4>
-        <p>From the moment you land to your final departure, a dedicated local contact is always one call away.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════ EXPERIENCES ═══════════════ -->
-<section class="section-activities" aria-labelledby="activities-heading">
-  <div class="container">
-    <div class="section-header-split">
-      <div>
-        <span class="section-label">Curated Experiences</span>
-        <h2 class="section-title" id="activities-heading">What Will You Explore?</h2>
-        <div class="gold-rule"></div>
-      </div>
-      <a routerLink="/day-tours" class="view-all" id="all-act-link">
-        All Experiences
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-    <div class="activities-grid" appScrollReveal>
-      <div class="activity-card" id="act-wildlife">
-        <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=600&auto=format&fit=crop&q=80"
-          alt="Elephant safari Yala" loading="lazy" />
-        <div class="activity-overlay">
-          <p class="activity-name">Wildlife Safaris</p>
-          <p class="activity-count">6 Experiences</p>
-        </div>
-      </div>
-      <div class="activity-card" id="act-culture">
-        <img src="https://images.unsplash.com/photo-1568454537842-d933259bb258?w=600&auto=format&fit=crop&q=80"
-          alt="Ancient Buddhist temple" loading="lazy" />
-        <div class="activity-overlay">
-          <p class="activity-name">Cultural Trails</p>
-          <p class="activity-count">8 Experiences</p>
-        </div>
-      </div>
-      <div class="activity-card" id="act-coast">
-        <img src="https://images.unsplash.com/photo-1560807707-8cc77767d783?w=600&auto=format&fit=crop&q=80"
-          alt="Sri Lanka beach" loading="lazy" />
-        <div class="activity-overlay">
-          <p class="activity-name">Coastal Escapes</p>
-          <p class="activity-count">5 Experiences</p>
-        </div>
-      </div>
-      <div class="activity-card" id="act-tea">
-        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600&auto=format&fit=crop&q=80"
-          alt="Tea plantation highlands" loading="lazy" />
-        <div class="activity-overlay">
-          <p class="activity-name">Tea Highland Trails</p>
-          <p class="activity-count">4 Experiences</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- Testimonials temporarily hidden until authentic post-launch reviews are collected -->
-
-
-<!-- ═══════════════ CTA BANNER — CINEMATIC ═══════════════ -->
-<section class="section-cta" aria-label="Call to action">
-  <img class="cta-bg"
-    src="https://images.unsplash.com/photo-1589308078059-be1415eab4c3?w=1920&auto=format&fit=crop&q=80"
-    alt="Sri Lanka tropical nature" loading="lazy" />
-  <div class="cta-overlay"></div>
-  <div class="container">
-    <div class="cta-content" appScrollReveal>
-      <span class="section-label" style="color: var(--gold);">Your Story. Your Pace. Your Sri Lanka.</span>
-      <h2>Ready to Begin Your Journey?</h2>
-      <p>Tell us your vision and we will craft a journey that exceeds every expectation.</p>
-      <div class="cta-btns">
-        <a routerLink="/tailor-made" class="btn btn-gold btn-lg" id="cta-tailor-btn">
+      <div class="zp-hero-ctas" data-hero-fade>
+        <a routerLink="/tailor-made" class="btn btn-gold btn-lg" appMagnetic>
           Design My Journey
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
-        <a routerLink="/contact" class="btn btn-outline-white btn-lg" id="cta-contact-btn">
-          Get in Touch
-        </a>
+        <a routerLink="/round-tours" class="btn btn-ghost-light btn-lg">Explore Journeys</a>
       </div>
+    </div>
+
+    <div class="zp-hero-bar container" data-hero-fade>
+      <div class="zp-hero-caption">
+        <span class="zp-hero-index">{{ pad(activeSlide() + 1) }}<small> / {{ pad(slides.length) }}</small></span>
+        <span class="zp-hero-place">{{ slides[activeSlide()].place }}</span>
+      </div>
+      <div class="zp-hero-dots" role="tablist" aria-label="Choose background">
+        @for (s of slides; track s.image; let i = $index) {
+          <button type="button" role="tab" [attr.aria-selected]="i === activeSlide()" [attr.aria-label]="s.place"
+                  [class.is-active]="i === activeSlide()" (click)="goTo(i)">
+            <span></span>
+          </button>
+        }
+      </div>
+      <button type="button" class="zp-hero-scroll" (click)="scrollDown()" aria-label="Scroll to content">
+        <span>Scroll</span><i></i>
+      </button>
+    </div>
+  </section>
+
+  <!-- ═════════════ MARQUEE ═════════════ -->
+  <div class="zp-marquee" aria-hidden="true">
+    <div class="zp-marquee-track">
+      @for (_ of [0, 1]; track $index) {
+        <div class="zp-marquee-group">
+          @for (p of marquee; track p) {
+            <span>{{ p }}</span><img src="logo-mark.png" alt="" width="40" height="23" />
+          }
+        </div>
+      }
     </div>
   </div>
-</section>
 
-
-<!-- ═══════════════ INSTAGRAM STRIP ═══════════════ -->
-<section class="section-gallery" aria-labelledby="gallery-heading">
-  <div class="container">
-    <div class="section-header-center" style="margin-bottom: 3rem;">
-      <span class="section-label">&#64;ZeilanParadise</span>
-      <h2 class="section-title" id="gallery-heading">Moments from the Island</h2>
-      <div class="gold-rule"></div>
-    </div>
-    <div class="gallery-grid" appScrollReveal>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1568454537842-d933259bb258?w=400&h=400&auto=format&fit=crop&q=80" alt="Sri Lanka" loading="lazy" />
+  <!-- ═════════════ MANIFESTO ═════════════ -->
+  <section class="zp-manifesto" id="discover">
+    <div class="container zp-manifesto-grid">
+      <div class="zp-manifesto-text">
+        <p class="eyebrow">Our philosophy</p>
+        <p class="zp-manifesto-lead" data-scrub-words>
+          We don't sell packages. We listen first, then compose a private journey around the way you love to travel:
+          the ancient kingdoms at dawn, a quiet tea estate at dusk, a leopard in the long grass at Yala.
+          Every detail is held by a team who calls this island home.
+        </p>
+        <a routerLink="/contact" class="zp-link">Meet the team <span aria-hidden="true">&rarr;</span></a>
       </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1560807707-8cc77767d783?w=400&h=400&auto=format&fit=crop&q=80" alt="Sri Lanka coast" loading="lazy" />
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=400&h=400&auto=format&fit=crop&q=80" alt="Wildlife" loading="lazy" />
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=400&auto=format&fit=crop&q=80" alt="Culture" loading="lazy" />
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=400&h=400&auto=format&fit=crop&q=80" alt="Ella" loading="lazy" />
-      </div>
-      <div class="gallery-item">
-        <img src="https://images.unsplash.com/photo-1585123388867-3bfe6dd4bdbf?w=400&h=400&auto=format&fit=crop&q=80" alt="Sigiriya" loading="lazy" />
+      <div class="zp-manifesto-media">
+        <div class="zp-manifesto-img zp-manifesto-img--a img-reveal" appScrollReveal>
+          <img src="img/nuwara-eliya-900.webp" alt="Tea picker among the bushes of Nuwara Eliya" loading="lazy" />
+        </div>
+        <div class="zp-manifesto-img zp-manifesto-img--b img-reveal" appScrollReveal>
+          <img src="img/day-tour-sigiriya-900.webp" alt="The lion's paws at the foot of Sigiriya rock" loading="lazy" />
+        </div>
       </div>
     </div>
-    <p class="text-center" style="margin-top: 2rem; font-size: 0.85rem; color: rgba(26,26,26,0.4); letter-spacing: 0.05em;">
-      Follow us on Instagram for daily inspiration from Sri Lanka
-    </p>
-  </div>
-</section>
+
+    <div class="container">
+      <ul class="zp-facts">
+        @for (f of facts; track f.label) {
+          <li appScrollReveal>
+            <span class="zp-fact-num"><span [attr.data-count]="f.value">0</span>{{ f.suffix }}</span>
+            <span class="zp-fact-label">{{ f.label }}</span>
+          </li>
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- ═════════════ DESTINATIONS — pinned horizontal ═════════════ -->
+  <section class="zp-dest" aria-labelledby="dest-heading">
+    <div class="zp-dest-pin" data-dest-pin>
+      <div class="zp-dest-track" data-dest-track>
+        <div class="zp-dest-intro">
+          <p class="eyebrow">Explore the island</p>
+          <h2 class="section-title" id="dest-heading">Nine places that<br /><em>stay with you</em></h2>
+          <p class="section-subtitle">From the Cultural Triangle to the southern coast, each region has its own rhythm. We weave them together at your pace.</p>
+          <a routerLink="/destinations" class="btn btn-outline-teal">All Destinations</a>
+        </div>
+        @for (d of destinations; track d.name; let i = $index) {
+          <a class="zp-dest-card" routerLink="/destinations" data-cursor="Explore">
+            <div class="zp-dest-img">
+              <img [src]="'img/' + d.image + '-900.webp'" [alt]="d.name" loading="lazy" width="900" height="1200" />
+            </div>
+            <div class="zp-dest-meta">
+              <span class="zp-dest-num">{{ pad(i + 1) }}</span>
+              <h3>{{ d.name }}</h3>
+              <p>{{ d.tagline }}</p>
+            </div>
+          </a>
+        }
+      </div>
+    </div>
+    <div class="zp-dest-progress" aria-hidden="true"><span data-dest-progress></span></div>
+  </section>
+
+  <!-- ═════════════ TRAVEL STYLES — expanding panels ═════════════ -->
+  <section class="zp-styles" aria-labelledby="styles-heading">
+    <div class="container">
+      <header class="zp-head" appScrollReveal>
+        <p class="eyebrow">Ways to travel</p>
+        <h2 class="section-title" id="styles-heading">How would you like<br /><em>to see Sri Lanka?</em></h2>
+      </header>
+      <div class="zp-styles-panels" appScrollReveal>
+        @for (s of styles; track s.title; let i = $index) {
+          <a class="zp-style" [routerLink]="s.link" [class.is-open]="openStyle() === i" (mouseenter)="openStyle.set(i)" (focus)="openStyle.set(i)" data-cursor="Discover">
+            <img [src]="'img/' + s.image + '-900.webp'" [alt]="s.title" loading="lazy" />
+            <div class="zp-style-body">
+              <span class="zp-style-tag">{{ s.tag }}</span>
+              <h3>{{ s.title }}</h3>
+              <p>{{ s.text }}</p>
+              <span class="zp-link">{{ s.cta }} <span aria-hidden="true">&rarr;</span></span>
+            </div>
+          </a>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ FEATURED JOURNEYS ═════════════ -->
+  <section class="zp-tours" aria-labelledby="tours-heading">
+    <div class="container">
+      <header class="zp-head zp-head--split" appScrollReveal>
+        <div>
+          <p class="eyebrow">Signature journeys</p>
+          <h2 class="section-title" id="tours-heading">Journeys to <em>begin with</em></h2>
+        </div>
+        <p class="section-subtitle">Starting points, never fixed. Every itinerary is reshaped around your dates, interests and style of stay.</p>
+      </header>
+      <div class="zp-tours-grid">
+        @for (t of tours; track t.id; let i = $index) {
+          <a class="zp-tour" [routerLink]="['/tours', t.id]" appScrollReveal [style.transition-delay.ms]="i * 120" data-cursor="View">
+            <div class="zp-tour-img">
+              <img [src]="t.image" [alt]="t.title" loading="lazy" data-parallax="8" />
+              @if (t.badge?.text) {
+                <span class="zp-tour-badge">{{ t.badge?.text }}</span>
+              }
+            </div>
+            <div class="zp-tour-body">
+              <p class="zp-tour-dur">{{ t.duration }}</p>
+              <h3>{{ t.title }}</h3>
+              <p class="zp-tour-desc">{{ t.description }}</p>
+              <span class="zp-link">View journey <span aria-hidden="true">&rarr;</span></span>
+            </div>
+          </a>
+        }
+      </div>
+      <div class="zp-center" appScrollReveal>
+        <a routerLink="/round-tours" class="btn btn-teal btn-lg" appMagnetic>See All Round Tours</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ HOW IT WORKS ═════════════ -->
+  <section class="zp-steps" aria-labelledby="steps-heading">
+    <div class="container">
+      <header class="zp-head zp-head--center" appScrollReveal>
+        <p class="eyebrow">How it works</p>
+        <h2 class="section-title" id="steps-heading">From first idea<br /><em>to final farewell</em></h2>
+      </header>
+      <ol class="zp-steps-list" data-steps>
+        <span class="zp-steps-line" aria-hidden="true"><span data-steps-line></span></span>
+        @for (s of steps; track s.title; let i = $index) {
+          <li appScrollReveal [style.transition-delay.ms]="i * 120">
+            <span class="zp-step-num">{{ pad(i + 1) }}</span>
+            <h3>{{ s.title }}</h3>
+            <p>{{ s.text }}</p>
+          </li>
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- ═════════════ PROMISE ═════════════ -->
+  <section class="zp-promise" aria-labelledby="promise-heading">
+    <img class="zp-promise-bg" src="img/tour-grand-odyssey-2000.webp" alt="" loading="lazy" data-parallax="15" />
+    <div class="zp-promise-shade"></div>
+    <div class="container zp-promise-inner">
+      <header class="zp-head" appScrollReveal>
+        <p class="eyebrow">The Zeilan promise</p>
+        <h2 class="section-title" id="promise-heading">Quietly looked after,<br /><em>every step of the way</em></h2>
+      </header>
+      <div class="zp-promise-grid">
+        @for (p of promises; track p.title; let i = $index) {
+          <article class="zp-promise-item" appScrollReveal [style.transition-delay.ms]="i * 100">
+            <span class="zp-promise-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+                @for (d of p.icon; track d) { <path [attr.d]="d" /> }
+              </svg>
+            </span>
+            <h3>{{ p.title }}</h3>
+            <p>{{ p.text }}</p>
+          </article>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════════ GALLERY — parallax columns ═════════════ -->
+  <section class="zp-gallery" aria-labelledby="gallery-heading">
+    <div class="container">
+      <header class="zp-head zp-head--center" appScrollReveal>
+        <p class="eyebrow">Moments from the island</p>
+        <h2 class="section-title" id="gallery-heading">Sri Lanka, <em>as we know it</em></h2>
+      </header>
+    </div>
+    <div class="zp-gallery-cols">
+      @for (col of gallery; track $index; let c = $index) {
+        <div class="zp-gallery-col" [attr.data-speed]="c % 2 === 0 ? -8 : 8">
+          @for (g of col; track g.image) {
+            <figure><img [src]="'img/' + g.image + '-900.webp'" [alt]="g.alt" loading="lazy" /></figure>
+          }
+        </div>
+      }
+    </div>
+  </section>
+</div>

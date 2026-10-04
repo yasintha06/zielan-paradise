@@ -12,6 +12,11 @@ class Config:
     FLASK_PORT = int(os.getenv('FLASK_PORT', 5000))
     ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', 'admin')
     ADMIN_PASSWORD = os.getenv('ADMIN_PASSWORD', 'ZeilanAdmin2025!')
+    # Comma-separated list of sites allowed to call the API from a browser.
+    ALLOWED_ORIGINS = [o.strip() for o in os.getenv(
+        'ALLOWED_ORIGINS',
+        'https://zeilanparadise.com,https://www.zeilanparadise.com' if FLASK_ENV == 'production' else '*'
+    ).split(',') if o.strip()]
 
 
 if Config.FLASK_ENV == 'production':

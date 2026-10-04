@@ -1,6 +1,29 @@
 {
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/*.{css,js,ico,png,jpg,jpeg,svg,webp,woff,woff2}"]
+    "exclude": ["/img/*", "/images/*", "/assets/*", "/*.{css,js,ico,png,jpg,jpeg,svg,webp,woff,woff2,json,txt,xml}"]
+  },
+  "routes": [
+    {
+      "route": "/img/*",
+      "headers": { "cache-control": "public, max-age=2592000" }
+    },
+    {
+      "route": "/*.{js,css}",
+      "headers": { "cache-control": "public, max-age=31536000, immutable" }
+    },
+    {
+      "route": "/index.html",
+      "headers": { "cache-control": "no-cache" }
+    }
+  ],
+  "globalHeaders": {
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "X-Frame-Options": "SAMEORIGIN",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=()"
+  },
+  "mimeTypes": {
+    "webp": "image/webp"
   }
 }

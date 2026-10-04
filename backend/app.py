@@ -23,8 +23,7 @@ def create_app():
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(seconds=Config.JWT_ACCESS_TOKEN_EXPIRES)
 
     # ── Extensions ─────────────────────────────────────────
-    import os
-    CORS(app, origins="*", supports_credentials=True)
+    CORS(app, origins=Config.ALLOWED_ORIGINS)
     JWTManager(app)
 
     # ── Database ───────────────────────────────────────────

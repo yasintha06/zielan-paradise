@@ -1,0 +1,53 @@
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(ellipse at 50% 40%, #0b4a43 0%, var(--ink) 70%);
+  clip-path: inset(0 0 0 0);
+}
+.preloader-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+.preloader-mark {
+  width: clamp(140px, 22vw, 200px);
+  height: auto;
+  filter: drop-shadow(0 10px 40px rgba(212, 175, 55, 0.35));
+}
+.preloader-word {
+  font-family: var(--ff-head);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ivory);
+  font-weight: 500;
+}
+.preloader-word em {
+  font-style: italic;
+  color: var(--gold);
+  letter-spacing: 0.12em;
+  text-transform: none;
+}
+.preloader-bar {
+  width: 180px;
+  height: 1px;
+  background: rgba(246, 240, 226, 0.15);
+  overflow: hidden;
+}
+.preloader-bar span {
+  display: block;
+  height: 100%;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.preloader-count {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  color: rgba(246, 240, 226, 0.5);
+  font-variant-numeric: tabular-nums;
+}
