@@ -1,211 +1,62 @@
-<!-- ═══════════════════════════════════════════════════════════════
-     ZEILAN PARADISE — ROUND TOURS PAGE
-     Editorial Luxury Multi-Day Journeys
-     ═══════════════════════════════════════════════════════════════ -->
+<app-page-hero
+  image="img/tour-grand-odyssey-2000.webp"
+  alt="Lake and green hills of the Sri Lankan highlands"
+  eyebrow="Multi-day journeys"
+  title="Signature round tours,"
+  titleEm="seven to fourteen days"
+  subtitle="Private journeys that thread the island's greatest places together, from the ancient kingdoms to the tea hills and the wild south. Each one is a starting point we reshape around you."
+  [crumbs]="[{ label: 'Round Tours' }]" />
 
-<!-- ═══════════════ PAGE HERO ═══════════════ -->
-<section class="page-hero">
-  <img class="page-hero-bg"
-    src="images/tours/tour-grand-odyssey.jpg"
-    alt="Sri Lanka aerial highlands" />
-  <div class="page-hero-overlay"></div>
+<section class="pg-section">
   <div class="container">
-    <div class="page-hero-content" appScrollReveal>
-      <div class="breadcrumb">
-        <a routerLink="/">Home</a>
-        <span>/</span>
-        <span>Round Tours</span>
+    <div class="rt-intro" appScrollReveal>
+      <p class="eyebrow">Expertly composed</p>
+      <p class="pg-lead">Every itinerary below is <em>fully private</em> and can be lengthened, shortened or rerouted. Think of them as a first draft of your journey.</p>
+    </div>
+
+    <div class="rt-bar" appScrollReveal>
+      <div class="chips" role="group" aria-label="Filter by length">
+        @for (f of filters; track f.key) {
+          @if (f.key === 'all' || countFor(f.key)) {
+            <button type="button" class="chip" [class.is-active]="activeFilter() === f.key" (click)="setFilter(f.key)"
+                    [attr.aria-pressed]="activeFilter() === f.key">
+              {{ f.label }}<small>{{ countFor(f.key) }}</small>
+            </button>
+          }
+        }
       </div>
-      <span class="section-label">Multi-Day Luxury Journeys</span>
-      <h1>Signature Round Tours</h1>
-      <p>Curated multi-day itineraries traversing Sri Lanka's greatest wonders — each journey designed around your pace, interests, and desire for discovery.</p>
+    </div>
+
+    <div class="rt-grid">
+      @for (t of filtered(); track t.id; let i = $index) {
+        <app-tour-card [tour]="t" [index]="i" appScrollReveal [style.transition-delay.ms]="(i % 2) * 120" />
+      } @empty {
+        <div class="pg-empty">
+          <p>No journeys of this length right now.</p>
+          <button type="button" class="btn btn-outline-teal btn-sm" (click)="setFilter('all')">Show all journeys</button>
+        </div>
+      }
     </div>
   </div>
 </section>
 
-
-<!-- ═══════════════ INTRO ═══════════════ -->
-<section class="rt-intro bg-white">
+<section class="pg-section pg-section--sand">
   <div class="container">
-    <div class="section-header center" appScrollReveal>
-      <span class="section-label">Expertly Curated</span>
-      <h2 class="section-title">Journeys That Define Sri Lanka</h2>
-      <div class="gold-rule"></div>
-      <p class="section-subtitle">
-        Every round tour is a carefully orchestrated symphony of culture, nature, and luxury — 
-        handcrafted by our local experts and refined through years of guest feedback.
-      </p>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════ FILTER + TOURS GRID ═══════════════ -->
-<section class="rt-tours bg-pearl">
-  <div class="container">
-    <!-- Filter Bar -->
-    <div class="filter-bar" appScrollReveal>
-      <button
-        *ngFor="let f of filters"
-        class="filter-btn"
-        [class.active]="activeFilter === f.key"
-        (click)="setFilter(f.key)"
-      >{{ f.label }}</button>
-    </div>
-
-    <!-- Tours Grid -->
-    <div class="tours-grid" appScrollReveal>
-      <article *ngFor="let t of filteredTours" class="tour-card" [id]="t.id">
-        <div class="tour-card-img-wrap">
-          <img class="tour-card-img" [src]="t.image" [alt]="t.title" loading="lazy" />
-          <span class="tour-badge" [ngClass]="t.badge?.class">{{ t.badge?.text }}</span>
-        </div>
-        <div class="tour-card-body">
-          <div class="tour-duration-badge">{{ t.duration }}</div>
-          <h3 class="tour-card-title">{{ t.title }}</h3>
-          
-          <p *ngIf="t.targetAudience" class="tour-target-audience">
-            <strong>Ideal For:</strong> {{ t.targetAudience }}
-          </p>
-
-          <p class="tour-card-desc">{{ t.description }}</p>
-
-          <div class="tour-card-route">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-            <span><strong>Route:</strong> {{ t.route }}</span>
-          </div>
-
-          <!-- Highlights -->
-          <div *ngIf="t.highlights && t.highlights.length > 0" class="tour-highlights-box">
-            <h6>Key Highlights:</h6>
-            <ul class="highlights-list">
-              <li *ngFor="let h of t.highlights.slice(0, 3)">✦ {{ h }}</li>
-            </ul>
-          </div>
-
-          <div class="tour-card-footer">
-            <div class="tour-card-nature">
-              <span class="luxury-tag">✦ 100% Private & Bespoke</span>
-            </div>
-            <div class="tour-card-actions">
-              <a [routerLink]="['/tours', t.id]" class="btn btn-outline-teal btn-sm" id="btn-view-itinerary">
-                View Full Itinerary
-              </a>
-              <a routerLink="/contact" [queryParams]="{ tour: t.id, tourName: t.title }" class="btn btn-gold btn-sm" id="btn-enquire-tour">
-                Enquire
-              </a>
-            </div>
-          </div>
-        </div>
-      </article>
-    </div>
-
-    <!-- Empty state -->
-    <div *ngIf="filteredTours.length === 0" class="rt-empty" appScrollReveal>
-      <p>No journeys found in this duration. <button (click)="setFilter('all')" class="rt-reset-link">View all journeys</button></p>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════ LUXURY ITINERARY MODAL ═══════════════ -->
-<div *ngIf="selectedTour" class="itinerary-modal-overlay" (click)="closeItineraryModal()">
-  <div class="itinerary-modal-container" (click)="$event.stopPropagation()">
-    <!-- Close Button -->
-    <button class="modal-close-btn" (click)="closeItineraryModal()" aria-label="Close modal">✕</button>
-
-    <!-- Modal Header -->
-    <div class="modal-header">
-      <span class="modal-badge">{{ selectedTour.badge?.text }}</span>
-      <h2>{{ selectedTour.title }}</h2>
-      <div class="modal-meta">
-        <span>⏱ <strong>{{ selectedTour.duration }}</strong></span>
-        <span>📍 <strong>{{ selectedTour.route }}</strong></span>
+    <header class="pg-head pg-head--split" appScrollReveal>
+      <div>
+        <p class="eyebrow">Always included</p>
+        <h2 class="section-title">The essentials,<br /><em>taken care of</em></h2>
       </div>
-      <p class="modal-audience" *ngIf="selectedTour.targetAudience">
-        <strong>Target Audience:</strong> {{ selectedTour.targetAudience }}
-      </p>
-    </div>
-
-    <!-- Modal Content -->
-    <div class="modal-body">
-      <!-- Full Highlights -->
-      <div class="modal-section" *ngIf="selectedTour.highlights?.length">
-        <h4 class="modal-section-title">✨ Journey Highlights</h4>
-        <ul class="modal-highlights-grid">
-          <li *ngFor="let h of selectedTour.highlights">
-            <span class="highlight-bullet">✓</span>
-            <span>{{ h }}</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Day by Day Timeline -->
-      <div class="modal-section" *ngIf="selectedTour.itinerary?.length">
-        <h4 class="modal-section-title">🗓️ Detailed Day-by-Day Itinerary</h4>
-        <div class="itinerary-timeline">
-          <div *ngFor="let day of selectedTour.itinerary" class="timeline-day">
-            <div class="timeline-day-marker">
-              <span class="day-number">{{ day.dayNumber || day.day }}</span>
-            </div>
-            <div class="timeline-day-content">
-              <h5>{{ day.title }} <span *ngIf="day.location" class="day-location">({{ day.location }})</span></h5>
-              <p>{{ day.description }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Inclusions & Exclusions -->
-      <div class="modal-section inclusions-exclusions-grid">
-        <div class="inc-box" *ngIf="selectedTour.inclusions?.length">
-          <h5>✓ What is Included</h5>
-          <ul>
-            <li *ngFor="let inc of selectedTour.inclusions">{{ inc }}</li>
-          </ul>
-        </div>
-        <div class="exc-box" *ngIf="selectedTour.exclusions?.length">
-          <h5>✕ Exclusions</h5>
-          <ul>
-            <li *ngFor="let exc of selectedTour.exclusions">{{ exc }}</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modal Footer -->
-    <div class="modal-footer">
-      <div class="modal-nature">
-        <span class="luxury-label">Private Guided Journey</span>
-        <strong>Tailored Proposal on Request</strong>
-      </div>
-      <a routerLink="/contact" [queryParams]="{ tour: selectedTour.id, tourName: selectedTour.title }" (click)="closeItineraryModal()" class="btn btn-gold btn-lg">
-        Customise & Request Quotation
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-  </div>
-</div>
-
-
-<!-- ═══════════════ TAILOR-MADE CTA ═══════════════ -->
-<section class="cta-banner">
-  <img class="cta-bg"
-    src="images/tours/tour-southern-coast.jpg"
-    alt="Sri Lanka tropical scenery" loading="lazy" />
-  <div class="cta-overlay"></div>
-  <div class="container">
-    <div class="cta-content" appScrollReveal>
-      <span class="section-label">Can't Find Your Perfect Tour?</span>
-      <h2>Let Us Craft Your Dream Journey</h2>
-      <p>Tell us your interests, travel dates, and budget — and our experts will design a completely bespoke itinerary just for you.</p>
-      <div class="cta-btns">
-        <a routerLink="/tailor-made" class="btn btn-gold btn-lg">
-          Start Planning
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a routerLink="/contact" class="btn btn-outline-white btn-lg">Get in Touch</a>
-      </div>
-    </div>
+      <a routerLink="/tailor-made" class="btn btn-teal" appMagnetic>Design your own route</a>
+    </header>
+    <ul class="rt-included">
+      @for (item of included; track item.title; let i = $index) {
+        <li appScrollReveal [style.transition-delay.ms]="i * 100">
+          <span class="rt-included-num">0{{ i + 1 }}</span>
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.text }}</p>
+        </li>
+      }
+    </ul>
   </div>
 </section>

@@ -1,150 +1,46 @@
-<!-- ═══════════════════════════════════════════════════════════════
-     ZEILAN PARADISE — DESTINATIONS PAGE
-     Live Data from MongoDB Atlas ("C-Lion Paradise")
-     ═══════════════════════════════════════════════════════════════ -->
+<app-page-hero
+  image="img/sigiriya-2000.webp"
+  alt="Sigiriya rock fortress rising above the jungle"
+  eyebrow="Explore Sri Lanka"
+  title="An island of"
+  titleEm="many worlds"
+  subtitle="Eight UNESCO World Heritage Sites, cloud-wrapped tea country, leopard forests and a coastline of golden coves, all within a few hours of each other."
+  [crumbs]="[{ label: 'Destinations' }]"
+  size="tall" />
 
-<!-- ═══════════════ PAGE HERO ═══════════════ -->
-<section class="page-hero">
-  <img class="page-hero-bg"
-    src="images/destinations/sigiriya.jpg"
-    alt="Sigiriya Rock Fortress aerial view" />
-  <div class="page-hero-overlay"></div>
+<section class="pg-section">
   <div class="container">
-    <div class="page-hero-content" appScrollReveal>
-      <div class="breadcrumb">
-        <a routerLink="/">Home</a>
-        <span>/</span>
-        <span>Destinations</span>
-      </div>
-      <span class="section-label">Explore Sri Lanka</span>
-      <h1>Iconic Destinations</h1>
-      <p>From ancient kingdoms to sun-kissed coastlines — discover the handpicked destinations shaping our luxury, bespoke itineraries.</p>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════ INTRO ═══════════════ -->
-<section class="dest-intro bg-white">
-  <div class="container">
-    <div class="section-header center" appScrollReveal>
-      <span class="section-label">A World Within an Island</span>
-      <h2 class="section-title">Every Region Tells a Story</h2>
-      <div class="gold-rule"></div>
-      <p class="section-subtitle">
-        Discover Sri Lanka's eight UNESCO World Heritage Sites, lush cloud forests, 
-        teeming wildlife parks, and pristine shores.
-      </p>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════ FILTER + DESTINATIONS GRID ═══════════════ -->
-<section class="dest-main bg-pearl">
-  <div class="container">
-    
-    <!-- Dynamic Tag & Theme Filter Bar -->
-    <div class="dest-filter-section" appScrollReveal>
-      <div class="filter-group">
-        <span class="filter-label">Filter by Experience / Tag:</span>
-        <div class="filter-chips">
-          <button
-            *ngFor="let tag of availableTags"
-            class="filter-chip-btn"
-            [class.active]="selectedTag === tag"
-            (click)="setTagFilter(tag)">
-            {{ tag === 'all' ? 'All Experiences' : ('✦ ' + tag) }}
-          </button>
-        </div>
+    <div class="ds-bar" appScrollReveal>
+      <p class="pg-lead">Every region has its own rhythm. Choose the places that call to you and <em>we'll weave them together.</em></p>
+      <div class="chips" role="group" aria-label="Filter by region">
+        <button type="button" class="chip" [class.is-active]="region() === 'all'" (click)="setRegion('all')">All regions<small>{{ countFor('all') }}</small></button>
+        @for (r of regions(); track r) {
+          <button type="button" class="chip" [class.is-active]="region() === r" (click)="setRegion(r)">{{ r }}<small>{{ countFor(r) }}</small></button>
+        }
       </div>
     </div>
 
-    <!-- Active Filter Indicator -->
-    <div *ngIf="selectedTag !== 'all' || selectedRegion !== 'all'" class="active-filter-banner" appScrollReveal>
-      <span>Showing destinations tagged with <strong>"{{ selectedTag !== 'all' ? selectedTag : selectedRegion }}"</strong></span>
-      <button (click)="resetFilters()" class="clear-filter-btn">✕ Clear Filter</button>
-    </div>
-
-    <!-- Loading State -->
-    <div *ngIf="isLoading" class="dest-loading" appScrollReveal>
-      <div class="spinner"></div>
-      <p>Fetching curated destinations from database...</p>
-    </div>
-
-    <!-- Error State -->
-    <div *ngIf="errorMessage && !isLoading" class="dest-error" appScrollReveal>
-      <p>{{ errorMessage }}</p>
-      <button (click)="fetchDestinations()" class="btn btn-outline-teal btn-sm">Try Again</button>
-    </div>
-
-    <!-- Destinations Grid -->
-    <div *ngIf="!isLoading" class="dest-full-grid" appScrollReveal>
-      <article *ngFor="let d of filteredDestinations; let i = index"
-        class="dest-full-card"
-        [class.dest-featured]="i === 0 && selectedTag === 'all'"
-        [id]="'dest-' + (d.name | lowercase)">
-        <div class="dest-full-img-wrap">
-          <img [src]="d.imageUrl || d.image" [alt]="d.name" loading="lazy" />
-          <div class="dest-full-overlay"></div>
-          <div class="dest-full-region" *ngIf="d.region">{{ d.region }}</div>
-        </div>
-        <div class="dest-full-body">
-          <span class="dest-full-tagline">{{ d.tagline }}</span>
-          <h3 class="dest-full-name">{{ d.name }}</h3>
-          <p class="dest-full-desc">{{ d.description }}</p>
-          
-          <!-- Clickable Tags -->
-          <div class="dest-full-tags" *ngIf="d.tags && d.tags.length > 0">
-            <button
-              *ngFor="let tag of d.tags"
-              type="button"
-              class="dest-tag-btn"
-              [class.active-tag]="selectedTag === tag"
-              (click)="setTagFilter(tag)"
-              [title]="'Filter by ' + tag">
-              {{ tag }}
-            </button>
+    <div class="ds-list">
+      @for (d of filtered(); track d.name; let i = $index; let odd = $odd) {
+        <article class="ds-row" [class.ds-row--flip]="odd" [id]="anchor(d)">
+          <div class="ds-img img-reveal" appScrollReveal>
+            <img [src]="imageUrl(d.imageUrl || d.image)" [alt]="d.name" loading="lazy" appParallax="10" />
           </div>
-
-          <div class="dest-card-actions">
-            <a routerLink="/contact" [queryParams]="{ destination: d.name }" class="dest-full-link">
-              Incorporate in My Itinerary
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
+          <div class="ds-text" appScrollReveal>
+            <span class="ds-num">{{ i + 1 < 10 ? '0' + (i + 1) : i + 1 }}</span>
+            <p class="eyebrow">{{ d.region }}</p>
+            <h2>{{ d.name }}</h2>
+            <p class="ds-tagline">{{ d.tagline }}</p>
+            <p class="ds-desc">{{ d.description }}</p>
+            @if (d.tags.length) {
+              <ul class="ds-tags">
+                @for (t of d.tags; track t) { <li>{{ t }}</li> }
+              </ul>
+            }
+            <a class="pg-link" routerLink="/tailor-made" [queryParams]="{ destination: d.name }">Include in my journey <span aria-hidden="true">&rarr;</span></a>
           </div>
-        </div>
-      </article>
-    </div>
-
-    <!-- Empty State -->
-    <div *ngIf="!isLoading && filteredDestinations.length === 0" class="dest-empty" appScrollReveal>
-      <p>No destinations found matching this filter.</p>
-      <button (click)="resetFilters()" class="btn btn-gold btn-sm">View All Destinations</button>
-    </div>
-
-  </div>
-</section>
-
-
-<!-- ═══════════════ TAILOR-MADE CTA ═══════════════ -->
-<section class="cta-banner">
-  <img class="cta-bg"
-    src="images/destinations/galle.jpg"
-    alt="Galle Fort sunset" loading="lazy" />
-  <div class="cta-overlay"></div>
-  <div class="container">
-    <div class="cta-content" appScrollReveal>
-      <span class="section-label">Your Dream Destination Awaits</span>
-      <h2>Ready to Explore Sri Lanka?</h2>
-      <p>Let our experts weave your favourite destinations into a seamless, luxury itinerary crafted just for you.</p>
-      <div class="cta-btns">
-        <a routerLink="/tailor-made" class="btn btn-gold btn-lg">
-          Design My Journey
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a routerLink="/round-tours" class="btn btn-outline-white btn-lg">View Round Tours</a>
-      </div>
+        </article>
+      }
     </div>
   </div>
 </section>

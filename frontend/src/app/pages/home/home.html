@@ -105,7 +105,7 @@
           <a routerLink="/destinations" class="btn btn-outline-teal">All Destinations</a>
         </div>
         @for (d of destinations; track d.name; let i = $index) {
-          <a class="zp-dest-card" routerLink="/destinations" data-cursor="Explore">
+          <a class="zp-dest-card" routerLink="/destinations" [fragment]="d.anchor" data-cursor="Explore">
             <div class="zp-dest-img">
               <img [src]="'img/' + d.image + '-900.webp'" [alt]="d.name" loading="lazy" width="900" height="1200" />
             </div>
@@ -156,20 +156,7 @@
       </header>
       <div class="zp-tours-grid">
         @for (t of tours; track t.id; let i = $index) {
-          <a class="zp-tour" [routerLink]="['/tours', t.id]" appScrollReveal [style.transition-delay.ms]="i * 120" data-cursor="View">
-            <div class="zp-tour-img">
-              <img [src]="t.image" [alt]="t.title" loading="lazy" data-parallax="8" />
-              @if (t.badge?.text) {
-                <span class="zp-tour-badge">{{ t.badge?.text }}</span>
-              }
-            </div>
-            <div class="zp-tour-body">
-              <p class="zp-tour-dur">{{ t.duration }}</p>
-              <h3>{{ t.title }}</h3>
-              <p class="zp-tour-desc">{{ t.description }}</p>
-              <span class="zp-link">View journey <span aria-hidden="true">&rarr;</span></span>
-            </div>
-          </a>
+          <app-tour-card class="zp-tour" [tour]="t" [index]="i" appScrollReveal [style.transition-delay.ms]="i * 120" />
         }
       </div>
       <div class="zp-center" appScrollReveal>

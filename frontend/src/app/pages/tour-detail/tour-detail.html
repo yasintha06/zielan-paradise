@@ -1,110 +1,157 @@
-<!-- ═══════════════════════════════════════════════════════════════
-     ZEILAN PARADISE — TOUR DETAIL PAGE
-     ═══════════════════════════════════════════════════════════════ -->
-<div *ngIf="isLoading" class="tour-detail-loading">
-  <div class="spinner"></div>
-</div>
-
-<div *ngIf="!isLoading && tour" class="tour-detail-wrapper">
-  
-  <!-- HERO BANNER -->
-  <section class="td-hero">
-    <img class="td-hero-bg" [src]="tour.image" [alt]="tour.title" />
-    <div class="td-hero-overlay"></div>
-    <div class="container">
-      <div class="td-hero-content">
-        <div class="breadcrumb">
-          <a routerLink="/">Home</a>
-          <span>/</span>
-          <a routerLink="/round-tours">Round Tours</a>
-          <span>/</span>
-          <span>{{ tour.title }}</span>
+@switch (state()) {
+  @case ('loading') {
+    <div class="td-loading" aria-live="polite"><span></span>Loading journey…</div>
+  }
+  @case ('missing') {
+    <section class="td-missing">
+      <div class="container">
+        <p class="eyebrow">Not found</p>
+        <h1 class="section-title">We couldn't find <em>that journey</em></h1>
+        <p>It may have been renamed or retired. Have a look at our current journeys instead.</p>
+        <div class="td-missing-actions">
+          <a routerLink="/round-tours" class="btn btn-teal">Round tours</a>
+          <a routerLink="/day-tours" class="btn btn-outline-teal">Day tours</a>
         </div>
-        <span class="td-badge" *ngIf="tour.badge">{{ tour.badge.text }}</span>
-        <h1 class="td-title">{{ tour.title }}</h1>
-        <div class="td-meta">
-          <span>⏱ <strong>{{ tour.duration }}</strong></span>
-          <span>📍 <strong>{{ tour.route }}</strong></span>
-        </div>
-        <p class="td-desc">{{ tour.description }}</p>
       </div>
-    </div>
-  </section>
+    </section>
+  }
+  @case ('ready') {
+    @if (tour(); as t) {
+      <app-page-hero
+        [image]="heroImage(t)"
+        [alt]="t.title"
+        [eyebrow]="t.badge?.text || (t.type === 'day' ? 'Day tour' : 'Round tour')"
+        [title]="t.title"
+        [subtitle]="t.description || ''"
+        [crumbs]="crumbs(t)"
+        size="tall">
+        <button type="button" class="btn btn-gold td-hero-cta" (click)="toEnquire()">Enquire about this journey</button>
+      </app-page-hero>
 
-  <!-- CONTENT & SIDEBAR SPLIT -->
-  <section class="td-content-section bg-pearl">
-    <div class="container">
-      <div class="td-grid">
-        
-        <!-- MAIN CONTENT (Accordion) -->
-        <div class="td-main">
-          
-          <div class="td-highlights" *ngIf="tour.highlights && tour.highlights.length">
-            <h3>Journey Highlights</h3>
-            <ul>
-              <li *ngFor="let h of tour.highlights">✦ {{ h }}</li>
-            </ul>
-          </div>
+      <!-- key facts -->
+      <div class="td-facts">
+        <div class="container td-facts-row">
+          <div><span>Duration</span><strong>{{ t.duration }}</strong></div>
+          @if (t.type === 'day' && t.startTime) {
+            <div><span>Starts</span><strong>{{ t.startTime }}</strong></div>
+          }
+          @if (t.guests) { <div><span>Group</span><strong>{{ t.guests }}</strong></div> }
+          @if (t.itinerary?.length) { <div><span>Stops</span><strong>{{ stops(t).length }} places</strong></div> }
+          <div><span>Style</span><strong>Private &amp; tailor-made</strong></div>
+        </div>
+      </div>
 
-          <div class="td-itinerary" *ngIf="tour.itinerary && tour.itinerary.length">
-            <h3>Day-by-Day Itinerary</h3>
-            
-            <div class="itinerary-accordion">
-              <div *ngFor="let day of tour.itinerary; let i = index" class="accordion-item" [class.expanded]="expandedDayIndex === i">
-                <button class="accordion-header" (click)="toggleDay(i)" [attr.aria-expanded]="expandedDayIndex === i">
-                  <div class="accordion-header-left">
-                    <span class="day-badge">Day {{ day.dayNumber || day.day }}</span>
-                    <h4>{{ day.title }} <span class="day-location" *ngIf="day.location">({{ day.location }})</span></h4>
-                  </div>
-                  <span class="accordion-icon">{{ expandedDayIndex === i ? '−' : '+' }}</span>
-                </button>
-                <div class="accordion-content">
-                  <div class="accordion-content-inner">
-                    <p>{{ day.description }}</p>
-                    <div class="day-logistics" *ngIf="day.accommodation || day.meals">
-                      <p *ngIf="day.accommodation"><strong>🛌 Accommodation:</strong> {{ day.accommodation }}</p>
-                      <p *ngIf="day.meals"><strong>🍽️ Meals:</strong> {{ day.meals }}</p>
-                    </div>
-                  </div>
-                </div>
+      <section class="pg-section">
+        <div class="container td-layout">
+          <div class="td-main">
+            @if (t.targetAudience) {
+              <div class="td-block" appScrollReveal>
+                <p class="eyebrow">Ideal for</p>
+                <p class="pg-lead">{{ t.targetAudience }}</p>
               </div>
-            </div>
+            }
+
+            @if (stops(t).length > 1) {
+              <div class="td-block" appScrollReveal>
+                <p class="eyebrow">The route</p>
+                <ol class="td-route">
+                  @for (s of stops(t); track $index) { <li>{{ s }}</li> }
+                </ol>
+              </div>
+            }
+
+            @if (t.highlights?.length) {
+              <div class="td-block" appScrollReveal>
+                <p class="eyebrow">Highlights</p>
+                <ul class="td-highlights">
+                  @for (h of t.highlights ?? []; track $index) { <li>{{ h }}</li> }
+                </ul>
+              </div>
+            }
+
+            @if (t.itinerary?.length) {
+              <div class="td-block">
+                <header class="td-block-head" appScrollReveal>
+                  <p class="eyebrow">Day by day</p>
+                  <h2 class="section-title">The <em>itinerary</em></h2>
+                </header>
+                <ol class="td-days">
+                  @for (d of t.itinerary ?? []; track $index; let i = $index) {
+                    <li class="td-day" [class.is-open]="openDay() === i" appScrollReveal>
+                      <button type="button" (click)="toggleDay(i)" [attr.aria-expanded]="openDay() === i" [attr.aria-controls]="'day-' + i">
+                        <span class="td-day-num"><small>Day</small>{{ dayLabel(d, i) }}</span>
+                        <span class="td-day-title">
+                          <strong>{{ d.title }}</strong>
+                          @if (d.location) { <em>{{ d.location }}</em> }
+                        </span>
+                        <span class="td-day-icon" aria-hidden="true"></span>
+                      </button>
+                      <div class="td-day-body" [id]="'day-' + i">
+                        <div>
+                          <p>{{ d.description }}</p>
+                          @if (d.accommodation || d.meals) {
+                            <p class="td-day-meta">
+                              @if (d.accommodation) { <span>Stay: {{ d.accommodation }}</span> }
+                              @if (d.meals) { <span>Meals: {{ d.meals }}</span> }
+                            </p>
+                          }
+                        </div>
+                      </div>
+                    </li>
+                  }
+                </ol>
+              </div>
+            }
+
+            @if (t.inclusions?.length || t.exclusions?.length) {
+              <div class="td-block td-incl" appScrollReveal>
+                @if (t.inclusions?.length) {
+                  <div>
+                    <h3>Included</h3>
+                    <ul class="ticks">@for (x of t.inclusions ?? []; track $index) { <li>{{ x }}</li> }</ul>
+                  </div>
+                }
+                @if (t.exclusions?.length) {
+                  <div>
+                    <h3>Not included</h3>
+                    <ul class="ticks ticks--cross">@for (x of t.exclusions ?? []; track $index) { <li>{{ x }}</li> }</ul>
+                  </div>
+                }
+              </div>
+            }
           </div>
 
-          <div class="td-inclusions-grid" *ngIf="tour.inclusions || tour.exclusions">
-            <div class="td-inc-box" *ngIf="tour.inclusions && tour.inclusions.length">
-              <h4>✓ What is Included</h4>
-              <ul>
-                <li *ngFor="let inc of tour.inclusions">{{ inc }}</li>
-              </ul>
+          <aside class="td-side" id="enquire">
+            <div class="td-card">
+              <p class="eyebrow">Make it yours</p>
+              <h3>Shape this journey around you</h3>
+              <p>Change the pace, swap a hotel, add a few days on the beach. Tell us what you'd like and we'll send a private proposal.</p>
+              <a routerLink="/contact" [queryParams]="{ tour: t.id, tourName: t.title }" class="btn btn-gold" appMagnetic>Request a proposal</a>
+              <a [href]="whatsappLink(t)" target="_blank" rel="noopener noreferrer" class="td-card-wa">or ask on WhatsApp &rarr;</a>
+              <p class="td-card-price">{{ t.priceDisplay && t.priceDisplay !== 'Tailor-made' ? t.priceDisplay : 'Priced on request' }}</p>
             </div>
-            <div class="td-exc-box" *ngIf="tour.exclusions && tour.exclusions.length">
-              <h4>✕ Exclusions</h4>
-              <ul>
-                <li *ngFor="let exc of tour.exclusions">{{ exc }}</li>
-              </ul>
-            </div>
-          </div>
-
+          </aside>
         </div>
-        
-        <!-- STICKY SIDEBAR -->
-        <aside class="td-sidebar-container">
-          <div class="td-sticky-card">
-            <h3>Tailor This Journey</h3>
-            <p>Every itinerary can be customised around your exact dates, pace, and accommodation preferences.</p>
-            <div class="td-sidebar-meta">
-              <p><strong>Ideal For:</strong> {{ tour.targetAudience || 'Couples & Families' }}</p>
-              <p><strong>Style:</strong> 100% Private & Bespoke</p>
-            </div>
-            <a routerLink="/contact" [queryParams]="{ tour: tour.id, tourName: tour.title }" class="btn btn-gold btn-full">
-              Bespoke Quote / Enquire Now
-            </a>
-            <p class="td-guarantee">✦ Speak directly with our UK-based concierge</p>
-          </div>
-        </aside>
+      </section>
 
-      </div>
-    </div>
-  </section>
-</div>
+      @if (related().length) {
+        <section class="pg-section pg-section--sand">
+          <div class="container">
+            <header class="pg-head pg-head--split" appScrollReveal>
+              <div>
+                <p class="eyebrow">You might also like</p>
+                <h2 class="section-title">More <em>journeys</em></h2>
+              </div>
+              <a [routerLink]="t.type === 'day' ? '/day-tours' : '/round-tours'" class="pg-link">See them all <span aria-hidden="true">&rarr;</span></a>
+            </header>
+            <div class="td-related">
+              @for (r of related(); track r.id; let i = $index) {
+                <app-tour-card [tour]="r" [index]="i" appScrollReveal [style.transition-delay.ms]="i * 110" />
+              }
+            </div>
+          </div>
+        </section>
+      }
+    }
+  }
+}

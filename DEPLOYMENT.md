@@ -35,11 +35,9 @@ Both apps deploy automatically from GitHub Actions when you push to `main`:
    ```
    Replace `<password>` with the real one. If the password contains `@ : / ? #` characters, URL-encode them.
 
-The API creates its collections (`tours`, `destinations`, `testimonials`, `inquiries`) and seeds starter content on first start. To load the full catalogue, run `seed_db.py` from your PC once with `MONGO_URI` set in `backend/.env`:
-
-```bash
-cd backend && venv/Scripts/python seed_db.py
-```
+On first start against an empty database, the API fills `tours` and `destinations` with the catalogue from
+`backend/fallback_data.py` (the same tours and itineraries as `data/*.json`). Testimonials are never seeded:
+add only genuine reviews. Enquiries go into the `inquiries` collection.
 
 ---
 
@@ -61,8 +59,15 @@ cd backend && venv/Scripts/python seed_db.py
    | `ADMIN_PASSWORD` | a strong admin password |
    | `ALLOWED_ORIGINS` | `https://zeilanparadise.com,https://www.zeilanparadise.com,https://<your-swa>.azurestaticapps.net` |
    | `SCM_DO_BUILD_DURING_DEPLOYMENT` | `true` (installs `requirements.txt` on deploy) |
+   | `ADMIN_NOTIFICATION_EMAIL` | where new-enquiry emails should go |
+   | `SMTP_HOST` / `SMTP_PORT` | e.g. `smtp.gmail.com` / `587` |
+   | `SMTP_USER` / `SMTP_PASS` | the sending mailbox and its password (for Gmail, an [App Password](https://myaccount.google.com/apppasswords)) |
+   | `EMAIL_FROM` | optional display sender, e.g. `Zeilan Paradise <hello@zeilanparadise.com>` |
 
    The API refuses to start in production if `MONGO_URI`, `JWT_SECRET_KEY` or `ADMIN_PASSWORD` is missing.
+   Every enquiry is saved to MongoDB **and** emailed to you (if SMTP is set). If the database is unreachable and
+   email isn't configured, the API rejects the enquiry and the website offers the visitor WhatsApp/email instead,
+   so no lead is silently lost.
 3. **Settings → Configuration → General settings → Startup Command**:
    ```
    gunicorn --bind=0.0.0.0 --timeout 600 "app:create_app()"

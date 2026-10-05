@@ -1,0 +1,87 @@
+:host { display: block; }
+.tc { display: flex; flex-direction: column; height: 100%; color: var(--ink); }
+.tc-img {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--sand);
+}
+.tc-img img { width: 100%; height: 100%; object-fit: cover; transition: filter 0.8s; }
+.tc:hover .tc-img img { filter: brightness(1.06) saturate(1.1); }
+.tc-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  background: rgba(247, 243, 234, 0.92);
+  backdrop-filter: blur(6px);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+.tc-num {
+  position: absolute;
+  right: 1.1rem;
+  bottom: 0.6rem;
+  font-family: var(--ff-head);
+  font-size: 3.2rem;
+  line-height: 1;
+  color: rgba(247, 243, 234, 0.85);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+.tc-body { display: flex; flex-direction: column; flex: 1; padding-top: 1.4rem; }
+.tc-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-dark);
+}
+.tc-title { font-size: clamp(1.6rem, 2.2vw, 2.1rem); font-weight: 500; margin: 0.45rem 0 0.6rem; line-height: 1.1; }
+.tc-title a { transition: color 0.4s; }
+.tc:hover .tc-title a { color: var(--teal); }
+.tc-text { font-size: 0.92rem; line-height: 1.7; color: var(--text-soft); margin-bottom: 1rem; }
+.tc-route {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.55rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.78rem;
+  color: var(--teal);
+}
+.tc-route i { width: 10px; height: 1px; background: var(--gold); }
+.tc-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: auto;
+  padding-top: 1.1rem;
+  border-top: 1px solid var(--pearl-dark);
+}
+.tc-link,
+.tc-enquire {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+.tc-link { color: var(--teal); display: inline-flex; gap: 0.5rem; transition: gap 0.4s var(--ease-out); }
+.tc-link:hover { gap: 0.9rem; }
+.tc-enquire {
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--gold);
+  border-radius: 999px;
+  color: var(--gold-dark);
+  transition: background 0.4s, color 0.4s;
+}
+.tc-enquire:hover { background: var(--gold); color: var(--ink); }

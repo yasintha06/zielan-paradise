@@ -20,6 +20,7 @@ def create_app():
 
     # ── Configuration ──────────────────────────────────────
     app.config['JWT_SECRET_KEY'] = Config.JWT_SECRET_KEY
+    app.config['MAX_CONTENT_LENGTH'] = 64 * 1024  # enquiries are small; reject oversized payloads
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(seconds=Config.JWT_ACCESS_TOKEN_EXPIRES)
 
     # ── Extensions ─────────────────────────────────────────

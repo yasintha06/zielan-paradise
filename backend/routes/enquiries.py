@@ -7,6 +7,8 @@ GET  /api/admin/enquiries — Protected: View all leads & inquiries
 from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required
 from datetime import datetime, timezone
+import html
+import re
 import os
 import smtplib
 from email.mime.text import MIMEText
@@ -16,69 +18,86 @@ from db import get_db
 
 enquiries_bp = Blueprint('enquiries', __name__)
 
+EMAIL_RE = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+
+def _env(*names, default=None):
+    """First non-empty environment variable among the given names (supports SMTP_* and MAIL_* naming)."""
+    for name in names:
+        value = os.environ.get(name)
+        if value:
+            return value
+    return default
+
+
+def email_configured():
+    return bool(_env("SMTP_USER", "MAIL_USERNAME") and _env("SMTP_PASS", "MAIL_PASSWORD")
+                and _env("ADMIN_NOTIFICATION_EMAIL", "ADMIN_EMAIL"))
+
+
+def _lead_email_html(data):
+    e = lambda v: html.escape(str(v if v not in (None, "") else "N/A"))
+    contact = data.get('contact') or {}
+    name = data.get('clientName') or {}
+    trip = data.get('tripDetails') or {}
+    prefs = data.get('preferences') or {}
+    travellers = trip.get('travelers') or {}
+    full_name = f"{name.get('firstName', data.get('firstName', ''))} {name.get('lastName', data.get('lastName', ''))}".strip()
+
+    rows = [
+        ("Form", "Tailor-made planner" if trip else "Contact form"),
+        ("Name", full_name),
+        ("Email", contact.get('email', data.get('email'))),
+        ("Phone / WhatsApp", contact.get('phone', data.get('phone'))),
+        ("Interested in", data.get('interest')),
+        ("Travel dates", trip.get('estimatedMonth', data.get('travelDates'))),
+        ("Duration", f"{trip['durationDays']} days" if trip.get('durationDays') else None),
+        ("Travellers", f"{travellers.get('adults', 0)} adults, {travellers.get('children', 0)} children" if travellers else data.get('guests')),
+        ("Accommodation", trip.get('accommodationStyle')),
+        ("Interests", ", ".join(prefs.get('interests', []))),
+        ("Regions", ", ".join(prefs.get('regions', []))),
+        ("Pace", prefs.get('pace')),
+        ("Planning stage", data.get('planningStage')),
+        ("Message", data.get('additionalNotes') or data.get('message')),
+    ]
+    body = "".join(
+        f'<tr><td style="padding:6px 12px;color:#666;vertical-align:top">{e(k)}</td>'
+        f'<td style="padding:6px 12px;white-space:pre-wrap">{e(v)}</td></tr>'
+        for k, v in rows if v
+    )
+    return (f'<html><body style="font-family:Arial,sans-serif;color:#222">'
+            f'<h2 style="color:#005b52">New enquiry</h2><table>{body}</table></body></html>')
+
+
 def send_lead_email_async(data):
     def send_email():
-        sender_email = os.environ.get("MAIL_USERNAME")
-        sender_password = os.environ.get("MAIL_PASSWORD")
-        recipient_email = os.environ.get("ADMIN_EMAIL")
-        
-        if not sender_email or not sender_password or not recipient_email:
-            print("[INFO] Email credentials not fully configured in .env. Skipping email dispatch.")
+        sender = _env("SMTP_USER", "MAIL_USERNAME")
+        password = _env("SMTP_PASS", "MAIL_PASSWORD")
+        recipient = _env("ADMIN_NOTIFICATION_EMAIL", "ADMIN_EMAIL")
+        if not (sender and password and recipient):
+            print("[INFO] Email not configured (SMTP_USER/SMTP_PASS/ADMIN_NOTIFICATION_EMAIL). Skipping.")
             return
 
-        msg = MIMEMultipart("alternative")
-        msg["Subject"] = f"New Lead: {data.get('status', 'Bespoke Inquiry')} from {data.get('clientName', {}).get('firstName', '')}"
-        msg["From"] = sender_email
-        msg["To"] = recipient_email
+        contact = data.get('contact') or {}
+        name = data.get('clientName') or {}
+        first = name.get('firstName') or data.get('firstName', '')
+        reply_to = contact.get('email') or data.get('email')
 
-        # Format HTML body
-        client_name = f"{data.get('clientName', {}).get('firstName', '')} {data.get('clientName', {}).get('lastName', '')}".strip() or data.get('firstName', 'Unknown')
-        contact = data.get('contact', {})
-        email = contact.get('email', data.get('email', 'N/A'))
-        phone = contact.get('phone', data.get('phone', 'N/A'))
-        
-        trip = data.get('tripDetails', {})
-        prefs = data.get('preferences', {})
-        
-        html = f"""
-        <html>
-        <body style="font-family: Arial, sans-serif; color: #333;">
-            <h2 style="color: #005b52;">New Lead Summary Sheet</h2>
-            <hr>
-            <h3>Client Details</h3>
-            <p><strong>Name:</strong> {client_name}</p>
-            <p><strong>Email:</strong> {email}</p>
-            <p><strong>Phone:</strong> {phone}</p>
-            
-            <h3>Trip Details</h3>
-            <p><strong>Estimated Month:</strong> {trip.get('estimatedMonth', 'N/A')}</p>
-            <p><strong>Duration:</strong> {trip.get('durationDays', 'N/A')} Days</p>
-            <p><strong>Accommodation Style:</strong> {trip.get('accommodationStyle', 'N/A')}</p>
-            
-            <h3>Preferences</h3>
-            <p><strong>Regions:</strong> {', '.join(prefs.get('regions', []))}</p>
-            <p><strong>Interests:</strong> {', '.join(prefs.get('interests', []))}</p>
-            <p><strong>Pace:</strong> {prefs.get('pace', 'N/A')}</p>
-            
-            <h3>Planning Stage</h3>
-            <p>{data.get('planningStage', 'N/A')}</p>
-            <p><strong>Notes / Message:</strong> {data.get('additionalNotes', data.get('message', 'None'))}</p>
-        </body>
-        </html>
-        """
-        
-        msg.attach(MIMEText(html, "html"))
-        
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = f"New enquiry from {first}".strip()
+        msg["From"] = _env("EMAIL_FROM", default=sender)
+        msg["To"] = recipient
+        if reply_to:
+            msg["Reply-To"] = reply_to
+        msg.attach(MIMEText(_lead_email_html(data), "html"))
+
         try:
-            # Connect to SMTP (Example using Gmail / generic TLS)
-            smtp_server = os.environ.get("MAIL_SERVER", "smtp.gmail.com")
-            smtp_port = int(os.environ.get("MAIL_PORT", 587))
-            
-            with smtplib.SMTP(smtp_server, smtp_port) as server:
+            host = _env("SMTP_HOST", "MAIL_SERVER", default="smtp.gmail.com")
+            port = int(_env("SMTP_PORT", "MAIL_PORT", default="587"))
+            with smtplib.SMTP(host, port, timeout=20) as server:
                 server.starttls()
-                server.login(sender_email, sender_password)
+                server.login(sender, password)
                 server.send_message(msg)
-            print("[INFO] Lead notification email dispatched successfully.")
+            print("[INFO] Lead notification email sent.")
         except Exception as e:
             print(f"[ERROR] Failed to send email: {e}")
 
@@ -86,7 +105,6 @@ def send_lead_email_async(data):
     thread = threading.Thread(target=send_email)
     thread.daemon = True
     thread.start()
-
 
 
 @enquiries_bp.route('/api/inquiries', methods=['POST'])
@@ -121,6 +139,12 @@ def submit_inquiry():
 
     if not first_name or not email:
         return jsonify({"error": "First name and email are required."}), 400
+    if not EMAIL_RE.match(email):
+        return jsonify({"error": "Please enter a valid email address."}), 400
+
+    # Honeypot: real visitors never see or fill the hidden "website" field.
+    if data.pop('website', ''):
+        return jsonify({"message": "Thank you."}), 201
 
     # Ensure standardized fields
     now_iso = datetime.now(timezone.utc).isoformat()
@@ -140,8 +164,12 @@ def submit_inquiry():
         except Exception as e:
             print(f"[ERROR] Failed to save inquiry to MongoDB: {e}")
             return jsonify({"error": "Failed to store inquiry in database."}), 500
+    elif email_configured():
+        # No database: the email notification is the only record, so it must be configured.
+        send_lead_email_async(data)
     else:
-        data.pop('_id', None)
+        print("[ERROR] Inquiry received but neither MongoDB nor email is available; it cannot be stored.")
+        return jsonify({"error": "We couldn't receive your enquiry right now. Please contact us directly."}), 503
 
     return jsonify({
         "message": "Thank you. Our destination experts will review your preferences and craft your bespoke itinerary within 24 hours.",

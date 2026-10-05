@@ -6,7 +6,7 @@ import { MotionService } from '../../services/motion.service';
 import { MagneticDirective } from '../../directives/magnetic';
 
 /** Routes whose page starts on a light background, so the bar must be solid from the top. */
-const LIGHT_TOP_ROUTES = ['/privacy', '/terms-and-conditions', '/admin'];
+const LIGHT_TOP_ROUTES = ['/admin'];
 
 @Component({
   selector: 'app-navbar',

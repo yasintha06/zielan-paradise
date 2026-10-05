@@ -1,5 +1,6 @@
 <footer class="zp-footer">
   <div class="container">
+    @if (showCta()) {
     <div class="zp-footer-cta">
       <p class="eyebrow">Begin the conversation</p>
       <h2 class="zp-footer-title">Let's design your<br /><em>Sri Lankan story.</em></h2>
@@ -8,6 +9,7 @@
         <a [href]="site.whatsappHref" target="_blank" rel="noopener noreferrer" class="btn btn-ghost-light btn-lg">WhatsApp Us</a>
       </div>
     </div>
+    }
 
     <div class="zp-footer-grid">
       <div class="zp-footer-brand">

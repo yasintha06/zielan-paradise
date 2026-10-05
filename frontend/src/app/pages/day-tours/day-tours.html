@@ -1,106 +1,55 @@
-<!-- ═══════════════════════════════════════════════════════════════
-     ZEILAN PARADISE — DAY TOURS PAGE
-     ═══════════════════════════════════════════════════════════════ -->
+<app-page-hero
+  image="img/yala-2000.webp"
+  alt="Leopard resting on a branch in Yala National Park"
+  eyebrow="Single-day experiences"
+  title="A perfect day,"
+  titleEm="privately guided"
+  subtitle="A leopard at first light, a sunset on the ramparts of Galle, a morning with the blue whales. Hand-picked excursions to make every day on the island count."
+  [crumbs]="[{ label: 'Day Tours' }]" />
 
-<!-- ═══════════════ PAGE HERO ═══════════════ -->
-<section class="page-hero">
-  <img class="page-hero-bg"
-    src="https://images.unsplash.com/photo-1569154941061-e231b4725ef1?w=1920&auto=format&fit=crop&q=80"
-    alt="Sri Lanka wildlife safari" />
-  <div class="page-hero-overlay"></div>
+<section class="pg-section">
   <div class="container">
-    <div class="page-hero-content" appScrollReveal>
-      <div class="breadcrumb">
-        <a routerLink="/">Home</a>
-        <span>/</span>
-        <span>Day Tours</span>
+    <div class="dt-bar" appScrollReveal>
+      <h2 class="section-title">Choose your <em>day</em></h2>
+      <div class="chips" role="group" aria-label="Filter by theme">
+        @for (f of filters; track f.key) {
+          @if (f.key === 'all' || countFor(f.key)) {
+            <button type="button" class="chip" [class.is-active]="activeFilter() === f.key" (click)="setFilter(f.key)"
+                    [attr.aria-pressed]="activeFilter() === f.key">
+              {{ f.label }}<small>{{ countFor(f.key) }}</small>
+            </button>
+          }
+        }
       </div>
-      <span class="section-label">Single-Day Luxury Experiences</span>
-      <h1>Day Tours</h1>
-      <p>Handpicked single-day experiences to make the most of every moment on the island — from dawn safaris to sunset coastal cruises.</p>
+    </div>
+
+    <div class="dt-grid">
+      @for (t of filtered(); track t.id; let i = $index) {
+        <app-tour-card [tour]="t" [index]="i" appScrollReveal [style.transition-delay.ms]="(i % 3) * 110" />
+      } @empty {
+        <div class="pg-empty">
+          <p>Nothing in this theme right now.</p>
+          <button type="button" class="btn btn-outline-teal btn-sm" (click)="setFilter('all')">Show all experiences</button>
+        </div>
+      }
     </div>
   </div>
 </section>
 
-
-<!-- ═══════════════ FILTER + TOURS GRID ═══════════════ -->
-<section class="dt-tours bg-pearl">
-  <div class="container">
-    <!-- Filter Bar -->
-    <div class="filter-bar" appScrollReveal>
-      <button
-        *ngFor="let f of filters"
-        class="filter-btn"
-        [class.active]="activeFilter === f.key"
-        (click)="setFilter(f.key)"
-      >{{ f.label }}</button>
+<section class="dt-notes">
+  <div class="container dt-notes-inner">
+    <div appScrollReveal>
+      <p class="eyebrow">Good to know</p>
+      <h2 class="section-title">Days designed<br /><em>around you</em></h2>
+      <a routerLink="/round-tours" class="pg-link dt-notes-link">Prefer a longer journey? See round tours <span aria-hidden="true">&rarr;</span></a>
     </div>
-
-    <!-- Tours Grid -->
-    <div class="dt-grid" appScrollReveal>
-      <article *ngFor="let t of filteredTours" class="dt-card" [id]="t.id">
-        <div class="dt-card-img-wrap">
-          <img [src]="t.image" [alt]="t.title" loading="lazy" />
-          <div class="dt-card-badges">
-            <span class="dt-badge dt-badge-duration">{{ t.duration }}</span>
-          </div>
-        </div>
-        <div class="dt-card-body">
-          <h3 class="dt-card-title">{{ t.title }}</h3>
-          <p class="dt-card-desc">{{ t.description }}</p>
-
-          <!-- Highlights -->
-          <div class="dt-highlights">
-            <span *ngFor="let h of t.highlights" class="dt-highlight-tag">{{ h }}</span>
-          </div>
-
-          <div class="dt-card-meta">
-            <div class="dt-meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-              <span>Starts {{ t.startTime }}</span>
-            </div>
-            <div class="dt-meta-item">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
-              <span>{{ t.guests }}</span>
-            </div>
-          </div>
-
-          <div class="dt-card-footer">
-            <div class="dt-tag-nature">
-              <span class="dt-nature-label">✦ Bespoke Quote</span>
-            </div>
-            <a routerLink="/contact" [queryParams]="{ tour: t.id, tourName: t.title }" class="btn btn-teal btn-sm">Enquire Now</a>
-          </div>
-        </div>
-      </article>
-    </div>
-
-    <!-- Empty state -->
-    <div *ngIf="filteredTours.length === 0" class="rt-empty" appScrollReveal>
-      <p>No tours found in this category. <button (click)="setFilter('all')" class="rt-reset-link">View all tours</button></p>
-    </div>
-  </div>
-</section>
-
-
-<!-- ═══════════════ CTA ═══════════════ -->
-<section class="cta-banner">
-  <img class="cta-bg"
-    src="https://images.unsplash.com/photo-1584551246679-0daf3d275d0f?w=1920&auto=format&fit=crop&q=80"
-    alt="Sri Lanka tea highlands" loading="lazy" />
-  <div class="cta-overlay"></div>
-  <div class="container">
-    <div class="cta-content" appScrollReveal>
-      <span class="section-label">Looking for a Multi-Day Journey?</span>
-      <h2>Explore Our Round Tours</h2>
-      <p>Combine multiple day experiences into an unforgettable multi-day itinerary, crafted around your pace and interests.</p>
-      <div class="cta-btns">
-        <a routerLink="/round-tours" class="btn btn-gold btn-lg">
-          View Round Tours
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a routerLink="/tailor-made" class="btn btn-outline-white btn-lg">Tailor-Made</a>
-      </div>
-    </div>
+    <ul>
+      @for (n of notes; track n.title; let i = $index) {
+        <li appScrollReveal [style.transition-delay.ms]="i * 100">
+          <h3>{{ n.title }}</h3>
+          <p>{{ n.text }}</p>
+        </li>
+      }
+    </ul>
   </div>
 </section>

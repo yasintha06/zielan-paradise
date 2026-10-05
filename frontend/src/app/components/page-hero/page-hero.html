@@ -1,0 +1,21 @@
+<section class="ph" [class.ph--tall]="size === 'tall'">
+  <div class="ph-media">
+    <img [src]="image" [alt]="alt" fetchpriority="high" />
+  </div>
+  <div class="ph-shade"></div>
+  <div class="container ph-content">
+    @if (crumbs.length) {
+      <nav class="ph-crumbs ph-fade" aria-label="Breadcrumb">
+        <a routerLink="/">Home</a>
+        @for (c of crumbs; track c.label) {
+          <span aria-hidden="true">/</span>
+          @if (c.link) { <a [routerLink]="c.link">{{ c.label }}</a> } @else { <span aria-current="page">{{ c.label }}</span> }
+        }
+      </nav>
+    }
+    @if (eyebrow) { <p class="eyebrow ph-fade">{{ eyebrow }}</p> }
+    <h1 class="ph-title">{{ title }}@if (titleEm) {<br /><em>{{ titleEm }}</em>}</h1>
+    @if (subtitle) { <p class="ph-sub ph-fade">{{ subtitle }}</p> }
+    <div class="ph-fade"><ng-content /></div>
+  </div>
+</section>

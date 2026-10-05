@@ -1,1 +1,24 @@
-<p>tour-card works!</p>
+<article class="tc">
+  <a class="tc-img" [routerLink]="['/tours', tour.id]" data-cursor="View" [attr.aria-label]="tour.title">
+    <img [src]="image" [alt]="tour.title" loading="lazy" appParallax="8" />
+    @if (tour.badge?.text) { <span class="tc-badge">{{ tour.badge?.text }}</span> }
+    <span class="tc-num">{{ index + 1 < 10 ? '0' + (index + 1) : index + 1 }}</span>
+  </a>
+  <div class="tc-body">
+    <p class="tc-meta">
+      <span>{{ tour.duration }}</span>
+      @if (tour.startTime) { <span>Starts {{ tour.startTime.split(' (')[0] }}</span> }
+    </p>
+    <h3 class="tc-title"><a [routerLink]="['/tours', tour.id]">{{ tour.title }}</a></h3>
+    @if (summary) { <p class="tc-text">{{ summary }}</p> }
+    @if (stops.length > 1) {
+      <p class="tc-route">
+        @for (s of stops; track $index; let last = $last) { <span>{{ s }}</span>@if (!last) {<i aria-hidden="true"></i>} }
+      </p>
+    }
+    <div class="tc-actions">
+      <a class="tc-link" [routerLink]="['/tours', tour.id]">{{ tour.type === 'day' ? 'Details' : 'View itinerary' }} <span aria-hidden="true">&rarr;</span></a>
+      <a class="tc-enquire" routerLink="/contact" [queryParams]="{ tour: tour.id, tourName: tour.title }">Enquire</a>
+    </div>
+  </div>
+</article>

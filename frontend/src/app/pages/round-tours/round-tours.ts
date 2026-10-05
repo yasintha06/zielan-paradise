@@ -1,65 +1,58 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { TourService, Tour } from '../../services/tour.service';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal';
+import { MagneticDirective } from '../../directives/magnetic';
+import { PageHeroComponent } from '../../components/page-hero/page-hero';
+import { TourCardComponent } from '../../components/tour-card/tour-card';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 @Component({
   selector: 'app-round-tours',
   standalone: true,
-  imports: [CommonModule, RouterLink, ScrollRevealDirective],
+  imports: [RouterLink, ScrollRevealDirective, MagneticDirective, PageHeroComponent, TourCardComponent],
   templateUrl: './round-tours.html',
   styleUrl: './round-tours.css',
-  encapsulation: ViewEncapsulation.None
 })
 export class RoundTours implements OnInit {
-  activeFilter = 'all';
-  selectedTour: Tour | null = null;
-  tours: Tour[] = [];
-  isLoading = true;
+  private tourService = inject(TourService);
 
-  filters = [
-    { key: 'all', label: 'All Journeys' },
-    { key: '14', label: '14 Days' },
-    { key: '10', label: '10 Days' },
-    { key: '8', label: '8 Days' },
-    { key: '7', label: '7 Days' }
+  tours = signal<Tour[]>([]);
+  activeFilter = signal('all');
+
+  readonly filters = [
+    { key: 'all', label: 'All journeys' },
+    { key: '14', label: '14 days' },
+    { key: '10', label: '10 days' },
+    { key: '8', label: '8 days' },
+    { key: '7', label: '7 days' },
   ];
 
-  constructor(private tourService: TourService) {}
+  readonly included = [
+    { title: 'Your own chauffeur-guide', text: 'A private, air-conditioned vehicle with an English-speaking guide for the whole journey.' },
+    { title: 'Hand-picked stays', text: 'Boutique hotels, planters’ bungalows and beach villas chosen for character and comfort.' },
+    { title: 'Entrance fees & safaris', text: 'Heritage site permits, national park fees and private jeeps with naturalists.' },
+    { title: 'Support around the clock', text: 'A local team on call 24/7 from the moment you land.' },
+  ];
 
-  ngOnInit(): void {
-    this.fetchRoundTours();
+  filtered = computed(() => {
+    const f = this.activeFilter();
+    return f === 'all' ? this.tours() : this.tours().filter((t) => t.category === f || t.duration.startsWith(f));
+  });
+
+  countFor(key: string): number {
+    return key === 'all' ? this.tours().length : this.tours().filter((t) => t.category === key || t.duration.startsWith(key)).length;
   }
 
-  fetchRoundTours(): void {
-    this.isLoading = true;
-    this.tourService.getRoundTours().subscribe({
-      next: (data) => {
-        this.tours = data || [];
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Error fetching round tours from database:', err);
-        this.isLoading = false;
-      }
+  ngOnInit(): void {
+    this.tourService.getRoundTours().subscribe((data) => {
+      this.tours.set(data);
+      setTimeout(() => ScrollTrigger.refresh(), 100);
     });
   }
 
   setFilter(key: string): void {
-    this.activeFilter = key;
-  }
-
-  get filteredTours(): Tour[] {
-    if (this.activeFilter === 'all') return this.tours;
-    return this.tours.filter(t => t.category === this.activeFilter || t.duration.startsWith(this.activeFilter));
-  }
-
-  openItineraryModal(tour: Tour): void {
-    this.selectedTour = tour;
-  }
-
-  closeItineraryModal(): void {
-    this.selectedTour = null;
+    this.activeFilter.set(key);
+    setTimeout(() => ScrollTrigger.refresh(), 100);
   }
 }

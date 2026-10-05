@@ -1,97 +1,102 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal';
+import { MagneticDirective } from '../../directives/magnetic';
+import { PageHeroComponent } from '../../components/page-hero/page-hero';
 import { ApiService } from '../../services/api';
+import { SITE } from '../../config/site';
+
+const EMAIL_RE = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+
+function blankForm() {
+  return { firstName: '', lastName: '', email: '', phone: '', travelDates: '', guests: '', interest: '', message: '' };
+}
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, ScrollRevealDirective],
+  imports: [FormsModule, RouterLink, ScrollRevealDirective, MagneticDirective, PageHeroComponent],
   templateUrl: './contact.html',
   styleUrl: './contact.css',
-  encapsulation: ViewEncapsulation.None
 })
 export class Contact implements OnInit {
-  formData = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    travelDates: '',
-    guests: '',
-    interest: '',
-    message: ''
-  };
+  private api = inject(ApiService);
+  private route = inject(ActivatedRoute);
 
-  isSubmitted = false;
-  isSubmitting = false;
-
-  interestOptions = [
-    'Round Tours',
-    'Day Tours',
-    'Tailor-Made Journey',
-    'Honeymoon / Anniversary',
-    'Family Holiday',
-    'Wellness Retreat',
-    'Wildlife Safari',
-    'General Enquiry'
+  readonly site = SITE;
+  readonly interestOptions = [
+    'Round tour', 'Day tour', 'Tailor-made journey', 'Honeymoon or anniversary',
+    'Family holiday', 'Wellness retreat', 'Wildlife safari', 'Something else',
   ];
 
-  constructor(
-    private apiService: ApiService,
-    private route: ActivatedRoute
-  ) {}
+  form = blankForm();
+  website = ''; // honeypot
+  submitting = signal(false);
+  submitted = signal(false);
+  error = signal('');
+  sendFailed = signal(false);
 
-  ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      const tourId = params['tour'] || '';
-      const tourName = params['tourName'] || '';
-
+  ngOnInit(): void {
+    this.route.queryParamMap.subscribe((params) => {
+      const tourName = params.get('tourName');
+      const tourId = params.get('tour') ?? '';
       if (tourName) {
-        this.formData.message = `I am interested in requesting a bespoke proposal for: "${tourName}" (ID: ${tourId}).\n\nPlease provide itinerary customisation options and private chauffeur availability.`;
-        if (tourId.startsWith('day-') || tourId.startsWith('dt-')) {
-          this.formData.interest = 'Day Tours';
-        } else {
-          this.formData.interest = 'Round Tours';
-        }
+        this.form.interest = tourId.startsWith('day-') ? 'Day tour' : 'Round tour';
+        this.form.message = `I'm interested in "${tourName}". Could you send me a proposal and let me know how it could be tailored?`;
       }
     });
   }
 
-  onSubmit() {
-    this.isSubmitting = true;
-    
-    const enquiryPayload = {
-      type: 'contact',
-      ...this.formData
-    };
+  submit(): void {
+    this.error.set('');
+    const f = this.form;
+    if (!f.firstName.trim() || !f.email.trim() || !f.message.trim()) {
+      this.error.set('Please fill in your first name, email and a short message.');
+      return;
+    }
+    if (!EMAIL_RE.test(f.email.trim())) {
+      this.error.set('That email address doesn’t look quite right.');
+      return;
+    }
 
-    this.apiService.submitEnquiry(enquiryPayload).subscribe({
-      next: (res) => {
-        this.isSubmitting = false;
-        this.isSubmitted = true;
+    this.submitting.set(true);
+    this.sendFailed.set(false);
+    const payload = Object.fromEntries(Object.entries(f).map(([k, v]) => [k, v.trim()]));
+    this.api.submitEnquiry({ type: 'contact', ...payload, website: this.website }).subscribe({
+      next: () => {
+        this.submitting.set(false);
+        this.submitted.set(true);
       },
       error: (err) => {
-        this.isSubmitting = false;
-        console.error('Error submitting enquiry:', err);
-        alert('There was an error submitting your enquiry. Please try again.');
-      }
+        this.submitting.set(false);
+        this.sendFailed.set(true);
+        this.error.set(err?.error?.error || 'We couldn’t send your message just now.');
+      },
     });
   }
 
-  resetForm() {
-    this.isSubmitted = false;
-    this.formData = {
-      firstName: '',
-      lastName: '',
-      email: '',
-      phone: '',
-      travelDates: '',
-      guests: '',
-      interest: '',
-      message: ''
-    };
+  private summary(): string {
+    const f = this.form;
+    const details = [
+      `Name: ${f.firstName} ${f.lastName}`.trim(),
+      f.interest ? `Interested in: ${f.interest}` : '',
+      f.travelDates ? `Dates: ${f.travelDates}` : '',
+      f.guests ? `Travellers: ${f.guests}` : '',
+    ].filter(Boolean);
+    return `${details.join('\n')}\n\n${f.message}`;
+  }
+
+  whatsappLink(): string {
+    return `${this.site.whatsappHref}?text=${encodeURIComponent(this.summary())}`;
+  }
+
+  mailLink(): string {
+    return `mailto:${this.site.email}?subject=${encodeURIComponent('Enquiry from the website')}&body=${encodeURIComponent(this.summary())}`;
+  }
+
+  reset(): void {
+    this.form = blankForm();
+    this.submitted.set(false);
   }
 }

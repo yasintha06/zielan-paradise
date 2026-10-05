@@ -1,62 +1,82 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink, Router } from '@angular/router';
+import { Component, OnInit, inject, signal } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+import { switchMap, catchError, of, map } from 'rxjs';
 import { TourService, Tour } from '../../services/tour.service';
+import { ScrollRevealDirective } from '../../directives/scroll-reveal';
+import { MagneticDirective } from '../../directives/magnetic';
+import { PageHeroComponent, Crumb } from '../../components/page-hero/page-hero';
+import { TourCardComponent } from '../../components/tour-card/tour-card';
+import { imageUrl } from '../../utils/image';
+import { SITE } from '../../config/site';
+import { MotionService } from '../../services/motion.service';
 
 @Component({
   selector: 'app-tour-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [RouterLink, ScrollRevealDirective, MagneticDirective, PageHeroComponent, TourCardComponent],
   templateUrl: './tour-detail.html',
   styleUrl: './tour-detail.css',
-  encapsulation: ViewEncapsulation.None
 })
 export class TourDetail implements OnInit {
-  tour: Tour | null = null;
-  isLoading = true;
-  expandedDayIndex: number = 0;
+  private route = inject(ActivatedRoute);
+  private tourService = inject(TourService);
+  private title = inject(Title);
+  private motion = inject(MotionService);
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private tourService: TourService
-  ) {}
+  readonly site = SITE;
+  tour = signal<Tour | null>(null);
+  related = signal<Tour[]>([]);
+  state = signal<'loading' | 'ready' | 'missing'>('loading');
+  openDay = signal(0);
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (id) {
-        this.fetchTour(id);
-      } else {
-        this.router.navigate(['/']);
-      }
+    this.route.paramMap.pipe(
+      map((p) => p.get('id') ?? ''),
+      switchMap((id) => {
+        this.state.set('loading');
+        return this.tourService.getTourById(id).pipe(catchError(() => of(null)));
+      })
+    ).subscribe((tour) => {
+      this.tour.set(tour);
+      this.state.set(tour ? 'ready' : 'missing');
+      this.openDay.set(0);
+      if (!tour) return;
+      this.title.setTitle(`${tour.title} | Zeilan Paradise`);
+      this.tourService.getTours(tour.type).subscribe((list) =>
+        this.related.set(list.filter((t) => t.id !== tour.id).slice(0, 3))
+      );
     });
   }
 
-  fetchTour(id: string): void {
-    this.isLoading = true;
-    this.tourService.getTourById(id).subscribe({
-      next: (data) => {
-        if (data) {
-          this.tour = data;
-        } else {
-          this.router.navigate(['/round-tours']);
-        }
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Failed to load tour details', err);
-        this.isLoading = false;
-        this.router.navigate(['/round-tours']);
-      }
-    });
+  heroImage(t: Tour): string {
+    return imageUrl(t.image, 2000);
   }
 
-  toggleDay(index: number): void {
-    if (this.expandedDayIndex === index) {
-      this.expandedDayIndex = -1; // Close if already open
-    } else {
-      this.expandedDayIndex = index;
-    }
+  crumbs(t: Tour): Crumb[] {
+    return t.type === 'day'
+      ? [{ label: 'Day Tours', link: '/day-tours' }, { label: t.title }]
+      : [{ label: 'Round Tours', link: '/round-tours' }, { label: t.title }];
+  }
+
+  stops(t: Tour): string[] {
+    return (t.route ?? '').split('→').map((s) => s.trim()).filter(Boolean);
+  }
+
+  dayLabel(d: { day?: string; dayNumber?: number | string }, i: number): string {
+    const raw = String(d.day ?? d.dayNumber ?? i + 1);
+    return raw.replace(/^day\s*/i, '');
+  }
+
+  toEnquire(): void {
+    this.motion.scrollTo('#enquire');
+  }
+
+  toggleDay(i: number): void {
+    this.openDay.set(this.openDay() === i ? -1 : i);
+  }
+
+  whatsappLink(t: Tour): string {
+    return `${this.site.whatsappHref}?text=${encodeURIComponent(`Hello, I'm interested in "${t.title}". Could you tell me more?`)}`;
   }
 }

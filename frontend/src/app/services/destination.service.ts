@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map, of } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { DESTINATIONS } from '../data/catalog';
 
 export interface Destination {
   id?: string;
@@ -36,7 +37,10 @@ export class DestinationService {
     if (params.length > 0) {
       url += `?${params.join('&')}`;
     }
-    return this.http.get<Destination[]>(url);
+    return this.http.get<Destination[]>(url).pipe(
+      map((list) => (list?.length ? list : DESTINATIONS)),
+      catchError(() => of(DESTINATIONS))
+    );
   }
 
   /**

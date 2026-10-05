@@ -1,413 +1,222 @@
-<!-- ═══════════════════════════════════════════════════════════════
-     ZEILAN PARADISE — BESPOKE JOURNEY DESIGNER
-     Consultative Luxury Intake System for Tailor-Made Itineraries
-     ═══════════════════════════════════════════════════════════════ -->
+<app-page-hero
+  image="img/tour-cultural-triangle-2000.webp"
+  alt="Ancient stone pillars in the Cultural Triangle"
+  eyebrow="Tailor-made"
+  title="A journey that exists"
+  titleEm="only for you"
+  subtitle="Tell us how you love to travel. We'll compose a private, day-by-day proposal around your interests, pace and style, then refine it with you until it's exactly right."
+  [crumbs]="[{ label: 'Tailor-Made' }]" />
 
-<!-- ═══════════════ PAGE HERO ═══════════════ -->
-<section class="page-hero">
-  <img class="page-hero-bg"
-    src="images/tours/tour-cultural-triangle.jpg"
-    alt="Bespoke Luxury Travel Sri Lanka" />
-  <div class="page-hero-overlay"></div>
-  <div class="container">
-    <div class="page-hero-content" appScrollReveal>
-      <div class="breadcrumb">
-        <a routerLink="/">Home</a>
-        <span>/</span>
-        <span>Tailor-Made</span>
-      </div>
-      <span class="section-label">Consultative Luxury Travel</span>
-      <h1>Design Your Bespoke Journey</h1>
-      <p>Every itinerary is handcrafted from a blank canvas — curated around your interests, desired pace, and accommodation style by our private destination specialists.</p>
-    </div>
-  </div>
-</section>
+<section class="pg-section tm" id="planner">
+  <div class="container tm-layout">
 
+    <!-- ── Left: progress + live summary ── -->
+    <aside class="tm-side" appScrollReveal>
+      <p class="eyebrow">Journey planner</p>
+      <h2 class="tm-side-title">Three short steps,<br /><em>about two minutes</em></h2>
 
-<!-- ═══════════════ THE PROCESS ═══════════════ -->
-<section class="tm-process bg-white">
-  <div class="container">
-    <div class="section-header center" appScrollReveal>
-      <span class="section-label">The Concierge Method</span>
-      <h2 class="section-title">How We Craft Your Itinerary</h2>
-      <div class="gold-rule"></div>
-      <p class="section-subtitle">A seamless four-step consultative experience designed exclusively for discerning international travelers.</p>
-    </div>
-    <div class="process-grid" appScrollReveal>
-      <div *ngFor="let s of howItWorks" class="process-card">
-        <div class="process-step-num">{{ s.step }}</div>
-        <h4 class="process-title">{{ s.title }}</h4>
-        <p class="process-desc">{{ s.desc }}</p>
-      </div>
-    </div>
-  </div>
-</section>
+      @if (!submitted()) {
+        <ol class="tm-steps">
+          @for (s of steps; track s; let i = $index) {
+            <li [class.is-current]="step() === i + 1" [class.is-done]="step() > i + 1">
+              <button type="button" (click)="goTo(i + 1)" [disabled]="i + 1 > step() + 1">
+                <span class="tm-step-num">0{{ i + 1 }}</span>{{ s }}
+              </button>
+            </li>
+          }
+        </ol>
+      }
 
-
-<!-- ═══════════════ MULTI-STEP CONSULTATIVE DESIGNER ═══════════════ -->
-<section class="tm-form-section bg-pearl" id="tm-designer-form">
-  <div class="container">
-
-    <!-- ── SUCCESS CONFIRMATION ── -->
-    <div *ngIf="isSubmitted" class="tm-success-card" appScrollReveal>
-      <div class="success-icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="42" height="42"><path d="M20 6L9 17l-5-5"/></svg>
-      </div>
-      <span class="success-subtitle">Inquiry Received & Priority Logged</span>
-      <h2>Your Bespoke Proposal is Underway</h2>
-      <div class="gold-rule"></div>
-      <p class="success-message">
-        Thank you. Our destination experts will review your preferences and craft your bespoke itinerary within 24 hours.
-      </p>
-      
-      <div class="success-summary-box">
-        <h4>Trip Overview Logged</h4>
-        <div class="summary-grid">
-          <div><span>Traveler:</span> <strong>{{ inquiryData.clientName.firstName }} {{ inquiryData.clientName.lastName }}</strong></div>
-          <div><span>Target Timing:</span> <strong>{{ inquiryData.tripDetails.estimatedMonth }} ({{ inquiryData.tripDetails.durationDays }} Days)</strong></div>
-          <div><span>Party:</span> <strong>{{ inquiryData.tripDetails.travelers.adults }} Adults <span *ngIf="inquiryData.tripDetails.travelers.children">, {{ inquiryData.tripDetails.travelers.children }} Children</span></strong></div>
-          <div><span>Pace & Style:</span> <strong>{{ inquiryData.preferences.pace }} • {{ inquiryData.tripDetails.accommodationStyle }}</strong></div>
-        </div>
+      <div class="tm-summary">
+        <h3>Your journey so far</h3>
+        <dl>
+          <dt>Interests</dt><dd>{{ inquiry.preferences.interests.join(', ') || 'Not chosen yet' }}</dd>
+          <dt>Regions</dt><dd>{{ inquiry.preferences.regions.join(', ') || 'Open to suggestions' }}</dd>
+          <dt>Pace</dt><dd>{{ inquiry.preferences.pace }}</dd>
+          <dt>When</dt><dd>{{ inquiry.tripDetails.estimatedMonth }} · {{ inquiry.tripDetails.durationDays }} days</dd>
+          <dt>Party</dt><dd>{{ inquiry.tripDetails.travelers.adults }} adults@if (inquiry.tripDetails.travelers.children) {, {{ inquiry.tripDetails.travelers.children }} children}</dd>
+          <dt>Stays</dt><dd>{{ inquiry.tripDetails.accommodationStyle }}</dd>
+        </dl>
       </div>
 
-      <div class="success-actions">
-        <button (click)="resetForm()" class="btn btn-outline-teal btn-md">Design Another Itinerary</button>
-        <a routerLink="/" class="btn btn-gold btn-md">Return to Homepage</a>
-      </div>
-    </div>
+      <p class="tm-alt">Prefer to talk? <a [href]="site.whatsappHref" target="_blank" rel="noopener noreferrer">WhatsApp us</a> or call <a [href]="site.phoneHref">{{ site.phoneDisplay }}</a>.</p>
+    </aside>
 
-    <!-- ── MULTI-STEP FORM ── -->
-    <div *ngIf="!isSubmitted" class="tm-designer-container" appScrollReveal>
-      
-      <!-- Stepper Header -->
-      <div class="stepper-header">
-        <div class="stepper-track">
-          <div class="stepper-step" [class.active]="currentStep === 1" [class.completed]="currentStep > 1" (click)="currentStep > 1 ? currentStep = 1 : null">
-            <div class="step-circle"><span>1</span></div>
-            <div class="step-meta">
-              <span class="step-tag">Step 01</span>
-              <span class="step-name">The Vision</span>
-            </div>
-          </div>
-          <div class="stepper-divider" [class.active-divider]="currentStep > 1"></div>
-          
-          <div class="stepper-step" [class.active]="currentStep === 2" [class.completed]="currentStep > 2" (click)="currentStep > 2 ? currentStep = 2 : null">
-            <div class="step-circle"><span>2</span></div>
-            <div class="step-meta">
-              <span class="step-tag">Step 02</span>
-              <span class="step-name">The Logistics</span>
-            </div>
-          </div>
-          <div class="stepper-divider" [class.active-divider]="currentStep > 2"></div>
-
-          <div class="stepper-step" [class.active]="currentStep === 3">
-            <div class="step-circle"><span>3</span></div>
-            <div class="step-meta">
-              <span class="step-tag">Step 03</span>
-              <span class="step-name">The Traveler</span>
-            </div>
+    <!-- ── Right: the form ── -->
+    <div class="tm-main" appScrollReveal>
+      @if (submitted()) {
+        <div class="tm-done">
+          <span class="tm-done-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M20 6 9 17l-5-5" /></svg>
+          </span>
+          <p class="eyebrow">Request received</p>
+          <h2 class="section-title">Thank you, {{ inquiry.clientName.firstName }}.<br /><em>Your journey begins.</em></h2>
+          <p>We'll study your preferences and come back to you at <strong>{{ inquiry.contact.email }}</strong> with a first proposal. If anything comes to mind in the meantime, just reply to our email or message us on WhatsApp.</p>
+          <div class="tm-actions">
+            <a routerLink="/round-tours" class="btn btn-teal">Browse journeys</a>
+            <button type="button" class="btn btn-outline-teal" (click)="reset()">Plan another trip</button>
           </div>
         </div>
-      </div>
+      } @else {
+        <form (ngSubmit)="submit()" novalidate>
+          <!-- honeypot -->
+          <input class="tm-hp" type="text" name="website" [(ngModel)]="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
-      <!-- Error Toast -->
-      <div *ngIf="submitError" class="tm-error-toast">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-        <span>{{ submitError }}</span>
-      </div>
-
-      <form (ngSubmit)="onSubmit()" class="tm-form-content">
-
-        <!-- ════════════════════════════════════════════════
-             STEP 1: THE VISION
-             ════════════════════════════════════════════════ -->
-        <div *ngIf="currentStep === 1" class="step-pane animate-fade">
-          <div class="pane-header">
-            <span class="pane-label">Preferences & Highlights</span>
-            <h3>What Inspires Your Journey?</h3>
-            <p>Select your signature interests and the regions you most desire to discover.</p>
-          </div>
-
-          <!-- Interests Checkboxes -->
-          <div class="form-section-block">
-            <label class="block-title">✦ Select Your Travel Interests <span class="required-note">(Select all that appeal)</span></label>
-            <div class="choice-cards-grid">
-              <div
-                *ngFor="let item of availableInterests"
-                class="choice-card"
-                [class.selected]="isInterestSelected(item.name)"
-                (click)="toggleInterest(item.name)">
-                <div class="choice-checkbox">
-                  <span *ngIf="isInterestSelected(item.name)">✓</span>
+          @switch (step()) {
+            @case (1) {
+              <fieldset class="tm-block">
+                <legend><span>01</span> What draws you to Sri Lanka?</legend>
+                <p class="tm-hint">Choose as many as you like.</p>
+                <div class="tm-cards">
+                  @for (o of interests; track o.name) {
+                    <label class="tm-card" [class.is-on]="inquiry.preferences.interests.includes(o.name)">
+                      <input type="checkbox" [checked]="inquiry.preferences.interests.includes(o.name)" (change)="toggle(inquiry.preferences.interests, o.name)" />
+                      <strong>{{ o.name }}</strong><small>{{ o.desc }}</small>
+                    </label>
+                  }
                 </div>
-                <div class="choice-icon">{{ item.icon }}</div>
-                <div class="choice-text">
-                  <h5>{{ item.name }}</h5>
-                  <p>{{ item.desc }}</p>
+              </fieldset>
+
+              <fieldset class="tm-block">
+                <legend><span>02</span> Any regions you already have in mind?</legend>
+                <p class="tm-hint">Optional. Leave blank and we'll suggest the best fit.</p>
+                <div class="tm-cards">
+                  @for (o of regions; track o.name) {
+                    <label class="tm-card" [class.is-on]="inquiry.preferences.regions.includes(o.name)">
+                      <input type="checkbox" [checked]="inquiry.preferences.regions.includes(o.name)" (change)="toggle(inquiry.preferences.regions, o.name)" />
+                      <strong>{{ o.name }}</strong><small>{{ o.desc }}</small>
+                    </label>
+                  }
                 </div>
-              </div>
-            </div>
-          </div>
+              </fieldset>
 
-          <!-- Must-See Regions Checkboxes -->
-          <div class="form-section-block">
-            <label class="block-title">✦ Must-See Regions & Highlights <span class="required-note">(Select 1 or more)</span></label>
-            <div class="choice-cards-grid region-grid">
-              <div
-                *ngFor="let reg of availableRegions"
-                class="choice-card region-card"
-                [class.selected]="isRegionSelected(reg.name)"
-                (click)="toggleRegion(reg.name)">
-                <div class="choice-checkbox">
-                  <span *ngIf="isRegionSelected(reg.name)">✓</span>
+              <fieldset class="tm-block">
+                <legend><span>03</span> Your ideal pace</legend>
+                <div class="tm-cards tm-cards--3">
+                  @for (o of paces; track o.value) {
+                    <label class="tm-card tm-card--radio" [class.is-on]="inquiry.preferences.pace === o.value">
+                      <input type="radio" name="pace" [value]="o.value" [(ngModel)]="inquiry.preferences.pace" />
+                      <strong>{{ o.value }}</strong><small>{{ o.desc }}</small>
+                    </label>
+                  }
                 </div>
-                <div class="choice-text">
-                  <h5>{{ reg.name }}</h5>
-                  <p>{{ reg.desc }}</p>
+              </fieldset>
+            }
+
+            @case (2) {
+              <fieldset class="tm-block">
+                <legend><span>04</span> When, and for how long?</legend>
+                <div class="tm-fields">
+                  <label class="tm-field">
+                    <span>Travel month</span>
+                    <select name="month" [(ngModel)]="inquiry.tripDetails.estimatedMonth">
+                      @for (m of months; track m) { <option [value]="m">{{ m }}</option> }
+                    </select>
+                  </label>
+                  <label class="tm-field">
+                    <span>Length of stay: <strong>{{ inquiry.tripDetails.durationDays }} days</strong></span>
+                    <input class="tm-range" type="range" min="3" max="28" name="days" [(ngModel)]="inquiry.tripDetails.durationDays" />
+                  </label>
                 </div>
-              </div>
-            </div>
-          </div>
+              </fieldset>
 
-          <!-- Pace of Travel Radio -->
-          <div class="form-section-block">
-            <label class="block-title">✦ Preferred Pace of Travel</label>
-            <div class="pace-options-grid">
-              <label
-                *ngFor="let p of paceOptions"
-                class="pace-card"
-                [class.selected]="inquiryData.preferences.pace === p.value">
-                <input
-                  type="radio"
-                  name="pace"
-                  [value]="p.value"
-                  [(ngModel)]="inquiryData.preferences.pace" />
-                <div class="pace-content">
-                  <h5>{{ p.label }}</h5>
-                  <p>{{ p.desc }}</p>
+              <fieldset class="tm-block">
+                <legend><span>05</span> Who's travelling?</legend>
+                <div class="tm-fields">
+                  <div class="tm-field">
+                    <span id="adults-label">Adults</span>
+                    <div class="tm-counter" role="group" aria-labelledby="adults-label">
+                      <button type="button" (click)="bump('adults', -1)" aria-label="One fewer adult">&minus;</button>
+                      <output>{{ inquiry.tripDetails.travelers.adults }}</output>
+                      <button type="button" (click)="bump('adults', 1)" aria-label="One more adult">+</button>
+                    </div>
+                  </div>
+                  <div class="tm-field">
+                    <span id="children-label">Children (under 12)</span>
+                    <div class="tm-counter" role="group" aria-labelledby="children-label">
+                      <button type="button" (click)="bump('children', -1)" aria-label="One fewer child">&minus;</button>
+                      <output>{{ inquiry.tripDetails.travelers.children }}</output>
+                      <button type="button" (click)="bump('children', 1)" aria-label="One more child">+</button>
+                    </div>
+                  </div>
                 </div>
-              </label>
-            </div>
-          </div>
+              </fieldset>
 
-          <!-- Step 1 Navigation -->
-          <div class="step-nav-bar right-align">
-            <button type="button" (click)="nextStep()" class="btn btn-gold btn-lg">
-              Proceed to Logistics
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-        </div>
-
-
-        <!-- ════════════════════════════════════════════════
-             STEP 2: THE LOGISTICS
-             ════════════════════════════════════════════════ -->
-        <div *ngIf="currentStep === 2" class="step-pane animate-fade">
-          <div class="pane-header">
-            <span class="pane-label">Timeline, Party & Accommodation</span>
-            <h3>How Would You Like to Travel?</h3>
-            <p>Tell us your timeline, party composition, and accommodation style.</p>
-          </div>
-
-          <div class="logistics-grid">
-            <!-- Travel Month -->
-            <div class="form-field-wrap">
-              <label class="form-field-label" for="tm-month">Estimated Travel Window *</label>
-              <select class="form-select-lux" id="tm-month" name="estimatedMonth" [(ngModel)]="inquiryData.tripDetails.estimatedMonth">
-                <option *ngFor="let m of monthOptions" [value]="m">{{ m }}</option>
-              </select>
-            </div>
-
-            <!-- Duration Days -->
-            <div class="form-field-wrap">
-              <label class="form-field-label" for="tm-duration">Approximate Trip Duration (Days): <strong>{{ inquiryData.tripDetails.durationDays }} Days</strong></label>
-              <div class="duration-slider-box">
-                <input
-                  type="range"
-                  min="5"
-                  max="28"
-                  step="1"
-                  class="duration-range-slider"
-                  id="tm-duration"
-                  name="durationDays"
-                  [(ngModel)]="inquiryData.tripDetails.durationDays" />
-                <div class="duration-scale">
-                  <span>5 Days</span>
-                  <span>10 Days</span>
-                  <span>14 Days (Signature)</span>
-                  <span>21 Days</span>
-                  <span>28 Days</span>
+              <fieldset class="tm-block">
+                <legend><span>06</span> Where would you like to stay?</legend>
+                <div class="tm-cards tm-cards--3">
+                  @for (o of stays; track o.value) {
+                    <label class="tm-card tm-card--radio" [class.is-on]="inquiry.tripDetails.accommodationStyle === o.value">
+                      <input type="radio" name="stay" [value]="o.value" [(ngModel)]="inquiry.tripDetails.accommodationStyle" />
+                      <strong>{{ o.value }}</strong><small>{{ o.desc }}</small>
+                    </label>
+                  }
                 </div>
-              </div>
-            </div>
+              </fieldset>
+            }
 
-            <!-- Adults Counter -->
-            <div class="form-field-wrap">
-              <label class="form-field-label" for="tm-adults">Number of Adults (12+ yrs)</label>
-              <div class="counter-box">
-                <button type="button" class="counter-btn" (click)="inquiryData.tripDetails.travelers.adults = inquiryData.tripDetails.travelers.adults > 1 ? inquiryData.tripDetails.travelers.adults - 1 : 1">-</button>
-                <input type="number" id="tm-adults" name="adults" [(ngModel)]="inquiryData.tripDetails.travelers.adults" min="1" max="20" class="counter-val" readonly />
-                <button type="button" class="counter-btn" (click)="inquiryData.tripDetails.travelers.adults = inquiryData.tripDetails.travelers.adults + 1">+</button>
-              </div>
-            </div>
-
-            <!-- Children Counter -->
-            <div class="form-field-wrap">
-              <label class="form-field-label" for="tm-children">Number of Children (0–11 yrs)</label>
-              <div class="counter-box">
-                <button type="button" class="counter-btn" (click)="inquiryData.tripDetails.travelers.children = inquiryData.tripDetails.travelers.children > 0 ? inquiryData.tripDetails.travelers.children - 1 : 0">-</button>
-                <input type="number" id="tm-children" name="children" [(ngModel)]="inquiryData.tripDetails.travelers.children" min="0" max="10" class="counter-val" readonly />
-                <button type="button" class="counter-btn" (click)="inquiryData.tripDetails.travelers.children = inquiryData.tripDetails.travelers.children + 1">+</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- Accommodation Style -->
-          <div class="form-section-block">
-            <label class="block-title">✦ Preferred Accommodation Standard</label>
-            <div class="accom-cards-grid">
-              <label
-                *ngFor="let acc of accommodationStyles"
-                class="accom-card"
-                [class.selected]="inquiryData.tripDetails.accommodationStyle === acc.value">
-                <input
-                  type="radio"
-                  name="accommodationStyle"
-                  [value]="acc.value"
-                  [(ngModel)]="inquiryData.tripDetails.accommodationStyle" />
-                <div class="accom-text">
-                  <h5>{{ acc.title }}</h5>
-                  <p>{{ acc.desc }}</p>
+            @case (3) {
+              <fieldset class="tm-block">
+                <legend><span>07</span> Where are you in your planning?</legend>
+                <div class="tm-cards tm-cards--3">
+                  @for (o of stages; track o.value) {
+                    <label class="tm-card tm-card--radio" [class.is-on]="inquiry.planningStage === o.value">
+                      <input type="radio" name="stage" [value]="o.value" [(ngModel)]="inquiry.planningStage" />
+                      <strong>{{ o.label }}</strong><small>{{ o.desc }}</small>
+                    </label>
+                  }
                 </div>
-              </label>
-            </div>
-          </div>
+              </fieldset>
 
-          <!-- Step 2 Navigation -->
-          <div class="step-nav-bar space-between">
-            <button type="button" (click)="prevStep()" class="btn btn-outline-teal btn-md">
-              ← Back to Vision
-            </button>
-            <button type="button" (click)="nextStep()" class="btn btn-gold btn-lg">
-              Proceed to Traveler Details
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-        </div>
-
-
-        <!-- ════════════════════════════════════════════════
-             STEP 3: THE TRAVELER
-             ════════════════════════════════════════════════ -->
-        <div *ngIf="currentStep === 3" class="step-pane animate-fade">
-          <div class="pane-header">
-            <span class="pane-label">Finalizing Your Intake</span>
-            <h3>Who Are We Designing For?</h3>
-            <p>Tell us where you are in your planning and how we can reach you with your proposal.</p>
-          </div>
-
-          <!-- Planning Stage -->
-          <div class="form-section-block">
-            <label class="block-title">✦ Current Planning Stage</label>
-            <div class="stage-cards-grid">
-              <label
-                *ngFor="let stg of planningStages"
-                class="stage-card"
-                [class.selected]="inquiryData.planningStage === stg.value">
-                <input
-                  type="radio"
-                  name="planningStage"
-                  [value]="stg.value"
-                  [(ngModel)]="inquiryData.planningStage" />
-                <div class="stage-text">
-                  <h5>{{ stg.label }}</h5>
-                  <p>{{ stg.desc }}</p>
+              <fieldset class="tm-block">
+                <legend><span>08</span> How can we reach you?</legend>
+                <div class="tm-fields">
+                  <label class="tm-field"><span>First name *</span>
+                    <input type="text" name="firstName" autocomplete="given-name" required [(ngModel)]="inquiry.clientName.firstName" /></label>
+                  <label class="tm-field"><span>Last name *</span>
+                    <input type="text" name="lastName" autocomplete="family-name" required [(ngModel)]="inquiry.clientName.lastName" /></label>
+                  <label class="tm-field"><span>Email *</span>
+                    <input type="email" name="email" autocomplete="email" required [(ngModel)]="inquiry.contact.email" /></label>
+                  <label class="tm-field"><span>Phone / WhatsApp</span>
+                    <input type="tel" name="phone" autocomplete="tel" [(ngModel)]="inquiry.contact.phone" /></label>
+                  <label class="tm-field tm-field--full"><span>Anything else? Celebrations, dietary needs, dream experiences</span>
+                    <textarea name="notes" rows="4" [(ngModel)]="inquiry.additionalNotes"></textarea></label>
                 </div>
-              </label>
+              </fieldset>
+            }
+          }
+
+          @if (error()) {
+            <div class="tm-error" role="alert">
+              <p>{{ error() }}</p>
+              @if (sendFailed()) {
+                <p>Nothing is lost. Send the same details straight to us instead:</p>
+                <div class="tm-error-actions">
+                  <a class="btn btn-teal btn-sm" [href]="whatsappLink()" target="_blank" rel="noopener noreferrer">Send via WhatsApp</a>
+                  <a class="btn btn-outline-teal btn-sm" [href]="mailLink()">Send via email</a>
+                </div>
+              }
             </div>
+          }
+
+          <div class="tm-nav">
+            @if (step() > 1) {
+              <button type="button" class="tm-back" (click)="goTo(step() - 1)">&larr; Back</button>
+            } @else { <span></span> }
+            @if (step() < steps.length) {
+              <button type="button" class="btn btn-gold btn-lg" (click)="next()" appMagnetic>
+                Continue
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+              </button>
+            } @else {
+              <button type="submit" class="btn btn-gold btn-lg" [disabled]="submitting()" appMagnetic>
+                {{ submitting() ? 'Sending…' : 'Send my request' }}
+              </button>
+            }
           </div>
-
-          <!-- Contact Details -->
-          <div class="contact-fields-grid">
-            <div class="form-field-wrap">
-              <label class="form-field-label" for="tm-fn">First Name *</label>
-              <input
-                type="text"
-                id="tm-fn"
-                name="firstName"
-                class="form-input-lux"
-                [(ngModel)]="inquiryData.clientName.firstName"
-                required
-                placeholder="e.g. James" />
-            </div>
-
-            <div class="form-field-wrap">
-              <label class="form-field-label" for="tm-ln">Last Name *</label>
-              <input
-                type="text"
-                id="tm-ln"
-                name="lastName"
-                class="form-input-lux"
-                [(ngModel)]="inquiryData.clientName.lastName"
-                required
-                placeholder="e.g. Sterling" />
-            </div>
-
-            <div class="form-field-wrap">
-              <label class="form-field-label" for="tm-em">Email Address *</label>
-              <input
-                type="email"
-                id="tm-em"
-                name="email"
-                class="form-input-lux"
-                [(ngModel)]="inquiryData.contact.email"
-                required
-                placeholder="e.g. james.sterling@example.co.uk" />
-            </div>
-
-            <div class="form-field-wrap">
-              <label class="form-field-label" for="tm-ph">Phone / WhatsApp *</label>
-              <input
-                type="tel"
-                id="tm-ph"
-                name="phone"
-                class="form-input-lux"
-                [(ngModel)]="inquiryData.contact.phone"
-                required
-                placeholder="e.g. +44 7700 900077" />
-            </div>
-          </div>
-
-          <!-- Special Requests / Notes -->
-          <div class="form-section-block">
-            <label class="block-title" for="tm-notes">✦ Special Celebrations & Itinerary Notes <span class="required-note">(Optional)</span></label>
-            <textarea
-              id="tm-notes"
-              name="additionalNotes"
-              rows="4"
-              class="form-textarea-lux"
-              [(ngModel)]="inquiryData.additionalNotes"
-              placeholder="e.g. Celebrating our 25th Wedding Anniversary, interest in private tea bungalow dinners, dietary requirements, or specific bucket-list experiences..."></textarea>
-          </div>
-
-          <!-- Step 3 Navigation -->
-          <div class="step-nav-bar space-between">
-            <button type="button" (click)="prevStep()" class="btn btn-outline-teal btn-md" [disabled]="isSubmitting">
-              ← Back to Logistics
-            </button>
-            <button type="submit" class="btn btn-gold btn-lg" [disabled]="isSubmitting">
-              <span *ngIf="!isSubmitting">Submit & Request Bespoke Itinerary</span>
-              <span *ngIf="isSubmitting">Submitting Your Preferences...</span>
-              <svg *ngIf="!isSubmitting" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-          </div>
-
-        </div>
-
-      </form>
-
+          <p class="tm-privacy">We only use your details to plan your trip. See our <a routerLink="/privacy">privacy policy</a>.</p>
+        </form>
+      }
     </div>
-
   </div>
 </section>

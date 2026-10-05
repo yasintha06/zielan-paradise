@@ -7,13 +7,14 @@ import { TourService, Tour } from '../../services/tour.service';
 import { MotionService } from '../../services/motion.service';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal';
 import { MagneticDirective } from '../../directives/magnetic';
+import { TourCardComponent } from '../../components/tour-card/tour-card';
 
 const SLIDE_MS = 6500;
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, ScrollRevealDirective, MagneticDirective],
+  imports: [RouterLink, ScrollRevealDirective, MagneticDirective, TourCardComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
   encapsulation: ViewEncapsulation.None
@@ -42,15 +43,15 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   readonly destinations = [
-    { name: 'Sigiriya', tagline: 'The fortress in the sky', image: 'sigiriya' },
-    { name: 'Kandy', tagline: 'Temple of the Sacred Tooth', image: 'kandy' },
-    { name: 'Ella', tagline: 'Emerald peaks & valleys', image: 'ella' },
-    { name: 'Nuwara Eliya', tagline: 'Little England in the clouds', image: 'nuwara-eliya' },
-    { name: 'Yala', tagline: 'Land of the leopard', image: 'yala' },
-    { name: 'Galle', tagline: 'A fort by the Indian Ocean', image: 'galle' },
-    { name: 'Mirissa', tagline: 'Whales, waves & golden sand', image: 'mirissa' },
-    { name: 'Anuradhapura', tagline: 'The first great kingdom', image: 'anuradhapura' },
-    { name: 'Dambulla', tagline: 'Cave temples of gold', image: 'dambulla' },
+    { name: 'Sigiriya', anchor: 'dest-sigiriya', tagline: 'The fortress in the sky', image: 'sigiriya' },
+    { name: 'Kandy', anchor: 'dest-kandy', tagline: 'Temple of the Sacred Tooth', image: 'kandy' },
+    { name: 'Ella', anchor: 'dest-ella', tagline: 'Emerald peaks & valleys', image: 'ella' },
+    { name: 'Nuwara Eliya', anchor: 'dest-nuwara-eliya', tagline: 'Little England in the clouds', image: 'nuwara-eliya' },
+    { name: 'Yala', anchor: 'dest-yala-national-park', tagline: 'Land of the leopard', image: 'yala' },
+    { name: 'Galle', anchor: 'dest-galle-fort', tagline: 'A fort by the Indian Ocean', image: 'galle' },
+    { name: 'Mirissa', anchor: 'dest-mirissa', tagline: 'Whales, waves & golden sand', image: 'mirissa' },
+    { name: 'Anuradhapura', anchor: 'dest-anuradhapura', tagline: 'The first great kingdom', image: 'anuradhapura' },
+    { name: 'Dambulla', anchor: 'dest-dambulla', tagline: 'Cave temples of gold', image: 'dambulla' },
   ];
 
   readonly styles = [

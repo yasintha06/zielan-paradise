@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { DAY_TOURS, ROUND_TOURS } from '../data/catalog';
 
 export interface TourItineraryDay {
-  dayNumber: number | string;
+  dayNumber?: number | string;
+  day?: string;
   title: string;
   location?: string;
   description: string;
@@ -15,7 +17,7 @@ export interface TourItineraryDay {
 export interface Tour {
   id: string;
   title: string;
-  description: string;
+  description?: string;
   duration: string;
   durationLabel?: string;
   targetAudience?: string;
@@ -66,7 +68,17 @@ export class TourService {
       url += `?${params.join('&')}`;
     }
 
-    return this.http.get<Tour[]>(url);
+    return this.http.get<Tour[]>(url).pipe(
+      map((tours) => (tours?.length ? tours : this.fallback(type, category, featured))),
+      catchError(() => of(this.fallback(type, category, featured)))
+    );
+  }
+
+  private fallback(type?: 'round' | 'day', category?: string, featured?: boolean): Tour[] {
+    let tours = type === 'round' ? ROUND_TOURS : type === 'day' ? DAY_TOURS : [...ROUND_TOURS, ...DAY_TOURS];
+    if (category) tours = tours.filter((t) => t.category === category);
+    if (featured) tours = tours.filter((t) => t.featured);
+    return tours;
   }
 
   /**
@@ -87,6 +99,9 @@ export class TourService {
    * Fetch a single tour by ID from backend.
    */
   getTourById(id: string): Observable<Tour> {
-    return this.http.get<Tour>(`${this.apiUrl}/${id}`);
+    const local = [...ROUND_TOURS, ...DAY_TOURS].find((t) => t.id === id);
+    return this.http.get<Tour>(`${this.apiUrl}/${id}`).pipe(
+      catchError((err) => (local ? of(local) : throwError(() => err)))
+    );
   }
 }

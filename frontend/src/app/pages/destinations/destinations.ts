@@ -1,85 +1,50 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { DestinationService, Destination } from '../../services/destination.service';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal';
+import { ParallaxDirective } from '../../directives/parallax';
+import { PageHeroComponent } from '../../components/page-hero/page-hero';
+import { imageUrl } from '../../utils/image';
 
 @Component({
   selector: 'app-destinations',
   standalone: true,
-  imports: [CommonModule, RouterLink, ScrollRevealDirective],
+  imports: [RouterLink, ScrollRevealDirective, ParallaxDirective, PageHeroComponent],
   templateUrl: './destinations.html',
   styleUrl: './destinations.css',
-  encapsulation: ViewEncapsulation.None
 })
 export class Destinations implements OnInit {
-  destinations: Destination[] = [];
-  isLoading = true;
-  errorMessage = '';
+  private destinationService = inject(DestinationService);
 
-  selectedTag = 'all';
-  selectedRegion = 'all';
+  destinations = signal<Destination[]>([]);
+  region = signal('all');
 
-  availableTags: string[] = [];
-  availableRegions: string[] = [];
+  regions = computed(() => Array.from(new Set(this.destinations().map((d) => d.region).filter(Boolean))));
+  filtered = computed(() => {
+    const r = this.region();
+    return r === 'all' ? this.destinations() : this.destinations().filter((d) => d.region === r);
+  });
 
-  constructor(private destinationService: DestinationService) {}
+  readonly imageUrl = imageUrl;
 
   ngOnInit(): void {
-    this.fetchDestinations();
-  }
-
-  fetchDestinations(): void {
-    this.isLoading = true;
-    this.errorMessage = '';
-
-    this.destinationService.getDestinations().subscribe({
-      next: (data) => {
-        this.destinations = data || [];
-        this.extractFilterMetadata();
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Error fetching destinations from database:', err);
-        this.errorMessage = 'Unable to load destinations from the database. Please try again.';
-        this.isLoading = false;
-      }
+    this.destinationService.getDestinations().subscribe((data) => {
+      this.destinations.set(data.filter((d) => d.isActive !== false));
+      setTimeout(() => ScrollTrigger.refresh(), 150);
     });
   }
 
-  private extractFilterMetadata(): void {
-    const tagSet = new Set<string>();
-    const regionSet = new Set<string>();
-
-    this.destinations.forEach(d => {
-      if (d.region) regionSet.add(d.region);
-      if (Array.isArray(d.tags)) {
-        d.tags.forEach(t => tagSet.add(t));
-      }
-    });
-
-    this.availableTags = ['all', ...Array.from(tagSet)];
-    this.availableRegions = ['all', ...Array.from(regionSet)];
+  setRegion(r: string): void {
+    this.region.set(r);
+    setTimeout(() => ScrollTrigger.refresh(), 150);
   }
 
-  setTagFilter(tag: string): void {
-    this.selectedTag = tag;
+  anchor(d: Destination): string {
+    return d.id || 'dest-' + d.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
   }
 
-  setRegionFilter(region: string): void {
-    this.selectedRegion = region;
-  }
-
-  resetFilters(): void {
-    this.selectedTag = 'all';
-    this.selectedRegion = 'all';
-  }
-
-  get filteredDestinations(): Destination[] {
-    return this.destinations.filter(d => {
-      const matchRegion = this.selectedRegion === 'all' || d.region === this.selectedRegion;
-      const matchTag = this.selectedTag === 'all' || (Array.isArray(d.tags) && d.tags.includes(this.selectedTag));
-      return matchRegion && matchTag;
-    });
+  countFor(r: string): number {
+    return r === 'all' ? this.destinations().length : this.destinations().filter((d) => d.region === r).length;
   }
 }

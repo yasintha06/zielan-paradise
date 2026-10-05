@@ -35,10 +35,15 @@ export class MotionService {
       }
     });
 
-    this.router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe(() => {
+    this.router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe((e) => {
+      const fragment = this.router.parseUrl((e as NavigationEnd).urlAfterRedirects).fragment;
       this.lenis?.scrollTo(0, { immediate: true, force: true });
       // Let the new page render its images/layout before measuring trigger positions.
-      setTimeout(() => ScrollTrigger.refresh(), 120);
+      setTimeout(() => {
+        ScrollTrigger.refresh();
+        const target = fragment ? document.getElementById(fragment) : null;
+        if (target) this.scrollTo(target);
+      }, fragment ? 400 : 120);
     });
   }
 
@@ -55,8 +60,9 @@ export class MotionService {
   }
 
   scrollTo(target: number | string | HTMLElement): void {
-    if (this.lenis) this.lenis.scrollTo(target, { duration: 1.6 });
+    if (this.lenis) this.lenis.scrollTo(target, { duration: 1.6, offset: typeof target === 'number' ? 0 : -90 });
     else if (typeof target === 'number') window.scrollTo({ top: target, behavior: 'smooth' });
+    else (typeof target === 'string' ? document.querySelector(target) : target)?.scrollIntoView({ behavior: 'smooth' });
   }
 
   onScroll(cb: (y: number, direction: number) => void): () => void {
