@@ -1,33 +1,28 @@
-<div class="admin-login-page bg-pearl">
-  <div class="admin-login-card">
-    <div class="admin-login-header">
-      <img src="logo.png" alt="Zeilan Paradise" class="admin-logo" />
-      <h2>Admin Portal</h2>
-      <p>Secure access to the Zeilan Paradise dashboard.</p>
-    </div>
+<div class="al-page">
+  <div class="al-card">
+    <img src="logo.png" alt="Zeilan Paradise" class="al-logo" width="400" height="341" />
+    <p class="eyebrow">Admin</p>
+    <h1>Welcome back</h1>
+    <p class="al-sub">Sign in to see your enquiries.</p>
 
-    <form (ngSubmit)="onSubmit()" class="admin-login-form">
-      <div *ngIf="errorMessage" class="admin-error">
-        {{ errorMessage }}
-      </div>
+    <form (ngSubmit)="onSubmit()" novalidate>
+      @if (errorMessage()) {
+        <div class="al-error" role="alert">{{ errorMessage() }}</div>
+      }
 
-      <div class="form-group">
-        <label for="username" class="form-label">Username</label>
-        <input type="text" id="username" name="username" 
-          [(ngModel)]="credentials.username" required 
-          class="form-input" autocomplete="username" />
-      </div>
+      <label class="al-field">
+        <span>Username</span>
+        <input type="text" name="username" [(ngModel)]="credentials.username" required autocomplete="username"
+               autocapitalize="none" spellcheck="false" />
+      </label>
 
-      <div class="form-group">
-        <label for="password" class="form-label">Password</label>
-        <input type="password" id="password" name="password" 
-          [(ngModel)]="credentials.password" required 
-          class="form-input" autocomplete="current-password" />
-      </div>
+      <label class="al-field">
+        <span>Password</span>
+        <input type="password" name="password" [(ngModel)]="credentials.password" required autocomplete="current-password" />
+      </label>
 
-      <button type="submit" class="btn btn-teal btn-lg w-100 mt-4" [disabled]="isLoading">
-        <span *ngIf="!isLoading">Sign In</span>
-        <span *ngIf="isLoading">Authenticating...</span>
+      <button type="submit" class="btn btn-teal btn-lg al-submit" [disabled]="isLoading()">
+        {{ isLoading() ? 'Signing in…' : 'Sign in' }}
       </button>
     </form>
   </div>

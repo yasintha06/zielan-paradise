@@ -81,11 +81,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     [{ image: 'mirissa', alt: 'Coastline from above' }, { image: 'day-tour-kandy', alt: 'Temple of the Tooth in Kandy' }],
   ];
 
-  tours: Tour[] = [
+  tours = signal<Tour[]>([
     { id: 'tour-grand-island-odyssey', title: 'The Grand Island Odyssey', description: 'A fourteen-day signature loop across Sri Lanka’s greatest cultural and coastal highlights.', duration: '14 Days / 13 Nights', type: 'round', badge: { text: 'Signature', class: '' }, image: 'img/tour-grand-odyssey-900.webp' },
     { id: 'tour-wild-heritage-highlands', title: 'Wild Heritage & Highlands', description: 'Private safari tracking, misty tea estates and boutique coastal calm.', duration: '10 Days / 9 Nights', type: 'round', badge: { text: 'Wildlife', class: '' }, image: 'img/tour-cultural-triangle-900.webp' },
     { id: 'tour-tea-trails-coastal-sanctuaries', title: 'Tea Trails & Coastal Sanctuaries', description: 'Planters’ bungalows, ocean hideaways and slow, romantic days.', duration: '8 Days / 7 Nights', type: 'round', badge: { text: 'Romance', class: '' }, image: 'img/tour-southern-coast-900.webp' },
-  ];
+  ]);
 
   activeSlide = signal(0);
   openStyle = signal(0);
@@ -97,7 +97,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tourService.getTours('round', undefined, true).subscribe({
       next: (data) => {
         if (data?.length) {
-          this.tours = data.slice(0, 3);
+          this.tours.set(data.slice(0, 3));
           setTimeout(() => ScrollTrigger.refresh(), 200);
         }
       },

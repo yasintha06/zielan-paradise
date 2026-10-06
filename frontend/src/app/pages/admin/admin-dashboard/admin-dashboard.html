@@ -1,67 +1,70 @@
-<div class="admin-dashboard bg-pearl">
-  <nav class="admin-nav bg-charcoal text-white">
-    <div class="container nav-content">
-      <div class="admin-brand">
-        <img src="logo.png" alt="Zeilan Paradise" class="admin-logo-small invert-white" />
-        <span class="fs-sm fw-600 tracking-wide uppercase">Admin Portal</span>
+<div class="ad-page">
+  <div class="container">
+    <header class="ad-head">
+      <div>
+        <p class="eyebrow">Admin</p>
+        <h1>Enquiries</h1>
       </div>
-      <button class="btn btn-outline-light btn-sm" (click)="logout()">Sign Out</button>
-    </div>
-  </nav>
-
-  <main class="container admin-main">
-    <header class="admin-header">
-      <h1 class="fs-xl fw-500 font-head">Enquiries Dashboard</h1>
-      <p class="text-muted">Manage your contact and tailor-made journey requests.</p>
+      <div class="ad-head-actions">
+        <button type="button" class="btn btn-outline-teal btn-sm" (click)="fetch()" [disabled]="isLoading()">Refresh</button>
+        <button type="button" class="btn btn-teal btn-sm" (click)="logout()">Sign out</button>
+      </div>
     </header>
 
-    <div *ngIf="isLoading" class="admin-loading">
-      <div class="spinner"></div>
-      <p>Loading enquiries...</p>
+    <ul class="ad-stats">
+      <li><strong>{{ stats().total }}</strong><span>Total</span></li>
+      <li><strong>{{ stats().week }}</strong><span>Last 7 days</span></li>
+      <li><strong>{{ stats().planner }}</strong><span>Journey planner</span></li>
+      <li><strong>{{ stats().contact }}</strong><span>Contact form</span></li>
+    </ul>
+
+    <div class="ad-tools">
+      <div class="chips" role="group" aria-label="Filter enquiries">
+        <button type="button" class="chip" [class.is-active]="filter() === 'all'" (click)="filter.set('all')">All</button>
+        <button type="button" class="chip" [class.is-active]="filter() === 'planner'" (click)="filter.set('planner')">Planner</button>
+        <button type="button" class="chip" [class.is-active]="filter() === 'contact'" (click)="filter.set('contact')">Contact</button>
+      </div>
+      <input class="ad-search" type="search" placeholder="Search name, email, message…" aria-label="Search enquiries"
+             [ngModel]="search()" (ngModelChange)="search.set($event)" />
     </div>
 
-    <div *ngIf="error" class="admin-error">
-      {{ error }}
-    </div>
-
-    <div *ngIf="!isLoading && !error" class="admin-table-container">
-      <table class="admin-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Type</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Details</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let eq of enquiries">
-            <td class="text-nowrap">{{ eq.createdAt | date:'mediumDate' }}</td>
-            <td>
-              <span class="badge" [ngClass]="{'badge-contact': eq.type === 'contact', 'badge-tailor': eq.type === 'tailor-made'}">
-                {{ eq.type === 'contact' ? 'Contact' : 'Tailor-Made' }}
-              </span>
-            </td>
-            <td class="fw-500">{{ eq.firstName }} {{ eq.lastName }}</td>
-            <td><a href="mailto:{{eq.email}}" class="text-teal">{{ eq.email }}</a></td>
-            <td>
-              <span class="status-badge" [ngClass]="'status-' + (eq.status || 'New').toLowerCase()">
-                {{ eq.status || 'New' }}
-              </span>
-            </td>
-            <td>
-              <button class="btn-text btn-sm text-teal">View</button>
-            </td>
-          </tr>
-          <tr *ngIf="enquiries.length === 0">
-            <td colspan="6" class="text-center py-4 text-muted">
-              No enquiries found in the database.
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </main>
+    @if (isLoading()) {
+      <p class="ad-note">Loading enquiries…</p>
+    } @else if (error()) {
+      <div class="ad-error" role="alert">{{ error() }}</div>
+    } @else {
+      <ol class="ad-list">
+        @for (l of visible(); track $index; let i = $index) {
+          <li class="ad-item" [class.is-open]="open() === i">
+            <button type="button" class="ad-row" (click)="toggle(i)" [attr.aria-expanded]="open() === i">
+              <span class="ad-kind" [class.ad-kind--planner]="l.kind === 'planner'">{{ l.kind === 'planner' ? 'Planner' : 'Contact' }}</span>
+              <span class="ad-name">{{ l.name }}</span>
+              <span class="ad-email">{{ l.email }}</span>
+              <span class="ad-date">{{ l.date ? (l.date | date: 'd MMM y, HH:mm') : '' }}</span>
+              <span class="ad-chev" aria-hidden="true"></span>
+            </button>
+            @if (open() === i) {
+              <div class="ad-body">
+                <dl>
+                  <div><dt>Email</dt><dd><a [href]="'mailto:' + l.email">{{ l.email }}</a></dd></div>
+                  @if (l.phone) { <div><dt>Phone</dt><dd><a [href]="'tel:' + l.phone">{{ l.phone }}</a></dd></div> }
+                  @for (d of l.details; track d.label) { <div><dt>{{ d.label }}</dt><dd>{{ d.value }}</dd></div> }
+                  <div><dt>Status</dt><dd>{{ l.status }}</dd></div>
+                </dl>
+                @if (l.message) { <blockquote>{{ l.message }}</blockquote> }
+                <div class="ad-actions">
+                  <a class="btn btn-gold btn-sm" [href]="replyLink(l)">Reply by email</a>
+                  @if (l.phone) {
+                    <a class="btn btn-outline-teal btn-sm" [href]="whatsappLink(l)" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                  }
+                </div>
+              </div>
+            }
+          </li>
+        } @empty {
+          <li class="ad-note">No enquiries yet.</li>
+        }
+      </ol>
+    }
+  </div>
 </div>

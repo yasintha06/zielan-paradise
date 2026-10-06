@@ -155,7 +155,7 @@
         <p class="section-subtitle">Starting points, never fixed. Every itinerary is reshaped around your dates, interests and style of stay.</p>
       </header>
       <div class="zp-tours-grid">
-        @for (t of tours; track t.id; let i = $index) {
+        @for (t of tours(); track t.id; let i = $index) {
           <app-tour-card class="zp-tour" [tour]="t" [index]="i" appScrollReveal [style.transition-delay.ms]="i * 120" />
         }
       </div>
