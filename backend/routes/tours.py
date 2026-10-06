@@ -106,6 +106,7 @@ def get_tour_by_id(tour_id):
 
 # ── POST: CREATE NEW TOUR ─────────────────────────────────────
 @tours_bp.route('/api/tours', methods=['POST'])
+@jwt_required()
 def create_tour():
     """
     Insert a new tour document into the collection adhering to the required schema.
@@ -171,6 +172,7 @@ def create_tour():
 
 # ── PUT: UPDATE EXISTING TOUR ─────────────────────────────────
 @tours_bp.route('/api/tours/<string:tour_id>', methods=['PUT'])
+@jwt_required()
 def update_tour(tour_id):
     """
     Update an existing tour document using its string ID.
@@ -207,6 +209,7 @@ def update_tour(tour_id):
 
 # ── DELETE: REMOVE TOUR ───────────────────────────────────────
 @tours_bp.route('/api/tours/<string:tour_id>', methods=['DELETE'])
+@jwt_required()
 def delete_tour(tour_id):
     """
     Remove a tour document from the collection by its string ID.
