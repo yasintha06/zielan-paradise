@@ -4,6 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SplitText } from 'gsap/SplitText';
 import { TourService, Tour } from '../../services/tour.service';
+import { ApiService, Review } from '../../services/api';
 import { MotionService } from '../../services/motion.service';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal';
 import { MagneticDirective } from '../../directives/magnetic';
@@ -24,6 +25,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private zone = inject(NgZone);
   private motion = inject(MotionService);
   private tourService = inject(TourService);
+  private api = inject(ApiService);
 
   readonly slides = [
     { image: 'sigiriya', place: 'Sigiriya · Cultural Triangle', alt: 'Sigiriya rock fortress rising from the jungle' },
@@ -87,6 +89,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     { id: 'tour-tea-trails-coastal-sanctuaries', title: 'Tea Trails & Coastal Sanctuaries', description: 'Planters’ bungalows, ocean hideaways and slow, romantic days.', duration: '8 Days / 7 Nights', type: 'round', badge: { text: 'Romance', class: '' }, image: 'img/tour-southern-coast-900.webp' },
   ]);
 
+  reviews = signal<Review[]>([]);
   activeSlide = signal(0);
   openStyle = signal(0);
 
@@ -94,6 +97,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private timer: ReturnType<typeof setInterval> | null = null;
 
   ngOnInit(): void {
+    this.api.getReviews().subscribe((r) => this.reviews.set(r));
     this.tourService.getTours('round', undefined, true).subscribe({
       next: (data) => {
         if (data?.length) {
@@ -116,6 +120,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.timer) clearInterval(this.timer);
     this.ctx?.revert();
+  }
+
+  reviewMeta(r: Review): string {
+    return [r.authorLocation, r.tripName].filter((x) => !!x).join(' · ');
   }
 
   pad(n: number): string {

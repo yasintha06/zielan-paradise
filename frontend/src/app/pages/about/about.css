@@ -1,0 +1,48 @@
+.ab-story {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(3rem, 7vw, 7rem);
+  align-items: center;
+}
+.section-title em { color: var(--teal); }
+.ab-story-text p:not(.eyebrow):not(.pg-lead) { color: var(--text-soft); margin-top: 1.25rem; max-width: 560px; }
+.ab-story-text .pg-lead { margin-top: 0.5rem; }
+.ab-story-media { position: relative; height: clamp(440px, 46vw, 620px); }
+.ab-img { position: absolute; border-radius: 2px; }
+.ab-img img { width: 100%; height: 100%; object-fit: cover; }
+.ab-img--tall { top: 0; right: 0; width: 70%; height: 82%; }
+.ab-img--small { bottom: 0; left: 0; width: 46%; height: 44%; outline: 10px solid var(--ivory); }
+
+.ab-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.5rem, 3vw, 3rem); }
+.ab-pillars li { padding-top: 1.75rem; border-top: 1px solid var(--gold); }
+.ab-pillars h3 { font-size: clamp(1.7rem, 2.4vw, 2.2rem); font-weight: 500; margin-bottom: 0.75rem; }
+.ab-pillars p:not(.eyebrow) { color: var(--text-soft); }
+
+.ab-strengths { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem clamp(2rem, 4vw, 4rem); }
+.ab-num { font-family: var(--ff-head); font-size: 1.1rem; color: var(--gold-dark); }
+.ab-strengths h3 { font-size: 1.7rem; font-weight: 500; margin: 0.5rem 0; }
+.ab-strengths p { color: var(--text-soft); font-size: 0.95rem; }
+
+.ab-responsible { position: relative; overflow: hidden; padding: var(--section-pad) 0; color: var(--ivory); background: var(--ink); }
+.ab-responsible-bg { position: absolute; inset: 0; overflow: hidden; }
+.ab-responsible-bg img { width: 100%; height: 100%; object-fit: cover; }
+.ab-responsible-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, rgba(0, 51, 46, 0.95) 35%, rgba(0, 51, 46, 0.6)); }
+.ab-responsible-inner { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 6vw, 6rem); align-items: center; }
+.ab-responsible .eyebrow { color: var(--gold); }
+.ab-responsible .section-title { color: var(--ivory); }
+.ab-responsible .section-title em { color: var(--gold-soft); }
+.ab-responsible ul { display: grid; gap: 0; }
+.ab-responsible li { padding: 1.1rem 0 1.1rem 2rem; border-bottom: 1px solid rgba(246, 240, 226, 0.15); position: relative; color: rgba(246, 240, 226, 0.88); }
+.ab-responsible li::before { content: ''; position: absolute; left: 0; top: 1.55rem; width: 8px; height: 8px; background: var(--gold); transform: rotate(45deg); }
+
+.ab-cta { text-align: center; }
+.ab-cta-actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.75rem; margin-top: 2rem; }
+
+@media (max-width: 900px) {
+  .ab-story, .ab-responsible-inner { grid-template-columns: 1fr; }
+  .ab-pillars, .ab-strengths { grid-template-columns: 1fr; }
+  .ab-story-media { height: 110vw; max-height: 520px; }
+}
+@media (min-width: 640px) and (max-width: 900px) {
+  .ab-strengths { grid-template-columns: 1fr 1fr; }
+}

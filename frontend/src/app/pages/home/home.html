@@ -70,7 +70,7 @@
           the ancient kingdoms at dawn, a quiet tea estate at dusk, a leopard in the long grass at Yala.
           Every detail is held by a team who calls this island home.
         </p>
-        <a routerLink="/contact" class="zp-link">Meet the team <span aria-hidden="true">&rarr;</span></a>
+        <a routerLink="/about" class="zp-link">Our story <span aria-hidden="true">&rarr;</span></a>
       </div>
       <div class="zp-manifesto-media">
         <div class="zp-manifesto-img zp-manifesto-img--a img-reveal" appScrollReveal>
@@ -210,12 +210,40 @@
     </div>
   </section>
 
+  <!-- ═════════════ REVIEWS (only when real reviews are published) ═════════════ -->
+  @if (reviews().length) {
+    <section class="zp-reviews" aria-labelledby="reviews-heading">
+      <div class="container">
+        <header class="zp-head zp-head--center" appScrollReveal>
+          <p class="eyebrow">In their words</p>
+          <h2 class="section-title" id="reviews-heading">From our <em>guests</em></h2>
+        </header>
+        <div class="zp-reviews-grid">
+          @for (r of reviews().slice(0, 3); track r.id; let i = $index) {
+            <figure class="zp-review" appScrollReveal [style.transition-delay.ms]="i * 120">
+              <span class="zp-review-stars" [attr.aria-label]="(r.rating || 5) + ' out of 5'">{{ '★★★★★'.slice(0, r.rating || 5) }}</span>
+              <blockquote>{{ r.text }}</blockquote>
+              <figcaption>
+                <strong>{{ r.authorName }}</strong>
+                @if (reviewMeta(r)) { <span>{{ reviewMeta(r) }}</span> }
+              </figcaption>
+            </figure>
+          }
+        </div>
+      </div>
+    </section>
+  }
+
   <!-- ═════════════ GALLERY — parallax columns ═════════════ -->
   <section class="zp-gallery" aria-labelledby="gallery-heading">
     <div class="container">
       <header class="zp-head zp-head--center" appScrollReveal>
         <p class="eyebrow">Moments from the island</p>
         <h2 class="section-title" id="gallery-heading">Sri Lanka, <em>as we know it</em></h2>
+        <div class="zp-gallery-links">
+          <a routerLink="/experiences" class="zp-link">Browse experiences <span aria-hidden="true">&rarr;</span></a>
+          <a routerLink="/journal" class="zp-link">Read the journal <span aria-hidden="true">&rarr;</span></a>
+        </div>
       </header>
     </div>
     <div class="zp-gallery-cols">

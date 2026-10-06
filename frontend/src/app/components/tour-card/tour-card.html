@@ -8,6 +8,7 @@
     <p class="tc-meta">
       <span>{{ tour.duration }}</span>
       @if (tour.startTime) { <span>Starts {{ tour.startTime.split(' (')[0] }}</span> }
+      @if (tour.bestTime) { <span class="tc-season">Best {{ tour.bestTime }}</span> }
     </p>
     <h3 class="tc-title"><a [routerLink]="['/tours', tour.id]">{{ tour.title }}</a></h3>
     @if (summary) { <p class="tc-text">{{ summary }}</p> }

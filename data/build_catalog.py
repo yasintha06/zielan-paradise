@@ -2,6 +2,7 @@
 Builds the built-in tour/destination catalogue from data/*.json (the single source of truth):
   - frontend/src/app/data/catalog.ts   (shown when the API is unreachable)
   - backend/catalog_data.py            (seeds an empty database / serves when MongoDB is down)
+  - frontend/public/sitemap.xml        (every public page, tour and journal article)
 
 Run after editing any data/*.json file:
     python data/build_catalog.py
@@ -69,4 +70,17 @@ CATALOG_DESTINATIONS = json.loads({json.dumps(json.dumps(destinations, ensure_as
 with open(os.path.join(ROOT, 'backend', 'catalog_data.py'), 'w', encoding='utf8') as f:
     f.write(py)
 
+# ── Sitemap ──
+journal_ts = open(os.path.join(ROOT, 'frontend', 'src', 'app', 'data', 'journal.ts'), encoding='utf8').read()
+articles = re.findall(r"slug: '([^']+)'", journal_ts)
+pages = ['', 'round-tours', 'day-tours', 'destinations', 'experiences', 'tailor-made', 'about', 'journal', 'contact',
+         'privacy', 'terms-and-conditions']
+pages += [f"tours/{t['id']}" for t in round_tours + day_tours if t.get('isActive', True)]
+pages += [f'journal/{slug}' for slug in articles]
+urls = ''.join(f'  <url><loc>https://zeilanparadise.com/{p}</loc></url>\n' for p in pages)
+with open(os.path.join(ROOT, 'frontend', 'public', 'sitemap.xml'), 'w', encoding='utf8') as f:
+    f.write('<?xml version="1.0" encoding="UTF-8"?>\n'
+            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + '</urlset>\n')
+
+print(f'{len(pages)} sitemap URLs')
 print(f'{len(round_tours)} round tours, {len(day_tours)} day tours, {len(destinations)} destinations')

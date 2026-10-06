@@ -67,6 +67,7 @@ export class PreloaderComponent implements AfterViewInit {
   }
 
   private alreadySeen(): boolean {
+    if (location.pathname.startsWith('/admin')) return true;
     try {
       return sessionStorage.getItem(SEEN_KEY) === '1';
     } catch {

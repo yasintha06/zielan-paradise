@@ -5,7 +5,7 @@
    Type: Cormorant Garamond (display) · Manrope (text)
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Manrope:wght@300;400;500;600;700&display=swap');
+/* Fonts are self-hosted via @fontsource (see angular.json "styles"): no requests to Google. */
 
 /* ── ANGULAR HOST ELEMENT FIX ───────────────────────────────── */
 app-root, app-home {
@@ -37,7 +37,7 @@ app-root, app-home {
   --overlay-deep:rgba(0,0,0,0.65);
 
   --ff-head:     'Cormorant Garamond', 'Times New Roman', serif;
-  --ff-body:     'Manrope', system-ui, sans-serif;
+  --ff-body:     'Manrope Variable', 'Manrope', system-ui, sans-serif;
 
   --fs-xs:   0.75rem;
   --fs-sm:   0.875rem;
@@ -423,3 +423,20 @@ section { padding: var(--section-pad) 0; }
   transform: none;
   border-bottom-color: rgba(10, 31, 28, 0.35);
 }
+
+/* ── ACCESSIBILITY ───────────────────────────────────────── */
+.skip-link {
+  position: fixed;
+  left: 1rem;
+  top: 1rem;
+  z-index: 10001;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--ink);
+  font-weight: 700;
+  transform: translateY(-200%);
+  transition: transform 0.3s;
+}
+.skip-link:focus { transform: none; }
+main:focus { outline: none; }

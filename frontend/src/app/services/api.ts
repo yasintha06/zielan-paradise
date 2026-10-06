@@ -1,45 +1,36 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, of } from 'rxjs';
 import { environment } from '../../environments/environment';
 
-@Injectable({
-  providedIn: 'root'
-})
+export interface Review {
+  id: string;
+  authorName: string;
+  authorLocation?: string;
+  text: string;
+  rating?: number;
+  tripName?: string;
+  travelDate?: string;
+  source?: string;
+  published?: boolean;
+}
+
+/** Public (no login) endpoints. Admin endpoints live in AdminService. */
+@Injectable({ providedIn: 'root' })
 export class ApiService {
+  private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
-
-  getFeaturedTours(market: string = 'uk'): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/tours?featured=true&market=${market}`);
+  /** Published guest reviews; an empty list if there are none or the API is unreachable. */
+  getReviews(): Observable<Review[]> {
+    return this.http.get<Review[]>(`${this.apiUrl}/testimonials`).pipe(catchError(() => of([])));
   }
 
-  getRoundTours(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/tours?type=round`);
+  submitEnquiry(data: object): Observable<unknown> {
+    return this.http.post(`${this.apiUrl}/enquiries`, data);
   }
 
-  getDayTours(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/tours?type=day`);
-  }
-
-  getDestinations(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/destinations`);
-  }
-
-  getTestimonials(market: string = 'uk'): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/testimonials?market=${market}`);
-  }
-
-  submitEnquiry(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/enquiries`, data);
-  }
-
-  submitInquiry(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/inquiries`, data);
-  }
-
-  getAdminEnquiries(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/admin/inquiries`);
+  submitInquiry(data: object): Observable<unknown> {
+    return this.http.post(`${this.apiUrl}/inquiries`, data);
   }
 }

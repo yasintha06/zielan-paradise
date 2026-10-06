@@ -1,6 +1,5 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Title } from '@angular/platform-browser';
 import { switchMap, catchError, of, map } from 'rxjs';
 import { TourService, Tour } from '../../services/tour.service';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal';
@@ -10,6 +9,7 @@ import { TourCardComponent } from '../../components/tour-card/tour-card';
 import { imageUrl } from '../../utils/image';
 import { SITE } from '../../config/site';
 import { MotionService } from '../../services/motion.service';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-tour-detail',
@@ -21,7 +21,7 @@ import { MotionService } from '../../services/motion.service';
 export class TourDetail implements OnInit {
   private route = inject(ActivatedRoute);
   private tourService = inject(TourService);
-  private title = inject(Title);
+  private seo = inject(SeoService);
   private motion = inject(MotionService);
 
   readonly site = SITE;
@@ -42,7 +42,11 @@ export class TourDetail implements OnInit {
       this.state.set(tour ? 'ready' : 'missing');
       this.openDay.set(0);
       if (!tour) return;
-      this.title.setTitle(`${tour.title} | Zeilan Paradise`);
+      this.seo.set({
+        title: `${tour.title} | Zeilan Paradise`,
+        description: tour.description || `${tour.duration} private journey: ${tour.route ?? ''}. ${tour.targetAudience ?? ''}`.trim(),
+        image: imageUrl(tour.image),
+      });
       this.tourService.getTours(tour.type).subscribe((list) =>
         this.related.set(list.filter((t) => t.id !== tour.id).slice(0, 3))
       );

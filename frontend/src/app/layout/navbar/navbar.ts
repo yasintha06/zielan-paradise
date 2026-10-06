@@ -22,12 +22,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
   readonly site = SITE;
   readonly links = [
     { path: '/destinations', label: 'Destinations' },
-    { path: '/round-tours', label: 'Round Tours' },
+    { path: '/round-tours', label: 'Journeys' },
     { path: '/day-tours', label: 'Day Tours' },
-    { path: '/tailor-made', label: 'Tailor-Made' },
+    { path: '/experiences', label: 'Experiences' },
+    { path: '/about', label: 'About' },
     { path: '/contact', label: 'Contact' },
   ];
-  readonly menuLinks = [{ path: '/', label: 'Home' }, ...this.links];
+  readonly menuLinks = [
+    { path: '/', label: 'Home' },
+    ...this.links.slice(0, 4),
+    { path: '/tailor-made', label: 'Tailor-Made' },
+    { path: '/journal', label: 'Journal' },
+    ...this.links.slice(4),
+  ];
 
   scrolled = signal(false);
   hidden = signal(false);

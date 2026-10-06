@@ -7,6 +7,7 @@ import { DAY_TOURS, ROUND_TOURS } from '../data/catalog';
 export interface TourItineraryDay {
   dayNumber?: number | string;
   day?: string;
+  drive?: string;
   title: string;
   location?: string;
   description: string;
@@ -19,6 +20,9 @@ export interface Tour {
   title: string;
   description?: string;
   duration: string;
+  bestTime?: string;
+  isActive?: boolean;
+  sortOrder?: number;
   durationLabel?: string;
   targetAudience?: string;
   guests?: string;

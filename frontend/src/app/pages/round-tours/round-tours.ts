@@ -20,13 +20,11 @@ export class RoundTours implements OnInit {
   tours = signal<Tour[]>([]);
   activeFilter = signal('all');
 
-  readonly filters = [
-    { key: 'all', label: 'All journeys' },
-    { key: '14', label: '14 days' },
-    { key: '10', label: '10 days' },
-    { key: '8', label: '8 days' },
-    { key: '7', label: '7 days' },
-  ];
+  /** Themes come from each tour's badge, so new tours added in the admin appear automatically. */
+  filters = computed(() => {
+    const themes = Array.from(new Set(this.tours().map((t) => t.badge?.text).filter((x): x is string => !!x)));
+    return [{ key: 'all', label: 'All journeys' }, ...themes.map((t) => ({ key: t, label: t }))];
+  });
 
   readonly included = [
     { title: 'Your own chauffeur-guide', text: 'A private, air-conditioned vehicle with an English-speaking guide for the whole journey.' },
@@ -37,11 +35,11 @@ export class RoundTours implements OnInit {
 
   filtered = computed(() => {
     const f = this.activeFilter();
-    return f === 'all' ? this.tours() : this.tours().filter((t) => t.category === f || t.duration.startsWith(f));
+    return f === 'all' ? this.tours() : this.tours().filter((t) => t.badge?.text === f);
   });
 
   countFor(key: string): number {
-    return key === 'all' ? this.tours().length : this.tours().filter((t) => t.category === key || t.duration.startsWith(key)).length;
+    return key === 'all' ? this.tours().length : this.tours().filter((t) => t.badge?.text === key).length;
   }
 
   ngOnInit(): void {

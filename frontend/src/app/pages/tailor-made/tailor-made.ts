@@ -95,8 +95,9 @@ export class TailorMade implements OnInit {
   readonly months = ['Flexible / still deciding', ...upcomingMonths(18)];
 
   ngOnInit(): void {
-    const destination = this.route.snapshot.queryParamMap.get('destination');
-    if (destination) this.inquiry.additionalNotes = `We would love to include ${destination}.`;
+    const params = this.route.snapshot.queryParamMap;
+    const wishes = [params.get('destination'), params.get('experience')].filter(Boolean);
+    if (wishes.length) this.inquiry.additionalNotes = `We would love to include: ${wishes.join(', ')}.`;
   }
 
   toggle(list: string[], value: string): void {

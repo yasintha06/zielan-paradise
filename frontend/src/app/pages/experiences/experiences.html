@@ -1,0 +1,38 @@
+<app-page-hero
+  image="img/day-tour-tea-2000.webp"
+  alt="Rolling tea estates in the hill country"
+  eyebrow="Experiences"
+  title="Moments you’ll"
+  titleEm="still talk about"
+  subtitle="The hotels matter, but it’s the experiences that stay with you. Add any of these to your journey, or tell us what you dream of and we’ll make it happen."
+  [crumbs]="[{ label: 'Experiences' }]" />
+
+<section class="pg-section">
+  <div class="container">
+    <div class="ex-bar" appScrollReveal>
+      <h2 class="section-title">Find your <em>moment</em></h2>
+      <div class="chips" role="group" aria-label="Filter by theme">
+        @for (t of ['All'].concat(themes); track t) {
+          <button type="button" class="chip" [class.is-active]="theme() === t" (click)="setTheme(t)" [attr.aria-pressed]="theme() === t">
+            {{ t }}<small>{{ countFor(t) }}</small>
+          </button>
+        }
+      </div>
+    </div>
+
+    <div class="ex-grid">
+      @for (e of visible(); track e.title; let i = $index) {
+        <article class="ex-card" appScrollReveal [style.transition-delay.ms]="(i % 3) * 100">
+          <div class="ex-img">
+            <img [src]="'img/' + e.image + '-900.webp'" [alt]="e.title" loading="lazy" appParallax="8" />
+            <span class="ex-theme">{{ e.theme }}</span>
+          </div>
+          <p class="ex-region">{{ e.region }}</p>
+          <h3>{{ e.title }}</h3>
+          <p class="ex-text">{{ e.text }}</p>
+          <a class="pg-link" routerLink="/tailor-made" [queryParams]="{ experience: e.title }">Add to my journey <span aria-hidden="true">&rarr;</span></a>
+        </article>
+      }
+    </div>
+  </div>
+</section>

@@ -45,6 +45,7 @@
   text-transform: uppercase;
   color: var(--gold-dark);
 }
+.tc-season { color: var(--teal); }
 .tc-title { font-size: clamp(1.6rem, 2.2vw, 2.1rem); font-weight: 500; margin: 0.45rem 0 0.6rem; line-height: 1.1; }
 .tc-title a { transition: color 0.4s; }
 .tc:hover .tc-title a { color: var(--teal); }

@@ -1,0 +1,79 @@
+<app-page-hero
+  image="img/kandy-2000.webp"
+  alt="The Temple of the Sacred Tooth Relic in Kandy"
+  eyebrow="About us"
+  title="A love of the island,"
+  titleEm="shared with care"
+  subtitle="Zeilan Paradise brings together planning from the UK and a team on the ground in Sri Lanka, so your journey feels personal from the very first conversation."
+  [crumbs]="[{ label: 'About' }]" />
+
+<section class="pg-section">
+  <div class="container ab-story">
+    <div class="ab-story-text" appScrollReveal>
+      <p class="eyebrow">Our story</p>
+      <h2 class="section-title">Why we do <em>this</em></h2>
+      <p class="pg-lead">Sri Lanka is small enough to cross in a day, yet it holds ancient cities, cloud forests, leopards, whales and a coastline of quiet coves.</p>
+      <p>Most visitors only scratch the surface. We started Zeilan Paradise to change that: to show the island through the eyes of people who love it, at a pace that leaves room for the unexpected. Every journey begins with a conversation, and every detail is checked by someone who has been there.</p>
+      <p>We are deliberately small. That means you deal with the same people from your first enquiry to your journey home, and we can say yes to the requests larger companies can’t.</p>
+    </div>
+    <div class="ab-story-media">
+      <div class="ab-img ab-img--tall img-reveal" appScrollReveal><img src="img/nuwara-eliya-900.webp" alt="Tea picker in the hill country" loading="lazy" /></div>
+      <div class="ab-img ab-img--small img-reveal" appScrollReveal><img src="img/anuradhapura-900.webp" alt="Stupa at sunset in Anuradhapura" loading="lazy" /></div>
+    </div>
+  </div>
+</section>
+
+<section class="pg-section pg-section--sand">
+  <div class="container">
+    <ul class="ab-pillars">
+      @for (p of pillars; track p.label; let i = $index) {
+        <li appScrollReveal [style.transition-delay.ms]="i * 120">
+          <p class="eyebrow">{{ p.label }}</p>
+          <h3>{{ p.title }}</h3>
+          <p>{{ p.text }}</p>
+        </li>
+      }
+    </ul>
+  </div>
+</section>
+
+<section class="pg-section">
+  <div class="container">
+    <header class="pg-head" appScrollReveal>
+      <p class="eyebrow">Our strengths</p>
+      <h2 class="section-title">What you can <em>count on</em></h2>
+    </header>
+    <ol class="ab-strengths">
+      @for (s of strengths; track s.title; let i = $index) {
+        <li appScrollReveal [style.transition-delay.ms]="(i % 3) * 100">
+          <span class="ab-num">0{{ i + 1 }}</span>
+          <h3>{{ s.title }}</h3>
+          <p>{{ s.text }}</p>
+        </li>
+      }
+    </ol>
+  </div>
+</section>
+
+<section class="ab-responsible">
+  <div class="ab-responsible-bg"><img src="img/yala-2000.webp" alt="" loading="lazy" appParallax="14" /></div>
+  <div class="container ab-responsible-inner">
+    <div appScrollReveal>
+      <p class="eyebrow">Travelling responsibly</p>
+      <h2 class="section-title">Leave the island<br /><em>better than we found it</em></h2>
+    </div>
+    <ul appScrollReveal>
+      @for (p of promises; track p) { <li>{{ p }}</li> }
+    </ul>
+  </div>
+</section>
+
+<section class="pg-section ab-cta">
+  <div class="container" appScrollReveal>
+    <h2 class="section-title">Let’s talk about <em>your</em> Sri Lanka</h2>
+    <div class="ab-cta-actions">
+      <a routerLink="/tailor-made" class="btn btn-gold btn-lg" appMagnetic>Start planning</a>
+      <a routerLink="/contact" class="btn btn-outline-teal btn-lg">Get in touch</a>
+    </div>
+  </div>
+</section>

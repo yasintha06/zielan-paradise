@@ -15,8 +15,8 @@
     </div>
 
     <div class="rt-bar" appScrollReveal>
-      <div class="chips" role="group" aria-label="Filter by length">
-        @for (f of filters; track f.key) {
+      <div class="chips" role="group" aria-label="Filter by theme">
+        @for (f of filters(); track f.key) {
           @if (f.key === 'all' || countFor(f.key)) {
             <button type="button" class="chip" [class.is-active]="activeFilter() === f.key" (click)="setFilter(f.key)"
                     [attr.aria-pressed]="activeFilter() === f.key">

@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 
 @Component({
@@ -13,12 +13,13 @@ import { AuthService } from '../../../services/auth.service';
 export class AdminLoginComponent {
   private authService = inject(AuthService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   credentials = { username: '', password: '' };
 
   // Signals so the view always refreshes when the HTTP response arrives.
   isLoading = signal(false);
-  errorMessage = signal('');
+  errorMessage = signal(this.route.snapshot.queryParamMap.get('expired') ? 'Your session has ended. Please sign in again.' : '');
 
   onSubmit(): void {
     if (this.isLoading()) return;
@@ -40,7 +41,9 @@ export class AdminLoginComponent {
         this.errorMessage.set(
           err.status === 401
             ? 'That username or password is not right. The username is usually "admin".'
-            : 'Could not reach the server. Please try again in a moment.'
+            : err.status === 429
+              ? 'Too many attempts. Please wait 15 minutes, then try again.'
+              : 'Could not reach the server. Please try again in a moment.'
         );
       }
     });

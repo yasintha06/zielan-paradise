@@ -1,70 +1,104 @@
-<div class="ad-page">
-  <div class="container">
-    <header class="ad-head">
-      <div>
-        <p class="eyebrow">Admin</p>
-        <h1>Enquiries</h1>
-      </div>
-      <div class="ad-head-actions">
-        <button type="button" class="btn btn-outline-teal btn-sm" (click)="fetch()" [disabled]="isLoading()">Refresh</button>
-        <button type="button" class="btn btn-teal btn-sm" (click)="logout()">Sign out</button>
-      </div>
-    </header>
-
-    <ul class="ad-stats">
-      <li><strong>{{ stats().total }}</strong><span>Total</span></li>
-      <li><strong>{{ stats().week }}</strong><span>Last 7 days</span></li>
-      <li><strong>{{ stats().planner }}</strong><span>Journey planner</span></li>
-      <li><strong>{{ stats().contact }}</strong><span>Contact form</span></li>
-    </ul>
-
-    <div class="ad-tools">
-      <div class="chips" role="group" aria-label="Filter enquiries">
-        <button type="button" class="chip" [class.is-active]="filter() === 'all'" (click)="filter.set('all')">All</button>
-        <button type="button" class="chip" [class.is-active]="filter() === 'planner'" (click)="filter.set('planner')">Planner</button>
-        <button type="button" class="chip" [class.is-active]="filter() === 'contact'" (click)="filter.set('contact')">Contact</button>
-      </div>
-      <input class="ad-search" type="search" placeholder="Search name, email, message…" aria-label="Search enquiries"
-             [ngModel]="search()" (ngModelChange)="search.set($event)" />
-    </div>
-
-    @if (isLoading()) {
-      <p class="ad-note">Loading enquiries…</p>
-    } @else if (error()) {
-      <div class="ad-error" role="alert">{{ error() }}</div>
-    } @else {
-      <ol class="ad-list">
-        @for (l of visible(); track $index; let i = $index) {
-          <li class="ad-item" [class.is-open]="open() === i">
-            <button type="button" class="ad-row" (click)="toggle(i)" [attr.aria-expanded]="open() === i">
-              <span class="ad-kind" [class.ad-kind--planner]="l.kind === 'planner'">{{ l.kind === 'planner' ? 'Planner' : 'Contact' }}</span>
-              <span class="ad-name">{{ l.name }}</span>
-              <span class="ad-email">{{ l.email }}</span>
-              <span class="ad-date">{{ l.date ? (l.date | date: 'd MMM y, HH:mm') : '' }}</span>
-              <span class="ad-chev" aria-hidden="true"></span>
-            </button>
-            @if (open() === i) {
-              <div class="ad-body">
-                <dl>
-                  <div><dt>Email</dt><dd><a [href]="'mailto:' + l.email">{{ l.email }}</a></dd></div>
-                  @if (l.phone) { <div><dt>Phone</dt><dd><a [href]="'tel:' + l.phone">{{ l.phone }}</a></dd></div> }
-                  @for (d of l.details; track d.label) { <div><dt>{{ d.label }}</dt><dd>{{ d.value }}</dd></div> }
-                  <div><dt>Status</dt><dd>{{ l.status }}</dd></div>
-                </dl>
-                @if (l.message) { <blockquote>{{ l.message }}</blockquote> }
-                <div class="ad-actions">
-                  <a class="btn btn-gold btn-sm" [href]="replyLink(l)">Reply by email</a>
-                  @if (l.phone) {
-                    <a class="btn btn-outline-teal btn-sm" [href]="whatsappLink(l)" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-                  }
-                </div>
-              </div>
-            }
-          </li>
-        } @empty {
-          <li class="ad-note">No enquiries yet.</li>
-        }
-      </ol>
-    }
+<header class="a-head">
+  <div>
+    <h1>Enquiries</h1>
+    <p>Every message from the contact form and the journey planner.</p>
   </div>
+  <div class="a-head-actions">
+    <button type="button" class="a-btn" (click)="fetch()" [disabled]="isLoading()">Refresh</button>
+  </div>
+</header>
+
+<div class="en-status">
+  @for (s of ['all'].concat(statuses); track s) {
+    <button type="button" [class.is-active]="status() === s" (click)="status.set($any(s))">
+      <span>{{ s === 'all' ? 'All' : s }}</span><strong>{{ countFor($any(s)) }}</strong>
+    </button>
+  }
 </div>
+
+<div class="a-toolbar">
+  <div class="en-kind">
+    <button type="button" class="a-btn a-btn--sm" [class.a-btn--primary]="kind() === 'all'" (click)="kind.set('all')">All forms</button>
+    <button type="button" class="a-btn a-btn--sm" [class.a-btn--primary]="kind() === 'planner'" (click)="kind.set('planner')">Planner</button>
+    <button type="button" class="a-btn a-btn--sm" [class.a-btn--primary]="kind() === 'contact'" (click)="kind.set('contact')">Contact</button>
+  </div>
+  <input class="a-input a-search" type="search" placeholder="Search name, email, notes…" aria-label="Search enquiries"
+         [ngModel]="search()" (ngModelChange)="search.set($event)" />
+</div>
+
+@if (error()) { <p class="a-error">{{ error() }}</p> }
+
+<div class="a-panel">
+  @if (isLoading()) {
+    <p class="a-empty">Loading enquiries…</p>
+  } @else {
+    <div class="a-table-wrap">
+      <table class="a-table">
+        <thead><tr><th>Received</th><th>Name</th><th>Form</th><th>Trip</th><th>Status</th></tr></thead>
+        <tbody>
+          @for (l of visible(); track l.id) {
+            <tr class="en-row" (click)="open(l)" [class.is-selected]="selected()?.id === l.id">
+              <td class="en-date">{{ l.createdAt ? (l.createdAt | date: 'd MMM y, HH:mm') : '–' }}</td>
+              <td><strong>{{ l.firstName }} {{ l.lastName }}</strong><br /><span class="a-muted">{{ l.email }}</span></td>
+              <td><span class="a-pill" [class.a-pill--gold]="l.kind === 'planner'" [class.a-pill--teal]="l.kind === 'contact'">{{ l.kind === 'planner' ? 'Planner' : 'Contact' }}</span></td>
+              <td class="a-muted">{{ l.trip?.month || l.travelDates || l.interest || '–' }}</td>
+              <td><span class="a-pill" [class]="'a-pill ' + statusClass(l.status)">{{ l.status }}</span></td>
+            </tr>
+          } @empty {
+            <tr><td colspan="5" class="a-empty">{{ leads().length ? 'Nothing matches these filters.' : 'No enquiries yet.' }}</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
+
+@if (selected(); as l) {
+  <div class="a-drawer-backdrop" (click)="close()"></div>
+  <aside class="a-drawer" role="dialog" aria-label="Enquiry details" data-lenis-prevent>
+    <div class="a-drawer-head">
+      <div>
+        <h2>{{ l.firstName }} {{ l.lastName }}</h2>
+        <span class="a-muted">{{ l.kind === 'planner' ? 'Journey planner' : 'Contact form' }} · {{ l.createdAt | date: 'd MMM y, HH:mm' }}</span>
+      </div>
+      <button type="button" class="a-btn a-btn--sm" (click)="close()" aria-label="Close">✕</button>
+    </div>
+    <div class="a-drawer-body">
+      <div class="en-actions">
+        <a class="a-btn a-btn--gold" [href]="replyLink(l)">Reply by email</a>
+        @if (l.phone) {
+          <a class="a-btn" [href]="whatsappLink(l)" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a class="a-btn" [href]="'tel:' + l.phone">Call</a>
+        }
+      </div>
+
+      <label class="a-field">
+        <span>Status</span>
+        <select [ngModel]="l.status" (ngModelChange)="setStatus(l, $event)">
+          @for (s of statuses; track s) { <option [value]="s">{{ s }}</option> }
+        </select>
+      </label>
+
+      <dl class="en-dl">
+        <div><dt>Email</dt><dd><a [href]="'mailto:' + l.email">{{ l.email }}</a></dd></div>
+        @if (l.phone) { <div><dt>Phone</dt><dd>{{ l.phone }}</dd></div> }
+        @for (d of details(l); track d.label) { <div><dt>{{ d.label }}</dt><dd>{{ d.value }}</dd></div> }
+      </dl>
+
+      @if (l.message) {
+        <div class="a-field"><span>Message</span><blockquote class="en-msg">{{ l.message }}</blockquote></div>
+      }
+
+      <label class="a-field">
+        <span>Private notes (only you see these)</span>
+        <textarea rows="5" [(ngModel)]="draftNotes" (ngModelChange)="saved.set(false)" placeholder="Calls, proposal sent, hotel preferences…"></textarea>
+      </label>
+    </div>
+    <div class="a-drawer-foot">
+      <button type="button" class="a-btn a-btn--danger" (click)="remove(l)">Delete</button>
+      <button type="button" class="a-btn a-btn--primary" (click)="saveNotes(l)" [disabled]="saving()">
+        {{ saving() ? 'Saving…' : saved() ? 'Saved ✓' : 'Save notes' }}
+      </button>
+    </div>
+  </aside>
+}

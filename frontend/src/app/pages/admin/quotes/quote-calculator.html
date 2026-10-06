@@ -1,0 +1,192 @@
+<header class="a-head no-print">
+  <div>
+    <a routerLink="/admin/quotes" class="qc-back">← All quotes</a>
+    <h1>{{ id() ? title || 'Quote' : 'New quote' }}</h1>
+    <p>Costing per the course method. All amounts convert to pounds using your exchange rates.</p>
+  </div>
+  <div class="a-head-actions">
+    <button type="button" class="a-btn" (click)="print()">Print</button>
+    <button type="button" class="a-btn a-btn--primary" (click)="save()" [disabled]="saving() || loading()">{{ saving() ? 'Saving…' : 'Save quote' }}</button>
+  </div>
+</header>
+
+@if (error()) { <p class="a-error qc-msg no-print">{{ error() }}</p> }
+@if (message()) { <p class="a-success qc-msg no-print">{{ message() }}</p> }
+
+<div class="qc-layout">
+  <div class="qc-main">
+    <!-- Client -->
+    <section class="a-panel a-panel-pad">
+      <h2>1 · Client &amp; trip</h2>
+      <div class="qc-fields">
+        <div class="a-grid-2">
+          <label class="a-field"><span>Quote name *</span><input [(ngModel)]="title" placeholder="Smith family, March 2027" /></label>
+          <label class="a-field"><span>Client</span><input [(ngModel)]="clientName" placeholder="Name or email" /></label>
+        </div>
+        <div class="a-grid-3">
+          <label class="a-field"><span>Travel dates</span><input [(ngModel)]="q.travelDates" placeholder="12–24 March 2027" /></label>
+          <label class="a-field"><span>Adults</span><input type="number" min="1" [(ngModel)]="q.adults" /></label>
+          <label class="a-field"><span>Children</span><input type="number" min="0" [(ngModel)]="q.children" /></label>
+        </div>
+        <div class="a-grid-3">
+          <label class="a-field"><span>Status</span>
+            <select [(ngModel)]="status">@for (s of statuses; track s) { <option [value]="s">{{ s }}</option> }</select>
+          </label>
+          <label class="a-field"><span>LKR per £1</span><input type="number" step="0.01" [(ngModel)]="q.rates.lkrPerGbp" /><small>Use today’s TT rate</small></label>
+          <label class="a-field"><span>US$ per £1</span><input type="number" step="0.001" [(ngModel)]="q.rates.usdPerGbp" /></label>
+        </div>
+        @if (tours().length) {
+          <label class="a-field no-print"><span>Start from one of your tours (optional)</span>
+            <select (change)="fromTour($any($event.target).value)">
+              <option value="">Choose a tour…</option>
+              @for (t of tours(); track t.id) { <option [value]="t.id">{{ t.title }} ({{ t.duration }})</option> }
+            </select>
+          </label>
+        }
+      </div>
+    </section>
+
+    <!-- Transport -->
+    <section class="a-panel a-panel-pad">
+      <h2>2 · Transport (in LKR)</h2>
+      <div class="qc-fields">
+        <div class="a-grid-2">
+          <label class="a-field"><span>Vehicle</span>
+            <select [ngModel]="q.transport.vehicle" (ngModelChange)="pickVehicle($event)">
+              @for (v of vehicles; track v.name) { <option [value]="v.name">{{ v.name }}</option> }
+            </select>
+            <small>Suggested for {{ totals.pax }} guests: {{ suggestedVehicle() }}</small>
+          </label>
+          <label class="a-field"><span>Rate per km (LKR)</span><input type="number" [(ngModel)]="q.transport.ratePerKm" /><small>Course figures are indicative; use your supplier’s rate</small></label>
+        </div>
+
+        <div class="qc-legs">
+          <div class="qc-legs-head">
+            <strong>Daily distances</strong>
+            <label class="a-check"><input type="checkbox" [(ngModel)]="q.transport.minKmPerDay" /> Charge at least {{ minKm }} km per day</label>
+          </div>
+          @for (l of q.transport.legs; track $index; let i = $index) {
+            <div class="qc-row qc-row--leg">
+              <input class="a-input" [(ngModel)]="l.label" aria-label="Day" />
+              <input class="a-input" type="number" [(ngModel)]="l.km" aria-label="Kilometres" />
+              <span class="a-muted">km</span>
+              <button type="button" class="a-btn a-btn--sm a-btn--danger no-print" (click)="removeLeg(i)" aria-label="Remove day">✕</button>
+            </div>
+          }
+          <button type="button" class="a-btn a-btn--sm no-print" (click)="addLeg()">+ Add day</button>
+          <p class="a-muted qc-hint">Course rules: start and end in Colombo, allow 10 km from city to hotel, 40 km for a large-city tour or 20 km for a small one.</p>
+        </div>
+
+        <div class="a-grid-2">
+          <label class="a-field"><span>Chauffeur-guide fee / day (LKR)</span><input type="number" [(ngModel)]="q.transport.guideFeePerDay" /></label>
+          <label class="a-field"><span>Other costs (LKR)</span><input type="number" [(ngModel)]="q.transport.extras" /><small>Water, parking, airport fees, highway tolls</small></label>
+        </div>
+        <div class="a-grid-2">
+          <label class="a-field"><span>Nights the guide needs a room</span><input type="number" min="0" [(ngModel)]="q.transport.guideNights" /><small>Only where the hotel doesn’t provide one</small></label>
+          <label class="a-field"><span>Guide room / night (LKR)</span><input type="number" [(ngModel)]="q.transport.guideAccomPerNight" /></label>
+        </div>
+        <p class="qc-subtotal">{{ totals.km | number: '1.0-0' }} km · LKR {{ totals.transportLkr | number: '1.0-0' }} · <strong>£{{ totals.transport | number: '1.2-2' }}</strong></p>
+      </div>
+    </section>
+
+    <!-- Hotels -->
+    <section class="a-panel a-panel-pad">
+      <h2>3 · Accommodation</h2>
+      @for (h of q.hotels; track $index; let i = $index) {
+        <div class="qc-line">
+          <div class="qc-row qc-row--hotel">
+            <label class="a-field"><span>Hotel</span><input [(ngModel)]="h.name" placeholder="Heritance Kandalama" /></label>
+            <label class="a-field"><span>Nights</span><input type="number" min="0" [(ngModel)]="h.nights" /></label>
+            <label class="a-field"><span>Rooms</span><input type="number" min="0" [(ngModel)]="h.rooms" /></label>
+            <label class="a-field"><span>Rate / room / night</span><input type="number" [(ngModel)]="h.rate" /></label>
+            <label class="a-field"><span>Currency</span><select [(ngModel)]="h.currency">@for (c of currencies; track c) { <option [value]="c">{{ c }}</option> }</select></label>
+            <label class="a-field"><span>Meals</span><select [(ngModel)]="h.meal">@for (m of mealBases; track m) { <option [value]="m">{{ m }}</option> }</select></label>
+            <label class="a-field"><span>Supplements (total)</span><input type="number" [(ngModel)]="h.supplements" /></label>
+            <button type="button" class="a-btn a-btn--sm a-btn--danger no-print qc-del" (click)="remove(q.hotels, i)" aria-label="Remove hotel">✕</button>
+          </div>
+        </div>
+      }
+      <button type="button" class="a-btn a-btn--sm no-print" (click)="addHotel()">+ Add hotel</button>
+      <p class="a-muted qc-hint">Add Christmas, New Year or Perahera supplements and any special-offer reductions as “supplements” (use a minus for discounts). {{ hotelNights() }} nights so far.</p>
+      <p class="qc-subtotal"><strong>£{{ totals.hotels | number: '1.2-2' }}</strong></p>
+    </section>
+
+    <!-- Activities -->
+    <section class="a-panel a-panel-pad">
+      <h2>4 · Entrance fees &amp; activities (per person)</h2>
+      @for (a of q.activities; track $index; let i = $index) {
+        <div class="qc-row qc-row--act">
+          <input class="a-input" [(ngModel)]="a.name" placeholder="Sigiriya Rock" aria-label="Activity" />
+          <input class="a-input" type="number" [(ngModel)]="a.perPerson" aria-label="Cost per person" />
+          <select class="a-input" [(ngModel)]="a.currency" aria-label="Currency">@for (c of currencies; track c) { <option [value]="c">{{ c }}</option> }</select>
+          <label class="a-check"><input type="checkbox" [(ngModel)]="a.included" /> In price</label>
+          <button type="button" class="a-btn a-btn--sm a-btn--danger no-print" (click)="remove(q.activities, i)" aria-label="Remove">✕</button>
+        </div>
+      }
+      <button type="button" class="a-btn a-btn--sm no-print" (click)="addActivity()">+ Add entrance / activity</button>
+      <p class="a-muted qc-hint">The course recommends showing entrance fees separately rather than in the price, unless the client asks.</p>
+      <p class="qc-subtotal">Included: <strong>£{{ totals.activities | number: '1.2-2' }}</strong></p>
+    </section>
+
+    <!-- Meals & extras -->
+    <section class="a-panel a-panel-pad">
+      <h2>5 · Meals outside hotels &amp; extras</h2>
+      @for (m of q.meals; track $index; let i = $index) {
+        <div class="qc-row qc-row--meal">
+          <input class="a-input" [(ngModel)]="m.name" aria-label="Meal" />
+          <input class="a-input" type="number" min="0" [(ngModel)]="m.count" aria-label="How many" />
+          <span class="a-muted">×</span>
+          <input class="a-input" type="number" [(ngModel)]="m.perPerson" aria-label="Cost per person" />
+          <select class="a-input" [(ngModel)]="m.currency" aria-label="Currency">@for (c of currencies; track c) { <option [value]="c">{{ c }}</option> }</select>
+          <button type="button" class="a-btn a-btn--sm a-btn--danger no-print" (click)="remove(q.meals, i)" aria-label="Remove">✕</button>
+        </div>
+      }
+      @for (e of q.extras; track $index; let i = $index) {
+        <div class="qc-row qc-row--extra">
+          <input class="a-input" [(ngModel)]="e.name" placeholder="Welcome gift, SIM cards…" aria-label="Extra" />
+          <input class="a-input" type="number" [(ngModel)]="e.amount" aria-label="Amount" />
+          <select class="a-input" [(ngModel)]="e.currency" aria-label="Currency">@for (c of currencies; track c) { <option [value]="c">{{ c }}</option> }</select>
+          <button type="button" class="a-btn a-btn--sm a-btn--danger no-print" (click)="remove(q.extras, i)" aria-label="Remove">✕</button>
+        </div>
+      }
+      <div class="qc-add no-print">
+        <button type="button" class="a-btn a-btn--sm" (click)="addMeal()">+ Add meal</button>
+        <button type="button" class="a-btn a-btn--sm" (click)="addExtra()">+ Add extra / gift</button>
+      </div>
+      <p class="qc-subtotal">Meals £{{ totals.meals | number: '1.2-2' }} · Extras £{{ totals.extras | number: '1.2-2' }}</p>
+    </section>
+
+    <section class="a-panel a-panel-pad">
+      <h2>Notes</h2>
+      <label class="a-field"><textarea [(ngModel)]="q.notes" rows="3" placeholder="Assumptions, hotel alternatives, validity date…"></textarea></label>
+    </section>
+  </div>
+
+  <!-- Summary -->
+  <aside class="qc-side">
+    <section class="a-panel a-panel-pad qc-summary">
+      <h2>Summary</h2>
+      <dl>
+        <div><dt>Transport</dt><dd>£{{ totals.transport | number: '1.2-2' }}</dd></div>
+        <div><dt>Accommodation</dt><dd>£{{ totals.hotels | number: '1.2-2' }}</dd></div>
+        <div><dt>Activities (included)</dt><dd>£{{ totals.activities | number: '1.2-2' }}</dd></div>
+        <div><dt>Meals</dt><dd>£{{ totals.meals | number: '1.2-2' }}</dd></div>
+        <div><dt>Extras</dt><dd>£{{ totals.extras | number: '1.2-2' }}</dd></div>
+        <div class="qc-total"><dt>Total cost</dt><dd>£{{ totals.cost | number: '1.2-2' }}</dd></div>
+      </dl>
+      <label class="a-field qc-markup"><span>Markup %</span><input type="number" step="0.5" [(ngModel)]="q.markupPct" /></label>
+      <dl>
+        <div><dt>Profit</dt><dd>£{{ totals.profit | number: '1.2-2' }} <small>({{ totals.marginPct | number: '1.0-1' }}% margin)</small></dd></div>
+        <div class="qc-sell"><dt>Selling price</dt><dd>£{{ totals.sell | number: '1.0-0' }}</dd></div>
+        <div class="qc-pp"><dt>Per person ({{ totals.pax }})</dt><dd>£{{ totals.perPerson | number: '1.0-0' }}</dd></div>
+      </dl>
+      @if (q.markupPct < 10) { <p class="a-error qc-warn">Below the course’s 10% minimum margin.</p> }
+      @if (totals.excludedPerPerson.length) {
+        <div class="qc-excl">
+          <strong>Paid locally (per person)</strong>
+          <ul>@for (x of totals.excludedPerPerson; track x.name) { <li><span>{{ x.name }}</span><span>£{{ x.amount | number: '1.0-0' }}</span></li> }</ul>
+        </div>
+      }
+    </section>
+  </aside>
+</div>

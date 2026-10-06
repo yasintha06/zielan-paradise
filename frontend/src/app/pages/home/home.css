@@ -444,6 +444,16 @@
 .zp-promise-item h3 { font-size: 1.6rem; font-weight: 500; margin-bottom: 0.6rem; }
 .zp-promise-item p { font-size: 0.92rem; color: rgba(246, 240, 226, 0.7); }
 
+/* ── REVIEWS ─────────────────────────────────────────────── */
+.zp-reviews { padding: var(--section-pad) 0 0 !important; }
+.zp-reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.5rem, 3vw, 2.5rem); }
+.zp-review { display: flex; flex-direction: column; gap: 1.25rem; padding: 2.25rem; background: var(--white); border-radius: 4px; box-shadow: var(--shadow-sm); }
+.zp-review-stars { color: var(--gold); letter-spacing: 0.2em; }
+.zp-review blockquote { font-family: var(--ff-head); font-size: 1.35rem; line-height: 1.45; color: var(--ink); flex: 1; }
+.zp-review figcaption { display: grid; gap: 0.2rem; font-size: 0.85rem; }
+.zp-review figcaption span { color: var(--text-soft); }
+.zp-gallery-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem 2.5rem; margin-top: 1.5rem; }
+
 /* ── GALLERY ─────────────────────────────────────────────── */
 .zp-gallery { padding: var(--section-pad) 0 !important; overflow: hidden; }
 .zp-gallery-cols {
@@ -461,6 +471,7 @@
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 1024px) {
   .zp-tours-grid { grid-template-columns: 1fr 1fr; }
+  .zp-reviews-grid { grid-template-columns: 1fr; max-width: 640px; margin: 0 auto; }
   .zp-tour:nth-child(2) { margin-top: 0; }
   .zp-steps-list,
   .zp-promise-grid { grid-template-columns: 1fr 1fr; row-gap: 3rem; }

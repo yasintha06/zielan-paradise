@@ -129,7 +129,9 @@
 .td-day.is-open .td-day-num,
 .td-day button:hover .td-day-num { background: var(--teal); border-color: var(--teal); color: var(--ivory); }
 .td-day-title strong { display: block; font-family: var(--ff-head); font-size: 1.5rem; font-weight: 500; line-height: 1.2; }
-.td-day-title em { font-size: 0.82rem; color: var(--gold-dark); }
+.td-day-title em { font-size: 0.82rem; color: var(--gold-dark); font-style: normal; }
+.td-drive { color: var(--text-soft); }
+.td-drive::before { content: '92  '; }
 .td-day-icon { position: relative; width: 28px; height: 28px; }
 .td-day-icon::before,
 .td-day-icon::after {

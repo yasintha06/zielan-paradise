@@ -1,0 +1,114 @@
+<header class="a-head">
+  <div>
+    <a routerLink="/admin/tours" class="te-back">← All tours</a>
+    <h1>{{ id() ? form.title || 'Edit tour' : form.type === 'day' ? 'New day tour' : 'New round tour' }}</h1>
+  </div>
+  <div class="a-head-actions">
+    @if (id()) { <a [href]="'/tours/' + id()" target="_blank" rel="noopener" class="a-btn">View on site ↗</a> }
+    <button type="button" class="a-btn a-btn--primary" (click)="save()" [disabled]="saving() || loading()">{{ saving() ? 'Saving…' : 'Save' }}</button>
+  </div>
+</header>
+
+@if (error()) { <p class="a-error te-msg">{{ error() }}</p> }
+@if (message()) { <p class="a-success te-msg">{{ message() }}</p> }
+
+@if (loading()) {
+  <p class="a-empty">Loading…</p>
+} @else {
+  <div class="te-layout">
+    <div class="te-main">
+      <section class="a-panel a-panel-pad">
+        <h2>Basics</h2>
+        <div class="te-fields">
+          <label class="a-field"><span>Title *</span><input [(ngModel)]="form.title" name="title" required /></label>
+          <div class="a-grid-3">
+            <label class="a-field"><span>Type</span>
+              <select [(ngModel)]="form.type" name="type"><option value="round">Round tour</option><option value="day">Day tour</option></select>
+            </label>
+            <label class="a-field"><span>Length</span><input [(ngModel)]="form.duration" name="duration" placeholder="10 Days / 9 Nights" /></label>
+            <label class="a-field"><span>Theme badge</span><input [(ngModel)]="form.badgeText" name="badge" placeholder="Wildlife, Honeymoon…" /></label>
+          </div>
+          <div class="a-grid-2">
+            <label class="a-field"><span>Best time to travel</span><input [(ngModel)]="form.bestTime" name="bestTime" placeholder="December – April" /></label>
+            <label class="a-field"><span>Price shown</span><input [(ngModel)]="form.priceDisplay" name="price" placeholder="Price on Request, or From £2,450 pp" /></label>
+          </div>
+          <label class="a-field"><span>Short description</span>
+            <textarea [(ngModel)]="form.description" name="description" rows="3" placeholder="One or two sentences shown on cards and at the top of the page."></textarea>
+          </label>
+          <label class="a-field"><span>Ideal for</span><input [(ngModel)]="form.targetAudience" name="audience" placeholder="Couples, first-time visitors…" /></label>
+          @if (form.type === 'round') {
+            <label class="a-field"><span>Route</span><input [(ngModel)]="form.route" name="route" placeholder="Negombo → Sigiriya → Kandy → Ella → Galle" />
+              <small>Separate stops with →</small></label>
+          } @else {
+            <div class="a-grid-2">
+              <label class="a-field"><span>Start time</span><input [(ngModel)]="form.startTime" name="start" placeholder="5:30 AM" /></label>
+              <label class="a-field"><span>Group size</span><input [(ngModel)]="form.guests" name="guests" /></label>
+            </div>
+          }
+        </div>
+      </section>
+
+      <section class="a-panel a-panel-pad">
+        <h2>Photo</h2>
+        <app-image-picker [(value)]="form.image" />
+      </section>
+
+      <section class="a-panel a-panel-pad">
+        <h2>Highlights &amp; inclusions</h2>
+        <div class="te-fields">
+          <label class="a-field"><span>Highlights</span><textarea [(ngModel)]="form.highlights" name="highlights" rows="5"></textarea><small>One per line</small></label>
+          <div class="a-grid-2">
+            <label class="a-field"><span>Included</span><textarea [(ngModel)]="form.inclusions" name="inclusions" rows="6"></textarea><small>One per line</small></label>
+            <label class="a-field"><span>Not included</span><textarea [(ngModel)]="form.exclusions" name="exclusions" rows="6"></textarea><small>One per line</small></label>
+          </div>
+        </div>
+      </section>
+
+      @if (form.type === 'round') {
+        <section class="a-panel a-panel-pad">
+          <div class="te-days-head">
+            <h2>Day-by-day itinerary</h2>
+            <button type="button" class="a-btn a-btn--sm" (click)="addDay()">+ Add day</button>
+          </div>
+          @for (d of form.itinerary; track $index; let i = $index; let first = $first; let last = $last) {
+            <div class="te-day">
+              <div class="te-day-top">
+                <strong>{{ d.day }}</strong>
+                <div class="te-day-tools">
+                  <button type="button" class="a-btn a-btn--sm" (click)="moveDay(i, -1)" [disabled]="first" aria-label="Move up">↑</button>
+                  <button type="button" class="a-btn a-btn--sm" (click)="moveDay(i, 1)" [disabled]="last" aria-label="Move down">↓</button>
+                  <button type="button" class="a-btn a-btn--sm a-btn--danger" (click)="removeDay(i)" aria-label="Remove day">Remove</button>
+                </div>
+              </div>
+              <div class="a-grid-3">
+                <label class="a-field"><span>Title</span><input [(ngModel)]="d.title" [name]="'dt' + i" /></label>
+                <label class="a-field"><span>Location</span><input [(ngModel)]="d.location" [name]="'dl' + i" /></label>
+                <label class="a-field"><span>Drive</span><input [(ngModel)]="d.drive" [name]="'dd' + i" placeholder="3 hrs · 120 km" /></label>
+              </div>
+              <label class="a-field"><span>Description</span><textarea [(ngModel)]="d.description" [name]="'ds' + i" rows="3"></textarea></label>
+            </div>
+          } @empty {
+            <p class="a-muted">No days yet. Add the first day of the journey.</p>
+          }
+        </section>
+      }
+    </div>
+
+    <aside class="te-side">
+      <section class="a-panel a-panel-pad">
+        <h2>Visibility</h2>
+        <div class="te-fields">
+          <label class="a-check"><input type="checkbox" [(ngModel)]="form.isActive" name="active" /> Show on website</label>
+          <label class="a-check"><input type="checkbox" [(ngModel)]="form.featured" name="featured" /> Feature on the homepage</label>
+          <label class="a-field"><span>Display order</span><input type="number" [(ngModel)]="form.sortOrder" name="sort" placeholder="Lower numbers first" /></label>
+        </div>
+      </section>
+      @if (id()) {
+        <section class="a-panel a-panel-pad">
+          <h2>Danger zone</h2>
+          <button type="button" class="a-btn a-btn--danger" (click)="remove()">Delete tour</button>
+        </section>
+      }
+    </aside>
+  </div>
+}
