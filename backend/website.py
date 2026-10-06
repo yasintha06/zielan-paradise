@@ -34,6 +34,20 @@ def _file_headers(headers, path, url):
         headers['Cache-Control'] = 'public, max-age=2592000'
 
 
+def _redirect_www(wsgi_app):
+    """Send www.example.com/... permanently to example.com/... so search engines see one site."""
+    def middleware(environ, start_response):
+        host = environ.get('HTTP_HOST', '')
+        if host.startswith('www.'):
+            path = environ.get('PATH_INFO', '/')
+            query = environ.get('QUERY_STRING', '')
+            location = f"https://{host[4:]}{path}" + (f"?{query}" if query else '')
+            start_response('301 Moved Permanently', [('Location', location), ('Content-Length', '0')])
+            return [b'']
+        return wsgi_app(environ, start_response)
+    return middleware
+
+
 def attach_website(app):
     if not os.path.isfile(os.path.join(STATIC_DIR, 'index.html')):
         print("  [WEB] No website build found in backend/static; serving API only.")
@@ -47,6 +61,7 @@ def attach_website(app):
         immutable_file_test=lambda path, url: bool(HASHED_FILE.search(url)),
         add_headers_function=_file_headers,
     )
+    app.wsgi_app = _redirect_www(app.wsgi_app)
 
     @app.route('/', defaults={'path': ''})
     @app.route('/<path:path>')
