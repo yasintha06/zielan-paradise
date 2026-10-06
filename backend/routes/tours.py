@@ -1,228 +1,111 @@
 """
-═══════════════════════════════════════════════════════════════
-  ZEILAN PARADISE — Tours REST API Routes (PyMongo CRUD)
-  Data Model:
-  {
-    "id": "tour-cultural-triangle",
-    "title": "String",
-    "description": "String",
-    "duration": "String",
-    "guests": "String",
-    "route": "String",
-    "category": "String",
-    "type": "round" | "day",
-    "badge": { "text": "String", "class": "String" },
-    "image": "String",
-    "priceType": "String",
-    "priceDisplay": "String",
-    "highlights": ["Array of Strings"]
-  }
-═══════════════════════════════════════════════════════════════
+Zeilan Paradise — Tours
+Public:  GET /api/tours  (?type=round|day, ?category=, ?featured=true)
+         GET /api/tours/<id>
+Admin:   GET /api/admin/tours · POST /api/admin/tours
+         PUT /api/admin/tours/<id> · DELETE /api/admin/tours/<id>
 """
-import re
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
+
+from api_utils import ApiError, clean, public, require_db, slugify
+from catalog_data import CATALOG_TOURS
 from db import get_db
-from fallback_data import FALLBACK_TOURS
 
 tours_bp = Blueprint('tours', __name__)
 
+TOUR_SCHEMA = {
+    'title': 'str', 'type': 'str', 'category': 'str', 'duration': 'str', 'bestTime': 'str',
+    'description': 'text', 'targetAudience': 'str', 'route': 'str', 'image': 'str',
+    'badge': 'badge', 'priceType': 'str', 'priceDisplay': 'str', 'guests': 'str', 'startTime': 'str',
+    'highlights': 'strlist', 'itinerary': 'itinerary', 'inclusions': 'strlist', 'exclusions': 'strlist',
+    'featured': 'bool', 'isActive': 'bool', 'market': 'str', 'sortOrder': 'int',
+}
 
-def _slugify(text: str) -> str:
-    """Helper to create a URL-friendly slug ID."""
-    text = text.lower().strip()
-    text = re.sub(r'[^\w\s-]', '', text)
-    return re.sub(r'[-\s]+', '-', text)
 
-
-# ── GET ALL TOURS (with filters) ──────────────────────────────
-@tours_bp.route('/api/tours', methods=['GET'])
-def get_tours():
-    """
-    Fetch all tours from MongoDB with optional filtering.
-    Query params:
-        - type: 'round' | 'day'
-        - category: 'cultural' | 'wildlife' | 'coast' | 'highlands' | 'safari' | 'wellness' | 'adventure'
-        - market: 'uk' (default: all or matched)
-        - featured: 'true' | 'false'
-    """
-    db = get_db()
-
+def _filter(tours):
     tour_type = request.args.get('type')
     category = request.args.get('category')
-    market = request.args.get('market')
     featured = request.args.get('featured')
-
-    if db is None:
-        # Fallback to in-memory dataset
-        tours = list(FALLBACK_TOURS)
-        if tour_type:
-            tours = [t for t in tours if t.get('type') == tour_type or t.get('category') == tour_type]
-        if category and category != 'all':
-            tours = [t for t in tours if t.get('category') == category]
-        if market:
-            tours = [t for t in tours if t.get('market', 'uk') == market]
-        if featured == 'true':
-            tours = [t for t in tours if t.get('featured') is True]
-        return jsonify(tours), 200
-
-    query = {}
     if tour_type:
-        # Support matching by explicit type field or category alias
-        query["$or"] = [
-            {"type": tour_type},
-            {"category": tour_type}
-        ]
+        tours = [t for t in tours if t.get('type') == tour_type]
     if category and category != 'all':
-        query["category"] = category
-    if market:
-        query["market"] = market
+        tours = [t for t in tours if t.get('category') == category]
     if featured == 'true':
-        query["featured"] = True
-    elif featured == 'false':
-        query["featured"] = False
-
-    tours = list(db.tours.find(query, {"_id": 0}))
-    return jsonify(tours), 200
+        tours = [t for t in tours if t.get('featured') is True]
+    return tours
 
 
-# ── GET SINGLE TOUR BY ID ─────────────────────────────────────
-@tours_bp.route('/api/tours/<string:tour_id>', methods=['GET'])
-def get_tour_by_id(tour_id):
-    """Retrieve a single tour by its string ID."""
+def _sorted(tours):
+    return sorted(tours, key=lambda t: (t.get('sortOrder') if t.get('sortOrder') is not None else 999))
+
+
+@tours_bp.route('/api/tours', methods=['GET'])
+def list_tours():
     db = get_db()
     if db is None:
-        tour = next((t for t in FALLBACK_TOURS if t.get('id') == tour_id), None)
-        if tour:
-            return jsonify(tour), 200
-        return jsonify({"error": f"Tour with ID '{tour_id}' not found."}), 404
+        tours = list(CATALOG_TOURS)
+    else:
+        tours = [public(t) for t in db.tours.find({"isActive": {"$ne": False}})]
+    return jsonify(_sorted(_filter(tours))), 200
 
-    tour = db.tours.find_one({"id": tour_id}, {"_id": 0})
+
+@tours_bp.route('/api/tours/<string:tour_id>', methods=['GET'])
+def get_tour(tour_id):
+    db = get_db()
+    if db is None:
+        tour = next((t for t in CATALOG_TOURS if t.get('id') == tour_id), None)
+    else:
+        tour = public(db.tours.find_one({"id": tour_id, "isActive": {"$ne": False}}))
     if not tour:
-        return jsonify({"error": f"Tour with ID '{tour_id}' not found."}), 404
-
+        return jsonify({"error": "Tour not found."}), 404
     return jsonify(tour), 200
 
 
-# ── POST: CREATE NEW TOUR ─────────────────────────────────────
-@tours_bp.route('/api/tours', methods=['POST'])
+# ── Admin ────────────────────────────────────────────────────
+@tours_bp.route('/api/admin/tours', methods=['GET'])
 @jwt_required()
-def create_tour():
-    """
-    Insert a new tour document into the collection adhering to the required schema.
-    """
-    db = get_db()
-    if db is None:
-        return jsonify({"error": "Database not available."}), 503
-
-    data = request.get_json()
-    if not data:
-        return jsonify({"error": "Tour JSON payload is required."}), 400
-
-    # Validate required fields
-    required_fields = ['title', 'description', 'duration', 'priceDisplay']
-    for field in required_fields:
-        if not data.get(field):
-            return jsonify({"error": f"Missing required field: '{field}'."}), 400
-
-    # Build standardized document adhering to the exact schema
-    tour_id = data.get('id') or f"tour-{_slugify(data['title'])}"
-    
-    # Check if ID already exists
-    if db.tours.find_one({"id": tour_id}):
-        return jsonify({"error": f"A tour with ID '{tour_id}' already exists."}), 409
-
-    badge = data.get('badge')
-    if not isinstance(badge, dict):
-        badge = {"text": data.get('duration', 'Curated'), "class": "bg-gold"}
-
-    highlights = data.get('highlights')
-    if not isinstance(highlights, list):
-        highlights = [h.strip() for h in str(highlights or '').split(',') if h.strip()]
-
-    tour_doc = {
-        "id": tour_id,
-        "title": str(data['title']),
-        "description": str(data['description']),
-        "duration": str(data['duration']),
-        "guests": str(data.get('guests', '2–8 Guests')),
-        "route": str(data.get('route', 'Sri Lanka Circuit')),
-        "category": str(data.get('category', 'cultural')),
-        "type": str(data.get('type', 'round')),
-        "badge": {
-            "text": str(badge.get('text', 'Featured')),
-            "class": str(badge.get('class', ''))
-        },
-        "image": str(data.get('image', 'images/tours/tour-cultural-triangle.jpg')),
-        "priceType": str(data.get('priceType', 'From')),
-        "priceDisplay": str(data['priceDisplay']),
-        "highlights": highlights,
-        "featured": bool(data.get('featured', False)),
-        "market": str(data.get('market', 'uk'))
-    }
-
-    db.tours.insert_one(tour_doc)
-    tour_doc.pop('_id', None)
-
-    return jsonify({
-        "message": "Tour created successfully.",
-        "tour": tour_doc
-    }), 201
+def admin_list_tours():
+    db = require_db()
+    return jsonify(_sorted([public(t) for t in db.tours.find()])), 200
 
 
-# ── PUT: UPDATE EXISTING TOUR ─────────────────────────────────
-@tours_bp.route('/api/tours/<string:tour_id>', methods=['PUT'])
+@tours_bp.route('/api/admin/tours', methods=['POST'])
 @jwt_required()
-def update_tour(tour_id):
-    """
-    Update an existing tour document using its string ID.
-    """
-    db = get_db()
-    if db is None:
-        return jsonify({"error": "Database not available."}), 503
+def admin_create_tour():
+    db = require_db()
+    data = clean(request.get_json(silent=True), TOUR_SCHEMA, partial=True)
+    if not data.get('title'):
+        raise ApiError("A title is required.")
+    data.setdefault('type', 'round')
+    data.setdefault('isActive', True)
+    data.setdefault('market', 'uk')
+    base = f"{'day-tour' if data['type'] == 'day' else 'tour'}-{slugify(data['title'])}"
+    tour_id, n = base, 2
+    while db.tours.find_one({"id": tour_id}):
+        tour_id, n = f"{base}-{n}", n + 1
+    data['id'] = tour_id
+    db.tours.insert_one(data)
+    return jsonify(public(data)), 201
 
-    data = request.get_json()
-    if not data:
-        return jsonify({"error": "Update JSON payload is required."}), 400
 
-    # Ensure _id is never modified
-    data.pop('_id', None)
-    data.pop('id', None)  # Prevent ID mutation
-
-    # Normalize badge and highlights if provided
-    if 'badge' in data and not isinstance(data['badge'], dict):
-        data['badge'] = {"text": str(data['badge']), "class": ""}
-    if 'highlights' in data and not isinstance(data['highlights'], list):
-        data['highlights'] = [h.strip() for h in str(data['highlights']).split(',') if h.strip()]
-
+@tours_bp.route('/api/admin/tours/<string:tour_id>', methods=['PUT'])
+@jwt_required()
+def admin_update_tour(tour_id):
+    db = require_db()
+    data = clean(request.get_json(silent=True), TOUR_SCHEMA, partial=True)
+    if 'title' in data and not data['title']:
+        raise ApiError("A title is required.")
     result = db.tours.update_one({"id": tour_id}, {"$set": data})
-
     if result.matched_count == 0:
-        return jsonify({"error": f"Tour with ID '{tour_id}' not found."}), 404
-
-    updated_tour = db.tours.find_one({"id": tour_id}, {"_id": 0})
-    return jsonify({
-        "message": f"Tour '{tour_id}' updated successfully.",
-        "tour": updated_tour
-    }), 200
+        raise ApiError("Tour not found.", 404)
+    return jsonify(public(db.tours.find_one({"id": tour_id}))), 200
 
 
-# ── DELETE: REMOVE TOUR ───────────────────────────────────────
-@tours_bp.route('/api/tours/<string:tour_id>', methods=['DELETE'])
+@tours_bp.route('/api/admin/tours/<string:tour_id>', methods=['DELETE'])
 @jwt_required()
-def delete_tour(tour_id):
-    """
-    Remove a tour document from the collection by its string ID.
-    """
-    db = get_db()
-    if db is None:
-        return jsonify({"error": "Database not available."}), 503
-
-    result = db.tours.delete_one({"id": tour_id})
-
-    if result.deleted_count == 0:
-        return jsonify({"error": f"Tour with ID '{tour_id}' not found."}), 404
-
-    return jsonify({
-        "message": f"Tour '{tour_id}' removed successfully."
-    }), 200
+def admin_delete_tour(tour_id):
+    db = require_db()
+    if db.tours.delete_one({"id": tour_id}).deleted_count == 0:
+        raise ApiError("Tour not found.", 404)
+    return jsonify({"message": "Tour deleted."}), 200

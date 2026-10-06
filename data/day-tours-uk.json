@@ -5,7 +5,10 @@
     "category": "wildlife",
     "type": "day",
     "duration": "Full Day",
-    "badge": { "text": "Full Day", "class": "teal" },
+    "badge": {
+      "text": "Full Day",
+      "class": "teal"
+    },
     "image": "images/tours/day-tour-yala.jpg",
     "description": "An exclusive private 4x4 safari through Sri Lanka's premier wildlife sanctuary, accompanied by an experienced tracker.",
     "highlights": [
@@ -27,7 +30,10 @@
     "category": "cultural",
     "type": "day",
     "duration": "Full Day",
-    "badge": { "text": "Full Day", "class": "" },
+    "badge": {
+      "text": "Full Day",
+      "class": ""
+    },
     "image": "images/tours/day-tour-sigiriya.jpg",
     "description": "Ascend the ancient 5th-century Lion Rock fortress and explore the painted cave sanctuaries of Dambulla in a single cultural loop.",
     "highlights": [
@@ -49,7 +55,10 @@
     "category": "coast",
     "type": "day",
     "duration": "Half Day",
-    "badge": { "text": "Half Day", "class": "teal" },
+    "badge": {
+      "text": "Half Day",
+      "class": "teal"
+    },
     "image": "images/tours/day-tour-whale.jpg",
     "description": "Set sail at dawn into the deep southern waters to observe migrating blue whales, sperm whales, and spinner dolphins.",
     "highlights": [
@@ -71,7 +80,10 @@
     "category": "cultural",
     "type": "day",
     "duration": "Full Day",
-    "badge": { "text": "Full Day", "class": "" },
+    "badge": {
+      "text": "Full Day",
+      "class": ""
+    },
     "image": "images/tours/day-tour-kandy.jpg",
     "description": "Experience the sacred rituals of the Temple of the Tooth, wander the Royal Botanic Gardens, and explore a working mountain tea estate.",
     "highlights": [
@@ -93,7 +105,10 @@
     "category": "coast",
     "type": "day",
     "duration": "Full Day",
-    "badge": { "text": "Full Day", "class": "" },
+    "badge": {
+      "text": "Full Day",
+      "class": ""
+    },
     "image": "images/tours/day-tour-galle.jpg",
     "description": "Stroll the 17th-century ramparts of this living Dutch citadel, cruise the coastal mangrove lagoons, and visit a sea turtle sanctuary.",
     "highlights": [
@@ -115,7 +130,10 @@
     "category": "highlands",
     "type": "day",
     "duration": "Full Day",
-    "badge": { "text": "Full Day", "class": "teal" },
+    "badge": {
+      "text": "Full Day",
+      "class": "teal"
+    },
     "image": "images/tours/day-tour-tea.jpg",
     "description": "Journey into the misty tea country, walk through heritage rolling estates, and experience classic Ceylon high tea.",
     "highlights": [
@@ -130,5 +148,77 @@
     "priceType": "Bespoke Quote",
     "priceDisplay": "Tailor-made",
     "link": "contact.html"
+  },
+  {
+    "id": "day-tour-ella",
+    "title": "Ella: Nine Arches & Little Adam's Peak",
+    "category": "highlands",
+    "type": "day",
+    "duration": "Full Day",
+    "badge": {
+      "text": "Full Day",
+      "class": "teal"
+    },
+    "image": "images/destinations/ella.jpg",
+    "description": "An easy hike to Little Adam's Peak for views across Ella Gap, then the Nine Arches Bridge as a train crosses.",
+    "highlights": [
+      "Little Adam's Peak",
+      "Nine Arches Bridge",
+      "Ravana Falls"
+    ],
+    "startTime": "7:00 AM",
+    "guests": "Private (1 – 6 Guests)",
+    "price": null,
+    "pricingType": "bespoke",
+    "priceType": "Bespoke Quote",
+    "priceDisplay": "Tailor-made"
+  },
+  {
+    "id": "day-tour-dambulla",
+    "title": "Dambulla Cave Temples & Village Life",
+    "category": "cultural",
+    "type": "day",
+    "duration": "Full Day",
+    "badge": {
+      "text": "Full Day",
+      "class": "teal"
+    },
+    "image": "images/destinations/dambulla.jpg",
+    "description": "The painted cave temples of Dambulla, then a village afternoon with a bullock-cart ride and a home-cooked lunch.",
+    "highlights": [
+      "Dambulla cave temples",
+      "Bullock-cart ride",
+      "Village lunch"
+    ],
+    "startTime": "8:00 AM",
+    "guests": "Private (1 – 6 Guests)",
+    "price": null,
+    "pricingType": "bespoke",
+    "priceType": "Bespoke Quote",
+    "priceDisplay": "Tailor-made"
+  },
+  {
+    "id": "day-tour-anuradhapura",
+    "title": "Anuradhapura Sacred City",
+    "category": "cultural",
+    "type": "day",
+    "duration": "Full Day",
+    "badge": {
+      "text": "Full Day",
+      "class": "teal"
+    },
+    "image": "images/destinations/anuradhapura.jpg",
+    "description": "By bicycle or vehicle through Sri Lanka's first great capital: vast stupas, the sacred Bodhi tree and ancient reservoirs.",
+    "highlights": [
+      "Ruwanwelisaya stupa",
+      "Sri Maha Bodhi tree",
+      "Cycling the ruins"
+    ],
+    "startTime": "7:30 AM",
+    "guests": "Private (1 – 6 Guests)",
+    "price": null,
+    "pricingType": "bespoke",
+    "priceType": "Bespoke Quote",
+    "priceDisplay": "Tailor-made"
   }
 ]

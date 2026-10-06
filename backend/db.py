@@ -4,7 +4,7 @@ Handles connection to MongoDB and provides collection accessors.
 """
 from pymongo import MongoClient
 from config import Config
-from fallback_data import FALLBACK_DESTINATIONS, FALLBACK_TOURS
+from catalog_data import CATALOG_DESTINATIONS, CATALOG_TOURS
 
 client = None
 db = None
@@ -39,9 +39,9 @@ def _seed_initial_data():
         return
 
     if db.destinations.count_documents({}) == 0:
-        db.destinations.insert_many([dict(d) for d in FALLBACK_DESTINATIONS])
+        db.destinations.insert_many([dict(d) for d in CATALOG_DESTINATIONS])
         print("    [SEED] Seeded destinations collection.")
 
     if db.tours.count_documents({}) == 0:
-        db.tours.insert_many([dict(t) for t in FALLBACK_TOURS])
+        db.tours.insert_many([dict(t) for t in CATALOG_TOURS])
         print("    [SEED] Seeded tours collection.")

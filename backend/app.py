@@ -6,13 +6,14 @@
 ═══════════════════════════════════════════════════════════════
 """
 from datetime import timedelta
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from config import Config
-from db import init_db
+from db import get_db, init_db
 from website import attach_website
-from routes import auth_bp, tours_bp, destinations_bp, testimonials_bp, enquiries_bp
+from api_utils import register_error_handler
+from routes import auth_bp, tours_bp, destinations_bp, testimonials_bp, enquiries_bp, admin_bp
 
 
 def create_app():
@@ -39,12 +40,25 @@ def create_app():
     app.register_blueprint(destinations_bp)
     app.register_blueprint(testimonials_bp)
     app.register_blueprint(enquiries_bp)
+    app.register_blueprint(admin_bp)
+    register_error_handler(app)
+
+    @app.errorhandler(404)
+    def not_found(_err):
+        if request.path.startswith('/api/'):
+            return jsonify({"error": "Not found."}), 404
+        return _err
+
+    @app.errorhandler(405)
+    def method_not_allowed(_err):
+        return jsonify({"error": "Method not allowed."}), 405
 
     # ── Health Check ───────────────────────────────────────
     @app.route('/api/health', methods=['GET'])
     def health():
         return jsonify({
             "status": "healthy",
+            "database": "connected" if get_db() is not None else "unavailable",
             "service": "Zeilan Paradise API",
             "version": "1.0.0"
         }), 200

@@ -34,6 +34,16 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Test the API
+        working-directory: backend
+        env:
+          MONGO_URI: mongodb://unused
+          ADMIN_USERNAME: admin
+          ADMIN_PASSWORD: ci-test-password
+        run: |
+          pip install -r requirements.txt -r requirements-dev.txt
+          python -m pytest -q -p no:cacheprovider tests
+
       - name: Bundle website into the backend package
         run: |
           rm -rf backend/static

@@ -4,3 +4,4 @@ from .tours import tours_bp
 from .destinations import destinations_bp
 from .testimonials import testimonials_bp
 from .enquiries import enquiries_bp
+from .admin import admin_bp

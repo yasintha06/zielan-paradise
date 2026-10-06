@@ -8,7 +8,10 @@
     "route": "Negombo → Cultural Triangle → Kandy → Hatton / Nuwara Eliya → Ella → Yala → Galle Fort → Colombo",
     "category": "14",
     "type": "round",
-    "badge": { "text": "Signature 14-Day Tour", "class": "bg-gold" },
+    "badge": {
+      "text": "Signature 14-Day Tour",
+      "class": "bg-gold"
+    },
     "image": "images/tours/tour-grand-odyssey.jpg",
     "priceType": "Signature Luxury",
     "priceDisplay": "Price on Request",
@@ -125,7 +128,8 @@
       "Discretionary driver/guide gratuities",
       "Travel insurance (mandatory for booking)",
       "Alcoholic beverages and personal expenses"
-    ]
+    ],
+    "bestTime": "December – April"
   },
   {
     "id": "tour-wild-heritage-highlands",
@@ -136,7 +140,10 @@
     "route": "Negombo → Wilpattu National Park → Sigiriya → Kandy → Ella → Yala → Southern Beach",
     "category": "10",
     "type": "round",
-    "badge": { "text": "Wildlife & Adventure", "class": "bg-teal" },
+    "badge": {
+      "text": "Wildlife & Adventure",
+      "class": "bg-teal"
+    },
     "image": "images/tours/tour-cultural-triangle.jpg",
     "priceType": "Curated Private Tour",
     "priceDisplay": "Price on Request",
@@ -187,13 +194,13 @@
         "day": "Day 6",
         "title": "Misty Highland Rail to Ella",
         "location": "Ella",
-        "description": "Kandy to Ella via scenic hill country train ride; evening walk along Nine Arches Bridge and Little Adam's Peak."
+        "description": "The scenic hill-country train from Kandy to Ella (about 6–7 hours) through tea estates and cloud forest. A quiet evening in Ella after a long, beautiful day."
       },
       {
         "day": "Day 7",
         "title": "Escarpment Descent to Yala",
         "location": "Yala National Park",
-        "description": "Ella to Yala; descend the southern mountain escarpment to the lowlands; evening leopard safari drive in Yala."
+        "description": "Morning walk up Little Adam's Peak and a stop at the Nine Arches Bridge, then descend the escarpment past Ravana Falls to Yala for an afternoon leopard safari."
       },
       {
         "day": "Day 8",
@@ -228,7 +235,8 @@
       "Discretionary driver/guide gratuities",
       "Travel insurance (mandatory for booking)",
       "Alcoholic beverages and personal expenses"
-    ]
+    ],
+    "bestTime": "February – April"
   },
   {
     "id": "tour-tea-trails-coastal-sanctuaries",
@@ -239,7 +247,10 @@
     "route": "Colombo → Tea Country (Hatton/Castlereagh) → Galle Fort → Bentota → Airport",
     "category": "8",
     "type": "round",
-    "badge": { "text": "Boutique & Romance", "class": "bg-charcoal" },
+    "badge": {
+      "text": "Boutique & Romance",
+      "class": "bg-charcoal"
+    },
     "image": "images/tours/day-tour-tea.jpg",
     "priceType": "Luxury Boutique",
     "priceDisplay": "Price on Request",
@@ -318,7 +329,8 @@
       "Discretionary driver/guide gratuities",
       "Travel insurance (mandatory for booking)",
       "Alcoholic beverages and personal expenses"
-    ]
+    ],
+    "bestTime": "December – April"
   },
   {
     "id": "tour-essence-of-ceylon",
@@ -329,7 +341,10 @@
     "route": "Airport → Sigiriya → Kandy → Galle → Airport",
     "category": "7",
     "type": "round",
-    "badge": { "text": "Essential Sri Lanka", "class": "bg-teal" },
+    "badge": {
+      "text": "Essential Sri Lanka",
+      "class": "bg-teal"
+    },
     "image": "images/tours/tour-southern-coast.jpg",
     "priceType": "Classic Private Tour",
     "priceDisplay": "Price on Request",
@@ -348,7 +363,7 @@
         "day": "Day 1",
         "title": "Arrival to the Ancient Triangle",
         "location": "Sigiriya",
-        "description": "Morning arrival at CMB; express transfer north to the Cultural Triangle (Sigiriya). Evening relaxing at a forest retreat."
+        "description": "Arrive at CMB and continue north to the Cultural Triangle (about 4 hours) for an evening at a forest lodge. Best suited to morning arrivals; if your flight lands late, we add a first night in Negombo so you never face a long drive after a long flight."
       },
       {
         "day": "Day 2",
@@ -401,6 +416,670 @@
       "Discretionary driver/guide gratuities",
       "Travel insurance (mandatory for booking)",
       "Alcoholic beverages and personal expenses"
+    ],
+    "bestTime": "December – April"
+  },
+  {
+    "id": "tour-east-coast-summer",
+    "title": "East Coast Summer Escape",
+    "duration": "10 Days / 9 Nights",
+    "bestTime": "May – September",
+    "targetAudience": "Summer holidays, when the east coast is at its best and the south-west sees the monsoon",
+    "route": "Negombo → Sigiriya → Trincomalee → Pasikudah → Kandy",
+    "category": "10",
+    "type": "round",
+    "featured": false,
+    "market": "uk",
+    "badge": {
+      "text": "Summer Season",
+      "class": "bg-teal"
+    },
+    "image": "images/tours/day-tour-whale.jpg",
+    "priceType": "Tailor-made",
+    "priceDisplay": "Price on Request",
+    "highlights": [
+      "Sigiriya at sunrise and the great elephant gathering at Minneriya or Kaudulla",
+      "Snorkelling among reef sharks and turtles at Pigeon Island National Park",
+      "Whale and dolphin watching off Trincomalee (seasonal, March to August)",
+      "Calm, shallow turquoise water on the long beach at Pasikudah",
+      "Evening ceremony at the Temple of the Sacred Tooth Relic in Kandy"
+    ],
+    "itinerary": [
+      {
+        "day": "Day 1",
+        "title": "Arrival & Rest by the Sea",
+        "location": "Negombo",
+        "description": "Meet your chauffeur-guide at Bandaranaike International Airport and take the short transfer to a beachside hotel in Negombo to rest after the flight.",
+        "drive": "25 min · 12 km"
+      },
+      {
+        "day": "Day 2",
+        "title": "Into the Cultural Triangle",
+        "location": "Sigiriya",
+        "description": "Drive inland through coconut country to Sigiriya. Afternoon village walk with a traditional lunch cooked in a local home.",
+        "drive": "4 hrs · 165 km"
+      },
+      {
+        "day": "Day 3",
+        "title": "Lion Rock & the Elephant Gathering",
+        "location": "Sigiriya",
+        "description": "Climb Sigiriya Rock early, before the heat. In the afternoon, a private jeep safari to Minneriya or Kaudulla, where hundreds of wild elephants gather at the reservoirs in the dry season."
+      },
+      {
+        "day": "Day 4",
+        "title": "To the Eastern Shore",
+        "location": "Trincomalee",
+        "description": "Continue east to Trincomalee. Sunset at Koneswaram Temple on Swami Rock, high above the ocean.",
+        "drive": "2.5 hrs · 105 km"
+      },
+      {
+        "day": "Day 5",
+        "title": "Pigeon Island Reef",
+        "location": "Trincomalee",
+        "description": "Boat to Pigeon Island National Park for snorkelling over coral gardens with reef fish, turtles and black-tip reef sharks. Afternoon at leisure on Nilaveli beach."
+      },
+      {
+        "day": "Day 6",
+        "title": "Whales & Dolphins",
+        "location": "Trincomalee",
+        "description": "Early boat excursion to look for blue whales, sperm whales and spinner dolphins (best March to August). Afternoon free."
+      },
+      {
+        "day": "Day 7",
+        "title": "Pasikudah Bay",
+        "location": "Pasikudah",
+        "description": "Drive south along the coast to Pasikudah, a sheltered bay of shallow, warm water perfect for swimming.",
+        "drive": "2.5 hrs · 110 km"
+      },
+      {
+        "day": "Day 8",
+        "title": "Beach Day",
+        "location": "Pasikudah",
+        "description": "A free day by the sea. Optional: kayaking in the lagoon or a visit to the fishing village at dawn."
+      },
+      {
+        "day": "Day 9",
+        "title": "Up to the Hill Capital",
+        "location": "Kandy",
+        "description": "Cross the island to Kandy. Evening ceremony at the Temple of the Sacred Tooth Relic.",
+        "drive": "4.5 hrs · 190 km"
+      },
+      {
+        "day": "Day 10",
+        "title": "Departure",
+        "location": "Airport",
+        "description": "Morning at the Royal Botanic Gardens, Peradeniya (time permitting), then transfer to the airport for your flight home.",
+        "drive": "3.5 hrs · 110 km"
+      }
+    ],
+    "inclusions": [
+      "Private air-conditioned vehicle with an English-speaking chauffeur-guide",
+      "Accommodation as listed (or similar) with daily breakfast",
+      "Entrance fees for the sites and safaris named in the itinerary",
+      "Highway tolls, fuel, and your chauffeur-guide's accommodation and meals",
+      "Bottled water in the vehicle",
+      "24/7 local support throughout your journey",
+      "Pigeon Island boat and snorkelling equipment",
+      "Shared whale-watching boat"
+    ],
+    "exclusions": [
+      "International flights and Sri Lanka visa / ETA fees",
+      "Travel insurance (required for every booking)",
+      "Meals not stated, drinks and personal expenses",
+      "Gratuities for guides, drivers and hotel staff"
+    ]
+  },
+  {
+    "id": "tour-ayurveda-wellness",
+    "title": "Ayurveda & Wellness Retreat",
+    "duration": "10 Days / 9 Nights",
+    "bestTime": "November – April",
+    "targetAudience": "Travellers who want to slow down, restore and travel lightly",
+    "route": "Airport → Ayurveda retreat (west coast) → Galle Fort → Airport",
+    "category": "10",
+    "type": "round",
+    "featured": false,
+    "market": "uk",
+    "badge": {
+      "text": "Wellness",
+      "class": "bg-charcoal"
+    },
+    "image": "images/destinations/mirissa.jpg",
+    "priceType": "Tailor-made",
+    "priceDisplay": "Price on Request",
+    "highlights": [
+      "A personal consultation with a qualified Ayurvedic doctor",
+      "Daily treatments tailored to you, with yoga and meditation",
+      "Ayurvedic cookery: learn to cook with healing spices",
+      "A quiet day at Geoffrey Bawa's garden at Lunuganga",
+      "Two unhurried nights inside the walls of Galle Fort"
+    ],
+    "itinerary": [
+      {
+        "day": "Day 1",
+        "title": "Arrival & Consultation",
+        "location": "West coast retreat",
+        "description": "Transfer to a dedicated Ayurveda retreat on the west coast. In the afternoon, an unhurried consultation with the resident Ayurvedic doctor, who plans your treatments and diet.",
+        "drive": "1.5–2 hrs · 100 km"
+      },
+      {
+        "day": "Day 2",
+        "title": "Settling In",
+        "location": "West coast retreat",
+        "description": "Morning yoga, then your first full day of treatments. Herbal baths, oil therapies and rest."
+      },
+      {
+        "day": "Day 3",
+        "title": "Treatments & Rest",
+        "location": "West coast retreat",
+        "description": "A daily rhythm of yoga, treatments, healthy meals and time by the sea."
+      },
+      {
+        "day": "Day 4",
+        "title": "Ayurvedic Cookery",
+        "location": "West coast retreat",
+        "description": "Join the retreat chef to learn how Ayurvedic cooking uses spices to balance body and mind."
+      },
+      {
+        "day": "Day 5",
+        "title": "Lunuganga Gardens",
+        "location": "West coast retreat",
+        "description": "A gentle half-day outing to Lunuganga, the country garden of architect Geoffrey Bawa, then back for afternoon treatments."
+      },
+      {
+        "day": "Day 6",
+        "title": "Treatments & Rest",
+        "location": "West coast retreat",
+        "description": "Continue your programme. Optional river boat trip on the Madu Ganga mangroves."
+      },
+      {
+        "day": "Day 7",
+        "title": "Final Retreat Day",
+        "location": "West coast retreat",
+        "description": "A closing consultation, with advice to take home."
+      },
+      {
+        "day": "Day 8",
+        "title": "To Galle Fort",
+        "location": "Galle",
+        "description": "A short drive south to a boutique hotel inside UNESCO-listed Galle Fort.",
+        "drive": "1.5 hrs · 70 km"
+      },
+      {
+        "day": "Day 9",
+        "title": "Galle at Your Pace",
+        "location": "Galle",
+        "description": "Walk the ramparts at sunrise, browse the galleries and cafés, and end with sunset on the lighthouse wall."
+      },
+      {
+        "day": "Day 10",
+        "title": "Departure",
+        "location": "Airport",
+        "description": "Transfer to the airport via the Southern Expressway.",
+        "drive": "2.5 hrs · 150 km"
+      }
+    ],
+    "inclusions": [
+      "Private air-conditioned vehicle with an English-speaking chauffeur-guide",
+      "Full-board Ayurveda programme at the retreat, with daily treatments as prescribed",
+      "Doctor consultations, yoga and meditation sessions",
+      "Bed and breakfast in Galle",
+      "Highway tolls, fuel, and your chauffeur-guide's accommodation and meals",
+      "Bottled water in the vehicle",
+      "24/7 local support throughout your journey"
+    ],
+    "exclusions": [
+      "International flights and Sri Lanka visa / ETA fees",
+      "Travel insurance (required for every booking)",
+      "Meals not stated, drinks and personal expenses",
+      "Gratuities for guides, drivers and hotel staff"
+    ]
+  },
+  {
+    "id": "tour-spice-tea-table",
+    "title": "Spice, Tea & Table",
+    "duration": "9 Days / 8 Nights",
+    "bestTime": "December – April",
+    "targetAudience": "Food lovers who would rather cook with locals than just eat out",
+    "route": "Colombo → Kandy → Tea Country → Galle Fort",
+    "category": "8",
+    "type": "round",
+    "featured": false,
+    "market": "uk",
+    "badge": {
+      "text": "Food & Culture",
+      "class": "bg-gold"
+    },
+    "image": "images/destinations/nuwara-eliya.jpg",
+    "priceType": "Tailor-made",
+    "priceDisplay": "Price on Request",
+    "highlights": [
+      "An evening street-food walk in Colombo",
+      "Hands-on cookery in a family kitchen near Kandy, not just a demonstration",
+      "A spice garden visit in Matale with the people who grow them",
+      "Tea plucking, a factory tour and a private tasting in the hill country",
+      "Morning at Galle's fish market, then cooking your catch with a chef"
+    ],
+    "itinerary": [
+      {
+        "day": "Day 1",
+        "title": "Arrival & Street Food",
+        "location": "Colombo",
+        "description": "Transfer to Colombo. In the evening, a guided street-food walk: kottu, hoppers and short eats around Galle Face Green.",
+        "drive": "45 min · 35 km"
+      },
+      {
+        "day": "Day 2",
+        "title": "To the Hill Capital",
+        "location": "Kandy",
+        "description": "Drive to Kandy with lunch at a local rice-and-curry house on the way. Evening at the Temple of the Sacred Tooth Relic.",
+        "drive": "3.5 hrs · 115 km"
+      },
+      {
+        "day": "Day 3",
+        "title": "Spice Garden & Family Kitchen",
+        "location": "Kandy",
+        "description": "Visit a spice garden in Matale, then cook a full rice-and-curry lunch with a local family in their kitchen."
+      },
+      {
+        "day": "Day 4",
+        "title": "Into Tea Country",
+        "location": "Hill country",
+        "description": "Climb into the hills past waterfalls to a heritage tea bungalow.",
+        "drive": "3 hrs · 80 km"
+      },
+      {
+        "day": "Day 5",
+        "title": "From Leaf to Cup",
+        "location": "Hill country",
+        "description": "Join the tea pluckers in the morning, follow the leaf through a working factory, then a private tasting. Planter's dinner at the bungalow."
+      },
+      {
+        "day": "Day 6",
+        "title": "Down to the Coast",
+        "location": "Galle",
+        "description": "A long but beautiful drive from the hills to Galle Fort on the south coast.",
+        "drive": "5 hrs · 230 km"
+      },
+      {
+        "day": "Day 7",
+        "title": "Market to Kitchen",
+        "location": "Galle",
+        "description": "Early visit to the fish market with a chef, then cook your catch together."
+      },
+      {
+        "day": "Day 8",
+        "title": "Galle Fort Food Walk",
+        "location": "Galle",
+        "description": "A tasting walk through the fort's cafés and kitchens. Farewell dinner."
+      },
+      {
+        "day": "Day 9",
+        "title": "Departure",
+        "location": "Airport",
+        "description": "Transfer to the airport via the Southern Expressway.",
+        "drive": "2.5 hrs · 150 km"
+      }
+    ],
+    "inclusions": [
+      "Private air-conditioned vehicle with an English-speaking chauffeur-guide",
+      "Accommodation as listed (or similar) with daily breakfast",
+      "Entrance fees for the sites and safaris named in the itinerary",
+      "Highway tolls, fuel, and your chauffeur-guide's accommodation and meals",
+      "Bottled water in the vehicle",
+      "24/7 local support throughout your journey",
+      "Street-food walk, two cookery classes and a private tea tasting"
+    ],
+    "exclusions": [
+      "International flights and Sri Lanka visa / ETA fees",
+      "Travel insurance (required for every booking)",
+      "Meals not stated, drinks and personal expenses",
+      "Gratuities for guides, drivers and hotel staff"
+    ]
+  },
+  {
+    "id": "tour-honeymoon-romance",
+    "title": "Romance in Ceylon",
+    "duration": "11 Days / 10 Nights",
+    "bestTime": "December – April",
+    "targetAudience": "Honeymooners and couples celebrating something special",
+    "route": "Negombo → Sigiriya → Kandy → Tea Country → Ella → South Coast",
+    "category": "10",
+    "type": "round",
+    "featured": false,
+    "market": "uk",
+    "badge": {
+      "text": "Honeymoon",
+      "class": "bg-gold"
+    },
+    "image": "images/tours/day-tour-galle.jpg",
+    "priceType": "Tailor-made",
+    "priceDisplay": "Price on Request",
+    "highlights": [
+      "Private sunrise climb of Sigiriya and an optional hot-air balloon flight",
+      "A candlelit dinner in a colonial tea planter's bungalow",
+      "The famous hill-country train ride to Ella, in reserved seats",
+      "Four nights in a private beach villa on the south coast",
+      "Romantic touches arranged throughout, from flowers to surprise dinners"
+    ],
+    "itinerary": [
+      {
+        "day": "Day 1",
+        "title": "Arrival",
+        "location": "Negombo",
+        "description": "A gentle start by the sea after your flight.",
+        "drive": "25 min · 12 km"
+      },
+      {
+        "day": "Day 2",
+        "title": "To Sigiriya",
+        "location": "Sigiriya",
+        "description": "Drive to a secluded jungle lodge near Sigiriya. Sunset from Pidurangala Rock.",
+        "drive": "4 hrs · 165 km"
+      },
+      {
+        "day": "Day 3",
+        "title": "Lion Rock & Balloons",
+        "location": "Sigiriya",
+        "description": "Optional dawn hot-air balloon flight (weather permitting), then climb Sigiriya Rock. Afternoon spa time."
+      },
+      {
+        "day": "Day 4",
+        "title": "Dambulla & Kandy",
+        "location": "Kandy",
+        "description": "The painted cave temples of Dambulla, then on to Kandy for the evening temple ceremony.",
+        "drive": "2.5 hrs · 90 km"
+      },
+      {
+        "day": "Day 5",
+        "title": "Into the Tea Hills",
+        "location": "Hill country",
+        "description": "Through the tea estates to a colonial bungalow. Candlelit dinner for two.",
+        "drive": "3 hrs · 80 km"
+      },
+      {
+        "day": "Day 6",
+        "title": "Tea Country at Leisure",
+        "location": "Hill country",
+        "description": "A private tea tasting and an easy estate walk, or simply time together on the veranda."
+      },
+      {
+        "day": "Day 7",
+        "title": "The Train to Ella & Down to the Sea",
+        "location": "South coast",
+        "description": "Board the train from Nanu Oya to Ella through the clouds, then drive down to your beach villa.",
+        "drive": "Train 3 hrs + drive 3 hrs"
+      },
+      {
+        "day": "Day 8",
+        "title": "Beach Villa",
+        "location": "South coast",
+        "description": "Days of your own making: swimming, spa, and long lunches by the sea."
+      },
+      {
+        "day": "Day 9",
+        "title": "Whales or Slow Morning",
+        "location": "South coast",
+        "description": "Optional whale watching from Mirissa (November to April), or a quiet morning."
+      },
+      {
+        "day": "Day 10",
+        "title": "Galle Fort",
+        "location": "South coast",
+        "description": "An afternoon in Galle Fort and sunset on the ramparts. Private farewell dinner on the beach."
+      },
+      {
+        "day": "Day 11",
+        "title": "Departure",
+        "location": "Airport",
+        "description": "Transfer to the airport via the Southern Expressway.",
+        "drive": "3 hrs · 190 km"
+      }
+    ],
+    "inclusions": [
+      "Private air-conditioned vehicle with an English-speaking chauffeur-guide",
+      "Accommodation as listed (or similar) with daily breakfast",
+      "Entrance fees for the sites and safaris named in the itinerary",
+      "Highway tolls, fuel, and your chauffeur-guide's accommodation and meals",
+      "Bottled water in the vehicle",
+      "24/7 local support throughout your journey",
+      "Reserved train seats (subject to availability)",
+      "Romantic dinners as described"
+    ],
+    "exclusions": [
+      "International flights and Sri Lanka visa / ETA fees",
+      "Travel insurance (required for every booking)",
+      "Meals not stated, drinks and personal expenses",
+      "Gratuities for guides, drivers and hotel staff",
+      "Hot-air balloon flight (optional, payable locally)"
+    ]
+  },
+  {
+    "id": "tour-family-adventure",
+    "title": "Family Adventure",
+    "duration": "10 Days / 9 Nights",
+    "bestTime": "December – April, or July – August with an east-coast finish",
+    "targetAudience": "Families with children aged 6 and up",
+    "route": "Negombo → Sigiriya → Kandy → Ella → Udawalawe → South Coast",
+    "category": "10",
+    "type": "round",
+    "featured": false,
+    "market": "uk",
+    "badge": {
+      "text": "Family",
+      "class": "bg-teal"
+    },
+    "image": "images/tours/day-tour-yala.jpg",
+    "priceType": "Tailor-made",
+    "priceDisplay": "Price on Request",
+    "highlights": [
+      "A village day with a bullock-cart ride, catamaran and home-cooked lunch",
+      "A pottery session made for children",
+      "The blue train to Ella and an easy hike up Little Adam's Peak",
+      "Jeep safari in Udawalawe, home to large herds of wild elephants",
+      "Visit to the Elephant Transit Home, which rescues and releases orphaned calves"
+    ],
+    "itinerary": [
+      {
+        "day": "Day 1",
+        "title": "Arrival",
+        "location": "Negombo",
+        "description": "A short transfer and an easy afternoon by the pool.",
+        "drive": "25 min · 12 km"
+      },
+      {
+        "day": "Day 2",
+        "title": "Village Life",
+        "location": "Sigiriya",
+        "description": "Drive to Sigiriya. Afternoon village tour: bullock cart, catamaran across the lake and lunch in a local home.",
+        "drive": "4 hrs · 165 km"
+      },
+      {
+        "day": "Day 3",
+        "title": "Lion Rock & Pottery",
+        "location": "Sigiriya",
+        "description": "Climb Sigiriya early. Afternoon pottery session for the children with a local potter."
+      },
+      {
+        "day": "Day 4",
+        "title": "Kandy",
+        "location": "Kandy",
+        "description": "Drive to Kandy. Evening cultural dance show and the Temple of the Tooth.",
+        "drive": "2.5 hrs · 90 km"
+      },
+      {
+        "day": "Day 5",
+        "title": "The Blue Train",
+        "location": "Ella",
+        "description": "Take the scenic train into the hills, arriving in Ella.",
+        "drive": "Train 6–7 hrs"
+      },
+      {
+        "day": "Day 6",
+        "title": "Ella Adventures",
+        "location": "Ella",
+        "description": "Easy morning hike up Little Adam's Peak, then the Nine Arches Bridge to watch a train cross."
+      },
+      {
+        "day": "Day 7",
+        "title": "Elephants!",
+        "location": "Udawalawe",
+        "description": "Drive down to Udawalawe. Afternoon jeep safari among the elephant herds.",
+        "drive": "2.5 hrs · 110 km"
+      },
+      {
+        "day": "Day 8",
+        "title": "Elephant Transit Home & the Sea",
+        "location": "South coast",
+        "description": "Watch feeding time at the Elephant Transit Home, then on to the beach.",
+        "drive": "2.5 hrs · 100 km"
+      },
+      {
+        "day": "Day 9",
+        "title": "Beach Day",
+        "location": "South coast",
+        "description": "Sandcastles, rock pools and a visit to a sea-turtle conservation project."
+      },
+      {
+        "day": "Day 10",
+        "title": "Departure",
+        "location": "Airport",
+        "description": "Transfer to the airport via the Southern Expressway.",
+        "drive": "3 hrs · 180 km"
+      }
+    ],
+    "inclusions": [
+      "Private air-conditioned vehicle with an English-speaking chauffeur-guide",
+      "Accommodation as listed (or similar) with daily breakfast",
+      "Entrance fees for the sites and safaris named in the itinerary",
+      "Highway tolls, fuel, and your chauffeur-guide's accommodation and meals",
+      "Bottled water in the vehicle",
+      "24/7 local support throughout your journey",
+      "Family rooms or interconnecting rooms where available",
+      "Village tour, pottery session and safari"
+    ],
+    "exclusions": [
+      "International flights and Sri Lanka visa / ETA fees",
+      "Travel insurance (required for every booking)",
+      "Meals not stated, drinks and personal expenses",
+      "Gratuities for guides, drivers and hotel staff"
+    ]
+  },
+  {
+    "id": "tour-wildlife-specialist",
+    "title": "Leopards, Elephants & Whales",
+    "duration": "11 Days / 10 Nights",
+    "bestTime": "February – April",
+    "targetAudience": "Wildlife enthusiasts and photographers",
+    "route": "Negombo → Wilpattu → Habarana → Udawalawe → Yala → Mirissa",
+    "category": "10",
+    "type": "round",
+    "featured": false,
+    "market": "uk",
+    "badge": {
+      "text": "Wildlife",
+      "class": "bg-teal"
+    },
+    "image": "images/destinations/yala.jpg",
+    "priceType": "Tailor-made",
+    "priceDisplay": "Price on Request",
+    "highlights": [
+      "Leopards and sloth bears in Wilpattu, Sri Lanka's largest national park",
+      "The elephant gathering at Minneriya or Kaudulla",
+      "Full-day safaris in Yala with an experienced naturalist",
+      "Blue whales off Mirissa (November to April)",
+      "Small-group or private jeeps throughout, timed for the best light"
+    ],
+    "itinerary": [
+      {
+        "day": "Day 1",
+        "title": "Arrival",
+        "location": "Negombo",
+        "description": "Rest after the flight; evening birding in the Muthurajawela marshes (optional).",
+        "drive": "25 min · 12 km"
+      },
+      {
+        "day": "Day 2",
+        "title": "To Wilpattu",
+        "location": "Wilpattu",
+        "description": "Drive north to a tented camp on the edge of Wilpattu. Afternoon safari.",
+        "drive": "3.5 hrs · 150 km"
+      },
+      {
+        "day": "Day 3",
+        "title": "Wilpattu",
+        "location": "Wilpattu",
+        "description": "Full day in the park among its natural lakes, looking for leopard and sloth bear."
+      },
+      {
+        "day": "Day 4",
+        "title": "To Habarana",
+        "location": "Habarana",
+        "description": "Drive east to Habarana. Afternoon safari to Minneriya or Kaudulla for the elephant gathering.",
+        "drive": "3 hrs · 140 km"
+      },
+      {
+        "day": "Day 5",
+        "title": "Sigiriya & Birding",
+        "location": "Habarana",
+        "description": "Sunrise climb of Sigiriya, then a guided birding walk in the scrub forest."
+      },
+      {
+        "day": "Day 6",
+        "title": "To Udawalawe",
+        "location": "Udawalawe",
+        "description": "A long transfer south. Late-afternoon safari among the elephant herds.",
+        "drive": "5 hrs · 230 km"
+      },
+      {
+        "day": "Day 7",
+        "title": "To Yala",
+        "location": "Yala",
+        "description": "Morning at the Elephant Transit Home, then on to Yala for an afternoon game drive.",
+        "drive": "2.5 hrs · 110 km"
+      },
+      {
+        "day": "Day 8",
+        "title": "Yala Full Day",
+        "location": "Yala",
+        "description": "A full day in Yala with a picnic, giving the best chance of leopard."
+      },
+      {
+        "day": "Day 9",
+        "title": "To Mirissa",
+        "location": "Mirissa",
+        "description": "Final dawn drive in Yala, then along the coast to Mirissa.",
+        "drive": "3 hrs · 140 km"
+      },
+      {
+        "day": "Day 10",
+        "title": "Whales",
+        "location": "Mirissa",
+        "description": "Early boat to find blue whales and spinner dolphins (November to April)."
+      },
+      {
+        "day": "Day 11",
+        "title": "Departure",
+        "location": "Airport",
+        "description": "Transfer to the airport via the Southern Expressway.",
+        "drive": "3 hrs · 180 km"
+      }
+    ],
+    "inclusions": [
+      "Private air-conditioned vehicle with an English-speaking chauffeur-guide",
+      "Accommodation as listed (or similar) with daily breakfast",
+      "Entrance fees for the sites and safaris named in the itinerary",
+      "Highway tolls, fuel, and your chauffeur-guide's accommodation and meals",
+      "Bottled water in the vehicle",
+      "24/7 local support throughout your journey",
+      "All jeep safaris with park fees and trackers",
+      "Shared whale-watching boat"
+    ],
+    "exclusions": [
+      "International flights and Sri Lanka visa / ETA fees",
+      "Travel insurance (required for every booking)",
+      "Meals not stated, drinks and personal expenses",
+      "Gratuities for guides, drivers and hotel staff"
     ]
   }
 ]
