@@ -7,7 +7,7 @@ export const SITE = {
   phoneDisplay: '+44 7387 629347',
   phoneHref: 'tel:+447387629347',
   whatsappHref: 'https://wa.me/447387629347',
-  email: 'yasinthalakshan06@gmail.com',
+  email: 'info@zeilanparadise.com',
   locations: 'United Kingdom · Sri Lanka',
   socials: {
     instagram: '',
