@@ -1,120 +1,106 @@
-# Deploying Zeilan Paradise (Azure + MongoDB Atlas)
+# Deploying Zeilan Paradise (Azure App Service + MongoDB Atlas)
 
 ```
-Visitor ──► Azure Static Web Apps (Angular site)  zeilanparadise.com
-               │  calls
-               ▼
-            Azure App Service (Flask API)          api.zeilanparadise.com
-               │
-               ▼
-            MongoDB Atlas (database)
+Visitor ──► Azure App Service "zeilan-backend"   zeilanparadise.com
+              ├─ /            Angular website (built into backend/static at deploy time)
+              └─ /api/...     Flask API
+                    │
+                    ▼
+              MongoDB Atlas (database)
 ```
 
-Both apps deploy automatically from GitHub Actions when you push to `main`:
+One App Service hosts both the website and the API, so they share a domain and need no
+cross-site (CORS) setup. (Azure Static Web Apps isn't used: the subscription's region
+policy blocks every region it supports.)
 
-| Workflow | Triggers on | Deploys |
-|---|---|---|
-| `.github/workflows/azure-static-web-apps.yml` | changes in `frontend/` | Angular site → Static Web Apps |
-| `.github/workflows/main_zeilan-backend.yml` | changes in `backend/` | Flask API → App Service `zeilan-backend` |
+Deploys are automatic: `.github/workflows/main_zeilan-backend.yml` runs on every push to
+`main` that touches `frontend/` or `backend/`. It builds the Angular site, copies it into
+`backend/static/`, pre-compresses it, and deploys the `backend` folder to the App Service.
 
 ---
 
 ## 1. MongoDB Atlas (database)
 
-1. Sign in at <https://cloud.mongodb.com> → **Create** a cluster.
-   - **M0 (Free)** is fine to launch with. Pick a region close to your App Service (e.g. *Azure / UK South* or *Azure / West Europe*).
-2. **Database Access** → *Add New Database User*
-   - Authentication: password. Username e.g. `zeilan-api`. Generate a strong password and keep it safe.
-   - Role: *Read and write to any database*.
-3. **Network Access** → *Add IP Address*
-   - Simplest: `0.0.0.0/0` (allow from anywhere; the password still protects it).
-   - Stricter: add each **Outbound IP address** of your App Service (App Service → *Networking* → *Outbound addresses*).
-4. **Connect** → *Drivers* → copy the connection string. It looks like:
-   ```
-   mongodb+srv://zeilan-api:<password>@cluster0.xxxxx.mongodb.net/zeilanparadise?retryWrites=true&w=majority
-   ```
-   Replace `<password>` with the real one. If the password contains `@ : / ? #` characters, URL-encode them.
+The existing cluster `zeilanparadise.6lrgwk0.mongodb.net` is used; database `zeilanparadise`.
 
-On first start against an empty database, the API fills `tours` and `destinations` with the catalogue from
-`backend/fallback_data.py` (the same tours and itineraries as `data/*.json`). Testimonials are never seeded:
-add only genuine reviews. Enquiries go into the `inquiries` collection.
+- **Network Access** must include `0.0.0.0/0` (or the App Service's outbound IPs, found under
+  App Service → *Networking* → *Outbound addresses*), or Azure can't connect.
+- The connection string (`MONGO_URI`) is the one in `backend/.env`. Keep it out of Git.
+
+On first start against an empty database, the API fills `tours` and `destinations` with the
+catalogue from `backend/fallback_data.py`. Testimonials are never seeded: add only genuine reviews.
+Enquiries go into the `inquiries` collection.
 
 ---
 
-## 2. Azure App Service (Flask API)
+## 2. Azure App Service
 
-1. Azure Portal → **Create a resource** → **Web App**
-   - Name: `zeilan-backend` (must match `app-name` in the backend workflow)
-   - Publish: *Code* · Runtime stack: **Python 3.12** · OS: **Linux**
-   - Region: same as Atlas (e.g. UK South)
-   - Pricing: **B1** is the minimum we recommend (Free F1 sleeps and is slow to wake).
-2. **Settings → Environment variables** → add:
+Created as **zeilan-backend** · Python 3.12 · Linux · region allowed by the subscription (Spain Central).
 
-   | Name | Value |
-   |---|---|
-   | `FLASK_ENV` | `production` |
-   | `MONGO_URI` | your Atlas connection string |
-   | `JWT_SECRET_KEY` | a long random string (e.g. `python -c "import secrets;print(secrets.token_hex(32))"`) |
-   | `ADMIN_USERNAME` | your admin login name |
-   | `ADMIN_PASSWORD` | a strong admin password |
-   | `ALLOWED_ORIGINS` | `https://zeilanparadise.com,https://www.zeilanparadise.com,https://<your-swa>.azurestaticapps.net` |
-   | `SCM_DO_BUILD_DURING_DEPLOYMENT` | `true` (installs `requirements.txt` on deploy) |
-   | `ADMIN_NOTIFICATION_EMAIL` | where new-enquiry emails should go |
-   | `SMTP_HOST` / `SMTP_PORT` | e.g. `smtp.gmail.com` / `587` |
-   | `SMTP_USER` / `SMTP_PASS` | the sending mailbox and its password (for Gmail, an [App Password](https://myaccount.google.com/apppasswords)) |
-   | `EMAIL_FROM` | optional display sender, e.g. `Zeilan Paradise <hello@zeilanparadise.com>` |
+**Settings → Environment variables**
 
-   The API refuses to start in production if `MONGO_URI`, `JWT_SECRET_KEY` or `ADMIN_PASSWORD` is missing.
-   Every enquiry is saved to MongoDB **and** emailed to you (if SMTP is set). If the database is unreachable and
-   email isn't configured, the API rejects the enquiry and the website offers the visitor WhatsApp/email instead,
-   so no lead is silently lost.
-3. **Settings → Configuration → General settings → Startup Command**:
-   ```
-   gunicorn --bind=0.0.0.0 --timeout 600 "app:create_app()"
-   ```
-   Turn **Always On** on (B1 or higher) so the first visitor isn't kept waiting.
-4. **Overview → Download publish profile**. In GitHub: *Settings → Secrets and variables → Actions → New repository secret*
-   - Name `AZUREAPPSERVICE_PUBLISHPROFILE`, value = entire contents of that file.
-5. Push a change in `backend/` (or run the workflow manually from the *Actions* tab). Then check
-   `https://zeilan-backend.azurewebsites.net/api/health` → `{"status": "healthy"}`.
+| Name | Value |
+|---|---|
+| `FLASK_ENV` | `production` |
+| `MONGO_URI` | Atlas connection string |
+| `JWT_SECRET_KEY` | long random string |
+| `ADMIN_USERNAME` / `ADMIN_PASSWORD` | admin login for `/admin/login` |
+| `SCM_DO_BUILD_DURING_DEPLOYMENT` | `true` (installs `requirements.txt` on deploy) |
+| `ADMIN_NOTIFICATION_EMAIL` | where new-enquiry emails go (optional) |
+| `SMTP_HOST` / `SMTP_PORT` | e.g. `smtp.gmail.com` / `587` (optional) |
+| `SMTP_USER` / `SMTP_PASS` | sending mailbox + password; for Gmail an [App Password](https://myaccount.google.com/apppasswords) (optional) |
+| `EMAIL_FROM` | display sender, e.g. `Zeilan Paradise <hello@zeilanparadise.com>` (optional) |
+
+`ALLOWED_ORIGINS` is not needed: the site and API share an origin.
+The API refuses to start in production if `MONGO_URI`, `JWT_SECRET_KEY` or `ADMIN_PASSWORD` is missing.
+Every enquiry is saved to MongoDB and emailed (if SMTP is set). If neither is available the API
+rejects it and the website offers the visitor WhatsApp/email instead, so no lead is silently lost.
+
+**Settings → Configuration → General settings**
+- Startup Command: `gunicorn --bind=0.0.0.0 --timeout 600 "app:create_app()"`
+- SCM Basic Auth Publishing Credentials: **On** (needed for the publish profile)
+- Always On: **On** (B1 plan or higher)
+
+**GitHub secret:** App Service → *Overview* → *Download publish profile*; in GitHub →
+*Settings → Secrets and variables → Actions*, add `AZUREAPPSERVICE_PUBLISHPROFILE` with the file's contents.
 
 ---
 
-## 3. Azure Static Web Apps (website)
+## 3. Deploy
 
-1. Azure Portal → **Create a resource** → **Static Web App**
-   - Plan: **Free** is enough to start (Standard adds SLA and more custom domains).
-   - Deployment source: **Other** (the workflow in this repo does the deploying).
-2. Open the new Static Web App → **Manage deployment token** → copy it.
-   In GitHub add secret `AZURE_STATIC_WEB_APPS_API_TOKEN` with that value.
-3. Push a change in `frontend/` (or run the workflow manually). The site appears at
-   `https://<random-name>.azurestaticapps.net`.
+```bash
+git push origin main
+```
 
-The production build calls the API at `https://api.zeilanparadise.com/api`
-(`frontend/src/environments/environment.prod.ts`). Until the custom domain below is set up,
-you can temporarily change that to `https://zeilan-backend.azurewebsites.net/api`.
+Watch GitHub → *Actions*. When it's green:
+- `https://zeilan-backend.azurewebsites.net/` shows the website
+- `https://zeilan-backend.azurewebsites.net/api/health` returns `{"status": "healthy"}`
 
 ---
 
-## 4. Custom domains (zeilanparadise.com)
+## 4. Custom domain (zeilanparadise.com)
 
-At your domain registrar's DNS settings:
+Custom domains need the **Basic (B1)** plan or higher; the Free F1 plan doesn't support them.
 
-| Host | Type | Points to | Then in Azure |
-|---|---|---|---|
-| `www` | CNAME | `<random-name>.azurestaticapps.net` | Static Web App → *Custom domains* → add `www.zeilanparadise.com` |
-| `@` (root) | ALIAS/ANAME, or TXT validation | as shown by Azure | Static Web App → *Custom domains* → add `zeilanparadise.com` |
-| `api` | CNAME | `zeilan-backend.azurewebsites.net` | App Service → *Custom domains* → add `api.zeilanparadise.com`, then *Add binding* with a free **App Service Managed Certificate** |
+App Service → *Custom domains* → *Add custom domain*, once for `zeilanparadise.com` and once for
+`www.zeilanparadise.com`. Azure shows the exact DNS records to add at your registrar, typically:
 
-Azure issues the HTTPS certificates for the site automatically.
+| Type | Host | Value |
+|---|---|---|
+| A | `@` | the App Service IP address Azure shows |
+| TXT | `asuid` | the verification ID Azure shows |
+| CNAME | `www` | `zeilan-backend.azurewebsites.net` |
+| TXT | `asuid.www` | the verification ID Azure shows |
+
+Then *Add binding* for each with a free **App Service Managed Certificate** for HTTPS.
+The old `api.zeilanparadise.com` subdomain is no longer needed.
 
 ---
 
 ## 5. Go-live checklist
 
-- [ ] `https://api.zeilanparadise.com/api/health` returns healthy
-- [ ] Home page shows tours from the database (not just the built-in fallback)
-- [ ] Contact / tailor-made form submits and the enquiry appears in the admin dashboard
-- [ ] Admin login works with the production password (the default one is never used in production)
+- [ ] `/api/health` returns healthy on the live domain
+- [ ] Tours load on Round Tours / Day Tours (not only the built-in fallback; check `/api/tours`)
+- [ ] Contact and tailor-made forms submit and appear in the admin dashboard / your inbox
+- [ ] Admin login works with the production password
 - [ ] Contact details in `frontend/src/app/config/site.ts` are correct
-- [ ] Browser console on the live site shows no CORS errors (if it does, fix `ALLOWED_ORIGINS`)

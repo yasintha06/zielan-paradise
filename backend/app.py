@@ -11,12 +11,14 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from config import Config
 from db import init_db
+from website import attach_website
 from routes import auth_bp, tours_bp, destinations_bp, testimonials_bp, enquiries_bp
 
 
 def create_app():
     """Application factory pattern."""
-    app = Flask(__name__)
+    # static_folder=None: the website build is served by website.py, not Flask's /static route.
+    app = Flask(__name__, static_folder=None)
 
     # ── Configuration ──────────────────────────────────────
     app.config['JWT_SECRET_KEY'] = Config.JWT_SECRET_KEY
@@ -47,7 +49,10 @@ def create_app():
             "version": "1.0.0"
         }), 200
 
-    # ── Root ───────────────────────────────────────────────
+    # ── Website (when a build is present) or API root ─────
+    if attach_website(app):
+        return app
+
     @app.route('/', methods=['GET'])
     def root():
         return jsonify({

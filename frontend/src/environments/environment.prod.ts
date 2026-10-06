@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.zeilanparadise.com/api'
+  // The website and the API are served by the same Azure App Service, so a relative path works on any domain.
+  apiUrl: '/api'
 };
