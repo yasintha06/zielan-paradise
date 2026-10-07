@@ -155,7 +155,7 @@ def send_lead_email_async(lead):
         msg.attach(MIMEText(_lead_email_html(lead), "html"))
 
         try:
-            host = _env("SMTP_HOST", "MAIL_SERVER", default="smtp.gmail.com")
+            host = _env("SMTP_HOST", "MAIL_SERVER", default="mail.privateemail.com")
             port = int(_env("SMTP_PORT", "MAIL_PORT", default="587"))
             with smtplib.SMTP(host, port, timeout=20) as server:
                 server.starttls()

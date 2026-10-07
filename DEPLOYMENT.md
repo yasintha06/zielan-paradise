@@ -47,7 +47,7 @@ Created as **zeilan-backend** · Python 3.12 · Linux · region allowed by the s
 | `ADMIN_USERNAME` / `ADMIN_PASSWORD` | admin login for `/admin/login` |
 | `SCM_DO_BUILD_DURING_DEPLOYMENT` | `true` (installs `requirements.txt` on deploy) |
 | `ADMIN_NOTIFICATION_EMAIL` | where new-enquiry emails go (optional) |
-| `SMTP_HOST` / `SMTP_PORT` | e.g. `smtp.gmail.com` / `587` (optional) |
+| `SMTP_HOST` / `SMTP_PORT` | `mail.privateemail.com` / `587` (Namecheap Private Email) |
 | `SMTP_USER` / `SMTP_PASS` | sending mailbox + password; for Gmail an [App Password](https://myaccount.google.com/apppasswords) (optional) |
 | `EMAIL_FROM` | display sender, e.g. `Zeilan Paradise <hello@zeilanparadise.com>` (optional) |
 
