@@ -23,11 +23,15 @@
           <label class="a-field"><span>Quote name *</span><input [(ngModel)]="title" placeholder="Smith family, March 2027" /></label>
           <label class="a-field"><span>Client</span><input [(ngModel)]="clientName" placeholder="Name or email" /></label>
         </div>
-        <div class="a-grid-3">
-          <label class="a-field"><span>Travel dates</span><input [(ngModel)]="q.travelDates" placeholder="12–24 March 2027" /></label>
-          <label class="a-field"><span>Adults</span><input type="number" min="1" [(ngModel)]="q.adults" /></label>
-          <label class="a-field"><span>Children</span><input type="number" min="0" [(ngModel)]="q.children" /></label>
+        <label class="a-field"><span>Travel dates</span><input [(ngModel)]="q.travelDates" placeholder="12–24 March 2027" /></label>
+        <div class="qc-rooms">
+          <label class="a-field"><span>Double / twin rooms</span><input type="number" min="0" [(ngModel)]="q.rooms.dbl" /></label>
+          <label class="a-field"><span>Single rooms</span><input type="number" min="0" [(ngModel)]="q.rooms.sgl" /></label>
+          <label class="a-field"><span>Triple rooms</span><input type="number" min="0" [(ngModel)]="q.rooms.tpl" /></label>
+          <label class="a-field"><span>Children, extra bed</span><input type="number" min="0" [(ngModel)]="q.rooms.childWithBed" /></label>
+          <label class="a-field"><span>Children, no bed</span><input type="number" min="0" [(ngModel)]="q.rooms.childNoBed" /></label>
         </div>
+        <p class="a-muted qc-hint">{{ totals.adults }} adults{{ totals.children ? ', ' + totals.children + ' children sharing with parents' : '' }} · {{ totals.pax }} guests in total.</p>
         <div class="a-grid-3">
           <label class="a-field"><span>Status</span>
             <select [(ngModel)]="status">@for (s of statuses; track s) { <option [value]="s">{{ s }}</option> }</select>
@@ -77,13 +81,19 @@
           <p class="a-muted qc-hint">Course rules: start and end in Colombo, allow 10 km from city to hotel, 40 km for a large-city tour or 20 km for a small one.</p>
         </div>
 
-        <div class="a-grid-2">
-          <label class="a-field"><span>Chauffeur-guide fee / day (LKR)</span><input type="number" [(ngModel)]="q.transport.guideFeePerDay" /></label>
-          <label class="a-field"><span>Other costs (LKR)</span><input type="number" [(ngModel)]="q.transport.extras" /><small>Water, parking, airport fees, highway tolls</small></label>
+        <div class="a-grid-3">
+          <label class="a-field"><span>Chauffeur-guide or national guide / day (LKR)</span><input type="number" [(ngModel)]="q.transport.guideFeePerDay" /><small>National guide about LKR 7,000/day</small></label>
+          <label class="a-field"><span>Nights the guide needs a room</span><input type="number" min="0" [(ngModel)]="q.transport.guideNights" /><small>National guides stay at the clients’ hotel</small></label>
+          <label class="a-field"><span>Guide room / night (LKR)</span><input type="number" [(ngModel)]="q.transport.guideAccomPerNight" /></label>
+        </div>
+        <div class="a-grid-3">
+          <label class="a-field"><span>Driver + helper bata / day (LKR)</span><input type="number" [(ngModel)]="q.transport.driverFeePerDay" /><small>Groups with a separate driver; about LKR 5,000/day</small></label>
+          <label class="a-field"><span>Nights the driver needs a room</span><input type="number" min="0" [(ngModel)]="q.transport.driverNights" /></label>
+          <label class="a-field"><span>Driver room / night (LKR)</span><input type="number" [(ngModel)]="q.transport.driverAccomPerNight" /></label>
         </div>
         <div class="a-grid-2">
-          <label class="a-field"><span>Nights the guide needs a room</span><input type="number" min="0" [(ngModel)]="q.transport.guideNights" /><small>Only where the hotel doesn’t provide one</small></label>
-          <label class="a-field"><span>Guide room / night (LKR)</span><input type="number" [(ngModel)]="q.transport.guideAccomPerNight" /></label>
+          <label class="a-field"><span>Other costs (LKR)</span><input type="number" [(ngModel)]="q.transport.extras" /><small>Water, airport parking, entrance and paging board, street parking, highway tolls</small></label>
+          <label class="a-field"><span>VAT on transport %</span><input type="number" min="0" step="0.5" [(ngModel)]="q.transport.vatPct" /><small>Only if your transport supplier charges VAT</small></label>
         </div>
         <p class="qc-subtotal">{{ totals.km | number: '1.0-0' }} km · LKR {{ totals.transportLkr | number: '1.0-0' }} · <strong>£{{ totals.transport | number: '1.2-2' }}</strong></p>
       </div>
@@ -97,8 +107,9 @@
           <div class="qc-row qc-row--hotel">
             <label class="a-field"><span>Hotel</span><input [(ngModel)]="h.name" placeholder="Heritance Kandalama" /></label>
             <label class="a-field"><span>Nights</span><input type="number" min="0" [(ngModel)]="h.nights" /></label>
-            <label class="a-field"><span>Rooms</span><input type="number" min="0" [(ngModel)]="h.rooms" /></label>
-            <label class="a-field"><span>Rate / room / night</span><input type="number" [(ngModel)]="h.rate" /></label>
+            <label class="a-field"><span>SGL / night</span><input type="number" [(ngModel)]="h.sgl" placeholder="= DBL" /></label>
+            <label class="a-field"><span>DBL / night</span><input type="number" [(ngModel)]="h.dbl" /></label>
+            <label class="a-field"><span>TPL / night</span><input type="number" [(ngModel)]="h.tpl" /></label>
             <label class="a-field"><span>Currency</span><select [(ngModel)]="h.currency">@for (c of currencies; track c) { <option [value]="c">{{ c }}</option> }</select></label>
             <label class="a-field"><span>Meals</span><select [(ngModel)]="h.meal">@for (m of mealBases; track m) { <option [value]="m">{{ m }}</option> }</select></label>
             <label class="a-field"><span>Supplements (total)</span><input type="number" [(ngModel)]="h.supplements" /></label>
@@ -107,7 +118,7 @@
         </div>
       }
       <button type="button" class="a-btn a-btn--sm no-print" (click)="addHotel()">+ Add hotel</button>
-      <p class="a-muted qc-hint">Add Christmas, New Year or Perahera supplements and any special-offer reductions as “supplements” (use a minus for discounts). {{ hotelNights() }} nights so far.</p>
+      <p class="a-muted qc-hint">Enter room rates per night from the rate sheet, for your travel dates and meal basis. Leave SGL empty if it is the same as DBL. Add Christmas, New Year or Perahera supplements and any special-offer reductions as “supplements” (use a minus for discounts). {{ hotelNights() }} nights so far.</p>
       <p class="qc-subtotal"><strong>£{{ totals.hotels | number: '1.2-2' }}</strong></p>
     </section>
 
@@ -176,11 +187,25 @@
       </dl>
       <label class="a-field qc-markup"><span>Markup %</span><input type="number" step="0.5" [(ngModel)]="q.markupPct" /></label>
       <dl>
+        <div class="qc-pp"><dt>Per person sharing</dt><dd>£{{ totals.perPerson | number: '1.0-0' }}</dd></div>
+        <div><dt>Single supplement</dt><dd>+ £{{ totals.singleSupplement | number: '1.0-0' }}</dd></div>
+        @if (totals.tripleReduction) { <div><dt>Triple reduction</dt><dd>− £{{ totals.tripleReduction | number: '1.0-0' }}</dd></div> }
+        <div><dt>Child, extra bed (40%)</dt><dd>£{{ totals.childWithBed | number: '1.0-0' }}</dd></div>
+        <div><dt>Child, no bed (25%)</dt><dd>£{{ totals.childNoBed | number: '1.0-0' }}</dd></div>
+        <div class="qc-sell"><dt>Total for {{ totals.pax }} guests</dt><dd>£{{ totals.sell | number: '1.0-0' }}</dd></div>
         <div><dt>Profit</dt><dd>£{{ totals.profit | number: '1.2-2' }} <small>({{ totals.marginPct | number: '1.0-1' }}% margin)</small></dd></div>
-        <div class="qc-sell"><dt>Selling price</dt><dd>£{{ totals.sell | number: '1.0-0' }}</dd></div>
-        <div class="qc-pp"><dt>Per person ({{ totals.pax }})</dt><dd>£{{ totals.perPerson | number: '1.0-0' }}</dd></div>
       </dl>
-      @if (q.markupPct < 10) { <p class="a-error qc-warn">Below the course’s 10% minimum margin.</p> }
+      @if (q.markupPct < minMarkup) { <p class="a-error qc-warn">Below the course’s {{ minMarkup }}% minimum markup.</p> }
+      @if (totals.sell > 0 && totals.profit < 0) { <p class="a-error qc-warn">This quote loses money. Child rates or room mix can cause this: raise the markup.</p> }
+      <div class="qc-slabs">
+        <strong>Per person sharing, by group size</strong>
+        <table>
+          <tbody>
+            @for (s of slabs; track s.pax) { <tr [class.is-current]="s.pax === totals.pax"><td>{{ s.pax }} guests</td><td>{{ s.vehicle.split(' (')[0] }}</td><td>£{{ s.perPerson | number: '1.0-0' }}</td></tr> }
+          </tbody>
+        </table>
+        <small>Use these to set “From £” prices on the website.</small>
+      </div>
       @if (totals.excludedPerPerson.length) {
         <div class="qc-excl">
           <strong>Paid locally (per person)</strong>

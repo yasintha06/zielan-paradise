@@ -5,7 +5,8 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AdminService } from '../../../services/admin.service';
 import { Tour } from '../../../services/tour.service';
 import {
-  Currency, QuoteData, Totals, VEHICLES, MIN_KM_PER_DAY, blankQuote, calculate, kmFromDrive,
+  Currency, QuoteData, Totals, VEHICLES, MIN_KM_PER_DAY, MIN_MARKUP_PCT,
+  blankQuote, calculate, kmFromDrive, normaliseQuote, priceBySlab, vehicleFor,
 } from './quote-model';
 
 @Component({
@@ -25,6 +26,7 @@ export class QuoteCalculator implements OnInit {
   readonly mealBases = ['BB', 'HB', 'FB', 'AI', 'RO'];
   readonly statuses = ['Draft', 'Sent', 'Accepted', 'Declined'];
   readonly minKm = MIN_KM_PER_DAY;
+  readonly minMarkup = MIN_MARKUP_PCT;
 
   id = signal<string | null>(null);
   title = '';
@@ -49,7 +51,7 @@ export class QuoteCalculator implements OnInit {
         this.title = quote.title;
         this.clientName = quote.clientName ?? '';
         this.status = quote.status || 'Draft';
-        this.q = { ...blankQuote(), ...(quote.data as QuoteData) };
+        this.q = normaliseQuote(quote.data as QuoteData);
         this.loading.set(false);
       },
       error: () => { this.loading.set(false); this.error.set('Could not load this quote.'); },
@@ -60,6 +62,10 @@ export class QuoteCalculator implements OnInit {
     return calculate(this.q);
   }
 
+  get slabs() {
+    return priceBySlab(this.q);
+  }
+
   // ── Transport ──
   pickVehicle(name: string): void {
     const v = this.vehicles.find((x) => x.name === name);
@@ -68,8 +74,7 @@ export class QuoteCalculator implements OnInit {
   }
 
   suggestedVehicle(): string {
-    const pax = this.totals.pax;
-    return this.vehicles.find((v) => pax <= v.maxPax)?.name ?? this.vehicles[this.vehicles.length - 1].name;
+    return vehicleFor(this.totals.pax).name;
   }
 
   addLeg(): void {
@@ -92,7 +97,7 @@ export class QuoteCalculator implements OnInit {
   }
 
   // ── Lines ──
-  addHotel(): void { this.q.hotels.push({ name: '', nights: 1, rooms: 1, rate: 0, currency: 'USD', meal: 'BB', supplements: 0 }); }
+  addHotel(): void { this.q.hotels.push({ name: '', nights: 1, sgl: 0, dbl: 0, tpl: 0, currency: 'USD', meal: 'BB', supplements: 0 }); }
   addActivity(): void { this.q.activities.push({ name: '', perPerson: 0, currency: 'USD', included: false }); }
   addMeal(): void { this.q.meals.push({ name: 'Lunch', count: 1, perPerson: 0, currency: 'USD' }); }
   addExtra(): void { this.q.extras.push({ name: '', amount: 0, currency: 'GBP' }); }
@@ -108,6 +113,9 @@ export class QuoteCalculator implements OnInit {
     this.message.set('');
     if (!this.title.trim()) { this.error.set('Give the quote a name, e.g. “Smith family, March 2027”.'); return; }
     this.saving.set(true);
+    const t = calculate(this.q);
+    this.q.adults = t.adults;
+    this.q.children = t.children;
     const body = { title: this.title.trim(), clientName: this.clientName, status: this.status, data: this.q };
     const id = this.id();
     const req = id ? this.admin.updateQuote(id, body) : this.admin.createQuote(body);
