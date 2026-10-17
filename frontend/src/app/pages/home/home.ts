@@ -191,7 +191,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private canPlayFilm(): boolean {
     if (!HERO_FILM_ENABLED || this.motion.reducedMotion || typeof document === 'undefined') return false;
     const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
-    if (conn?.saveData || ['slow-2g', '2g', '3g'].includes(conn?.effectiveType ?? '')) return false;
+    if (conn?.saveData || ['slow-2g', '2g'].includes(conn?.effectiveType ?? '')) return false;
     return !!document.createElement('video').canPlayType('video/mp4');
   }
 
