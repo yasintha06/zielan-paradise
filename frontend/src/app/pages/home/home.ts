@@ -115,6 +115,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private timer: ReturnType<typeof setInterval> | null = null;
   private heroVisible = true;
   private heroObserver: IntersectionObserver | null = null;
+  private stopAutoplayRetry: (() => void) | null = null;
 
   ngOnInit(): void {
     this.api.getReviews().subscribe((r) => this.reviews.set(r));
@@ -146,6 +147,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.timer) clearInterval(this.timer);
     this.heroObserver?.disconnect();
+    this.stopAutoplayRetry?.();
     this.ctx?.revert();
   }
 
@@ -188,14 +190,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.motion.scrollTo('#discover');
   }
 
-  /** Autoplay refused (browser policy or power saving): start on the first scroll, tap or key press instead. */
-  private playBlocked(e: DOMException, v: HTMLVideoElement): void {
+  /** Autoplay refused (browser policy or power saving): start the current clip on the first scroll, tap or key press. */
+  private playBlocked(e: DOMException): void {
     if (e?.name !== 'NotAllowedError') return this.filmFailed();
+    if (this.stopAutoplayRetry) return; // already waiting for an interaction
+    const events = ['pointerdown', 'keydown', 'wheel', 'touchstart', 'scroll'];
     const resume = () => {
-      ['pointerdown', 'keydown', 'wheel', 'touchstart', 'scroll'].forEach((t) => removeEventListener(t, resume));
-      v.play().catch(() => this.filmFailed());
+      this.stopAutoplayRetry?.();
+      this.clipVideos()[this.activeSlide()]?.play().catch(() => this.filmFailed());
     };
-    ['pointerdown', 'keydown', 'wheel', 'touchstart', 'scroll'].forEach((t) => addEventListener(t, resume, { passive: true }));
+    this.stopAutoplayRetry = () => {
+      events.forEach((t) => removeEventListener(t, resume));
+      this.stopAutoplayRetry = null;
+    };
+    events.forEach((t) => addEventListener(t, resume, { passive: true }));
   }
 
   private canPlayFilm(): boolean {
@@ -226,14 +234,16 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       if (k === i) {
         v.currentTime = 0;
-        if (this.heroVisible) v.play().catch((e: DOMException) => this.playBlocked(e, v));
+        if (this.heroVisible) v.play().catch((e: DOMException) => this.playBlocked(e));
       } else {
         v.pause();
       }
     });
     // Safety net: move on even if a clip stalls and never fires "ended".
     if (this.timer) clearInterval(this.timer);
-    this.timer = setInterval(() => this.nextClip(), 12000);
+    this.timer = setInterval(() => {
+      if (this.heroVisible && !document.hidden && !this.stopAutoplayRetry) this.nextClip();
+    }, 12000);
   }
 
   /** Pause the film while the hero is scrolled out of view. */

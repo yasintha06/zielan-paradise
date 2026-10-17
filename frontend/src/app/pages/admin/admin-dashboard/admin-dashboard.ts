@@ -75,7 +75,8 @@ export class AdminDashboardComponent implements OnInit {
 
   private apply(updated: Lead): void {
     this.leads.update((list) => list.map((l) => (l.id === updated.id ? updated : l)));
-    this.selected.set(updated);
+    // A slow response must not reopen an enquiry the owner has already moved away from.
+    if (this.selected()?.id === updated.id) this.selected.set(updated);
   }
 
   setStatus(l: Lead, status: LeadStatus): void {
@@ -122,8 +123,12 @@ export class AdminDashboardComponent implements OnInit {
     return `mailto:${l.email}?subject=${subject}&body=${body}`;
   }
 
+  /** wa.me needs the full international number: 00… and UK 07… numbers are converted. */
   whatsappLink(l: Lead): string {
-    return `https://wa.me/${l.phone.replace(/[^\d]/g, '')}`;
+    let digits = l.phone.replace(/[^\d]/g, '');
+    if (digits.startsWith('00')) digits = digits.slice(2);
+    else if (/^07\d{9}$/.test(digits)) digits = `44${digits.slice(1)}`;
+    return `https://wa.me/${digits}`;
   }
 
   statusClass(s: string): string {

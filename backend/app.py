@@ -76,11 +76,9 @@ def create_app():
                 "GET /api/tours": "List tours (?type=round&market=uk&featured=true)",
                 "GET /api/destinations": "List destinations (?featured=true)",
                 "GET /api/testimonials": "List testimonials (?market=uk)",
+                "POST /api/enquiries": "Submit an enquiry (Public)",
                 "POST /api/admin/login": "Admin authentication (returns JWT)",
-                "POST /api/tours": "Create tour (JWT required)",
-                "POST /api/destinations": "Create destination (JWT required)",
-                "POST /api/testimonials": "Create testimonial (JWT required)",
-                "POST /api/enquiries": "Submit an enquiry (Public)"
+                "/api/admin/...": "Tours, destinations, testimonials, inquiries, quotes, overview (JWT required)"
             }
         }), 200
 

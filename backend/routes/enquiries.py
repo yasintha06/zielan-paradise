@@ -32,6 +32,11 @@ def _s(value, limit=300):
     return str(value if value is not None else '').strip()[:limit]
 
 
+def _line(value, limit):
+    """Single-line text (names, phone): no line breaks, which could reach email headers."""
+    return re.sub(r'[\x00-\x1f\x7f]+', ' ', _s(value, limit)).strip()
+
+
 def _list(value):
     return [_s(v, 80) for v in value][:20] if isinstance(value, list) else []
 
@@ -54,10 +59,10 @@ def normalise(raw):
 
     lead = {
         'kind': 'planner' if is_planner else 'contact',
-        'firstName': _s(name.get('firstName', raw.get('firstName')), 80),
-        'lastName': _s(name.get('lastName', raw.get('lastName')), 80),
-        'email': _s(contact.get('email', raw.get('email')), 200),
-        'phone': _s(contact.get('phone', raw.get('phone')), 40),
+        'firstName': _line(name.get('firstName', raw.get('firstName')), 80),
+        'lastName': _line(name.get('lastName', raw.get('lastName')), 80),
+        'email': _line(contact.get('email', raw.get('email')), 200),
+        'phone': _line(contact.get('phone', raw.get('phone')), 40),
         'interest': _s(raw.get('interest'), 120),
         'travelDates': _s(raw.get('travelDates'), 120),
         'guests': _s(raw.get('guests'), 120),
@@ -103,7 +108,7 @@ def _env(*names, default=None):
 
 
 def email_configured():
-    return bool(_env("SMTP_USER", "MAIL_USERNAME") and _env("SMTP_PASS", "MAIL_PASSWORD")
+    return bool(_env("SMTP_USER", "MAIL_USERNAME") and _env("SMTP_PASS", "SMTP_PASSWORD", "MAIL_PASSWORD")
                 and _env("ADMIN_NOTIFICATION_EMAIL", "ADMIN_EMAIL"))
 
 
@@ -139,7 +144,7 @@ def _lead_email_html(lead):
 def send_lead_email_async(lead):
     def send_email():
         sender = _env("SMTP_USER", "MAIL_USERNAME")
-        password = _env("SMTP_PASS", "MAIL_PASSWORD")
+        password = _env("SMTP_PASS", "SMTP_PASSWORD", "MAIL_PASSWORD")
         recipient = _env("ADMIN_NOTIFICATION_EMAIL", "ADMIN_EMAIL")
         if not (sender and password and recipient):
             print("[INFO] Email not configured (SMTP_USER/SMTP_PASS/ADMIN_NOTIFICATION_EMAIL). Skipping.")

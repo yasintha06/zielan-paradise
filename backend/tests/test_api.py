@@ -203,3 +203,25 @@ def test_overview_counts(client, auth_headers):
     client.post('/api/enquiries', json={'firstName': 'Jo', 'email': 'jo@example.com'})
     body = client.get('/api/admin/overview', headers=auth_headers).get_json()
     assert body['enquiries'] == 1 and body['enquiriesByStatus'] == {'New': 1} and body['tours'] == 19
+
+
+def test_login_rejects_non_object_json(client):
+    assert client.post('/api/admin/login', json=['username', 'password']).status_code == 400
+    res = client.post('/api/admin/login', data='not json', content_type='text/plain')
+    assert res.status_code == 400 and res.get_json()['error']
+
+
+def test_enquiry_names_are_single_line(client, auth_headers):
+    client.post('/api/enquiries', json={'firstName': 'Bob\r\nBcc: x@y.z', 'email': 'bob@example.com', 'message': 'Hi'})
+    lead = client.get('/api/admin/inquiries', headers=auth_headers).get_json()[0]
+    assert '\n' not in lead['firstName'] and '\r' not in lead['firstName']
+
+
+def test_email_settings_accept_smtp_password(monkeypatch):
+    from routes import enquiries
+    for k in ('SMTP_PASS', 'MAIL_PASSWORD', 'MAIL_USERNAME', 'ADMIN_EMAIL'):
+        monkeypatch.delenv(k, raising=False)
+    monkeypatch.setenv('SMTP_USER', 'info@example.com')
+    monkeypatch.setenv('SMTP_PASSWORD', 'secret')
+    monkeypatch.setenv('ADMIN_NOTIFICATION_EMAIL', 'info@example.com')
+    assert enquiries.email_configured()

@@ -39,6 +39,9 @@ def _recent_failures(ip):
     cutoff = time.time() - WINDOW_SECONDS
     while attempts and attempts[0] < cutoff:
         attempts.popleft()
+    # Forget clients with no recent failures so the table can't grow forever.
+    for key in [k for k, v in _failures.items() if not v and k != ip]:
+        del _failures[key]
     return attempts
 
 
@@ -49,9 +52,9 @@ def admin_login():
     Expects JSON: { "username": "admin", "password": "..." }
     Returns: { "access_token": "...", "message": "Login successful" }
     """
-    data = request.get_json()
+    data = request.get_json(silent=True)
 
-    if not data or 'username' not in data or 'password' not in data:
+    if not isinstance(data, dict) or 'username' not in data or 'password' not in data:
         return jsonify({"error": "Username and password are required."}), 400
 
     ip = _client_ip()
