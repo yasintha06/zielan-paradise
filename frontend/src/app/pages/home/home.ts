@@ -14,8 +14,8 @@ const SLIDE_MS = 6500;
 
 /**
  * Hero film: short, compressed clips in public/video/ ({name}-1080.mp4, {name}-720.mp4 for phones, {name}.webp poster).
- * Plays one after another with a cross-fade. Visitors who prefer reduced motion, use data-saver
- * or a slow connection get the photo slideshow instead. Set to false to always use the slideshow.
+ * Plays one after another with a cross-fade. Visitors who prefer reduced motion or use data-saver
+ * get the photo slideshow instead. Set to false to always use the slideshow.
  */
 const HERO_FILM_ENABLED = true;
 const HERO_FILM = [
@@ -188,10 +188,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.motion.scrollTo('#discover');
   }
 
+  /** Autoplay refused (browser policy or power saving): start on the first scroll, tap or key press instead. */
+  private playBlocked(e: DOMException, v: HTMLVideoElement): void {
+    if (e?.name !== 'NotAllowedError') return this.filmFailed();
+    const resume = () => {
+      ['pointerdown', 'keydown', 'wheel', 'touchstart', 'scroll'].forEach((t) => removeEventListener(t, resume));
+      v.play().catch(() => this.filmFailed());
+    };
+    ['pointerdown', 'keydown', 'wheel', 'touchstart', 'scroll'].forEach((t) => addEventListener(t, resume, { passive: true }));
+  }
+
   private canPlayFilm(): boolean {
     if (!HERO_FILM_ENABLED || this.motion.reducedMotion || typeof document === 'undefined') return false;
-    const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
-    if (conn?.saveData || ['slow-2g', '2g'].includes(conn?.effectiveType ?? '')) return false;
+    const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    if (conn?.saveData) return false;
     return !!document.createElement('video').canPlayType('video/mp4');
   }
 
@@ -216,7 +226,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       }
       if (k === i) {
         v.currentTime = 0;
-        if (this.heroVisible) v.play().catch(() => this.filmFailed());
+        if (this.heroVisible) v.play().catch((e: DOMException) => this.playBlocked(e, v));
       } else {
         v.pause();
       }
