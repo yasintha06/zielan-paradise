@@ -53,7 +53,9 @@
   transition: opacity 1.6s var(--ease-in-out);
 }
 .zp-hero-slide.is-active { opacity: 1; z-index: 1; }
-.zp-hero-slide img {
+.zp-hero-slide img,
+.zp-hero-slide video {
+  display: block;
   width: 100%;
   height: 115%;
   margin-top: -7.5%;
@@ -61,6 +63,8 @@
 }
 /* Ken Burns drift on the active slide */
 .zp-hero-slide.is-active { animation: zp-kenburns 9s linear both; }
+/* Drone footage already moves: no Ken Burns drift on the film */
+.zp-hero--film .zp-hero-slide.is-active { animation: none; }
 @keyframes zp-kenburns {
   from { transform: scale(1.12); }
   to { transform: scale(1); }

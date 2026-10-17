@@ -1,13 +1,22 @@
 <div class="zp-home">
 
   <!-- ═════════════ HERO — cinematic slideshow ═════════════ -->
-  <section class="zp-hero" aria-label="Introduction">
+  <section class="zp-hero" [class.zp-hero--film]="filmMode()" aria-label="Introduction">
     <div class="zp-hero-media" data-hero-media>
-      @for (s of slides; track s.image; let i = $index) {
-        <figure class="zp-hero-slide" [class.is-active]="i === activeSlide()">
-          <img [src]="'img/' + s.image + '-2000.webp'" [alt]="s.alt" [attr.fetchpriority]="i === 0 ? 'high' : null"
-               [attr.loading]="i === 0 ? 'eager' : 'lazy'" width="2000" height="1250" />
-        </figure>
+      @if (filmMode()) {
+        @for (c of film; track c.video; let i = $index) {
+          <figure class="zp-hero-slide" [class.is-active]="i === activeSlide()">
+            <video muted playsinline disablepictureinpicture preload="none" aria-hidden="true"
+                   [attr.poster]="'video/' + c.video + '.webp'" (ended)="nextClip()" (error)="filmFailed()"></video>
+          </figure>
+        }
+      } @else {
+        @for (s of slides; track s.image; let i = $index) {
+          <figure class="zp-hero-slide" [class.is-active]="i === activeSlide()">
+            <img [src]="'img/' + s.image + '-2000.webp'" [alt]="s.alt" [attr.fetchpriority]="i === 0 ? 'high' : null"
+                 [attr.loading]="i === 0 ? 'eager' : 'lazy'" width="2000" height="1250" />
+          </figure>
+        }
       }
     </div>
     <div class="zp-hero-shade"></div>
@@ -30,11 +39,11 @@
 
     <div class="zp-hero-bar container" data-hero-fade>
       <div class="zp-hero-caption">
-        <span class="zp-hero-index">{{ pad(activeSlide() + 1) }}<small> / {{ pad(slides.length) }}</small></span>
-        <span class="zp-hero-place">{{ slides[activeSlide()].place }}</span>
+        <span class="zp-hero-index">{{ pad(activeSlide() + 1) }}<small> / {{ pad(heroItems().length) }}</small></span>
+        <span class="zp-hero-place">{{ heroItems()[activeSlide()].place }}</span>
       </div>
       <div class="zp-hero-dots" role="tablist" aria-label="Choose background">
-        @for (s of slides; track s.image; let i = $index) {
+        @for (s of heroItems(); track s.place; let i = $index) {
           <button type="button" role="tab" [attr.aria-selected]="i === activeSlide()" [attr.aria-label]="s.place"
                   [class.is-active]="i === activeSlide()" (click)="goTo(i)">
             <span></span>

@@ -12,6 +12,20 @@ import { TourCardComponent } from '../../components/tour-card/tour-card';
 
 const SLIDE_MS = 6500;
 
+/**
+ * Hero film: short, compressed clips in public/video/ ({name}-1080.mp4, {name}-720.mp4 for phones, {name}.webp poster).
+ * Plays one after another with a cross-fade. Visitors who prefer reduced motion, use data-saver
+ * or a slow connection get the photo slideshow instead. Set to false to always use the slideshow.
+ */
+const HERO_FILM_ENABLED = true;
+const HERO_FILM = [
+  { video: 'sigiriya', place: 'Sigiriya · Cultural Triangle' },
+  { video: 'nine-arches', place: 'Nine Arches Bridge · Ella' },
+  { video: 'tea-country', place: 'Tea country · The Hill Country' },
+  { video: 'galle', place: 'Galle Fort · South Coast' },
+  { video: 'mirissa', place: 'Mirissa · South Coast' },
+];
+
 @Component({
   selector: 'app-home',
   standalone: true,
@@ -89,12 +103,18 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     { id: 'tour-tea-trails-coastal-sanctuaries', title: 'Tea Trails & Coastal Sanctuaries', description: 'Planters’ bungalows, ocean hideaways and slow, romantic days.', duration: '8 Days / 7 Nights', type: 'round', badge: { text: 'Romance', class: '' }, image: 'img/tour-southern-coast-900.webp' },
   ]);
 
+  readonly film = HERO_FILM;
+  /** True when the hero plays the film instead of the photo slideshow. */
+  filmMode = signal(false);
+
   reviews = signal<Review[]>([]);
   activeSlide = signal(0);
   openStyle = signal(0);
 
   private ctx: gsap.Context | null = null;
   private timer: ReturnType<typeof setInterval> | null = null;
+  private heroVisible = true;
+  private heroObserver: IntersectionObserver | null = null;
 
   ngOnInit(): void {
     this.api.getReviews().subscribe((r) => this.reviews.set(r));
@@ -110,7 +130,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.startSlides();
+    if (this.canPlayFilm()) {
+      this.filmMode.set(true);
+      setTimeout(() => this.playClip(0));
+      this.watchHero();
+    } else {
+      this.startSlides();
+    }
     this.zone.runOutsideAngular(() => {
       const root = this.el.nativeElement.querySelector('.zp-home') as HTMLElement;
       this.ctx = gsap.context(() => this.animate(root), root);
@@ -119,6 +145,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.timer) clearInterval(this.timer);
+    this.heroObserver?.disconnect();
     this.ctx?.revert();
   }
 
@@ -131,12 +158,86 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   goTo(i: number): void {
+    if (this.filmMode()) {
+      this.playClip(i);
+      return;
+    }
     this.activeSlide.set(i);
+    this.startSlides();
+  }
+
+  /** Items the hero caption and dots describe: film clips or photo slides. */
+  heroItems(): { place: string }[] {
+    return this.filmMode() ? this.film : this.slides;
+  }
+
+  /** Called when a clip ends (or stalls): fade to the next one. */
+  nextClip(): void {
+    this.playClip((this.activeSlide() + 1) % this.film.length);
+  }
+
+  /** If any clip fails to load, fall back to the photo slideshow. */
+  filmFailed(): void {
+    if (!this.filmMode()) return;
+    this.filmMode.set(false);
+    this.activeSlide.set(0);
     this.startSlides();
   }
 
   scrollDown(): void {
     this.motion.scrollTo('#discover');
+  }
+
+  private canPlayFilm(): boolean {
+    if (!HERO_FILM_ENABLED || this.motion.reducedMotion || typeof document === 'undefined') return false;
+    const conn = (navigator as Navigator & { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    if (conn?.saveData || ['slow-2g', '2g', '3g'].includes(conn?.effectiveType ?? '')) return false;
+    return !!document.createElement('video').canPlayType('video/mp4');
+  }
+
+  private clipVideos(): HTMLVideoElement[] {
+    return Array.from(this.el.nativeElement.querySelectorAll('.zp-hero-slide video'));
+  }
+
+  private clipSrc(name: string): string {
+    return `video/${name}-${window.innerWidth < 900 ? '720' : '1080'}.mp4`;
+  }
+
+  /** Start clip i from the beginning, preload the one after it, pause the rest. */
+  private playClip(i: number): void {
+    const videos = this.clipVideos();
+    if (!videos.length) return;
+    const next = (i + 1) % videos.length;
+    this.activeSlide.set(i);
+    videos.forEach((v, k) => {
+      if ((k === i || k === next) && !v.getAttribute('src')) {
+        v.src = this.clipSrc(this.film[k].video);
+        v.preload = 'auto';
+      }
+      if (k === i) {
+        v.currentTime = 0;
+        if (this.heroVisible) v.play().catch(() => this.filmFailed());
+      } else {
+        v.pause();
+      }
+    });
+    // Safety net: move on even if a clip stalls and never fires "ended".
+    if (this.timer) clearInterval(this.timer);
+    this.timer = setInterval(() => this.nextClip(), 12000);
+  }
+
+  /** Pause the film while the hero is scrolled out of view. */
+  private watchHero(): void {
+    const hero = this.el.nativeElement.querySelector('.zp-hero');
+    if (!hero || typeof IntersectionObserver === 'undefined') return;
+    this.heroObserver = new IntersectionObserver(([entry]) => {
+      this.heroVisible = entry.isIntersecting;
+      const current = this.clipVideos()[this.activeSlide()];
+      if (!current) return;
+      if (this.heroVisible) current.play().catch(() => {});
+      else current.pause();
+    });
+    this.heroObserver.observe(hero);
   }
 
   private startSlides(): void {
@@ -181,7 +282,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       yPercent: -25, opacity: 0, ease: 'none',
       scrollTrigger: { trigger: '.zp-hero', start: 'top top', end: 'bottom top', scrub: true },
     });
-    gsap.to(q('.zp-hero-slide img'), {
+    gsap.to(q('.zp-hero-slide img, .zp-hero-slide video'), {
       yPercent: 12, ease: 'none',
       scrollTrigger: { trigger: '.zp-hero', start: 'top top', end: 'bottom top', scrub: true },
     });

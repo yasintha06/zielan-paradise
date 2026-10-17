@@ -30,7 +30,7 @@ def _file_headers(headers, path, url):
         headers[name] = value
     if url.endswith('.html') or url == '/':
         headers['Cache-Control'] = 'no-cache'
-    elif url.startswith('/img/') or url.startswith('/images/') or url.startswith('/assets/'):
+    elif url.startswith(('/img/', '/images/', '/assets/', '/video/')):
         headers['Cache-Control'] = 'public, max-age=2592000'
 
 
