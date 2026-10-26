@@ -17,7 +17,7 @@ export class TourCardComponent {
   @Input() index = 0;
 
   get image(): string {
-    return imageUrl(this.tour.image);
+    return imageUrl(this.tour.image, 900, this.tour.id);
   }
 
   get summary(): string {

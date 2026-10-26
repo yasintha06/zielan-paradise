@@ -1,7 +1,7 @@
 import { DOCUMENT } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
 const ORIGIN = 'https://zeilanparadise.com';
@@ -29,6 +29,8 @@ export class SeoService {
   private doc = inject(DOCUMENT);
 
   init(): void {
+    // Drop the previous page's structured data before the next page sets its own.
+    this.router.events.pipe(filter((e) => e instanceof NavigationStart)).subscribe(() => this.setJsonLd(null));
     this.router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe(() => {
       let r = this.route.snapshot;
       while (r.firstChild) r = r.firstChild;
@@ -60,5 +62,21 @@ export class SeoService {
       this.doc.head.appendChild(canonical);
     }
     canonical.href = url;
+  }
+
+  /** Page-specific structured data (schema.org) for Google rich results; null removes it. */
+  setJsonLd(data: object | null): void {
+    let el = this.doc.getElementById('page-ld');
+    if (!data) {
+      el?.remove();
+      return;
+    }
+    if (!el) {
+      el = this.doc.createElement('script');
+      el.id = 'page-ld';
+      el.setAttribute('type', 'application/ld+json');
+      this.doc.head.appendChild(el);
+    }
+    el.textContent = JSON.stringify({ '@context': 'https://schema.org', ...data });
   }
 }

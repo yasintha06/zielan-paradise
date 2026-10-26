@@ -115,7 +115,7 @@ export class AdminTours implements OnInit {
   }
 
   img(t: Tour): string {
-    return imageUrl(t.image);
+    return imageUrl(t.image, 900, t.id);
   }
 
   toggleActive(t: Tour): void {

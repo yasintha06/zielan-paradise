@@ -14,4 +14,11 @@ describe('imageUrl', () => {
   it('falls back to a default photo', () => {
     expect(imageUrl(undefined)).toBe('img/sigiriya-900.webp');
   });
+
+  it('gives each photo-less tour its own stable fallback', () => {
+    const a = imageUrl('', 900, 'tour-a');
+    expect(a).toBe(imageUrl(null, 900, 'tour-a'));
+    const all = new Set(['tour-a', 'tour-b', 'tour-c', 'tour-d', 'tour-e'].map((k) => imageUrl('', 900, k)));
+    expect(all.size).toBeGreaterThan(1);
+  });
 });

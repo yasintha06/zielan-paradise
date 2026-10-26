@@ -440,3 +440,10 @@ section { padding: var(--section-pad) 0; }
 }
 .skip-link:focus { transform: none; }
 main:focus { outline: none; }
+
+/* ── Print: just the page content ── */
+@media print {
+  app-navbar, app-footer, app-whatsapp-fab, app-cursor, app-preloader, .skip-link { display: none !important; }
+  body { background: #fff !important; color: #000; }
+  a[href]::after { content: none !important; }
+}

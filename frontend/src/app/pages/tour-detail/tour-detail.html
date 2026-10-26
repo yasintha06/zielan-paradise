@@ -131,6 +131,10 @@
               <p>Change the pace, swap a hotel, add a few days on the beach. Tell us what you'd like and we'll send a private proposal.</p>
               <a routerLink="/contact" [queryParams]="{ tour: t.id, tourName: t.title }" class="btn btn-gold" appMagnetic>Request a proposal</a>
               <a [href]="whatsappLink(t)" target="_blank" rel="noopener noreferrer" class="td-card-wa">or ask on WhatsApp &rarr;</a>
+              <button type="button" class="td-card-print" (click)="print()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a1 1 0 0 1-1-1v-6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v6a1 1 0 0 1-1 1h-2M6 14h12v7H6z"/></svg>
+                Print or save as PDF
+              </button>
               <p class="td-card-price">{{ t.priceDisplay && t.priceDisplay !== 'Tailor-made' ? t.priceDisplay : 'Priced on request' }}</p>
             </div>
           </aside>
@@ -138,7 +142,7 @@
       </section>
 
       @if (related().length) {
-        <section class="pg-section pg-section--sand">
+        <section class="pg-section pg-section--sand td-more">
           <div class="container">
             <header class="pg-head pg-head--split" appScrollReveal>
               <div>

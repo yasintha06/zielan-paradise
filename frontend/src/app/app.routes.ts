@@ -54,6 +54,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/journal/article').then((m) => m.ArticlePage),
   },
   {
+    path: 'faq', title: 'FAQ: Planning a Sri Lanka Holiday' + SUFFIX,
+    data: { description: 'Answers for UK travellers: how tailor-made booking works, deposits, visas, the best time to visit Sri Lanka, insurance and more.' },
+    loadComponent: () => import('./pages/faq/faq').then((m) => m.Faq),
+  },
+  {
     path: 'contact', title: 'Contact Us' + SUFFIX,
     data: { description: 'Talk to Zeilan Paradise by WhatsApp, phone or email, or send us a message to start planning your Sri Lanka journey.' },
     loadComponent: () => import('./pages/contact/contact').then((m) => m.Contact),

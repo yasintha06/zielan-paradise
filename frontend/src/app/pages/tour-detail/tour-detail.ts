@@ -45,16 +45,44 @@ export class TourDetail implements OnInit {
       this.seo.set({
         title: `${tour.title} | Zeilan Paradise`,
         description: tour.description || `${tour.duration} private journey: ${tour.route ?? ''}. ${tour.targetAudience ?? ''}`.trim(),
-        image: imageUrl(tour.image),
+        image: imageUrl(tour.image, 900, tour.id),
       });
+      this.seo.setJsonLd(this.structuredData(tour));
       this.tourService.getTours(tour.type).subscribe((list) =>
         this.related.set(list.filter((t) => t.id !== tour.id).slice(0, 3))
       );
     });
   }
 
+  /** schema.org TouristTrip, so Google can show the journey as a rich result. */
+  private structuredData(t: Tour): object {
+    return {
+      '@type': 'TouristTrip',
+      name: t.title,
+      description: t.description || t.targetAudience || undefined,
+      image: new URL(imageUrl(t.image, 2000, t.id), location.origin + '/').href,
+      url: location.origin + '/tours/' + t.id,
+      touristType: t.targetAudience || undefined,
+      provider: { '@type': 'TravelAgency', name: 'Zeilan Paradise', url: location.origin + '/' },
+      itinerary: t.itinerary?.length
+        ? {
+            '@type': 'ItemList',
+            itemListElement: t.itinerary.map((d, i) => ({
+              '@type': 'ListItem', position: i + 1,
+              item: { '@type': 'TouristAttraction', name: d.location || d.title, description: d.title },
+            })),
+          }
+        : undefined,
+    };
+  }
+
+  /** Prints the itinerary (or saves it as PDF) with every day expanded. */
+  print(): void {
+    window.print();
+  }
+
   heroImage(t: Tour): string {
-    return imageUrl(t.image, 2000);
+    return imageUrl(t.image, 2000, t.id);
   }
 
   crumbs(t: Tour): Crumb[] {

@@ -202,3 +202,19 @@
   .td-days::before { left: 25px; }
   .td-day-body { padding-left: 0; }
 }
+
+.td-card-print {
+  display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 0.75rem;
+  background: none; border: 0; padding: 0; color: var(--text-soft); font-size: 0.82rem; cursor: pointer;
+}
+.td-card-print svg { width: 16px; height: 16px; }
+.td-card-print:hover { color: var(--teal); }
+
+/* Printed itinerary: every day open, no buttons or animation */
+@media print {
+  .td-hero-cta, .td-card .btn, .td-card-wa, .td-card-print, .td-day-icon, .td-more { display: none !important; }
+  .td-layout { display: block; }
+  .td-day-body { grid-template-rows: 1fr !important; }
+  .td-day { break-inside: avoid; }
+  [appScrollReveal], .td-day { opacity: 1 !important; transform: none !important; }
+}
