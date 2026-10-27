@@ -95,7 +95,7 @@
       <ul class="zp-facts">
         @for (f of facts; track f.label) {
           <li appScrollReveal>
-            <span class="zp-fact-num"><span [attr.data-count]="f.value">0</span>{{ f.suffix }}</span>
+            <span class="zp-fact-num"><span [attr.data-count]="f.value">{{ f.value.toLocaleString('en-GB') }}</span>{{ f.suffix }}</span>
             <span class="zp-fact-label">{{ f.label }}</span>
           </li>
         }

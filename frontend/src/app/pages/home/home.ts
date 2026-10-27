@@ -270,15 +270,18 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const q = gsap.utils.selector(root);
 
     // Number counters run whether or not motion is reduced (they just jump to final value).
+    // The template already shows the final number, so it is never stuck at 0 if the scroll trigger doesn't fire.
     q('[data-count]').forEach((el: HTMLElement) => {
       const end = Number(el.dataset['count']);
       const obj = { v: 0 };
       const fmt = (v: number) => Math.round(v).toLocaleString('en-GB');
       if (reduced) { el.textContent = fmt(end); return; }
-      gsap.to(obj, {
-        v: end, duration: 2.2, ease: 'power3.out',
-        scrollTrigger: { trigger: el, start: 'top 90%', once: true },
-        onUpdate: () => (el.textContent = fmt(obj.v)),
+      ScrollTrigger.create({
+        trigger: el, start: 'top 90%', once: true,
+        onEnter: () => gsap.to(obj, {
+          v: end, duration: 2.2, ease: 'power3.out',
+          onUpdate: () => (el.textContent = fmt(obj.v)),
+        }),
       });
     });
 
