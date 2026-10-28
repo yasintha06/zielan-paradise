@@ -59,19 +59,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   readonly destinations = [
-    { name: 'Sigiriya', anchor: 'dest-sigiriya', tagline: 'The fortress in the sky', image: 'sigiriya' },
+    { name: 'Sigiriya', anchor: 'dest-sigiriya-dambulla', tagline: 'The fortress in the sky', image: 'sigiriya' },
     { name: 'Kandy', anchor: 'dest-kandy', tagline: 'Temple of the Sacred Tooth', image: 'kandy' },
     { name: 'Ella', anchor: 'dest-ella', tagline: 'Emerald peaks & valleys', image: 'ella' },
-    { name: 'Nuwara Eliya', anchor: 'dest-nuwara-eliya', tagline: 'Little England in the clouds', image: 'nuwara-eliya' },
-    { name: 'Yala', anchor: 'dest-yala-national-park', tagline: 'Land of the leopard', image: 'yala' },
-    { name: 'Galle', anchor: 'dest-galle-fort', tagline: 'A fort by the Indian Ocean', image: 'galle' },
-    { name: 'Mirissa', anchor: 'dest-mirissa', tagline: 'Whales, waves & golden sand', image: 'mirissa' },
+    { name: 'Nuwara Eliya', anchor: 'dest-nuwara-eliya-hatton', tagline: 'Little England in the clouds', image: 'nuwara-eliya' },
+    { name: 'Yala', anchor: 'dest-yala', tagline: 'Land of the leopard', image: 'yala' },
+    { name: 'Galle', anchor: 'dest-galle', tagline: 'A fort by the Indian Ocean', image: 'galle' },
+    { name: 'Mirissa', anchor: 'dest-mirissa-tangalle', tagline: 'Whales, waves & golden sand', image: 'mirissa' },
     { name: 'Anuradhapura', anchor: 'dest-anuradhapura', tagline: 'The first great kingdom', image: 'anuradhapura' },
-    { name: 'Dambulla', anchor: 'dest-dambulla', tagline: 'Cave temples of gold', image: 'dambulla' },
+    { name: 'East coast', anchor: 'dest-trincomalee-pasikuda-arugam-bay', tagline: 'Calm seas in the UK summer', image: 'eastcoast-nilaveli-beach-01' },
   ];
 
   readonly styles = [
-    { tag: 'Multi-day', title: 'Round Tours', text: 'Seven to fourteen days traversing the island’s greatest wonders, with your own chauffeur-guide.', cta: 'Explore round tours', link: '/round-tours', image: 'tour-cultural-triangle' },
+    { tag: 'Multi-day', title: 'Round Tours', text: 'Eight to sixteen days traversing the island’s greatest wonders, with your own chauffeur-guide.', cta: 'Explore round tours', link: '/round-tours', image: 'tour-cultural-triangle' },
     { tag: 'Single day', title: 'Day Tours', text: 'Perfectly paced private excursions: a safari at first light, a fort at sunset, a morning with the whales.', cta: 'Explore day tours', link: '/day-tours', image: 'day-tour-whale' },
     { tag: 'Fully bespoke', title: 'Tailor-Made', text: 'Tell us how you like to travel and we’ll compose a journey that exists only for you.', cta: 'Start planning', link: '/tailor-made', image: 'day-tour-tea' },
   ];
@@ -98,9 +98,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   tours = signal<Tour[]>([
-    { id: 'tour-grand-island-odyssey', title: 'The Grand Island Odyssey', description: 'A fourteen-day signature loop across Sri Lanka’s greatest cultural and coastal highlights.', duration: '14 Days / 13 Nights', type: 'round', badge: { text: 'Signature', class: '' }, image: 'img/tour-grand-odyssey-900.webp' },
-    { id: 'tour-wild-heritage-highlands', title: 'Wild Heritage & Highlands', description: 'Private safari tracking, misty tea estates and boutique coastal calm.', duration: '10 Days / 9 Nights', type: 'round', badge: { text: 'Wildlife', class: '' }, image: 'img/tour-cultural-triangle-900.webp' },
-    { id: 'tour-tea-trails-coastal-sanctuaries', title: 'Tea Trails & Coastal Sanctuaries', description: 'Planters’ bungalows, ocean hideaways and slow, romantic days.', duration: '8 Days / 7 Nights', type: 'round', badge: { text: 'Romance', class: '' }, image: 'img/tour-southern-coast-900.webp' },
+    { id: 'tour-sri-lanka-highlights', title: 'Sri Lanka Highlights', description: 'The essentials of Sri Lanka in a week: Sigiriya and wild elephants, sacred Kandy and colonial Galle.', duration: '8 Days / 7 Nights', type: 'round', badge: { text: 'First visit', class: '' }, image: 'img/sigiriya-rock-01-900.webp' },
+    { id: 'tour-classic-ceylon-coast', title: 'Classic Ceylon & Coast', description: 'The complete first visit at an easy pace, from the ancient cities to tea country and the beach.', duration: '14 Days / 13 Nights', type: 'round', badge: { text: 'Signature', class: '' }, image: 'img/ella-nine-arches-02-900.webp' },
+    { id: 'tour-untamed-sri-lanka', title: 'Untamed Sri Lanka: Cloud Forests, Leopards & Whales', description: 'Three national parks, the cloud forest of Horton Plains and the ocean, always watched responsibly.', duration: '12 Days / 11 Nights', type: 'round', badge: { text: 'Wildlife', class: '' }, image: 'img/untamed-leopard-01-900.webp' },
   ]);
 
   readonly film = HERO_FILM;

@@ -22,7 +22,7 @@ export const routes: Routes = [
   },
   {
     path: 'destinations', title: 'Sri Lanka Destinations' + SUFFIX,
-    data: { description: 'Discover Sri Lanka region by region: Sigiriya, Kandy, Ella, Nuwara Eliya, Yala, Galle, Mirissa, Anuradhapura and Dambulla.' },
+    data: { description: 'Discover Sri Lanka region by region: Colombo, Sigiriya, Kandy, the tea country, Ella, Yala, Galle, the south and east coasts and Jaffna.' },
     loadComponent: () => import('./pages/destinations/destinations').then((m) => m.Destinations),
   },
   {

@@ -16,6 +16,10 @@ export interface Destination {
   image?: string;
   isActive: boolean;
   featured?: boolean;
+  bestTime?: string;
+  catalogRev?: number;
+  /** Ids of tours that visit this destination. */
+  tours?: string[];
 }
 
 @Injectable({

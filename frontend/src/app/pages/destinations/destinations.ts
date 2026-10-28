@@ -2,6 +2,7 @@ import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { DestinationService, Destination } from '../../services/destination.service';
+import { TourService, Tour } from '../../services/tour.service';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal';
 import { ParallaxDirective } from '../../directives/parallax';
 import { PageHeroComponent } from '../../components/page-hero/page-hero';
@@ -16,8 +17,10 @@ import { imageUrl } from '../../utils/image';
 })
 export class Destinations implements OnInit {
   private destinationService = inject(DestinationService);
+  private tourService = inject(TourService);
 
   destinations = signal<Destination[]>([]);
+  tours = signal<Map<string, Tour>>(new Map());
   region = signal('all');
 
   regions = computed(() => Array.from(new Set(this.destinations().map((d) => d.region).filter(Boolean))));
@@ -33,6 +36,14 @@ export class Destinations implements OnInit {
       this.destinations.set(data.filter((d) => d.isActive !== false));
       setTimeout(() => ScrollTrigger.refresh(), 150);
     });
+    this.tourService.getTours().subscribe((list) => this.tours.set(new Map(list.map((t) => [t.id, t]))));
+  }
+
+  /** Live tours that visit a destination, round tours first. */
+  toursFor(d: Destination): Tour[] {
+    const map = this.tours();
+    return (d.tours ?? []).map((id) => map.get(id)).filter((t): t is Tour => !!t)
+      .sort((a, b) => (a.type === b.type ? 0 : a.type === 'round' ? -1 : 1));
   }
 
   setRegion(r: string): void {

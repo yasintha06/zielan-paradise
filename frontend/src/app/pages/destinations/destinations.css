@@ -47,3 +47,16 @@
   .ds-row--flip .ds-img { order: 0; }
   .ds-num { top: -0.2em; }
 }
+
+.ds-best { margin: 0 0 1rem; font-size: 0.92rem; color: var(--ink); }
+.ds-best span, .ds-tours > span {
+  display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-dark); margin-bottom: 0.25rem;
+}
+.ds-tours { margin-bottom: 1.5rem; }
+.ds-tours ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.ds-tours a {
+  display: inline-block; padding: 0.35rem 0.75rem; border: 1px solid var(--pearl-dark); border-radius: 999px;
+  font-size: 0.82rem; color: var(--teal); transition: background 0.3s, color 0.3s;
+}
+.ds-tours a:hover { background: var(--teal); color: #fff; border-color: var(--teal); }
+.ds-tours a.ds-more { border-style: dashed; color: var(--text-soft); }

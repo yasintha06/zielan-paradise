@@ -54,14 +54,19 @@ export interface Quote<T = unknown> extends QuoteSummary {
 }
 
 /** Everything behind the admin login. The auth interceptor adds the token to these requests. */
+export interface CatalogSync {
+  addedTours: string[]; updatedTours: string[]; hiddenTours: string[];
+  addedDestinations: string[]; updatedDestinations: string[]; hiddenDestinations: string[];
+}
+
 @Injectable({ providedIn: 'root' })
 export class AdminService {
   private http = inject(HttpClient);
   private api = `${environment.apiUrl}/admin`;
 
   overview(): Observable<Overview> { return this.http.get<Overview>(`${this.api}/overview`); }
-  importCatalog(): Observable<{ addedTours: string[]; addedDestinations: string[] }> {
-    return this.http.post<{ addedTours: string[]; addedDestinations: string[] }>(`${this.api}/catalog/import`, {});
+  importCatalog(): Observable<CatalogSync> {
+    return this.http.post<CatalogSync>(`${this.api}/catalog/import`, {});
   }
   images(): Observable<string[]> { return this.http.get<string[]>(`${this.api}/images`); }
 

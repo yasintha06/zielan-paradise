@@ -1,0 +1,30 @@
+{
+  "_about": "Catalogue items replaced in the October 2026 content update. 'Import catalogue' hides these (isActive=false); nothing is deleted.",
+  "tours": [
+    "tour-grand-island-odyssey",
+    "tour-wild-heritage-highlands",
+    "tour-tea-trails-coastal-sanctuaries",
+    "tour-essence-of-ceylon",
+    "tour-spice-tea-table",
+    "tour-honeymoon-romance",
+    "tour-family-adventure",
+    "tour-wildlife-specialist",
+    "day-tour-yala",
+    "day-tour-sigiriya",
+    "day-tour-whale",
+    "day-tour-kandy",
+    "day-tour-galle",
+    "day-tour-tea",
+    "day-tour-ella",
+    "day-tour-dambulla",
+    "day-tour-anuradhapura"
+  ],
+  "destinations": [
+    "dest-sigiriya",
+    "dest-dambulla",
+    "dest-mirissa",
+    "dest-galle-fort",
+    "dest-yala-national-park",
+    "dest-nuwara-eliya"
+  ]
+}

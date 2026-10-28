@@ -85,6 +85,15 @@ export class TourDetail implements OnInit {
     return imageUrl(t.image, 2000, t.id);
   }
 
+  gallery(t: Tour): string[] {
+    return (t.gallery ?? []).map((g) => imageUrl(g, 900));
+  }
+
+  /** The signature experience has its own panel, so it isn't repeated as the first highlight. */
+  highlightsOf(t: Tour): string[] {
+    return (t.highlights ?? []).filter((h) => h !== t.signature);
+  }
+
   crumbs(t: Tour): Crumb[] {
     return t.type === 'day'
       ? [{ label: 'Day Tours', link: '/day-tours' }, { label: t.title }]
@@ -97,7 +106,7 @@ export class TourDetail implements OnInit {
 
   dayLabel(d: { day?: string; dayNumber?: number | string }, i: number): string {
     const raw = String(d.day ?? d.dayNumber ?? i + 1);
-    return raw.replace(/^day\s*/i, '');
+    return raw.replace(/^days?\s*/i, '');
   }
 
   toEnquire(): void {

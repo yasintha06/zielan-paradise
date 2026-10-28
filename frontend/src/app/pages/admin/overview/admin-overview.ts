@@ -64,8 +64,8 @@ import { AdminService, LEAD_STATUSES, Lead, Overview } from '../../../services/a
 
         <section class="a-panel a-panel-pad">
           <h2>Catalogue</h2>
-          <p class="a-muted ov-small">Add any of the standard tours and destinations that aren’t in your database yet. Your edits are never overwritten.</p>
-          <button type="button" class="a-btn" (click)="importCatalog()" [disabled]="importing()">{{ importing() ? 'Importing…' : 'Import missing catalogue items' }}</button>
+          <p class="a-muted ov-small">Bring the website's tours and destinations up to date with the latest catalogue. New ones are added, rewritten ones are refreshed and retired ones are hidden (never deleted). Edits you make in the admin afterwards are kept.</p>
+          <button type="button" class="a-btn" (click)="importCatalog()" [disabled]="importing()">{{ importing() ? 'Updating…' : 'Update catalogue' }}</button>
           @if (importResult()) { <p class="a-success ov-result">{{ importResult() }}</p> }
         </section>
       </div>
@@ -121,8 +121,12 @@ export class AdminOverview implements OnInit {
     this.admin.importCatalog().subscribe({
       next: (r) => {
         this.importing.set(false);
-        const added = [...r.addedTours, ...r.addedDestinations];
-        this.importResult.set(added.length ? `Added ${added.length}: ${added.join(', ')}.` : 'Everything is already up to date.');
+        const parts = [
+          ['Added', [...r.addedTours, ...r.addedDestinations]],
+          ['Updated', [...r.updatedTours, ...r.updatedDestinations]],
+          ['Hidden', [...r.hiddenTours, ...r.hiddenDestinations]],
+        ].filter(([, items]) => items.length).map(([label, items]) => `${label} ${items.length}: ${(items as string[]).join(', ')}.`);
+        this.importResult.set(parts.length ? parts.join(' ') : 'Everything is already up to date.');
         this.admin.overview().subscribe((o) => this.overview.set(o));
       },
       error: () => { this.importing.set(false); this.error.set('Import failed. Please try again.'); },

@@ -1,7 +1,7 @@
 """
 Zeilan Paradise — Admin tools
 GET  /api/admin/overview          — counts for the dashboard home
-POST /api/admin/catalog/import    — add catalogue tours/destinations missing from the database
+POST /api/admin/catalog/import    — sync catalogue tours/destinations into the database (add, refresh, hide retired)
 GET  /api/admin/images            — photos available in the site's image library
 Quotes (costing calculator):
 GET/POST /api/admin/quotes · GET/PUT/DELETE /api/admin/quotes/<id>
@@ -12,7 +12,7 @@ from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 
 from api_utils import ApiError, clean, id_query, new_id, now_iso, public, require_db, slugify
-from catalog_data import CATALOG_DESTINATIONS, CATALOG_TOURS
+from catalog_data import CATALOG_DESTINATIONS, CATALOG_TOURS, RETIRED_DESTINATION_IDS, RETIRED_TOUR_IDS
 
 admin_bp = Blueprint('admin', __name__)
 
@@ -47,24 +47,36 @@ def overview():
 @admin_bp.route('/api/admin/catalog/import', methods=['POST'])
 @jwt_required()
 def import_catalog():
-    """Adds catalogue entries whose id isn't in the database. Never overwrites your edits."""
+    """
+    Brings the database in line with the built-in catalogue:
+      - adds catalogue entries whose id isn't in the database;
+      - replaces copies saved from an older catalogue revision (catalogRev), so rewritten tours show
+        their new content; items already on the current revision, including your admin edits, are left alone;
+      - hides (isActive=false, never deletes) the retired items listed in data/retired.json.
+    """
     db = require_db()
-    tour_ids = {t.get('id') for t in db.tours.find({}, {"id": 1})}
-    new_tours = [dict(t) for t in CATALOG_TOURS if t['id'] not in tour_ids]
-    if new_tours:
-        db.tours.insert_many(new_tours)
+    report = {"addedTours": [], "updatedTours": [], "hiddenTours": [],
+              "addedDestinations": [], "updatedDestinations": [], "hiddenDestinations": []}
 
-    dest_keys = set()
-    for d in db.destinations.find({}, {"id": 1, "name": 1}):
-        dest_keys.add(d.get('id') or 'dest-' + slugify(d.get('name', '')))
-    new_dests = [dict(d) for d in CATALOG_DESTINATIONS if d['id'] not in dest_keys]
-    if new_dests:
-        db.destinations.insert_many(new_dests)
+    def sync(collection, catalogue, retired, key, kind):
+        existing = {key(doc): doc for doc in collection.find()}
+        for item in catalogue:
+            doc = existing.get(item['id'])
+            if doc is None:
+                collection.insert_one(dict(item))
+                report['added' + kind].append(item.get('title') or item.get('name'))
+            elif (doc.get('catalogRev') or 0) < item.get('catalogRev', 0):
+                collection.replace_one({"_id": doc['_id']}, dict(item))
+                report['updated' + kind].append(item.get('title') or item.get('name'))
+        for doc_key, doc in existing.items():
+            if doc_key in retired and doc.get('isActive') is not False:
+                collection.update_one({"_id": doc['_id']}, {"$set": {"isActive": False}})
+                report['hidden' + kind].append(doc.get('title') or doc.get('name'))
 
-    return jsonify({
-        "addedTours": [t['title'] for t in new_tours],
-        "addedDestinations": [d['name'] for d in new_dests],
-    }), 200
+    sync(db.tours, CATALOG_TOURS, set(RETIRED_TOUR_IDS), lambda d: d.get('id'), 'Tours')
+    sync(db.destinations, CATALOG_DESTINATIONS, set(RETIRED_DESTINATION_IDS),
+         lambda d: d.get('id') or 'dest-' + slugify(d.get('name', '')), 'Destinations')
+    return jsonify(report), 200
 
 
 @admin_bp.route('/api/admin/images', methods=['GET'])

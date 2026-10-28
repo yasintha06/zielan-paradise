@@ -24,6 +24,7 @@
         [title]="t.title"
         [subtitle]="t.description || ''"
         [crumbs]="crumbs(t)"
+        [video]="t.video || ''"
         size="tall">
         <button type="button" class="btn btn-gold td-hero-cta" (click)="toEnquire()">Enquire about this journey</button>
       </app-page-hero>
@@ -49,6 +50,19 @@
               <div class="td-block" appScrollReveal>
                 <p class="eyebrow">Ideal for</p>
                 <p class="pg-lead">{{ t.targetAudience }}</p>
+                @if (t.type === 'round') {
+                  <p class="td-tailor">Every itinerary is a starting point: we tailor the route, hotels and pace to each client.</p>
+                }
+              </div>
+            }
+
+            @if (t.signature) {
+              <div class="td-block td-signature" appScrollReveal>
+                <span class="td-signature-mark" aria-hidden="true"></span>
+                <div>
+                  <p class="eyebrow">Zeilan signature experience</p>
+                  <p>{{ t.signature }}</p>
+                </div>
               </div>
             }
 
@@ -65,8 +79,31 @@
               <div class="td-block" appScrollReveal>
                 <p class="eyebrow">Highlights</p>
                 <ul class="td-highlights">
-                  @for (h of t.highlights ?? []; track $index) { <li>{{ h }}</li> }
+                  @for (h of highlightsOf(t); track $index) { <li>{{ h }}</li> }
                 </ul>
+              </div>
+            }
+
+            @if (gallery(t).length) {
+              <div class="td-block" appScrollReveal>
+                <p class="eyebrow">Moments along the way</p>
+                <div class="td-gallery" [class.td-gallery--few]="gallery(t).length < 4">
+                  @for (g of gallery(t); track g; let i = $index) {
+                    <figure><img [src]="g" [alt]="t.title + ', photo ' + (i + 1)" loading="lazy" /></figure>
+                  }
+                </div>
+              </div>
+            }
+
+            @if (t.stays?.length) {
+              <div class="td-block" appScrollReveal>
+                <p class="eyebrow">Where you'll stay</p>
+                <ol class="td-stays">
+                  @for (s of t.stays ?? []; track $index) {
+                    <li><strong>{{ s.place }}</strong><span>{{ s.nights }} {{ s.nights === 1 ? 'night' : 'nights' }}</span></li>
+                  }
+                </ol>
+                <p class="td-small">Hotels are chosen with you when we plan your journey.</p>
               </div>
             }
 
@@ -103,6 +140,13 @@
                     </li>
                   }
                 </ol>
+              </div>
+            }
+
+            @if (t.optional || t.note) {
+              <div class="td-block td-good" appScrollReveal>
+                @if (t.optional) { <p><strong>Optional on request</strong>{{ t.optional }}</p> }
+                @if (t.note) { <p><strong>Good to know</strong>{{ t.note }}</p> }
               </div>
             }
 

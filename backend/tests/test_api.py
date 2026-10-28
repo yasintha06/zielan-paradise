@@ -49,7 +49,7 @@ def test_tours_are_seeded_and_filterable(client):
     rounds = client.get('/api/tours?type=round').get_json()
     days = client.get('/api/tours?type=day').get_json()
     assert len(rounds) == 10 and all(t['type'] == 'round' for t in rounds)
-    assert len(days) == 9
+    assert len(days) == 8
     assert all('_id' not in t for t in rounds)
 
 
@@ -85,7 +85,7 @@ def test_admin_routes_require_login(client, method, url):
 
 def test_old_unprotected_tour_routes_are_gone(client):
     assert client.post('/api/tours', json={'title': 'x'}).status_code in (404, 405)
-    assert client.delete('/api/tours/tour-grand-island-odyssey').status_code in (404, 405)
+    assert client.delete('/api/tours/tour-grand-explorer').status_code in (404, 405)
 
 
 def test_login_locks_after_repeated_failures(client):
@@ -172,12 +172,30 @@ def test_tour_crud_and_hidden_tours(client, auth_headers):
     assert client.post('/api/admin/tours', headers=auth_headers, json={'title': ''}).status_code == 400
 
 
-def test_catalog_import_only_adds_missing(client, auth_headers):
+def test_catalog_import_adds_missing_and_keeps_current_edits(client, auth_headers):
     client.delete('/api/admin/tours/tour-east-coast-summer', headers=auth_headers)
-    client.put('/api/admin/tours/tour-grand-island-odyssey', headers=auth_headers, json={'title': 'My Edited Title'})
+    client.put('/api/admin/tours/tour-grand-explorer', headers=auth_headers, json={'title': 'My Edited Title'})
     res = client.post('/api/admin/catalog/import', headers=auth_headers).get_json()
     assert res['addedTours'] == ['East Coast Summer Escape']
-    assert client.get('/api/tours/tour-grand-island-odyssey').get_json()['title'] == 'My Edited Title'
+    assert client.get('/api/tours/tour-grand-explorer').get_json()['title'] == 'My Edited Title'
+
+
+def test_catalog_import_refreshes_old_copies_and_hides_retired(client, auth_headers):
+    db = db_module.db
+    # The live database as it was before the October 2026 rewrite: old content, no catalogRev.
+    db.tours.update_one({'id': 'tour-ayurveda-wellness'}, {'$set': {'title': 'Old title'}, '$unset': {'catalogRev': ''}})
+    db.tours.insert_one({'id': 'tour-grand-island-odyssey', 'title': 'The Grand Island Odyssey', 'type': 'round'})
+    db.tours.insert_one({'id': 'tour-my-own', 'title': 'Added in the admin', 'type': 'round'})
+    db.destinations.insert_one({'name': 'Galle Fort', 'tagline': 'old'})
+    res = client.post('/api/admin/catalog/import', headers=auth_headers).get_json()
+    assert res['updatedTours'] == ['Ayurveda & Wellness Retreat']
+    assert res['hiddenTours'] == ['The Grand Island Odyssey'] and res['hiddenDestinations'] == ['Galle Fort']
+    assert client.get('/api/tours/tour-grand-island-odyssey').status_code == 404
+    assert db.tours.count_documents({'id': 'tour-grand-island-odyssey'}) == 1  # hidden, not deleted
+    assert client.get('/api/tours/tour-my-own').status_code == 200
+    assert client.get('/api/tours/tour-ayurveda-wellness').get_json()['title'] == 'Ayurveda & Wellness Retreat'
+    again = client.post('/api/admin/catalog/import', headers=auth_headers).get_json()
+    assert not any(again.values())
 
 
 def test_destination_crud_including_legacy_without_id(client, auth_headers):
@@ -202,7 +220,7 @@ def test_quotes_crud(client, auth_headers):
 def test_overview_counts(client, auth_headers):
     client.post('/api/enquiries', json={'firstName': 'Jo', 'email': 'jo@example.com'})
     body = client.get('/api/admin/overview', headers=auth_headers).get_json()
-    assert body['enquiries'] == 1 and body['enquiriesByStatus'] == {'New': 1} and body['tours'] == 19
+    assert body['enquiries'] == 1 and body['enquiriesByStatus'] == {'New': 1} and body['tours'] == 18
 
 
 def test_login_rejects_non_object_json(client):

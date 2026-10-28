@@ -47,6 +47,19 @@ export interface Tour {
   featured?: boolean;
   market?: string;
   startTime?: string;
+  /** Extra photos for the tour page (same path style as `image`). */
+  gallery?: string[];
+  /** Looping banner clip in /video, e.g. "tea-pickers". */
+  video?: string;
+  /** The "Zeilan signature experience". */
+  signature?: string;
+  /** Where the nights are spent, in order. */
+  stays?: { place: string; nights: number }[];
+  /** "Optional on request" extra, e.g. the hill-country train. */
+  optional?: string;
+  catalogRev?: number;
+  /** Good-to-know note for the traveller. */
+  note?: string;
 }
 
 @Injectable({

@@ -52,3 +52,6 @@ Thumbs.db
 
 # Website build copied in at deploy time
 backend/static/
+
+# Original full-size photos/videos (web copies live in frontend/public/img and /video)
+media-originals/
