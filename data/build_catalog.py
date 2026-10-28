@@ -85,7 +85,7 @@ with open(os.path.join(ROOT, 'backend', 'catalog_data.py'), 'w', encoding='utf8'
 # ── Sitemap ──
 journal_ts = open(os.path.join(ROOT, 'frontend', 'src', 'app', 'data', 'journal.ts'), encoding='utf8').read()
 articles = re.findall(r"slug: '([^']+)'", journal_ts)
-pages = ['', 'round-tours', 'day-tours', 'destinations', 'experiences', 'tailor-made', 'about', 'journal', 'faq', 'contact',
+pages = ['', 'round-tours', 'day-tours', 'destinations', 'experiences', 'tailor-made', 'about', 'agents', 'journal', 'faq', 'contact',
          'privacy', 'terms-and-conditions']
 pages += [f"tours/{t['id']}" for t in round_tours + day_tours if t.get('isActive', True)]
 pages += [f'journal/{slug}' for slug in articles]

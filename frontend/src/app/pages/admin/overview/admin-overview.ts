@@ -39,7 +39,7 @@ import { AdminService, LEAD_STATUSES, Lead, Overview } from '../../../services/a
             @for (l of leads().slice(0, 6); track l.id) {
               <li>
                 <a [routerLink]="['/admin/enquiries']" [queryParams]="{ open: l.id }">
-                  <span class="a-pill" [class.a-pill--gold]="l.kind === 'planner'" [class.a-pill--teal]="l.kind === 'contact'">{{ l.kind === 'planner' ? 'Planner' : 'Contact' }}</span>
+                  <span class="a-pill" [class.a-pill--gold]="l.kind === 'planner'" [class.a-pill--teal]="l.kind !== 'planner'">{{ l.kind === 'planner' ? 'Planner' : l.kind === 'agent' ? 'Agent' : 'Contact' }}</span>
                   <strong>{{ l.firstName }} {{ l.lastName }}</strong>
                   <span class="a-muted">{{ l.createdAt | date: 'd MMM, HH:mm' }}</span>
                   <span class="a-pill" [class.a-pill--red]="l.status === 'New'">{{ l.status }}</span>

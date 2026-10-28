@@ -4,6 +4,7 @@ import { ScrollRevealDirective } from '../../directives/scroll-reveal';
 import { MagneticDirective } from '../../directives/magnetic';
 import { ParallaxDirective } from '../../directives/parallax';
 import { BgVideoComponent } from '../../components/bg-video/bg-video';
+import { BUSINESS, SITE } from '../../config/site';
 import { PageHeroComponent } from '../../components/page-hero/page-hero';
 
 @Component({
@@ -14,6 +15,9 @@ import { PageHeroComponent } from '../../components/page-hero/page-hero';
   styleUrl: './about.css',
 })
 export class About {
+  readonly site = SITE;
+  readonly business = BUSINESS;
+
   readonly pillars = [
     { label: 'Vision', title: 'Sri Lanka, as it deserves to be seen', text: 'To be the most trusted way for discerning travellers to discover Sri Lanka: personally, thoughtfully and in comfort.' },
     { label: 'Mission', title: 'Journeys built around people', text: 'To listen first, then design private journeys that match each guest’s pace, interests and style, and to look after them at every step.' },

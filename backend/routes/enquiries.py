@@ -4,8 +4,11 @@ Public:  POST /api/enquiries  (alias /api/inquiries)
 Admin:   GET /api/admin/inquiries · PATCH/DELETE /api/admin/inquiries/<id>
 
 Every enquiry is stored in one shape:
-  { id, kind: 'planner'|'contact', firstName, lastName, email, phone,
+  { id, kind: 'planner'|'contact'|'agent', firstName, lastName, email, phone, company (agents),
     interest, travelDates, guests, message, trip: {...}, status, notes, createdAt }
+
+Emails: every enquiry notifies the business (ADMIN_NOTIFICATION_EMAIL, default info@zeilanparadise.com).
+Agent enquiries also get a plain confirmation email, limited per sender address and per IP to stop abuse.
 Older records in other shapes are converted when read.
 """
 import html
@@ -13,6 +16,7 @@ import os
 import re
 import smtplib
 import threading
+import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -25,6 +29,8 @@ from db import get_db
 enquiries_bp = Blueprint('enquiries', __name__)
 
 EMAIL_RE = re.compile(r'^[^@\s]+@[^@\s]+\.[^@\s]+$')
+BUSINESS_EMAIL = 'info@zeilanparadise.com'
+KIND_LABELS = {'planner': 'Journey planner', 'contact': 'Enquiry', 'agent': 'Agent enquiry'}
 STATUSES = ['New', 'Contacted', 'Proposal sent', 'Booked', 'Closed']
 
 
@@ -55,10 +61,11 @@ def normalise(raw):
     trip_in = raw.get('tripDetails') if isinstance(raw.get('tripDetails'), dict) else (raw.get('trip') or {})
     prefs = raw.get('preferences') if isinstance(raw.get('preferences'), dict) else {}
     people = trip_in.get('travelers') if isinstance(trip_in.get('travelers'), dict) else {}
-    is_planner = raw.get('kind') == 'planner' or bool(raw.get('tripDetails')) or bool(name)
+    is_agent = 'agent' in (raw.get('kind'), raw.get('type'))
+    is_planner = not is_agent and (raw.get('kind') == 'planner' or bool(raw.get('tripDetails')) or bool(name))
 
     lead = {
-        'kind': 'planner' if is_planner else 'contact',
+        'kind': 'agent' if is_agent else 'planner' if is_planner else 'contact',
         'firstName': _line(name.get('firstName', raw.get('firstName')), 80),
         'lastName': _line(name.get('lastName', raw.get('lastName')), 80),
         'email': _line(contact.get('email', raw.get('email')), 200),
@@ -68,6 +75,8 @@ def normalise(raw):
         'guests': _s(raw.get('guests'), 120),
         'message': _s(raw.get('additionalNotes', raw.get('message')), 4000),
     }
+    if is_agent:
+        lead['company'] = _line(raw.get('company'), 120)
     if is_planner:
         lead['trip'] = {
             'month': _s(trip_in.get('estimatedMonth', trip_in.get('month')), 60),
@@ -108,16 +117,20 @@ def _env(*names, default=None):
 
 
 def email_configured():
-    return bool(_env("SMTP_USER", "MAIL_USERNAME") and _env("SMTP_PASS", "SMTP_PASSWORD", "MAIL_PASSWORD")
-                and _env("ADMIN_NOTIFICATION_EMAIL", "ADMIN_EMAIL"))
+    return bool(_env("SMTP_USER", "MAIL_USERNAME") and _env("SMTP_PASS", "SMTP_PASSWORD", "MAIL_PASSWORD"))
+
+
+def _business_inbox():
+    return _env("ADMIN_NOTIFICATION_EMAIL", "ADMIN_EMAIL", default=BUSINESS_EMAIL)
 
 
 def _lead_email_html(lead):
     e = lambda v: html.escape(str(v))
     trip = lead.get('trip') or {}
     rows = [
-        ("Form", "Journey planner" if lead['kind'] == 'planner' else "Contact form"),
+        ("Form", {'planner': "Journey planner", 'agent': "Travel agent form"}.get(lead['kind'], "Contact form")),
         ("Name", f"{lead['firstName']} {lead['lastName']}".strip()),
+        ("Company", lead.get('company')),
         ("Email", lead['email']),
         ("Phone / WhatsApp", lead['phone']),
         ("Interested in", lead['interest']),
@@ -129,7 +142,7 @@ def _lead_email_html(lead):
         ("Regions", ", ".join(trip.get('regions', []))),
         ("Pace", trip.get('pace')),
         ("Planning stage", trip.get('stage')),
-        ("Message", lead['message']),
+        ("Tours or dates" if lead['kind'] == 'agent' else "Message", lead['message']),
     ]
     body = "".join(
         f'<tr><td style="padding:6px 12px;color:#666;vertical-align:top">{e(k)}</td>'
@@ -138,40 +151,93 @@ def _lead_email_html(lead):
     )
     return (f'<html><body style="font-family:Arial,sans-serif;color:#222">'
             f'<h2 style="color:#005b52">New enquiry</h2><table>{body}</table>'
-            f'<p style="color:#888;font-size:12px">Reply to this email to answer the guest directly.</p></body></html>')
+            f'<p style="color:#888;font-size:12px">Reply to this email to answer them directly.</p></body></html>')
 
 
-def send_lead_email_async(lead):
-    def send_email():
-        sender = _env("SMTP_USER", "MAIL_USERNAME")
-        password = _env("SMTP_PASS", "SMTP_PASSWORD", "MAIL_PASSWORD")
-        recipient = _env("ADMIN_NOTIFICATION_EMAIL", "ADMIN_EMAIL")
-        if not (sender and password and recipient):
-            print("[INFO] Email not configured (SMTP_USER/SMTP_PASS/ADMIN_NOTIFICATION_EMAIL). Skipping.")
-            return
+def build_notification(lead):
+    """The email the business receives for every enquiry."""
+    msg = MIMEMultipart("alternative")
+    name = f"{lead['firstName']} {lead['lastName']}".strip()
+    company = f" ({lead['company']})" if lead.get('company') else ''
+    msg["Subject"] = f"{KIND_LABELS.get(lead['kind'], 'Enquiry')}: {name}{company}"
+    msg["To"] = _business_inbox()
+    if lead.get('email'):
+        msg["Reply-To"] = lead['email']
+    msg.attach(MIMEText(_lead_email_html(lead), "html"))
+    return msg
 
-        msg = MIMEMultipart("alternative")
-        label = "Journey planner" if lead['kind'] == 'planner' else "Enquiry"
-        msg["Subject"] = f"{label}: {lead['firstName']} {lead['lastName']}".strip()
-        msg["From"] = _env("EMAIL_FROM", default=sender)
-        msg["To"] = recipient
-        if lead.get('email'):
-            msg["Reply-To"] = lead['email']
-        msg.attach(MIMEText(_lead_email_html(lead), "html"))
 
-        try:
-            host = _env("SMTP_HOST", "MAIL_SERVER", default="mail.privateemail.com")
-            port = int(_env("SMTP_PORT", "MAIL_PORT", default="587"))
-            with smtplib.SMTP(host, port, timeout=20) as server:
-                server.starttls()
-                server.login(sender, password)
+def build_confirmation(lead):
+    """Plain-text receipt for the person who sent an agent enquiry. It never repeats their message,
+    so the form can't be used to send someone else arbitrary text."""
+    name = f"{lead['firstName']} {lead['lastName']}".strip()
+    msg = MIMEText(
+        f"Dear {name},\n\n"
+        "Thank you for contacting Zeilan Paradise. This email confirms that we have received "
+        "your travel agent enquiry.\n\n"
+        "We will reply to this email address. If you would like to add anything, simply reply to this email.\n\n"
+        "Zeilan Paradise\n"
+        f"{BUSINESS_EMAIL}\n"
+        "+44 7818 792995\n"
+        "https://zeilanparadise.com\n\n"
+        "You are receiving this because this email address was entered on the travel agent form at "
+        "zeilanparadise.com. If this was not you, please ignore this email.\n",
+        "plain", "utf-8")
+    msg["Subject"] = "We have received your enquiry | Zeilan Paradise"
+    msg["To"] = lead['email']
+    msg["Reply-To"] = _business_inbox()
+    return msg
+
+
+def _send(messages):
+    sender = _env("SMTP_USER", "MAIL_USERNAME")
+    password = _env("SMTP_PASS", "SMTP_PASSWORD", "MAIL_PASSWORD")
+    if not (sender and password):
+        print("[INFO] Email not configured (SMTP_USER/SMTP_PASS). Skipping.")
+        return
+    try:
+        host = _env("SMTP_HOST", "MAIL_SERVER", default="mail.privateemail.com")
+        port = int(_env("SMTP_PORT", "MAIL_PORT", default="587"))
+        with smtplib.SMTP(host, port, timeout=20) as server:
+            server.starttls()
+            server.login(sender, password)
+            for msg in messages:
+                msg["From"] = _env("EMAIL_FROM", default=sender)
                 server.send_message(msg)
-            print("[INFO] Lead notification email sent.")
-        except Exception as e:
-            print(f"[ERROR] Failed to send email: {e}")
+        print(f"[INFO] Sent {len(messages)} enquiry email(s).")
+    except Exception as e:
+        print(f"[ERROR] Failed to send email: {e}")
 
+
+# Confirmation emails go to an address typed into a public form, so cap them (per server process).
+_CONFIRM_LIMIT = 3
+_CONFIRM_WINDOW = 3600
+_confirm_log = {}
+
+
+def _confirmation_allowed(*keys):
+    now = time.time()
+    for key in keys:
+        _confirm_log[key] = [t for t in _confirm_log.get(key, []) if now - t < _CONFIRM_WINDOW]
+        if len(_confirm_log[key]) >= _CONFIRM_LIMIT:
+            return False
+    for key in keys:
+        _confirm_log[key].append(now)
+    return True
+
+
+def emails_for(lead, ip=''):
+    """Every email an enquiry triggers: the business notification, plus a receipt for agents."""
+    messages = [build_notification(lead)]
+    if lead['kind'] == 'agent' and _confirmation_allowed('email:' + lead['email'].lower(), 'ip:' + ip):
+        messages.append(build_confirmation(lead))
+    return messages
+
+
+def send_lead_email_async(lead, ip=''):
+    messages = emails_for(lead, ip)
     # Send in the background so the visitor isn't kept waiting.
-    threading.Thread(target=send_email, daemon=True).start()
+    threading.Thread(target=_send, args=(messages,), daemon=True).start()
 
 
 # ── Public ───────────────────────────────────────────────────
@@ -189,10 +255,13 @@ def submit_inquiry():
     lead = normalise(raw)
     if not lead['firstName'] or not lead['email']:
         raise ApiError("Please add your first name and email address.")
+    if lead['kind'] == 'agent' and not lead.get('company'):
+        raise ApiError("Please add your company name.")
     if not EMAIL_RE.match(lead['email']):
         raise ApiError("Please enter a valid email address.")
 
     lead.update(id=new_id('enq'), status='New', notes='', createdAt=now_iso())
+    ip = (request.headers.get('X-Forwarded-For') or request.remote_addr or '').split(',')[0].strip()
 
     db = get_db()
     if db is not None:
@@ -202,10 +271,10 @@ def submit_inquiry():
             print(f"[ERROR] Failed to save enquiry to MongoDB: {e}")
             if not email_configured():
                 raise ApiError("We couldn't receive your enquiry right now. Please contact us directly.", 503)
-        send_lead_email_async(lead)
+        send_lead_email_async(lead, ip)
     elif email_configured():
         # No database: the email notification is the only record.
-        send_lead_email_async(lead)
+        send_lead_email_async(lead, ip)
     else:
         print("[ERROR] Enquiry received but neither MongoDB nor email is available; it cannot be stored.")
         raise ApiError("We couldn't receive your enquiry right now. Please contact us directly.", 503)

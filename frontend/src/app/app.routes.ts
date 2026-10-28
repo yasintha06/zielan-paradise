@@ -45,6 +45,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/about/about').then((m) => m.About),
   },
   {
+    path: 'agents', title: 'For Travel Agents' + SUFFIX,
+    data: { description: 'Private Sri Lanka round tours and day tours for travel agents and their UK clients. Send an agent enquiry.' },
+    loadComponent: () => import('./pages/agents/agents').then((m) => m.Agents),
+  },
+  {
     path: 'journal', title: 'Sri Lanka Travel Journal' + SUFFIX,
     data: { description: 'Practical guides to planning a Sri Lanka holiday: the best time to visit, two-week routes and tips for UK travellers.' },
     loadComponent: () => import('./pages/journal/journal').then((m) => m.Journal),

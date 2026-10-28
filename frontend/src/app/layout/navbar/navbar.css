@@ -63,6 +63,7 @@
   text-transform: uppercase;
   color: rgba(246, 240, 226, 0.88);
   padding: 0.4rem 0;
+  white-space: nowrap;
 }
 .zp-nav-links a::after {
   content: '';
@@ -107,6 +108,7 @@
   gap: 1.5rem;
 }
 .zp-nav-phone {
+  white-space: nowrap;
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -205,10 +207,10 @@
 .zp-menu-foot a:hover { color: var(--gold); }
 
 /* ── RESPONSIVE ──────────────────────────────────────────── */
-@media (max-width: 1180px) {
+@media (max-width: 1380px) {
   .zp-nav-phone { display: none; }
 }
-@media (max-width: 1024px) {
+@media (max-width: 1120px) {
   .zp-nav-links { display: none; }
   .zp-burger { display: block; }
 }

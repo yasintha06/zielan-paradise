@@ -11,7 +11,8 @@ export type LeadStatus = (typeof LEAD_STATUSES)[number];
 
 export interface Lead {
   id: string;
-  kind: 'planner' | 'contact';
+  kind: 'planner' | 'contact' | 'agent';
+  company?: string;
   firstName: string;
   lastName: string;
   email: string;

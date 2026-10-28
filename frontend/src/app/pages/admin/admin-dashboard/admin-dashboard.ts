@@ -20,7 +20,7 @@ export class AdminDashboardComponent implements OnInit {
   isLoading = signal(true);
   error = signal('');
   status = signal<'all' | LeadStatus>('all');
-  kind = signal<'all' | 'planner' | 'contact'>('all');
+  kind = signal<'all' | 'planner' | 'contact' | 'agent'>('all');
   search = signal('');
 
   selected = signal<Lead | null>(null);
@@ -105,6 +105,7 @@ export class AdminDashboardComponent implements OnInit {
   details(l: Lead): { label: string; value: string }[] {
     const t = l.trip;
     return [
+      { label: 'Company', value: l.company ?? '' },
       { label: 'Interested in', value: l.interest },
       { label: 'When', value: t?.month || l.travelDates },
       { label: 'Length', value: t?.days ? `${t.days} days` : '' },

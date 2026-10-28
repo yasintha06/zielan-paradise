@@ -1,0 +1,40 @@
+.ag-intro { display: grid; grid-template-columns: 1fr 1.2fr; gap: clamp(2rem, 5vw, 5rem); align-items: start; }
+.ag-intro-text p:not(.pg-lead) { color: var(--text-soft); margin-top: 1.25rem; }
+.ag-intro-links { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 2rem; margin-top: 2rem; }
+
+.ag-steps { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+.ag-steps li { padding-top: 1.5rem; border-top: 1px solid rgba(10, 31, 28, 0.15); }
+.ag-num { font-family: var(--ff-head); font-size: 1.1rem; color: var(--gold-dark); }
+.ag-steps h3 { font-size: 1.7rem; font-weight: 500; margin: 0.5rem 0; }
+.ag-steps p { color: var(--text-soft); }
+.ag-note { margin-top: 2rem; font-weight: 600; color: var(--teal); }
+
+.ag-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 6vw, 6rem); align-items: start; }
+.ag-ticks { margin-top: 1.75rem; }
+
+.ag-faq { list-style: none; padding: 0; margin: 1rem 0 0; border-top: 1px solid var(--pearl-dark); }
+.ag-faq li { border-bottom: 1px solid var(--pearl-dark); }
+.ag-faq button {
+  width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 1.5rem;
+  padding: 1.15rem 0; background: none; border: 0; text-align: left; cursor: pointer;
+  font: inherit; font-size: 1.02rem; font-weight: 600; color: var(--ink);
+}
+.ag-faq button:hover span { color: var(--teal); }
+.ag-faq i { position: relative; flex: 0 0 14px; height: 14px; }
+.ag-faq i::before, .ag-faq i::after {
+  content: ''; position: absolute; left: 0; right: 0; top: 50%; height: 1.5px; background: var(--gold-dark);
+  transition: transform 0.35s var(--ease-out);
+}
+.ag-faq i::after { transform: rotate(90deg); }
+.ag-faq li.is-open i::after { transform: rotate(0); }
+.ag-faq-answer { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.45s var(--ease-out); }
+.ag-faq-answer > div { overflow: hidden; }
+.ag-faq li.is-open .ag-faq-answer { grid-template-rows: 1fr; }
+.ag-faq-answer p { color: var(--text-soft); padding-bottom: 1.15rem; }
+
+.ct-list small { color: var(--text-soft); font-size: 0.85rem; }
+
+@media (max-width: 900px) {
+  .ag-intro, .ag-cols { grid-template-columns: 1fr; }
+  .ag-steps { grid-template-columns: 1fr; gap: 1.5rem; }
+}

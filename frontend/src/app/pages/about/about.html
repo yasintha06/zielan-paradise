@@ -71,6 +71,27 @@
   </div>
 </section>
 
+<section class="pg-section pg-section--sand">
+  <div class="container ab-trust">
+    <div class="ab-trust-person" appScrollReveal>
+      @if (business.founder.photo) {
+        <img class="ab-trust-photo" [src]="business.founder.photo" [alt]="business.founder.name" loading="lazy" />
+      }
+      <div>
+        <p class="eyebrow">Who you will deal with</p>
+        <h2 class="section-title">{{ business.founder.name }}</h2>
+        <p class="ab-trust-role">{{ business.founder.role }}</p>
+      </div>
+    </div>
+    <dl class="ab-trust-list" appScrollReveal>
+      <div><dt>London</dt><dd><a [href]="site.phoneHref">{{ site.phoneDisplay }}</a></dd></div>
+      <div><dt>Email</dt><dd><a [href]="'mailto:' + site.email">{{ site.email }}</a></dd></div>
+      @if (business.sriLankaOffice) { <div><dt>Sri Lanka office</dt><dd>{{ business.sriLankaOffice }}</dd></div> }
+      <div><dt>Company</dt><dd>{{ business.company }}@if (business.registrationNumber) {<br /><small>Registration number {{ business.registrationNumber }}</small>}</dd></div>
+    </dl>
+  </div>
+</section>
+
 <section class="pg-section ab-cta">
   <div class="container" appScrollReveal>
     <h2 class="section-title">Let’s talk about <em>your</em> Sri Lanka</h2>

@@ -243,3 +243,78 @@ def test_email_settings_accept_smtp_password(monkeypatch):
     monkeypatch.setenv('SMTP_PASSWORD', 'secret')
     monkeypatch.setenv('ADMIN_NOTIFICATION_EMAIL', 'info@example.com')
     assert enquiries.email_configured()
+
+
+# ── Enquiry emails (nothing is really sent: the SMTP step is replaced) ───────────
+@pytest.fixture()
+def outbox(monkeypatch):
+    """Runs the email step immediately and collects the messages instead of sending them."""
+    from routes import enquiries
+    sent = []
+
+    class NowThread:
+        def __init__(self, target, args=(), daemon=None):
+            self.target, self.args = target, args
+
+        def start(self):
+            self.target(*self.args)
+
+    for k in ('ADMIN_NOTIFICATION_EMAIL', 'ADMIN_EMAIL'):
+        monkeypatch.delenv(k, raising=False)
+    monkeypatch.setattr(enquiries.threading, 'Thread', NowThread)
+    monkeypatch.setattr(enquiries, '_send', lambda messages: sent.extend(messages))
+    enquiries._confirm_log.clear()
+    return sent
+
+
+def _text(msg):
+    part = msg.get_payload()[0] if msg.is_multipart() else msg
+    return part.get_payload(decode=True).decode('utf8')
+
+
+def test_contact_enquiry_emails_the_business_only(client, outbox):
+    res = client.post('/api/enquiries', json={'type': 'contact', 'firstName': 'Jane', 'lastName': 'Doe',
+                                              'email': 'jane@example.com', 'message': 'Two weeks in March'})
+    assert res.status_code == 201
+    assert len(outbox) == 1
+    msg = outbox[0]
+    assert msg['To'] == 'info@zeilanparadise.com' and msg['Reply-To'] == 'jane@example.com'
+    assert msg['Subject'] == 'Enquiry: Jane Doe' and 'Two weeks in March' in _text(msg)
+
+
+def test_agent_enquiry_is_saved_and_confirmed(client, auth_headers, outbox):
+    res = client.post('/api/enquiries', json={
+        'type': 'agent', 'firstName': 'Sam Agent', 'company': 'Example Travel Ltd', 'email': 'sam@agency.example',
+        'phone': '+44 20 0000 0000', 'message': 'Classic Ceylon & Coast, 4 guests, February'})
+    assert res.status_code == 201
+    lead = client.get('/api/admin/inquiries', headers=auth_headers).get_json()[0]
+    assert lead['kind'] == 'agent' and lead['company'] == 'Example Travel Ltd'
+
+    notification, confirmation = outbox
+    assert notification['To'] == 'info@zeilanparadise.com'
+    assert notification['Subject'] == 'Agent enquiry: Sam Agent (Example Travel Ltd)'
+    assert 'Example Travel Ltd' in _text(notification) and 'Travel agent form' in _text(notification)
+    assert confirmation['To'] == 'sam@agency.example' and confirmation['Reply-To'] == 'info@zeilanparadise.com'
+    assert confirmation.get_content_type() == 'text/plain'
+    body = _text(confirmation)
+    assert body.startswith('Dear Sam Agent,') and 'Classic Ceylon' not in body  # never echoes the message
+
+
+def test_agent_enquiry_needs_a_company(client, outbox):
+    res = client.post('/api/enquiries', json={'type': 'agent', 'firstName': 'Sam', 'email': 'sam@agency.example'})
+    assert res.status_code == 400 and outbox == []
+
+
+def test_agent_honeypot_sends_nothing(client, auth_headers, outbox):
+    res = client.post('/api/enquiries', json={'type': 'agent', 'firstName': 'Bot', 'company': 'X',
+                                              'email': 'victim@example.com', 'website': 'spam.com'})
+    assert res.status_code == 201 and outbox == []
+    assert client.get('/api/admin/inquiries', headers=auth_headers).get_json() == []
+
+
+def test_agent_confirmations_are_capped(client, outbox):
+    for _ in range(5):
+        client.post('/api/enquiries', json={'type': 'agent', 'firstName': 'Sam', 'company': 'X',
+                                            'email': 'same@agency.example'})
+    confirmations = [m for m in outbox if m['To'] == 'same@agency.example']
+    assert len(confirmations) == 3 and len(outbox) == 8  # every enquiry still reaches the business
