@@ -56,7 +56,7 @@ export const ARTICLES: Article[] = [
       } },
       { h: 'Wildlife timing' },
       { list: [
-        'Blue whales: off Mirissa from roughly November to April; off Trincomalee from roughly March to August.',
+        'Blue whales: off Mirissa from December to April; off Trincomalee from roughly March to August.',
         'Elephant gathering: Minneriya and Kaudulla in the dry season, usually July to October.',
         'Leopards: Yala and Wilpattu are good much of the year; check Yala’s annual closure if you travel in September or October.',
       ] },
