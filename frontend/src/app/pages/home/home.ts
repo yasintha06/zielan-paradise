@@ -9,6 +9,7 @@ import { MotionService } from '../../services/motion.service';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal';
 import { MagneticDirective } from '../../directives/magnetic';
 import { TourCardComponent } from '../../components/tour-card/tour-card';
+import { BgVideoComponent } from '../../components/bg-video/bg-video';
 
 const SLIDE_MS = 6500;
 
@@ -19,17 +20,17 @@ const SLIDE_MS = 6500;
  */
 const HERO_FILM_ENABLED = true;
 const HERO_FILM = [
-  { video: 'sigiriya', place: 'Sigiriya · Cultural Triangle' },
-  { video: 'nine-arches', place: 'Nine Arches Bridge · Ella' },
-  { video: 'tea-country', place: 'Tea country · The Hill Country' },
-  { video: 'galle', place: 'Galle Fort · South Coast' },
-  { video: 'mirissa', place: 'Mirissa · South Coast' },
+  { video: 'sigiriya-aerial', place: 'Sigiriya · Cultural Triangle' },
+  { video: 'ella-nine-arches', place: 'Nine Arches Bridge · Ella' },
+  { video: 'tea-hills-mist', place: 'Tea country · The Hill Country' },
+  { video: 'elephants-herd', place: 'Wild elephants · Sri Lanka' },
+  { video: 'beach-palm-waves', place: 'Sri Lanka’s coast' },
 ];
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterLink, ScrollRevealDirective, MagneticDirective, TourCardComponent],
+  imports: [RouterLink, ScrollRevealDirective, MagneticDirective, TourCardComponent, BgVideoComponent],
   templateUrl: './home.html',
   styleUrl: './home.css',
   encapsulation: ViewEncapsulation.None
@@ -109,6 +110,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   reviews = signal<Review[]>([]);
   activeSlide = signal(0);
+
+  /** Only the current and next clip get a poster, so a phone doesn't download every still up front. */
+  isNearClip(i: number): boolean {
+    const a = this.activeSlide();
+    return i === a || i === (a + 1) % this.film.length;
+  }
   openStyle = signal(0);
 
   private ctx: gsap.Context | null = null;

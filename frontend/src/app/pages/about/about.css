@@ -1,3 +1,13 @@
+/* "Our story" sits on a quiet tea-leaves film, darkened so the text stays readable. */
+.ab-story-section { position: relative; overflow: hidden; background: var(--ink); color: var(--ivory); }
+.ab-story-shade { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(10, 31, 28, 0.92) 35%, rgba(10, 31, 28, 0.7) 100%); }
+.ab-story-section .ab-story { position: relative; }
+.ab-story-section .section-title { color: var(--ivory); }
+.ab-story-section .section-title em { color: var(--gold-soft); }
+.ab-story-section .pg-lead { color: var(--ivory); }
+.ab-story-section .ab-story-text p:not(.eyebrow):not(.pg-lead) { color: rgba(246, 240, 226, 0.78); }
+.ab-story-section .ab-img--small { outline-color: var(--ink); }
+
 .ab-story {
   display: grid;
   grid-template-columns: 1.1fr 1fr;

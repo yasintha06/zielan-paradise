@@ -2,7 +2,7 @@
   <div class="ph-media">
     <img [src]="image" [alt]="alt" fetchpriority="high" />
     @if (video && canPlayVideo()) {
-      <video [src]="videoSrc" [poster]="image" autoplay muted loop playsinline preload="metadata" aria-hidden="true"
+      <video [src]="videoSrc" [poster]="image" autoplay muted [muted]="true" loop playsinline preload="metadata" aria-hidden="true"
              [class.is-playing]="playing()" (playing)="playing.set(true)" (error)="canPlayVideo.set(false)"></video>
     }
   </div>

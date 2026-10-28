@@ -429,7 +429,7 @@
 .zp-promise-shade {
   position: absolute;
   inset: 0;
-  background: linear-gradient(110deg, rgba(0, 51, 46, 0.96) 30%, rgba(0, 51, 46, 0.7) 100%);
+  background: linear-gradient(110deg, rgba(0, 51, 46, 0.93) 30%, rgba(0, 51, 46, 0.62) 100%);
 }
 .zp-promise-inner { position: relative; }
 .zp-promise .section-title { color: var(--ivory); }

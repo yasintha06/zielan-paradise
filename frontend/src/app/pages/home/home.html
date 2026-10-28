@@ -7,7 +7,7 @@
         @for (c of film; track c.video; let i = $index) {
           <figure class="zp-hero-slide" [class.is-active]="i === activeSlide()">
             <video muted playsinline disablepictureinpicture preload="none" aria-hidden="true"
-                   [attr.poster]="'video/' + c.video + '.webp'" (ended)="nextClip()" (error)="filmFailed()"></video>
+                   [attr.poster]="isNearClip(i) ? 'video/' + c.video + '.webp' : null" (ended)="nextClip()" (error)="filmFailed()"></video>
           </figure>
         }
       } @else {
@@ -196,7 +196,7 @@
 
   <!-- ═════════════ PROMISE ═════════════ -->
   <section class="zp-promise" aria-labelledby="promise-heading">
-    <img class="zp-promise-bg" src="img/tour-grand-odyssey-2000.webp" alt="" loading="lazy" data-parallax="15" />
+    <app-bg-video class="zp-promise-bg" name="coast-aerial" />
     <div class="zp-promise-shade"></div>
     <div class="container zp-promise-inner">
       <header class="zp-head" appScrollReveal>

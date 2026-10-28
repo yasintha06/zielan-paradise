@@ -3,12 +3,13 @@ import { RouterLink } from '@angular/router';
 import { ScrollRevealDirective } from '../../directives/scroll-reveal';
 import { MagneticDirective } from '../../directives/magnetic';
 import { ParallaxDirective } from '../../directives/parallax';
+import { BgVideoComponent } from '../../components/bg-video/bg-video';
 import { PageHeroComponent } from '../../components/page-hero/page-hero';
 
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [RouterLink, ScrollRevealDirective, MagneticDirective, ParallaxDirective, PageHeroComponent],
+  imports: [RouterLink, ScrollRevealDirective, MagneticDirective, ParallaxDirective, PageHeroComponent, BgVideoComponent],
   templateUrl: './about.html',
   styleUrl: './about.css',
 })

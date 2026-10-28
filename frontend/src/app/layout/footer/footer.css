@@ -14,6 +14,14 @@
 }
 .zp-footer .container { position: relative; }
 
+.zp-footer-cta-wrap { position: relative; }
+.zp-footer--film { padding-top: 0; }
+.zp-footer--film .zp-footer-cta { padding-top: clamp(80px, 11vw, 150px); border-bottom: 0; }
+.zp-footer-cta-shade {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(10, 31, 28, 0.66) 0%, rgba(10, 31, 28, 0.78) 60%, var(--ink) 100%);
+}
+
 .zp-footer-cta {
   padding-top: clamp(40px, 6vw, 80px);
   padding-bottom: clamp(60px, 9vw, 120px);
