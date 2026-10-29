@@ -5,7 +5,7 @@
   eyebrow="About us"
   title="A love of the island,"
   titleEm="shared with care"
-  subtitle="Zeilan Paradise brings together planning from the UK and a team on the ground in Sri Lanka, so your journey feels personal from the very first conversation."
+  subtitle="Zeilan Paradise brings together planning from the UK and private chauffeur-guides in Sri Lanka, so your journey feels personal from the very first conversation."
   [crumbs]="[{ label: 'About' }]" />
 
 <section class="pg-section ab-story-section">
@@ -87,7 +87,9 @@
       <div><dt>London</dt><dd><a [href]="site.phoneHref">{{ site.phoneDisplay }}</a></dd></div>
       <div><dt>Email</dt><dd><a [href]="'mailto:' + site.email">{{ site.email }}</a></dd></div>
       @if (business.sriLankaOffice) { <div><dt>Sri Lanka office</dt><dd>{{ business.sriLankaOffice }}</dd></div> }
-      <div><dt>Company</dt><dd>{{ business.company }}@if (business.registrationNumber) {<br /><small>Registration number {{ business.registrationNumber }}</small>}</dd></div>
+      @if (business.incorporated) {
+        <div><dt>Company</dt><dd>{{ business.company }}@if (business.registrationNumber) {<br /><small>Registration number {{ business.registrationNumber }}</small>}</dd></div>
+      }
     </dl>
   </div>
 </section>

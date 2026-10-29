@@ -21,11 +21,14 @@ export const SITE = {
  */
 export const BUSINESS = {
   company: 'Zeilan Paradise (Pvt) Ltd',
+  /** TODO: set to true once the company is incorporated (eROC). Until then the company name is hidden. */
+  incorporated: false,
   /** TODO: company registration number. */
   registrationNumber: '',
   founder: {
     name: 'Yasintha Agampodi',
-    role: 'Founder and Director',
+    /** Change to 'Founder and Director' once the company is incorporated. */
+    role: 'Founder',
     /** TODO: photo path, e.g. 'img/founder-yasintha-900.webp'. */
     photo: '',
   },

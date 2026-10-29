@@ -1,7 +1,7 @@
 # Zeilan Paradise: website text for proofreading
 
 All visible English text, in page order, taken from the site on branch feat/agents-and-trust (desktop view, 2026-10-28).
-Nothing here has been reworded yet. Notes:
+Updated after the claims review (unproven claims removed); otherwise not reworded yet. Notes:
 - "##" starts each page; "###" and "####" are headings on that page; lines starting with "-" are list items.
 - [placeholder] marks the grey example text inside an empty form field.
 - Accordion answers (FAQ, itinerary days) are included even though they open on click.
@@ -11,13 +11,13 @@ Nothing here has been reworded yet. Notes:
 
 Private & tailor-made · Sri Lanka
 ### Where the island reveals itself
-Bespoke journeys through ancient kingdoms, misty tea country and wild southern shores, planned with you from the UK and guided by our own team on the island.
+Bespoke journeys through ancient kingdoms, misty tea country and wild southern shores, planned with you from the UK and guided by your own private chauffeur-guide.
 Design My Journey
 Explore Journeys
 Sigiriya · Cultural Triangle
 Scroll
 Our philosophy
-We don't sell packages. We listen first, then compose a private journey around the way you love to travel: the ancient kingdoms at dawn, a quiet tea estate at dusk, a leopard in the long grass at Yala. Every detail is held by a team who calls this island home.
+We don't sell packages. We listen first, then compose a private journey around the way you love to travel: the ancient kingdoms at dawn, a quiet tea estate at dusk, a leopard in the long grass at Yala. Every journey is planned around you.
 Our story
 8
 UNESCO World Heritage Sites
@@ -25,8 +25,8 @@ UNESCO World Heritage Sites
 Of tropical coastline
 2,500+
 Years of recorded history
-24/7
-On-island support for you
+10
+Private round tours
 Explore the island
 #### Nine places that stay with you
 From the Cultural Triangle to the southern coast, each region has its own rhythm. We weave them together at your pace.
@@ -106,7 +106,7 @@ Wildlife
 12 Days / 11 Nights
 Best February – April
 ##### Untamed Sri Lanka: Cloud Forests, Leopards & Whales
-Three national parks, the cloud forest of Horton Plains and the ocean: a journey built around Sri Lanka's wildlife, always watched responsibly with expert guides, and with two nights at almost every stop.
+Three national parks, the cloud forest of Horton Plains and the ocean: a journey built around Sri Lanka's wildlife, always watched responsibly, and with two nights at almost every stop.
 Wilpattu
 Sigiriya
 Kandy
@@ -129,17 +129,17 @@ A private, day-by-day proposal with hand-picked stays and experiences.
 We fine-tune every detail with you until it feels exactly right.
 04
 ##### Travel, cared for
-Your guide meets you on arrival, with our team on call around the clock.
+Your chauffeur-guide meets you on arrival and looks after you throughout.
 The Zeilan promise
 #### Quietly looked after, every step of the way
 ##### UK-based planning
 Plan with a real person in your time zone, by phone, email or WhatsApp.
-##### Our own island team
-Licensed chauffeur-guides who bring history, wildlife and culture to life.
+##### Your own chauffeur-guide
+A private, English-speaking chauffeur-guide who brings history, wildlife and culture to life.
 ##### Entirely private
 No group coaches, no fixed departures. Your journey, your pace.
-##### Care around the clock
-From landing to departure, help is always one call away.
+##### Looked after throughout
+From landing to departure, your chauffeur-guide is with you.
 Moments from the island
 #### Sri Lanka, as we know it
 Browse experiences
@@ -153,7 +153,7 @@ Home
 About
 About us
 ### A love of the island, shared with care
-Zeilan Paradise brings together planning from the UK and a team on the ground in Sri Lanka, so your journey feels personal from the very first conversation.
+Zeilan Paradise brings together planning from the UK and private chauffeur-guides in Sri Lanka, so your journey feels personal from the very first conversation.
 Our story
 #### Why we do this
 Sri Lanka is small enough to cross in a day, yet it holds ancient cities, cloud forests, leopards, whales and a coastline of quiet coves.
@@ -174,8 +174,8 @@ Our strengths
 ##### UK-based planning
 Speak to someone in your own time zone, by phone, WhatsApp or email, from the first idea to the day you fly.
 02
-##### Our own team on the island
-Experienced, licensed chauffeur-guides who know the history, the wildlife and the best place for lunch.
+##### Your own chauffeur-guide
+A private, English-speaking chauffeur-guide for the whole journey, who knows the history, the wildlife and the best place for lunch.
 03
 ##### Entirely private
 No coaches and no fixed departures. Every journey is yours alone and moves at your pace.
@@ -183,8 +183,8 @@ No coaches and no fixed departures. Every journey is yours alone and moves at yo
 ##### Hand-picked stays
 From planters’ bungalows to beach villas, we choose places for character, comfort and kind service.
 05
-##### Help around the clock
-A local contact is a call away for the whole of your trip, day or night.
+##### Looked after throughout
+Your chauffeur-guide is with you for the whole trip, and you can reach us by phone or WhatsApp.
 06
 ##### Nothing pushed on you
 No forced shopping stops. Gem shops and spice gardens only if you ask for them.
@@ -196,13 +196,11 @@ Travelling responsibly
 - Plastic-light travel: refillable water on every journey.
 Who you will deal with
 #### Yasintha Agampodi
-Founder and Director
+Founder
 London
 +44 7818 792995
 Email
 info@zeilanparadise.com
-Company
-Zeilan Paradise (Pvt) Ltd
 #### Let’s talk about your Sri Lanka
 Start planning
 Get in touch
@@ -260,7 +258,7 @@ Wildlife
 12 Days / 11 Nights
 Best February – April
 ##### Untamed Sri Lanka: Cloud Forests, Leopards & Whales
-Three national parks, the cloud forest of Horton Plains and the ocean: a journey built around Sri Lanka's wildlife, always watched responsibly with expert guides, and with two nights at almost every stop.
+Three national parks, the cloud forest of Horton Plains and the ocean: a journey built around Sri Lanka's wildlife, always watched responsibly, and with two nights at almost every stop.
 Wilpattu
 Sigiriya
 Kandy
@@ -380,8 +378,8 @@ Boutique hotels, planters’ bungalows and beach villas chosen for character and
 ##### Safaris & boat trips
 Jeep safaris, boat trips, meals and experiences named in your itinerary, plus airport meet-and-greet.
 04
-##### Support around the clock
-A local team on call 24/7 from the moment you land.
+##### UK contact
+Plan with us from the UK before you travel, and reach us by phone or WhatsApp.
 
 ---
 
@@ -513,7 +511,7 @@ Swap the day 9 drive for the scenic hill-country train to Ella, subject to seat 
 - Meals and experiences named in the itinerary
 - Jeep safaris and boat trips named in the itinerary
 - Airport meet-and-greet, all transfers, and 1 litre of bottled water per person per day
-- A UK-based contact before you travel and 24/7 support on the island
+- A UK-based contact before you travel
 ##### Not included
 - International flights
 - Visa
@@ -547,7 +545,7 @@ Wildlife
 12 Days / 11 Nights
 Best February – April
 ##### Untamed Sri Lanka: Cloud Forests, Leopards & Whales
-Three national parks, the cloud forest of Horton Plains and the ocean: a journey built around Sri Lanka's wildlife, always watched responsibly with expert guides, and with two nights at almost every stop.
+Three national parks, the cloud forest of Horton Plains and the ocean: a journey built around Sri Lanka's wildlife, always watched responsibly, and with two nights at almost every stop.
 Wilpattu
 Sigiriya
 Kandy
@@ -681,8 +679,6 @@ How much does a Sri Lanka holiday cost?
 It depends on the length of your trip, the season and the style of hotels. Because every journey is tailor-made we price each one individually. Your proposal and quote are free, with no obligation.
 What deposit do you need, and when is the balance due?
 A non-refundable deposit of 20% of the total cost confirms your booking (some luxury hotels ask for more). The balance is due 60 days before departure. Full details are in our Terms & Conditions.
-Is my money protected?
-Where your arrangements form a package under the Package Travel Regulations 2018, you have all the rights those Regulations give. Details of the financial protection that applies to your booking are confirmed to you in writing before you pay anything.
 Do you book international flights?
 We arrange everything in Sri Lanka: hotels, your private vehicle and chauffeur-guide, transfers and experiences. You book your own international flights, and we’re happy to suggest the best routes and arrival times.
 #### Travelling in Sri Lanka
@@ -780,7 +776,7 @@ Their own private, English-speaking chauffeur-guide drives them throughout. Ther
 Do you book international flights?
 No. We arrange everything in Sri Lanka: hotels, the private vehicle and chauffeur-guide, transfers and experiences. Your clients book their own international flights.
 Who will I be dealing with?
-Yasintha Agampodi, Founder and Director. Email info@zeilanparadise.com or call +44 7818 792995.
+Yasintha Agampodi, Founder. Email info@zeilanparadise.com or call +44 7818 792995.
 #### Agent enquiry
 Your name *
 Company *
@@ -791,7 +787,7 @@ Which tours or dates?
 Send enquiry
 We only use your details to reply to you. Privacy policy
 Contact
-Yasintha Agampodi Founder and Director
+Yasintha Agampodi Founder
 Email
 info@zeilanparadise.com
 Call

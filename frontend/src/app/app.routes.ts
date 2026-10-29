@@ -8,7 +8,7 @@ const SUFFIX = ' | Zeilan Paradise';
 export const routes: Routes = [
   {
     path: '', component: HomeComponent, title: 'Zeilan Paradise | Luxury Tailor-Made Sri Lanka Holidays',
-    data: { description: 'Private, tailor-made journeys across Sri Lanka, planned with you from the UK and guided by our own team on the island.' },
+    data: { description: 'Private, tailor-made journeys across Sri Lanka, planned with you from the UK and guided by your own private chauffeur-guide.' },
   },
   {
     path: 'round-tours', title: 'Sri Lanka Round Tours' + SUFFIX,
@@ -41,7 +41,7 @@ export const routes: Routes = [
   },
   {
     path: 'about', title: 'About Us' + SUFFIX,
-    data: { description: 'A UK-based Sri Lanka specialist with our own team on the island. Private, responsible, tailor-made journeys.' },
+    data: { description: 'A UK-based Sri Lanka specialist. Private, responsible, tailor-made journeys.' },
     loadComponent: () => import('./pages/about/about').then((m) => m.About),
   },
   {

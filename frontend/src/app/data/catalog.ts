@@ -116,7 +116,7 @@ export const ROUND_TOURS: Tour[] = [
       "Meals and experiences named in the itinerary",
       "Jeep safaris and boat trips named in the itinerary",
       "Airport meet-and-greet, all transfers, and 1 litre of bottled water per person per day",
-      "A UK-based contact before you travel and 24/7 support on the island"
+      "A UK-based contact before you travel"
     ],
     "exclusions": [
       "International flights",
@@ -283,7 +283,7 @@ export const ROUND_TOURS: Tour[] = [
       "Meals and experiences named in the itinerary",
       "Jeep safaris and boat trips named in the itinerary",
       "Airport meet-and-greet, all transfers, and 1 litre of bottled water per person per day",
-      "A UK-based contact before you travel and 24/7 support on the island"
+      "A UK-based contact before you travel"
     ],
     "exclusions": [
       "International flights",
@@ -300,7 +300,7 @@ export const ROUND_TOURS: Tour[] = [
   {
     "id": "tour-untamed-sri-lanka",
     "title": "Untamed Sri Lanka: Cloud Forests, Leopards & Whales",
-    "description": "Three national parks, the cloud forest of Horton Plains and the ocean: a journey built around Sri Lanka's wildlife, always watched responsibly with expert guides, and with two nights at almost every stop.",
+    "description": "Three national parks, the cloud forest of Horton Plains and the ocean: a journey built around Sri Lanka's wildlife, always watched responsibly, and with two nights at almost every stop.",
     "duration": "12 Days / 11 Nights",
     "targetAudience": "Wildlife and nature lovers",
     "route": "Wilpattu → Sigiriya → Kandy → Nuwara Eliya → Yala → Mirissa",
@@ -439,7 +439,7 @@ export const ROUND_TOURS: Tour[] = [
       "Meals and experiences named in the itinerary",
       "Jeep safaris and boat trips named in the itinerary",
       "Airport meet-and-greet, all transfers, and 1 litre of bottled water per person per day",
-      "A UK-based contact before you travel and 24/7 support on the island"
+      "A UK-based contact before you travel"
     ],
     "exclusions": [
       "International flights",
@@ -620,7 +620,7 @@ export const ROUND_TOURS: Tour[] = [
       "Meals and experiences named in the itinerary",
       "Jeep safaris and boat trips named in the itinerary",
       "Airport meet-and-greet, all transfers, and 1 litre of bottled water per person per day",
-      "A UK-based contact before you travel and 24/7 support on the island"
+      "A UK-based contact before you travel"
     ],
     "exclusions": [
       "International flights",
@@ -799,7 +799,7 @@ export const ROUND_TOURS: Tour[] = [
       "Meals and experiences named in the itinerary",
       "Jeep safaris and boat trips named in the itinerary",
       "Airport meet-and-greet, all transfers, and 1 litre of bottled water per person per day",
-      "A UK-based contact before you travel and 24/7 support on the island"
+      "A UK-based contact before you travel"
     ],
     "exclusions": [
       "International flights",
@@ -948,7 +948,7 @@ export const ROUND_TOURS: Tour[] = [
       "Meals and experiences named in the itinerary",
       "Jeep safaris and boat trips named in the itinerary",
       "Airport meet-and-greet, all transfers, and 1 litre of bottled water per person per day",
-      "A UK-based contact before you travel and 24/7 support on the island"
+      "A UK-based contact before you travel"
     ],
     "exclusions": [
       "International flights",
@@ -1061,7 +1061,7 @@ export const ROUND_TOURS: Tour[] = [
       "Meals and experiences named in the itinerary",
       "Jeep safaris and boat trips named in the itinerary",
       "Airport meet-and-greet, all transfers, and 1 litre of bottled water per person per day",
-      "A UK-based contact before you travel and 24/7 support on the island"
+      "A UK-based contact before you travel"
     ],
     "exclusions": [
       "International flights",
@@ -1206,7 +1206,7 @@ export const ROUND_TOURS: Tour[] = [
       "Meals and experiences named in the itinerary",
       "Jeep safaris and boat trips named in the itinerary",
       "Airport meet-and-greet, all transfers, and 1 litre of bottled water per person per day",
-      "A UK-based contact before you travel and 24/7 support on the island"
+      "A UK-based contact before you travel"
     ],
     "exclusions": [
       "International flights",
@@ -1346,7 +1346,7 @@ export const ROUND_TOURS: Tour[] = [
       "Meals and experiences named in the itinerary",
       "Jeep safaris and boat trips named in the itinerary",
       "Airport meet-and-greet, all transfers, and 1 litre of bottled water per person per day",
-      "A UK-based contact before you travel and 24/7 support on the island"
+      "A UK-based contact before you travel"
     ],
     "exclusions": [
       "International flights",
@@ -1535,7 +1535,7 @@ export const ROUND_TOURS: Tour[] = [
       "Meals and experiences named in the itinerary",
       "Jeep safaris and boat trips named in the itinerary",
       "Airport meet-and-greet, all transfers, and 1 litre of bottled water per person per day",
-      "A UK-based contact before you travel and 24/7 support on the island"
+      "A UK-based contact before you travel"
     ],
     "exclusions": [
       "International flights",

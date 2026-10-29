@@ -5,7 +5,10 @@ import { ScrollRevealDirective } from '../../directives/scroll-reveal';
 import { SeoService } from '../../services/seo.service';
 import { SITE } from '../../config/site';
 
-interface FaqItem { q: string; a: string; }
+interface FaqItem { q: string; a: string; hidden?: boolean; }
+
+/** Set to true only once customer-money protection is really in place (ask the UK travel-law adviser first). */
+const MONEY_PROTECTION_CONFIRMED = false;
 
 /** Answers must stay consistent with the Terms & Conditions page. */
 const GROUPS: { title: string; items: FaqItem[] }[] = [
@@ -20,7 +23,7 @@ const GROUPS: { title: string; items: FaqItem[] }[] = [
         a: 'It depends on the length of your trip, the season and the style of hotels. Because every journey is tailor-made we price each one individually. Your proposal and quote are free, with no obligation.' },
       { q: 'What deposit do you need, and when is the balance due?',
         a: 'A non-refundable deposit of 20% of the total cost confirms your booking (some luxury hotels ask for more). The balance is due 60 days before departure. Full details are in our Terms & Conditions.' },
-      { q: 'Is my money protected?',
+      { hidden: !MONEY_PROTECTION_CONFIRMED, q: 'Is my money protected?',
         a: 'Where your arrangements form a package under the Package Travel Regulations 2018, you have all the rights those Regulations give. Details of the financial protection that applies to your booking are confirmed to you in writing before you pay anything.' },
       { q: 'Do you book international flights?',
         a: 'We arrange everything in Sri Lanka: hotels, your private vehicle and chauffeur-guide, transfers and experiences. You book your own international flights, and we’re happy to suggest the best routes and arrival times.' },
@@ -46,6 +49,9 @@ const GROUPS: { title: string; items: FaqItem[] }[] = [
     ],
   },
 ];
+
+/** Questions hidden until their facts are confirmed are left out of the page and of Google's FAQ data. */
+const VISIBLE_GROUPS = GROUPS.map((g) => ({ ...g, items: g.items.filter((f) => !f.hidden) }));
 
 @Component({
   selector: 'app-faq',
@@ -128,13 +134,13 @@ const GROUPS: { title: string; items: FaqItem[] }[] = [
 export class Faq implements OnInit, OnDestroy {
   private seo = inject(SeoService);
   readonly site = SITE;
-  readonly groups = GROUPS;
+  readonly groups = VISIBLE_GROUPS;
   open = signal('0-0');
 
   ngOnInit(): void {
     this.seo.setJsonLd({
       '@type': 'FAQPage',
-      mainEntity: GROUPS.flatMap((g) => g.items).map((f) => ({
+      mainEntity: VISIBLE_GROUPS.flatMap((g) => g.items).map((f) => ({
         '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a },
       })),
     });

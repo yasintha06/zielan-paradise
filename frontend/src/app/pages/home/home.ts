@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     { value: 8, suffix: '', label: 'UNESCO World Heritage Sites' },
     { value: 1340, suffix: ' km', label: 'Of tropical coastline' },
     { value: 2500, suffix: '+', label: 'Years of recorded history' },
-    { value: 24, suffix: '/7', label: 'On-island support for you' },
+    { value: 10, suffix: '', label: 'Private round tours' },
   ];
 
   readonly destinations = [
@@ -81,14 +81,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     { title: 'Share your dream', text: 'Tell us when, who and what moves you, by form, call or WhatsApp.' },
     { title: 'Receive your itinerary', text: 'A private, day-by-day proposal with hand-picked stays and experiences.' },
     { title: 'Refine it together', text: 'We fine-tune every detail with you until it feels exactly right.' },
-    { title: 'Travel, cared for', text: 'Your guide meets you on arrival, with our team on call around the clock.' },
+    { title: 'Travel, cared for', text: 'Your chauffeur-guide meets you on arrival and looks after you throughout.' },
   ];
 
   readonly promises = [
     { title: 'UK-based planning', text: 'Plan with a real person in your time zone, by phone, email or WhatsApp.', icon: ['M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z', 'M2 12h20', 'M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z'] },
-    { title: 'Our own island team', text: 'Licensed chauffeur-guides who bring history, wildlife and culture to life.', icon: ['M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', 'M9 12l2 2 4-4'] },
+    { title: 'Your own chauffeur-guide', text: 'A private, English-speaking chauffeur-guide who brings history, wildlife and culture to life.', icon: ['M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', 'M9 12l2 2 4-4'] },
     { title: 'Entirely private', text: 'No group coaches, no fixed departures. Your journey, your pace.', icon: ['M12 3l2.6 5.6 6.1.7-4.5 4.2 1.2 6L12 16.6 6.6 19.5l1.2-6L3.3 9.3l6.1-.7z'] },
-    { title: 'Care around the clock', text: 'From landing to departure, help is always one call away.', icon: ['M12 6v6l4 2', 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z'] },
+    { title: 'Looked after throughout', text: 'From landing to departure, your chauffeur-guide is with you.', icon: ['M12 6v6l4 2', 'M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z'] },
   ];
 
   readonly gallery = [
