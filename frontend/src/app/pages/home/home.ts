@@ -197,16 +197,20 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.motion.scrollTo('#discover');
   }
 
-  /** Autoplay refused (browser policy or power saving): start the current clip on the first scroll, tap or key press. */
+  /**
+   * Autoplay refused (browser policy or power saving): keep the poster and start the current clip on the
+   * first tap, click or key press. Scrolling doesn't count as permission to play, so it isn't used, and a
+   * refusal never switches the hero to photos: only a clip that really fails to load does that.
+   */
   private playBlocked(e: DOMException): void {
     // AbortError only means a play() was interrupted by moving to the next clip: harmless.
     if (e?.name === 'AbortError') return;
     if (e?.name !== 'NotAllowedError') return this.filmFailed();
     if (this.stopAutoplayRetry) return; // already waiting for an interaction
-    const events = ['pointerdown', 'keydown', 'wheel', 'touchstart', 'scroll'];
+    const events = ['pointerdown', 'pointerup', 'touchend', 'keydown', 'click'];
     const resume = () => {
       this.stopAutoplayRetry?.();
-      this.clipVideos()[this.activeSlide()]?.play().catch((err: DOMException) => err?.name !== 'AbortError' && this.filmFailed());
+      this.clipVideos()[this.activeSlide()]?.play().catch((err: DOMException) => this.playBlocked(err));
     };
     this.stopAutoplayRetry = () => {
       events.forEach((t) => removeEventListener(t, resume));
@@ -237,6 +241,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const next = (i + 1) % videos.length;
     this.activeSlide.set(i);
     videos.forEach((v, k) => {
+      v.muted = true; // as a property too: browsers only autoplay videos they know are silent
       if ((k === i || k === next) && !v.getAttribute('src')) {
         v.src = this.clipSrc(this.film[k].video);
         v.preload = 'auto';

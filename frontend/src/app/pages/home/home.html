@@ -6,7 +6,7 @@
       @if (filmMode()) {
         @for (c of film; track c.video; let i = $index) {
           <figure class="zp-hero-slide" [class.is-active]="i === activeSlide()">
-            <video muted playsinline disablepictureinpicture preload="none" aria-hidden="true"
+            <video muted [muted]="true" playsinline disablepictureinpicture preload="none" aria-hidden="true"
                    [attr.poster]="isNearClip(i) ? 'video/' + c.video + '.webp' : null" (ended)="nextClip()" (error)="filmFailed()"></video>
           </figure>
         }
