@@ -199,12 +199,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   /** Autoplay refused (browser policy or power saving): start the current clip on the first scroll, tap or key press. */
   private playBlocked(e: DOMException): void {
+    // AbortError only means a play() was interrupted by moving to the next clip: harmless.
+    if (e?.name === 'AbortError') return;
     if (e?.name !== 'NotAllowedError') return this.filmFailed();
     if (this.stopAutoplayRetry) return; // already waiting for an interaction
     const events = ['pointerdown', 'keydown', 'wheel', 'touchstart', 'scroll'];
     const resume = () => {
       this.stopAutoplayRetry?.();
-      this.clipVideos()[this.activeSlide()]?.play().catch(() => this.filmFailed());
+      this.clipVideos()[this.activeSlide()]?.play().catch((err: DOMException) => err?.name !== 'AbortError' && this.filmFailed());
     };
     this.stopAutoplayRetry = () => {
       events.forEach((t) => removeEventListener(t, resume));
@@ -246,11 +248,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         v.pause();
       }
     });
-    // Safety net: move on even if a clip stalls and never fires "ended".
+    // Safety net: move on even if a clip stalls and never fires "ended". Longer than any clip (12 s),
+    // so it never races the normal "ended" event and skips a clip.
     if (this.timer) clearInterval(this.timer);
     this.timer = setInterval(() => {
       if (this.heroVisible && !document.hidden && !this.stopAutoplayRetry) this.nextClip();
-    }, 12000);
+    }, 20000);
   }
 
   /** Pause the film while the hero is scrolled out of view. */

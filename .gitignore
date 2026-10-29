@@ -55,3 +55,6 @@ backend/static/
 
 # Original full-size photos/videos (web copies live in frontend/public/img and /video)
 media-originals/
+
+# Generated JPEG copies for the WTM PDFs (rebuilt by make_wtm.py)
+docs/wtm/img/

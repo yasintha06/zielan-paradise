@@ -108,13 +108,17 @@
   gap: 1.5rem;
 }
 .zp-nav-phone {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
   white-space: nowrap;
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.06em;
-  color: rgba(246, 240, 226, 0.8);
-  transition: color 0.3s;
+  color: rgba(246, 240, 226, 0.85);
+  transition: color 0.3s, border-color 0.3s;
 }
+.zp-nav-phone svg { width: 16px; height: 16px; flex: none; color: var(--gold); }
 .zp-nav-phone:hover { color: var(--gold); }
 
 .zp-burger {
@@ -207,8 +211,15 @@
 .zp-menu-foot a:hover { color: var(--gold); }
 
 /* ── RESPONSIVE ──────────────────────────────────────────── */
+/* Below 1380px the number becomes a round call button, so it is always one tap away (phones included). */
 @media (max-width: 1380px) {
-  .zp-nav-phone { display: none; }
+  .zp-nav-phone {
+    justify-content: center; width: 44px; height: 44px; border-radius: 50%;
+    border: 1px solid rgba(246, 240, 226, 0.35);
+  }
+  .zp-nav-phone:hover { border-color: var(--gold); }
+  .zp-nav-phone svg { width: 18px; height: 18px; }
+  .zp-nav-phone-num { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 }
 @media (max-width: 1120px) {
   .zp-nav-links { display: none; }
@@ -216,6 +227,7 @@
 }
 @media (max-width: 560px) {
   .zp-nav-cta { display: none; }
+  .zp-nav-right { gap: 0.75rem; }
   .zp-nav-logo img { height: 58px; }
   .zp-nav.is-solid .zp-nav-logo img { height: 48px; }
 }

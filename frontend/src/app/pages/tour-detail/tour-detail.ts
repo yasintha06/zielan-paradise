@@ -81,8 +81,9 @@ export class TourDetail implements OnInit {
     window.print();
   }
 
+  /** Tours with a film use its (always wide) still as the banner, so portrait photos are never squeezed. */
   heroImage(t: Tour): string {
-    return imageUrl(t.image, 2000, t.id);
+    return t.video ? `video/${t.video}.webp` : imageUrl(t.image, 2000, t.id);
   }
 
   gallery(t: Tour): string[] {

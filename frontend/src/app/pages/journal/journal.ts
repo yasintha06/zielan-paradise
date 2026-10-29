@@ -10,7 +10,7 @@ import { PageHeroComponent } from '../../components/page-hero/page-hero';
   standalone: true,
   imports: [RouterLink, ScrollRevealDirective, ParallaxDirective, PageHeroComponent],
   template: `
-    <app-page-hero image="img/galle-2000.webp" alt="Galle lighthouse" eyebrow="Journal"
+    <app-page-hero image="img/galle-fort-street-01-2000.webp" alt="A street inside Galle Fort" eyebrow="Journal"
       title="Notes from" titleEm="the island"
       subtitle="Practical advice and inspiration to help you plan: when to go, where to stay and what not to miss."
       [crumbs]="[{ label: 'Journal' }]" />

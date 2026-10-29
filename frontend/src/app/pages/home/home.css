@@ -528,3 +528,9 @@
   .zp-facts li + li { padding: 1.75rem 0.75rem 0 0; border-left: 0; }
   .zp-head--split .section-subtitle { max-width: none; }
 }
+
+/* ── For travel agents band ── */
+.zp-agents { background: var(--sand); padding: clamp(2.5rem, 5vw, 4rem) 0; }
+.zp-agents-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+.zp-agents .section-title { font-size: clamp(1.8rem, 3.4vw, 2.8rem); margin-top: 0.4rem; }
+.zp-agents .section-title em { color: var(--teal); }

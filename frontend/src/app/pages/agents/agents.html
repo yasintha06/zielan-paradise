@@ -21,6 +21,9 @@
       <div class="ag-intro-links">
         <a routerLink="/round-tours" class="pg-link">See the round tours <span aria-hidden="true">&rarr;</span></a>
         <a routerLink="/day-tours" class="pg-link">See the day tours <span aria-hidden="true">&rarr;</span></a>
+        @if (hasFactSheet()) {
+          <a [href]="agents.factSheetPdf" class="btn btn-teal btn-sm" download>Agent fact sheet (PDF)</a>
+        }
         @if (hasSamplePdf()) {
           <a [href]="agents.samplePdf" class="btn btn-outline-teal btn-sm" download>Download sample itinerary (PDF)</a>
         }

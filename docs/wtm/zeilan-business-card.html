@@ -1,0 +1,36 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><title>Zeilan Paradise · Business card</title><style>
+@font-face { font-family: 'Cormorant Garamond'; font-weight: 500; src: url('../../frontend/node_modules/@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-normal.woff2'); }
+@font-face { font-family: 'Cormorant Garamond'; font-weight: 600; src: url('../../frontend/node_modules/@fontsource/cormorant-garamond/files/cormorant-garamond-latin-600-normal.woff2'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; src: url('../../frontend/node_modules/@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-italic.woff2'); }
+@font-face { font-family: 'Manrope'; font-weight: 200 800; src: url('../../frontend/node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2'); }
+:root { --teal: #005B52; --gold: #D4AF37; --gold-dark: #B08F2A; --ink: #0A1F1C; --ivory: #F7F3EA; --sand: #EFE7D6; --soft: #4c5a57; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+@page { size: A4; margin: 0; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { font-family: 'Manrope', sans-serif; color: var(--ink); font-size: 9.4pt; line-height: 1.5; }
+h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; line-height: 1.1; }
+em { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--teal); }
+.eyebrow { font-size: 7pt; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-dark); }
+.page { width: 210mm; height: 297mm; padding: 14mm 15mm; position: relative; overflow: hidden; page-break-after: always; }
+.page:last-child { page-break-after: auto; }
+
+@page { size: 91mm 61mm; margin: 0; }
+.card { width: 91mm; height: 61mm; padding: 7mm 8mm; position: relative; overflow: hidden; page-break-after: always; }
+.card:last-child { page-break-after: auto; }
+.front { background: var(--ink); color: var(--ivory); display: flex; flex-direction: column; justify-content: space-between; }
+.front img { height: 17mm; align-self: flex-start; }
+.front .name { font-family: 'Cormorant Garamond'; font-size: 15pt; line-height: 1; }
+.front .role { font-size: 6.5pt; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-top: 1mm; }
+.front .lines { font-size: 7.4pt; line-height: 1.55; margin-top: 2.5mm; }
+.back { background: var(--ivory); display: flex; align-items: center; gap: 5mm; }
+.back img { width: 28mm; height: 28mm; }
+.back h3 { font-size: 14pt; }
+.back h3 em { color: var(--teal); }
+.back p { font-size: 7pt; color: var(--soft); margin-top: 1.5mm; }
+</style></head><body>
+<section class="card front"><img src="../../frontend/public/logo-light.png" alt="Zeilan Paradise">
+  <div><p class="name">Yasintha Agampodi</p><p class="role">Founder</p>
+  <p class="lines">+44 7818 792995 · WhatsApp<br>info@zeilanparadise.com<br>zeilanparadise.com</p></div></section>
+<section class="card back"><img src="qr-agents.svg" alt="">
+  <div><h3>Private Sri Lanka journeys <em>for your clients</em></h3>
+  <p>10 round tours · 8 day tours<br>Scan for agent enquiries<br>zeilanparadise.com/agents</p></div></section></body></html>

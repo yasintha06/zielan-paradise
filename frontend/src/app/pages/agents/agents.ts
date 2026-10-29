@@ -42,6 +42,7 @@ export class Agents implements OnInit {
   dayCount = signal(DAY_TOURS.length);
   /** The sample itinerary button only appears once the PDF really exists on the site. */
   hasSamplePdf = signal(false);
+  hasFactSheet = signal(false);
 
   readonly steps = [
     { title: 'Enquiry', text: 'Tell us which tours or dates your clients are interested in, using the form below, email or phone.' },
@@ -81,9 +82,11 @@ export class Agents implements OnInit {
   ngOnInit(): void {
     this.tours.getRoundTours().subscribe((list) => list.length && this.roundCount.set(list.length));
     this.tours.getDayTours().subscribe((list) => list.length && this.dayCount.set(list.length));
-    fetch(AGENTS.samplePdf, { method: 'HEAD' })
-      .then((r) => this.hasSamplePdf.set(r.ok && (r.headers.get('content-type') ?? '').includes('pdf')))
-      .catch(() => {});
+    const isPdf = (url: string) => fetch(url, { method: 'HEAD' })
+      .then((r) => r.ok && (r.headers.get('content-type') ?? '').includes('pdf'))
+      .catch(() => false);
+    isPdf(AGENTS.samplePdf).then((ok) => this.hasSamplePdf.set(ok));
+    isPdf(AGENTS.factSheetPdf).then((ok) => this.hasFactSheet.set(ok));
   }
 
   toForm(): void {

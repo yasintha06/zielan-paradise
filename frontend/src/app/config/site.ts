@@ -46,4 +46,6 @@ export const AGENTS = {
   commission: '',
   /** Drop a PDF at this path (frontend/public/files/...) and the download button appears by itself. */
   samplePdf: 'files/zeilan-sample-itinerary.pdf',
+  /** Same rule for the two-page agent fact sheet (made by docs/wtm/make_wtm.py). */
+  factSheetPdf: 'files/zeilan-agent-factsheet.pdf',
 } as const;

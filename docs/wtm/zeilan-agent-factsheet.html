@@ -1,0 +1,100 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><title>Zeilan Paradise · Agent fact sheet</title><style>
+@font-face { font-family: 'Cormorant Garamond'; font-weight: 500; src: url('../../frontend/node_modules/@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-normal.woff2'); }
+@font-face { font-family: 'Cormorant Garamond'; font-weight: 600; src: url('../../frontend/node_modules/@fontsource/cormorant-garamond/files/cormorant-garamond-latin-600-normal.woff2'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; src: url('../../frontend/node_modules/@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-italic.woff2'); }
+@font-face { font-family: 'Manrope'; font-weight: 200 800; src: url('../../frontend/node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2'); }
+:root { --teal: #005B52; --gold: #D4AF37; --gold-dark: #B08F2A; --ink: #0A1F1C; --ivory: #F7F3EA; --sand: #EFE7D6; --soft: #4c5a57; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+@page { size: A4; margin: 0; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { font-family: 'Manrope', sans-serif; color: var(--ink); font-size: 9.4pt; line-height: 1.5; }
+h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; line-height: 1.1; }
+em { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--teal); }
+.eyebrow { font-size: 7pt; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-dark); }
+.page { width: 210mm; height: 297mm; padding: 14mm 15mm; position: relative; overflow: hidden; page-break-after: always; }
+.page:last-child { page-break-after: auto; }
+
+.cover { height: 92mm; margin: -14mm -15mm 0; position: relative; color: #fff; }
+.cover img.bg { width: 100%; height: 100%; object-fit: cover; }
+.cover::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, rgba(10,31,28,.88) 30%, rgba(10,31,28,.25)); }
+.cover .in { position: absolute; inset: 0; z-index: 1; padding: 13mm 15mm; display: flex; flex-direction: column; justify-content: space-between; }
+.cover .logo { height: 19mm; align-self: flex-start; }
+.cover h1 { font-size: 25pt; max-width: 150mm; }
+.cover h1 em { color: var(--gold); }
+.cover p { max-width: 135mm; font-size: 10pt; opacity: .92; margin-top: 2.5mm; }
+.cover .eyebrow { color: var(--gold); }
+h2 { font-size: 16pt; margin: 4.5mm 0 2mm; }
+table { width: 100%; border-collapse: collapse; font-size: 7.6pt; }
+th { text-align: left; font-size: 6.5pt; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-dark); padding: 0 2mm 1.5mm 0; border-bottom: 1px solid var(--ink); }
+td { padding: 1.1mm 2mm 1.1mm 0; border-bottom: 1px solid #e4dccb; vertical-align: top; }
+td strong { display: block; font-size: 8.3pt; }
+td.len { white-space: nowrap; }
+td span { color: var(--soft); font-size: 7.3pt; }
+td.route { color: var(--soft); font-size: 7.3pt; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+.days { list-style: none; columns: 2; column-gap: 6mm; font-size: 8.2pt; }
+.days li { padding: 1.3mm 0; border-bottom: 1px solid #e4dccb; break-inside: avoid; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; margin-top: 2mm; }
+.steps div { border-top: 2px solid var(--gold); padding-top: 2.5mm; }
+.steps b { font-family: 'Cormorant Garamond', serif; font-size: 14pt; font-weight: 600; display: block; margin-bottom: 1mm; }
+ul.ticks { list-style: none; }
+ul.ticks li { padding: 1mm 0 1mm 4.5mm; position: relative; }
+ul.ticks li::before { content: ''; position: absolute; left: 0; top: 2.6mm; width: 2mm; height: 2mm; background: var(--gold); transform: rotate(45deg); }
+.note { color: var(--soft); font-size: 8pt; margin-top: 2mm; }
+.band { background: var(--sand); margin: 6mm -15mm 0; padding: 5mm 15mm; }
+.contact { position: absolute; left: 15mm; right: 15mm; bottom: 11mm; background: #fff; display: flex; justify-content: space-between; align-items: flex-end;
+  border-top: 1px solid var(--ink); padding-top: 4.5mm; }
+.contact .who { font-family: 'Cormorant Garamond', serif; font-size: 17pt; margin: 1mm 0; }
+.contact .who span { font-family: 'Manrope'; font-size: 8pt; color: var(--soft); margin-left: 3mm; }
+.qr { display: flex; align-items: center; gap: 3mm; font-size: 7.5pt; color: var(--soft); text-align: right; }
+.qr img { width: 24mm; height: 24mm; }
+.photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5mm; height: 27mm; margin-top: 4mm; }
+.photos > img { display: block; width: 100%; height: 27mm; min-height: 0; object-fit: cover; border-radius: 1mm; }
+.photos { overflow: hidden; }
+</style></head><body>
+<section class="page">
+  <div class="cover"><img class="bg" src="img/sigiriya-rock-01-cover.jpg" alt="">
+    <div class="in"><img class="logo" src="../../frontend/public/logo-light.png" alt="Zeilan Paradise">
+      <div><p class="eyebrow">For travel agents · Inbound Sri Lanka</p>
+        <h1>Private Sri Lanka journeys <em>for your clients</em></h1>
+        <p>Zeilan Paradise is an inbound Sri Lanka tour business for UK travellers and travel agents. We offer 10 private round tours and 8 day tours, each tailored to your clients.</p></div></div></div>
+  <h2>10 private round tours</h2>
+  <table><thead><tr><th>Journey · ideal for</th><th>Length</th><th>Best time</th><th>Route</th></tr></thead><tbody><tr><td><strong>Sri Lanka Highlights</strong><span>First-time visitors short on time</span></td><td class='len'>8 days · 7 nights</td><td>December – April</td><td class='route'>Negombo → Sigiriya → Kandy → Galle</td></tr><tr><td><strong>Classic Ceylon &amp; Coast</strong><span>First-time couples</span></td><td class='len'>14 days · 13 nights</td><td>December – April</td><td class='route'>Negombo → Sigiriya → Kandy → Nuwara Eliya → Ella → Mirissa</td></tr><tr><td><strong>Untamed Sri Lanka: Cloud Forests, Leopards &amp; Whales</strong><span>Wildlife and nature lovers</span></td><td class='len'>12 days · 11 nights</td><td>February – April</td><td class='route'>Wilpattu → Sigiriya → Kandy → Nuwara Eliya → Yala → Mirissa</td></tr><tr><td><strong>Summer Family Adventure</strong><span>Families with children</span></td><td class='len'>15 days · 14 nights</td><td>July – August</td><td class='route'>Negombo → Kandy → Nuwara Eliya → Ella → Arugam Bay → Pasikuda → Sigiriya → Negombo</td></tr><tr><td><strong>Footprints in the Hills &amp; Northern Frontiers</strong><span>Repeat visitors and curious explorers</span></td><td class='len'>15 days · 14 nights</td><td>February – April, July – September</td><td class='route'>Negombo → Anuradhapura → Jaffna → Trincomalee → Sigiriya → Kandy → Hatton</td></tr><tr><td><strong>Honeymoon: Tea Hills &amp; Southern Beaches</strong><span>Honeymooners and anniversary couples</span></td><td class='len'>11 days · 10 nights</td><td>December – April</td><td class='route'>Negombo → Sigiriya → Kandy → Hatton → Ella → Tangalle</td></tr><tr><td><strong>Ayurveda &amp; Wellness Retreat</strong><span>Wellness seekers and solo travellers</span></td><td class='len'>10 days · 9 nights</td><td>Year-round (best Dec–Apr)</td><td class='route'>Kandy → Hatton → Bentota</td></tr><tr><td><strong>East Coast Summer Escape</strong><span>Couples travelling in the UK summer</span></td><td class='len'>11 days · 10 nights</td><td>May – September</td><td class='route'>Negombo → Sigiriya → Trincomalee → Pasikuda → Kandy</td></tr><tr><td><strong>Tea Trails &amp; Pekoe Trail Walking</strong><span>Active walkers</span></td><td class='len'>10 days · 9 nights</td><td>January – April</td><td class='route'>Negombo → Kandy → Hatton → Ella → Galle</td></tr><tr><td><strong>Grand Explorer</strong><span>Travellers who want to see it all</span></td><td class='len'>16 days · 15 nights</td><td>December – April</td><td class='route'>Negombo → Anuradhapura → Sigiriya → Kandy → Hatton → Ella → Yala → Galle</td></tr></tbody></table>
+  <p class="note">Every itinerary is a starting point: we tailor the route, hotels and pace to each client.</p>
+  
+<div class="contact">
+  <div><p class="eyebrow">Talk to us</p>
+    <p class="who">Yasintha Agampodi<span>Founder</span></p>
+    <p>+44 7818 792995 &nbsp;·&nbsp; WhatsApp<br>info@zeilanparadise.com<br>zeilanparadise.com</p></div>
+  <div class="qr"><img src="qr-agents.svg" alt=""><span>Agent enquiries<br>zeilanparadise.com/agents</span></div>
+</div>
+</section>
+<section class="page">
+  <h2 style="margin-top:0">8 private day tours</h2>
+  <ul class="days"><li><strong>Colombo City &amp; Culture</strong> · Half Day</li><li><strong>Kandy &amp; the Temple of the Tooth</strong> · Full Day</li><li><strong>Sigiriya &amp; Dambulla</strong> · Full Day</li><li><strong>Galle Fort Walking Tour</strong> · Half Day</li><li><strong>Udawalawe Elephant Safari</strong> · Full Day</li><li><strong>Whale Watching from Mirissa</strong> · Half Day</li><li><strong>Madu Ganga River &amp; Turtle Conservation</strong> · Half Day</li><li><strong>Minneriya or Kaudulla Elephant Safari</strong> · Half Day</li></ul>
+  <h2>How it works</h2>
+  <div class="steps">
+    <div><b>1 · Enquiry</b>Tell us which tours or dates your clients are interested in, by email, phone or the form at zeilanparadise.com/agents.</div>
+    <div><b>2 · Quote</b>We send you a written quote for the journey, built around your clients’ dates and group.</div>
+    <div><b>3 · Confirmation</b>When your clients are happy, we confirm the arrangements in Sri Lanka.</div>
+  </div>
+  <div class="cols">
+    <div><h2>What a quote contains</h2><ul class="ticks">
+      <li>A day-by-day itinerary</li><li>Where your clients stay each night, with hotels as listed or similar</li>
+      <li>What is included and what is not</li><li>The price for your clients’ dates and group size</li></ul></div>
+    <div><h2>Every round tour includes</h2><ul class="ticks"><li>Private air-conditioned vehicle (car, van or coach, depending on group size) with an English-speaking guide for the whole trip</li><li>All hotels as listed (or similar), with breakfast daily; standard check-in is 12:00</li><li>Meals and experiences named in the itinerary</li><li>Jeep safaris and boat trips named in the itinerary</li><li>Airport meet-and-greet, all transfers, and 1 litre of bottled water per person per day</li><li>A UK-based contact before you travel</li></ul>
+      <p class="note">Not included: International flights, visa, travel insurance, entrance fees, unless stated, tips.</p></div>
+  </div>
+  <div class="band"><p class="eyebrow">How our journeys are planned</p>
+    <p style="margin-top:1.5mm">First night near the airport after a long flight · one direction around the island, no backtracking ·
+    two or more nights at most stops · early starts for Sigiriya and safaris · ethical wildlife only: no elephant rides ·
+    routes timed to the season, south and west coast December to April, east coast May to September.</p></div>
+  <div class="photos"><img src="img/kandy-temple-tooth-01.jpg" alt=""><img src="img/teatrails-walkers-01.jpg" alt=""><img src="img/untamed-leopard-01.jpg" alt=""></div>
+  
+<div class="contact">
+  <div><p class="eyebrow">Talk to us</p>
+    <p class="who">Yasintha Agampodi<span>Founder</span></p>
+    <p>+44 7818 792995 &nbsp;·&nbsp; WhatsApp<br>info@zeilanparadise.com<br>zeilanparadise.com</p></div>
+  <div class="qr"><img src="qr-agents.svg" alt=""><span>Agent enquiries<br>zeilanparadise.com/agents</span></div>
+</div>
+</section></body></html>

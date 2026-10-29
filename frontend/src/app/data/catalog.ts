@@ -825,13 +825,13 @@ export const ROUND_TOURS: Tour[] = [
       "text": "Honeymoon",
       "class": "bg-gold"
     },
-    "image": "images/tours/honeymoon-beach-sunset-01.jpg",
+    "image": "images/tours/tangalle-beach-01.jpg",
     "gallery": [
-      "images/tours/sigiriya-rock-01.jpg",
+      "images/tours/activity-hot-air-balloon-01.jpg",
       "images/tours/teatrails-misty-path-01.jpg",
       "images/tours/activity-tea-tasting-01.jpg",
       "images/tours/ella-little-adams-peak-01.jpg",
-      "images/tours/tangalle-beach-01.jpg",
+      "images/tours/kandy-temple-tooth-01.jpg",
       "images/tours/activity-turtle-watching-01.jpg"
     ],
     "video": "tea-leaves-hands",
@@ -979,7 +979,7 @@ export const ROUND_TOURS: Tour[] = [
     "gallery": [
       "images/tours/activity-ayurveda-massage-01.jpg",
       "images/tours/kandy-lake-view-01.jpg",
-      "images/tours/lotus-pond-01.jpg",
+      "images/tours/teatrails-misty-path-01.jpg",
       "images/tours/activity-tea-tasting-01.jpg",
       "images/tours/bentota-beach-01.jpg",
       "images/tours/bentota-madu-ganga-01.jpg"
@@ -1091,7 +1091,7 @@ export const ROUND_TOURS: Tour[] = [
     "image": "images/tours/pasikuda-bay-01.jpg",
     "gallery": [
       "images/tours/eastcoast-nilaveli-beach-01.jpg",
-      "images/tours/activity-snorkelling-turtle-01.jpg",
+      "images/tours/trincomalee-pigeon-island-01.jpg",
       "images/tours/polonnaruwa-vatadage-01.jpg",
       "images/tours/daytour-minneriya-gathering-01.jpg",
       "images/tours/eastcoast-batticaloa-lagoon-01.jpg",
@@ -1590,7 +1590,7 @@ export const DAY_TOURS: Tour[] = [
       "text": "Full Day",
       "class": "teal"
     },
-    "image": "images/tours/kandy.jpg",
+    "image": "images/tours/kandy-temple-tooth-01.jpg",
     "gallery": [
       "images/tours/kandy-lake-view-01.jpg"
     ],
@@ -1835,7 +1835,7 @@ export const DESTINATIONS: Destination[] = [
       "Near the airport"
     ],
     "region": "West Coast",
-    "imageUrl": "assets/images/destinations/honeymoon-beach-sunset-01.jpg",
+    "imageUrl": "assets/images/destinations/negombo-beach-sunset-01.jpg",
     "bestTime": "December – April",
     "tours": [
       "tour-sri-lanka-highlights",
@@ -1950,7 +1950,7 @@ export const DESTINATIONS: Destination[] = [
       "Culture"
     ],
     "region": "Hill Country",
-    "imageUrl": "assets/images/destinations/kandy-lake-view-01.jpg",
+    "imageUrl": "assets/images/destinations/kandy-temple-tooth-01.jpg",
     "bestTime": "All year",
     "tours": [
       "tour-sri-lanka-highlights",
