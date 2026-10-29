@@ -13,9 +13,11 @@
       <h2 class="section-title">Find your <em>moment</em></h2>
       <div class="chips" role="group" aria-label="Filter by theme">
         @for (t of ['All'].concat(themes); track t) {
-          <button type="button" class="chip" [class.is-active]="theme() === t" (click)="setTheme(t)" [attr.aria-pressed]="theme() === t">
-            {{ t }}<small>{{ countFor(t) }}</small>
-          </button>
+          @if (countFor(t)) {
+            <button type="button" class="chip" [class.is-active]="theme() === t" (click)="setTheme(t)" [attr.aria-pressed]="theme() === t">
+              {{ t }}<small>{{ countFor(t) }}</small>
+            </button>
+          }
         }
       </div>
     </div>

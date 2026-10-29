@@ -1,83 +1,325 @@
 [
   {
-    "name": "Sigiriya",
-    "tagline": "The Ancient Citadel",
-    "description": "Ascend the legendary Lion Rock fortress and explore the royal water gardens of this 5th-century architectural marvel.",
-    "tags": ["History", "Photography", "Hiking"],
+    "name": "Colombo",
+    "tagline": "The capital by the sea",
+    "description": "Sri Lanka's capital mixes busy markets, colonial buildings and temples. Explore Pettah market, visit Gangaramaya Temple and watch the sunset at Galle Face Green.",
+    "tags": [
+      "City",
+      "Markets",
+      "Colonial heritage"
+    ],
+    "region": "West Coast",
+    "imageUrl": "assets/images/destinations/daytour-colombo-galle-face-01.jpg",
+    "bestTime": "All year",
+    "tours": [
+      "day-tour-colombo-city"
+    ],
+    "isActive": true
+  },
+  {
+    "name": "Negombo",
+    "tagline": "Your first night by the sea",
+    "description": "A beach town just 20 minutes from the airport, and the easy first stop after a long flight. Walk the beach, see the fish market, take a boat along the Dutch canal, and visit St Mary's Church and Angurukaramulla Temple.",
+    "tags": [
+      "Beach",
+      "Fishing boats",
+      "Near the airport"
+    ],
+    "region": "West Coast",
+    "imageUrl": "assets/images/destinations/negombo-beach-sunset-01.jpg",
+    "bestTime": "December – April",
+    "tours": [
+      "tour-sri-lanka-highlights",
+      "tour-classic-ceylon-coast",
+      "tour-summer-family-adventure",
+      "tour-footprints-northern-frontiers",
+      "tour-honeymoon-tea-hills-beaches",
+      "tour-east-coast-summer",
+      "tour-tea-trails-pekoe-walking",
+      "tour-grand-explorer"
+    ],
+    "isActive": true
+  },
+  {
+    "name": "Bentota",
+    "tagline": "Golden beaches and Ayurveda",
+    "description": "Golden beaches and some of the island's best Ayurveda resorts. Take a boat on the Madu Ganga river, enjoy Ayurveda treatments, or try water sports.",
+    "tags": [
+      "Beach",
+      "Ayurveda",
+      "River"
+    ],
+    "region": "West Coast",
+    "imageUrl": "assets/images/destinations/bentota-beach-01.jpg",
+    "bestTime": "December – April",
+    "tours": [
+      "tour-ayurveda-wellness",
+      "day-tour-madu-ganga-turtles"
+    ],
+    "isActive": true
+  },
+  {
+    "name": "Sigiriya & Dambulla",
+    "tagline": "Lion Rock and the cave temples",
+    "description": "Home to the Lion Rock fortress and the painted cave temples of Dambulla. Climb Sigiriya, watch the sunrise from Pidurangala and explore the Dambulla caves.",
+    "tags": [
+      "UNESCO heritage",
+      "History",
+      "Sunrise climbs"
+    ],
     "region": "Cultural Triangle",
-    "imageUrl": "assets/images/destinations/sigiriya.jpg",
+    "imageUrl": "assets/images/destinations/sigiriya-rock-01.jpg",
+    "bestTime": "All year",
+    "tours": [
+      "tour-sri-lanka-highlights",
+      "tour-classic-ceylon-coast",
+      "tour-untamed-sri-lanka",
+      "tour-summer-family-adventure",
+      "tour-footprints-northern-frontiers",
+      "tour-honeymoon-tea-hills-beaches",
+      "tour-east-coast-summer",
+      "tour-grand-explorer",
+      "day-tour-sigiriya-dambulla"
+    ],
+    "isActive": true
+  },
+  {
+    "name": "Polonnaruwa",
+    "tagline": "The medieval royal city",
+    "description": "The medieval royal capital, best explored by bicycle. Cycle between the ruins and see the great carved Buddhas of Gal Vihara.",
+    "tags": [
+      "UNESCO heritage",
+      "Cycling",
+      "Ancient cities"
+    ],
+    "region": "Cultural Triangle",
+    "imageUrl": "assets/images/destinations/polonnaruwa-gal-vihara-01.jpg",
+    "bestTime": "All year",
+    "tours": [
+      "tour-classic-ceylon-coast",
+      "tour-footprints-northern-frontiers",
+      "tour-east-coast-summer",
+      "tour-grand-explorer"
+    ],
     "isActive": true
   },
   {
     "name": "Anuradhapura",
-    "tagline": "Sacred Ancient Wonders",
-    "description": "Marvel at towering white stupas, the sacred Sri Maha Bodhi tree, and the sprawling ruins of Sri Lanka's first ancient kingdom.",
-    "tags": ["Ancient Wonders", "Spirituality", "UNESCO Heritage"],
+    "tagline": "The first ancient capital",
+    "description": "Sri Lanka's first great capital, with giant white stupas. Visit Ruwanwelisaya, the sacred Sri Maha Bodhi tree and nearby Mihintale.",
+    "tags": [
+      "UNESCO heritage",
+      "Spirituality",
+      "Ancient cities"
+    ],
     "region": "Cultural Triangle",
-    "imageUrl": "assets/images/destinations/anuradhapura.jpg",
-    "isActive": true
-  },
-  {
-    "name": "Dambulla",
-    "tagline": "Golden Cave Temples",
-    "description": "Discover centuries-old golden cave temple murals and hundreds of sacred Buddha statues carved directly into the rock face.",
-    "tags": ["Culture", "Spirituality", "History"],
-    "region": "Cultural Triangle",
-    "imageUrl": "assets/images/destinations/dambulla.jpg",
-    "isActive": true
-  },
-  {
-    "name": "Ella",
-    "tagline": "Emerald Peaks & Valleys",
-    "description": "Journey through misty tea plantations, cross the iconic Nine Arches Bridge, and hike to breathtaking viewpoints above the clouds.",
-    "tags": ["Nature", "Hiking", "Train Rides"],
-    "region": "Hill Country",
-    "imageUrl": "assets/images/destinations/ella.jpg",
-    "isActive": true
-  },
-  {
-    "name": "Mirissa",
-    "tagline": "Golden Sands & Whales",
-    "description": "Watch blue whales breach at sunrise, surf pristine waves, and dine on the freshest seafood at sunset on golden beaches.",
-    "tags": ["Beach", "Whale Watching", "Surfing"],
-    "region": "South Coast",
-    "imageUrl": "assets/images/destinations/mirissa.jpg",
-    "isActive": true
-  },
-  {
-    "name": "Galle Fort",
-    "tagline": "Colonial Charm",
-    "description": "Wander the cobblestone streets of this UNESCO fortress, where Dutch colonial architecture meets Indian Ocean sunsets and boutique galleries.",
-    "tags": ["History", "Shopping", "Architecture"],
-    "region": "South Coast",
-    "imageUrl": "assets/images/destinations/galle.jpg",
-    "isActive": true
-  },
-  {
-    "name": "Yala National Park",
-    "tagline": "Untamed Wilderness",
-    "description": "Home to the highest density of leopards in the world, alongside elephants, sloth bears, and over 200 bird species in stunning landscapes.",
-    "tags": ["Wildlife", "Photography", "Safari"],
-    "region": "South East",
-    "imageUrl": "assets/images/destinations/yala.jpg",
+    "imageUrl": "assets/images/destinations/anuradhapura-ruwanwelisaya-01.jpg",
+    "bestTime": "All year",
+    "tours": [
+      "tour-footprints-northern-frontiers",
+      "tour-grand-explorer"
+    ],
     "isActive": true
   },
   {
     "name": "Kandy",
-    "tagline": "Sacred Hill Capital",
-    "description": "Home to the Temple of the Tooth Relic and surrounded by lush hills, Kandy is the cultural heart of Sri Lanka — steeped in royal heritage.",
-    "tags": ["Culture", "Temples", "Gardens"],
+    "tagline": "The sacred hill capital",
+    "description": "The hill capital and home of the Temple of the Tooth. Visit the temple, walk around Kandy Lake, explore the botanical gardens and watch a Kandyan dance show.",
+    "tags": [
+      "Temples",
+      "Gardens",
+      "Culture"
+    ],
     "region": "Hill Country",
-    "imageUrl": "assets/images/destinations/kandy.jpg",
+    "imageUrl": "assets/images/destinations/kandy-temple-tooth-01.jpg",
+    "bestTime": "All year",
+    "tours": [
+      "tour-sri-lanka-highlights",
+      "tour-classic-ceylon-coast",
+      "tour-untamed-sri-lanka",
+      "tour-summer-family-adventure",
+      "tour-footprints-northern-frontiers",
+      "tour-honeymoon-tea-hills-beaches",
+      "tour-ayurveda-wellness",
+      "tour-east-coast-summer",
+      "tour-tea-trails-pekoe-walking",
+      "tour-grand-explorer",
+      "day-tour-kandy-temple-tooth"
+    ],
     "isActive": true
   },
   {
-    "name": "Nuwara Eliya",
-    "tagline": "Little England in the Hills",
-    "description": "Stroll through emerald tea estates, visit historic colonial factories, and savor Ceylon high tea amidst mist-kissed hills.",
-    "tags": ["Tea Tasting", "Cool Climate", "Colonial Heritage"],
+    "name": "Nuwara Eliya & Hatton",
+    "tagline": "Tea country and planters' bungalows",
+    "description": "Tea country, with colonial bungalows and the Pekoe Trail. Visit a tea factory, walk in Horton Plains, follow the Pekoe Trail or climb Adam's Peak.",
+    "tags": [
+      "Tea",
+      "Walking",
+      "Colonial bungalows"
+    ],
     "region": "Hill Country",
-    "imageUrl": "assets/images/destinations/nuwara-eliya.jpg",
+    "imageUrl": "assets/images/destinations/nuwara-eliya-gregory-lake-01.jpg",
+    "bestTime": "January – April",
+    "tours": [
+      "tour-classic-ceylon-coast",
+      "tour-untamed-sri-lanka",
+      "tour-summer-family-adventure",
+      "tour-footprints-northern-frontiers",
+      "tour-honeymoon-tea-hills-beaches",
+      "tour-ayurveda-wellness",
+      "tour-tea-trails-pekoe-walking",
+      "tour-grand-explorer"
+    ],
+    "isActive": true
+  },
+  {
+    "name": "Ella",
+    "tagline": "Valley views and hiking",
+    "description": "A mountain village with valley views and hiking. See the Nine Arches Bridge and climb Little Adam's Peak or Ella Rock.",
+    "tags": [
+      "Hiking",
+      "Views",
+      "Nine Arches Bridge"
+    ],
+    "region": "Hill Country",
+    "imageUrl": "assets/images/destinations/ella-nine-arches-02.jpg",
+    "bestTime": "January – April",
+    "tours": [
+      "tour-classic-ceylon-coast",
+      "tour-summer-family-adventure",
+      "tour-honeymoon-tea-hills-beaches",
+      "tour-tea-trails-pekoe-walking",
+      "tour-grand-explorer"
+    ],
+    "isActive": true
+  },
+  {
+    "name": "Yala",
+    "tagline": "The best place to see leopards",
+    "description": "The best place in Sri Lanka to see leopards. Go on a jeep safari to look for leopards and birds. The park usually closes for several weeks from September.",
+    "tags": [
+      "Safari",
+      "Leopards",
+      "Birds"
+    ],
+    "region": "National Parks",
+    "imageUrl": "assets/images/destinations/untamed-leopard-01.jpg",
+    "bestTime": "February – July",
+    "tours": [
+      "tour-untamed-sri-lanka",
+      "tour-grand-explorer"
+    ],
+    "isActive": true
+  },
+  {
+    "name": "Udawalawe & Sinharaja",
+    "tagline": "Elephant herds and rainforest",
+    "description": "Elephant herds and rainforest. Take an elephant safari, visit the Elephant Transit Home and trek in the rainforest.",
+    "tags": [
+      "Elephants",
+      "Rainforest",
+      "Safari"
+    ],
+    "region": "National Parks",
+    "imageUrl": "assets/images/destinations/udawalawe-elephants-01.jpg",
+    "bestTime": "All year",
+    "tours": [
+      "day-tour-udawalawe-safari"
+    ],
+    "isActive": true
+  },
+  {
+    "name": "Wilpattu",
+    "tagline": "Quiet lakes, leopards and sloth bears",
+    "description": "Quiet natural lakes, leopards and sloth bears. Spend a full day on safari, away from the crowds.",
+    "tags": [
+      "Safari",
+      "Leopards",
+      "Sloth bears"
+    ],
+    "region": "National Parks",
+    "imageUrl": "assets/images/destinations/wilpattu-villu-lake-01.jpg",
+    "bestTime": "February – October",
+    "tours": [
+      "tour-untamed-sri-lanka"
+    ],
+    "isActive": true
+  },
+  {
+    "name": "Galle",
+    "tagline": "The UNESCO Dutch fort",
+    "description": "A UNESCO-listed Dutch fort on the south coast. Walk the fort walls, see the lighthouse and browse the boutiques.",
+    "tags": [
+      "UNESCO heritage",
+      "Architecture",
+      "Boutiques"
+    ],
+    "region": "South Coast",
+    "imageUrl": "assets/images/destinations/galle-fort-street-01.jpg",
+    "bestTime": "December – April",
+    "tours": [
+      "tour-sri-lanka-highlights",
+      "tour-classic-ceylon-coast",
+      "tour-tea-trails-pekoe-walking",
+      "tour-grand-explorer",
+      "day-tour-galle-fort-walk"
+    ],
+    "isActive": true
+  },
+  {
+    "name": "Mirissa & Tangalle",
+    "tagline": "Palm beaches and whale watching",
+    "description": "Palm-lined beaches and whale watching. Go whale watching, climb Coconut Tree Hill and find a quiet bay.",
+    "tags": [
+      "Beach",
+      "Whale watching",
+      "Quiet bays"
+    ],
+    "region": "South Coast",
+    "imageUrl": "assets/images/destinations/mirissa-coconut-hill-01.jpg",
+    "bestTime": "December – April",
+    "tours": [
+      "tour-classic-ceylon-coast",
+      "tour-untamed-sri-lanka",
+      "tour-honeymoon-tea-hills-beaches",
+      "day-tour-mirissa-whales"
+    ],
+    "isActive": true
+  },
+  {
+    "name": "Trincomalee, Pasikuda & Arugam Bay",
+    "tagline": "East-coast beaches and surf",
+    "description": "East-coast beaches and surf, at their best in the UK summer. Snorkel at Pigeon Island, swim in calm bays and surf at Arugam Bay.",
+    "tags": [
+      "Beach",
+      "Snorkelling",
+      "Surfing"
+    ],
+    "region": "East Coast",
+    "imageUrl": "assets/images/destinations/eastcoast-nilaveli-beach-01.jpg",
+    "bestTime": "May – September",
+    "tours": [
+      "tour-summer-family-adventure",
+      "tour-footprints-northern-frontiers",
+      "tour-east-coast-summer"
+    ],
+    "isActive": true
+  },
+  {
+    "name": "Jaffna",
+    "tagline": "Tamil culture of the far north",
+    "description": "The Tamil culture of the far north. Visit Nallur Kovil, the islands and Jaffna Fort, and try the local cuisine.",
+    "tags": [
+      "Culture",
+      "Temples",
+      "Food"
+    ],
+    "region": "The North",
+    "imageUrl": "assets/images/destinations/jaffna-nainativu-temple-01.jpg",
+    "bestTime": "February – September",
+    "tours": [
+      "tour-footprints-northern-frontiers"
+    ],
     "isActive": true
   }
 ]

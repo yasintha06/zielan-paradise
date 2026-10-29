@@ -29,8 +29,8 @@ export class RoundTours implements OnInit {
   readonly included = [
     { title: 'Your own chauffeur-guide', text: 'A private, air-conditioned vehicle with an English-speaking guide for the whole journey.' },
     { title: 'Hand-picked stays', text: 'Boutique hotels, planters’ bungalows and beach villas chosen for character and comfort.' },
-    { title: 'Entrance fees & safaris', text: 'Heritage site permits, national park fees and private jeeps with naturalists.' },
-    { title: 'Support around the clock', text: 'A local team on call 24/7 from the moment you land.' },
+    { title: 'Safaris & boat trips', text: 'Jeep safaris, boat trips, meals and experiences named in your itinerary, plus airport meet-and-greet.' },
+    { title: 'UK contact', text: 'Plan with us from the UK before you travel, and reach us by phone or WhatsApp.' },
   ];
 
   filtered = computed(() => {

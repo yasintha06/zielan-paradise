@@ -8,7 +8,7 @@ const SUFFIX = ' | Zeilan Paradise';
 export const routes: Routes = [
   {
     path: '', component: HomeComponent, title: 'Zeilan Paradise | Luxury Tailor-Made Sri Lanka Holidays',
-    data: { description: 'Private, tailor-made journeys across Sri Lanka, planned with you from the UK and guided by our own team on the island.' },
+    data: { description: 'Private, tailor-made journeys across Sri Lanka, planned with you from the UK and guided by your own private chauffeur-guide.' },
   },
   {
     path: 'round-tours', title: 'Sri Lanka Round Tours' + SUFFIX,
@@ -22,7 +22,7 @@ export const routes: Routes = [
   },
   {
     path: 'destinations', title: 'Sri Lanka Destinations' + SUFFIX,
-    data: { description: 'Discover Sri Lanka region by region: Sigiriya, Kandy, Ella, Nuwara Eliya, Yala, Galle, Mirissa, Anuradhapura and Dambulla.' },
+    data: { description: 'Discover Sri Lanka region by region: Colombo, Sigiriya, Kandy, the tea country, Ella, Yala, Galle, the south and east coasts and Jaffna.' },
     loadComponent: () => import('./pages/destinations/destinations').then((m) => m.Destinations),
   },
   {
@@ -41,8 +41,13 @@ export const routes: Routes = [
   },
   {
     path: 'about', title: 'About Us' + SUFFIX,
-    data: { description: 'A UK-based Sri Lanka specialist with our own team on the island. Private, responsible, tailor-made journeys.' },
+    data: { description: 'A UK-based Sri Lanka specialist. Private, responsible, tailor-made journeys.' },
     loadComponent: () => import('./pages/about/about').then((m) => m.About),
+  },
+  {
+    path: 'agents', title: 'For Travel Agents' + SUFFIX,
+    data: { description: 'Private Sri Lanka round tours and day tours for travel agents and their UK clients. Send an agent enquiry.' },
+    loadComponent: () => import('./pages/agents/agents').then((m) => m.Agents),
   },
   {
     path: 'journal', title: 'Sri Lanka Travel Journal' + SUFFIX,

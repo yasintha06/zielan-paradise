@@ -26,6 +26,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
     { path: '/day-tours', label: 'Day Tours' },
     { path: '/experiences', label: 'Experiences' },
     { path: '/about', label: 'About' },
+    { path: '/agents', label: 'Agents' },
     { path: '/contact', label: 'Contact' },
   ];
   readonly menuLinks = [

@@ -81,8 +81,18 @@ export class TourDetail implements OnInit {
     window.print();
   }
 
+  /** Tours with a film use its (always wide) still as the banner, so portrait photos are never squeezed. */
   heroImage(t: Tour): string {
-    return imageUrl(t.image, 2000, t.id);
+    return t.video ? `video/${t.video}.webp` : imageUrl(t.image, 2000, t.id);
+  }
+
+  gallery(t: Tour): string[] {
+    return (t.gallery ?? []).map((g) => imageUrl(g, 900));
+  }
+
+  /** The signature experience has its own panel, so it isn't repeated as the first highlight. */
+  highlightsOf(t: Tour): string[] {
+    return (t.highlights ?? []).filter((h) => h !== t.signature);
   }
 
   crumbs(t: Tour): Crumb[] {
@@ -97,7 +107,7 @@ export class TourDetail implements OnInit {
 
   dayLabel(d: { day?: string; dayNumber?: number | string }, i: number): string {
     const raw = String(d.day ?? d.dayNumber ?? i + 1);
-    return raw.replace(/^day\s*/i, '');
+    return raw.replace(/^days?\s*/i, '');
   }
 
   toEnquire(): void {

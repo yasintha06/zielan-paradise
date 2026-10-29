@@ -52,7 +52,7 @@ interface ReviewForm {
             <label class="a-field"><span>From</span><input [(ngModel)]="form.authorLocation" placeholder="Bristol, UK" /></label>
           </div>
           <div class="a-grid-2">
-            <label class="a-field"><span>Trip</span><input [(ngModel)]="form.tripName" placeholder="Romance in Ceylon" /></label>
+            <label class="a-field"><span>Trip</span><input [(ngModel)]="form.tripName" placeholder="Classic Ceylon & Coast" /></label>
             <label class="a-field"><span>When</span><input [(ngModel)]="form.travelDate" placeholder="March 2027" /></label>
           </div>
           <label class="a-field"><span>Review *</span><textarea [(ngModel)]="form.text" rows="6"></textarea></label>

@@ -37,6 +37,20 @@
                 @for (t of d.tags; track t) { <li>{{ t }}</li> }
               </ul>
             }
+            @if (d.bestTime) { <p class="ds-best"><span>Best time</span>{{ d.bestTime }}</p> }
+            @if (toursFor(d).length) {
+              <div class="ds-tours">
+                <span>Visited on</span>
+                <ul>
+                  @for (t of toursFor(d).slice(0, 4); track t.id) {
+                    <li><a [routerLink]="['/tours', t.id]">{{ t.title }}</a></li>
+                  }
+                  @if (toursFor(d).length > 4) {
+                    <li><a routerLink="/round-tours" class="ds-more">+ {{ toursFor(d).length - 4 }} more</a></li>
+                  }
+                </ul>
+              </div>
+            }
             <a class="pg-link" routerLink="/tailor-made" [queryParams]="{ destination: d.name }">Include in my journey <span aria-hidden="true">&rarr;</span></a>
           </div>
         </article>

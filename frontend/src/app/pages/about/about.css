@@ -1,3 +1,13 @@
+/* "Our story" sits on a quiet tea-leaves film, darkened so the text stays readable. */
+.ab-story-section { position: relative; overflow: hidden; background: var(--ink); color: var(--ivory); }
+.ab-story-shade { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(10, 31, 28, 0.92) 35%, rgba(10, 31, 28, 0.7) 100%); }
+.ab-story-section .ab-story { position: relative; }
+.ab-story-section .section-title { color: var(--ivory); }
+.ab-story-section .section-title em { color: var(--gold-soft); }
+.ab-story-section .pg-lead { color: var(--ivory); }
+.ab-story-section .ab-story-text p:not(.eyebrow):not(.pg-lead) { color: rgba(246, 240, 226, 0.78); }
+.ab-story-section .ab-img--small { outline-color: var(--ink); }
+
 .ab-story {
   display: grid;
   grid-template-columns: 1.1fr 1fr;
@@ -45,4 +55,20 @@
 }
 @media (min-width: 640px) and (max-width: 900px) {
   .ab-strengths { grid-template-columns: 1fr 1fr; }
+}
+
+.ab-trust { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; }
+.ab-trust-person { display: flex; align-items: center; gap: 1.75rem; }
+.ab-trust-photo { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; flex: none; }
+.ab-trust-person .section-title { margin: 0.25rem 0; }
+.ab-trust-role { color: var(--text-soft); font-weight: 600; }
+.ab-trust-list { display: grid; gap: 1rem; margin: 0; }
+.ab-trust-list > div { display: grid; grid-template-columns: 140px 1fr; gap: 1rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(10, 31, 28, 0.12); }
+.ab-trust-list dt { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-dark); padding-top: 0.2rem; }
+.ab-trust-list dd { margin: 0; color: var(--ink); }
+.ab-trust-list a { color: var(--teal); }
+.ab-trust-list small { color: var(--text-soft); }
+@media (max-width: 900px) {
+  .ab-trust { grid-template-columns: 1fr; }
+  .ab-trust-list > div { grid-template-columns: 1fr; gap: 0.25rem; }
 }

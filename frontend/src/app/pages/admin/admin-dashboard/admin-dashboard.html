@@ -21,6 +21,7 @@
     <button type="button" class="a-btn a-btn--sm" [class.a-btn--primary]="kind() === 'all'" (click)="kind.set('all')">All forms</button>
     <button type="button" class="a-btn a-btn--sm" [class.a-btn--primary]="kind() === 'planner'" (click)="kind.set('planner')">Planner</button>
     <button type="button" class="a-btn a-btn--sm" [class.a-btn--primary]="kind() === 'contact'" (click)="kind.set('contact')">Contact</button>
+    <button type="button" class="a-btn a-btn--sm" [class.a-btn--primary]="kind() === 'agent'" (click)="kind.set('agent')">Agents</button>
   </div>
   <input class="a-input a-search" type="search" placeholder="Search name, email, notes…" aria-label="Search enquiries"
          [ngModel]="search()" (ngModelChange)="search.set($event)" />
@@ -40,7 +41,7 @@
             <tr class="en-row" (click)="open(l)" [class.is-selected]="selected()?.id === l.id">
               <td class="en-date">{{ l.createdAt ? (l.createdAt | date: 'd MMM y, HH:mm') : '–' }}</td>
               <td><strong>{{ l.firstName }} {{ l.lastName }}</strong><br /><span class="a-muted">{{ l.email }}</span></td>
-              <td><span class="a-pill" [class.a-pill--gold]="l.kind === 'planner'" [class.a-pill--teal]="l.kind === 'contact'">{{ l.kind === 'planner' ? 'Planner' : 'Contact' }}</span></td>
+              <td><span class="a-pill" [class.a-pill--gold]="l.kind === 'planner'" [class.a-pill--teal]="l.kind !== 'planner'">{{ l.kind === 'planner' ? 'Planner' : l.kind === 'agent' ? 'Agent' : 'Contact' }}</span></td>
               <td class="a-muted">{{ l.trip?.month || l.travelDates || l.interest || '–' }}</td>
               <td><span class="a-pill" [class]="'a-pill ' + statusClass(l.status)">{{ l.status }}</span></td>
             </tr>
@@ -59,7 +60,7 @@
     <div class="a-drawer-head">
       <div>
         <h2>{{ l.firstName }} {{ l.lastName }}</h2>
-        <span class="a-muted">{{ l.kind === 'planner' ? 'Journey planner' : 'Contact form' }} · {{ l.createdAt | date: 'd MMM y, HH:mm' }}</span>
+        <span class="a-muted">{{ l.kind === 'planner' ? 'Journey planner' : l.kind === 'agent' ? 'Travel agent form' : 'Contact form' }} · {{ l.createdAt | date: 'd MMM y, HH:mm' }}</span>
       </div>
       <button type="button" class="a-btn a-btn--sm" (click)="close()" aria-label="Close">✕</button>
     </div>

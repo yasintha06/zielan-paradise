@@ -1,0 +1,96 @@
+<!doctype html><html lang="en-GB"><head><meta charset="utf-8"><title>Zeilan Paradise · Sample itinerary</title><style>
+@font-face { font-family: 'Cormorant Garamond'; font-weight: 500; src: url('../../frontend/node_modules/@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-normal.woff2'); }
+@font-face { font-family: 'Cormorant Garamond'; font-weight: 600; src: url('../../frontend/node_modules/@fontsource/cormorant-garamond/files/cormorant-garamond-latin-600-normal.woff2'); }
+@font-face { font-family: 'Cormorant Garamond'; font-style: italic; font-weight: 500; src: url('../../frontend/node_modules/@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-italic.woff2'); }
+@font-face { font-family: 'Manrope'; font-weight: 200 800; src: url('../../frontend/node_modules/@fontsource-variable/manrope/files/manrope-latin-wght-normal.woff2'); }
+:root { --teal: #005B52; --gold: #D4AF37; --gold-dark: #B08F2A; --ink: #0A1F1C; --ivory: #F7F3EA; --sand: #EFE7D6; --soft: #4c5a57; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+@page { size: A4; margin: 0; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { font-family: 'Manrope', sans-serif; color: var(--ink); font-size: 9.4pt; line-height: 1.5; }
+h1, h2, h3 { font-family: 'Cormorant Garamond', serif; font-weight: 500; line-height: 1.1; }
+em { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--teal); }
+.eyebrow { font-size: 7pt; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-dark); }
+.page { width: 210mm; height: 297mm; padding: 14mm 15mm; position: relative; overflow: hidden; page-break-after: always; }
+.page:last-child { page-break-after: auto; }
+
+.cover { height: 92mm; margin: -14mm -15mm 0; position: relative; color: #fff; }
+.cover img.bg { width: 100%; height: 100%; object-fit: cover; }
+.cover::after { content: ''; position: absolute; inset: 0; background: linear-gradient(100deg, rgba(10,31,28,.88) 30%, rgba(10,31,28,.25)); }
+.cover .in { position: absolute; inset: 0; z-index: 1; padding: 13mm 15mm; display: flex; flex-direction: column; justify-content: space-between; }
+.cover .logo { height: 19mm; align-self: flex-start; }
+.cover h1 { font-size: 25pt; max-width: 150mm; }
+.cover h1 em { color: var(--gold); }
+.cover p { max-width: 135mm; font-size: 10pt; opacity: .92; margin-top: 2.5mm; }
+.cover .eyebrow { color: var(--gold); }
+h2 { font-size: 16pt; margin: 4.5mm 0 2mm; }
+table { width: 100%; border-collapse: collapse; font-size: 7.6pt; }
+th { text-align: left; font-size: 6.5pt; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-dark); padding: 0 2mm 1.5mm 0; border-bottom: 1px solid var(--ink); }
+td { padding: 1.1mm 2mm 1.1mm 0; border-bottom: 1px solid #e4dccb; vertical-align: top; }
+td strong { display: block; font-size: 8.3pt; }
+td.len { white-space: nowrap; }
+td span { color: var(--soft); font-size: 7.3pt; }
+td.route { color: var(--soft); font-size: 7.3pt; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8mm; }
+.days { list-style: none; columns: 2; column-gap: 6mm; font-size: 8.2pt; }
+.days li { padding: 1.3mm 0; border-bottom: 1px solid #e4dccb; break-inside: avoid; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5mm; margin-top: 2mm; }
+.steps div { border-top: 2px solid var(--gold); padding-top: 2.5mm; }
+.steps b { font-family: 'Cormorant Garamond', serif; font-size: 14pt; font-weight: 600; display: block; margin-bottom: 1mm; }
+ul.ticks { list-style: none; }
+ul.ticks li { padding: 1mm 0 1mm 4.5mm; position: relative; }
+ul.ticks li::before { content: ''; position: absolute; left: 0; top: 2.6mm; width: 2mm; height: 2mm; background: var(--gold); transform: rotate(45deg); }
+.note { color: var(--soft); font-size: 8pt; margin-top: 2mm; }
+.band { background: var(--sand); margin: 6mm -15mm 0; padding: 5mm 15mm; }
+.contact { position: absolute; left: 15mm; right: 15mm; bottom: 11mm; background: #fff; display: flex; justify-content: space-between; align-items: flex-end;
+  border-top: 1px solid var(--ink); padding-top: 4.5mm; }
+.contact .who { font-family: 'Cormorant Garamond', serif; font-size: 17pt; margin: 1mm 0; }
+.contact .who span { font-family: 'Manrope'; font-size: 8pt; color: var(--soft); margin-left: 3mm; }
+.qr { display: flex; align-items: center; gap: 3mm; font-size: 7.5pt; color: var(--soft); text-align: right; }
+.qr img { width: 24mm; height: 24mm; }
+.photos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.5mm; height: 27mm; margin-top: 4mm; }
+.photos > img { display: block; width: 100%; height: 27mm; min-height: 0; object-fit: cover; border-radius: 1mm; }
+.photos { overflow: hidden; }
+
+.page.flow { height: auto; min-height: 297mm; overflow: visible; padding-bottom: 40mm; }
+.facts { display: flex; gap: 8mm; margin: 5mm 0 2mm; }
+.facts div { border-left: 2px solid var(--gold); padding-left: 3mm; }
+.facts b { display: block; font-size: 10.5pt; }
+.stays { list-style: none; display: flex; flex-wrap: wrap; gap: 2mm; margin-top: 2mm; }
+.stays li { border: 1px solid #e0d6c2; border-radius: 1mm; padding: 1.5mm 3mm; font-size: 8pt; }
+.stays b { font-family: 'Cormorant Garamond'; font-size: 11.5pt; font-weight: 600; margin-right: 2mm; }
+.day { display: grid; grid-template-columns: 11mm 1fr; gap: 3mm; padding: 2.4mm 0; border-bottom: 1px solid #e4dccb; break-inside: avoid; }
+.day .n { width: 9mm; height: 9mm; border-radius: 50%; background: var(--teal); color: #fff; display: grid; place-items: center; font-weight: 700; font-size: 8.5pt; }
+.day h3 { font-size: 12.5pt; }
+.day h3 small { font-family: 'Manrope'; font-size: 7.3pt; color: var(--gold-dark); letter-spacing: .1em; text-transform: uppercase; margin-left: 2.5mm; }
+.day p { color: #33403d; margin-top: .6mm; }
+.sig { background: var(--ink); color: var(--ivory); padding: 4mm 5mm; border-radius: 1mm; margin-top: 4mm; }
+.sig .eyebrow { color: var(--gold); }
+.sig p:last-child { font-family: 'Cormorant Garamond'; font-size: 13pt; margin-top: 1mm; }
+.contact { position: static; margin-top: 8mm; }
+</style></head><body>
+<section class="page flow">
+  <div class="cover"><img class="bg" src="img/ella-nine-arches-02-cover.jpg" alt="">
+    <div class="in"><img class="logo" src="../../frontend/public/logo-light.png" alt="Zeilan Paradise">
+      <div><p class="eyebrow">Sample itinerary · Signature</p><h1>Classic Ceylon &amp; Coast</h1><p>The complete first visit at an easy pace: three nights among the ancient cities, sacred Kandy, two nights in tea country, the mountain village of Ella and three days on a palm-fringed beach to finish.</p></div></div></div>
+  <div class="facts"><div><span class="eyebrow">Length</span><b>14 Days / 13 Nights</b></div>
+    <div><span class="eyebrow">Best time</span><b>December – April</b></div>
+    <div><span class="eyebrow">Ideal for</span><b>First-time couples</b></div>
+    <div><span class="eyebrow">Style</span><b>Private &amp; tailor-made</b></div></div>
+  <p class="note">Every itinerary is a starting point: we tailor the route, hotels and pace to each client.</p>
+  <div class="sig"><p class="eyebrow">Zeilan signature experience</p><p>Village cycling and a home-cooked lunch with a farming family near Sigiriya</p></div>
+  <div class="cols"><div><h2>Highlights</h2><ul class="ticks"><li>Village cycling and a home-cooked lunch with a farming family near Sigiriya</li><li>Cycling the medieval royal city of Polonnaruwa</li><li>A dawn walk to World&#x27;s End in Horton Plains National Park</li><li>Little Adam&#x27;s Peak and the Nine Arches Bridge in Ella</li><li>Optional whale watching from Mirissa with a responsible operator</li></ul></div>
+    <div><h2>Where you stay</h2><ul class="stays"><li><b>Negombo</b>1 night</li><li><b>Sigiriya</b>3 nights</li><li><b>Kandy</b>2 nights</li><li><b>Nuwara Eliya</b>2 nights</li><li><b>Ella</b>2 nights</li><li><b>Mirissa</b>3 nights</li></ul><p class="note">Hotels are chosen with you when we plan the journey.</p></div></div>
+  <h2>Day by day</h2><div class='day'><span class='n'>1</span><div><h3>Welcome to Sri Lanka<small>Negombo</small></h3><p>Your chauffeur-guide meets you at the airport and takes you to your hotel in Negombo, 20 minutes away. Rest after the flight and enjoy a sunset dinner by the sea.</p></div></div><div class='day'><span class='n'>2</span><div><h3>Into the Cultural Triangle<small>Sigiriya</small></h3><p>Drive north through villages and paddy fields to Sigiriya, home to Sri Lanka&#x27;s most famous ancient sites. Settle into your jungle hotel and spend the afternoon by the pool.</p></div></div><div class='day'><span class='n'>3</span><div><h3>Sigiriya Rock and village life<small>Sigiriya</small></h3><p>Climb Sigiriya rock fortress at dawn, passing the frescoes and lion&#x27;s paws on the way to the royal summit. Later, cycle through a nearby village, take a short ride on a traditional bullock cart or catamaran, and enjoy a home-cooked lunch with a local family.</p></div></div><div class='day'><span class='n'>4</span><div><h3>Polonnaruwa and elephant safari<small>Sigiriya</small></h3><p>Explore the medieval royal city of Polonnaruwa by bicycle, with its palaces, temples and the great carved Buddhas of Gal Vihara. In the afternoon, head out on a jeep safari in Minneriya or Kaudulla to watch wild elephants gather by the water.</p></div></div><div class='day'><span class='n'>5</span><div><h3>Dambulla and Kandy<small>Kandy</small></h3><p>Visit the Dambulla cave temple with its ancient statues and painted ceilings, then stop at a spice garden on the way to Kandy. In the evening, attend the ceremony at the Temple of the Sacred Tooth Relic.</p></div></div><div class='day'><span class='n'>6</span><div><h3>Kandy at leisure<small>Kandy</small></h3><p>Stroll through the Royal Botanical Gardens at Peradeniya, famous for their orchids and avenues of giant palms. Walk around Kandy Lake and the town in the afternoon, and watch a traditional Kandyan dance performance in the evening.</p></div></div><div class='day'><span class='n'>7</span><div><h3>Into tea country<small>Nuwara Eliya</small></h3><p>Climb into the hills past waterfalls and tea estates to Nuwara Eliya. Stop at a working tea factory to see how Ceylon tea is made, with a tasting overlooking the plantations.</p></div></div><div class='day'><span class='n'>8</span><div><h3>Horton Plains<small>Nuwara Eliya</small></h3><p>Set off before dawn for Horton Plains National Park and walk the trail to World&#x27;s End, where the land drops away nearly a kilometre to the plains below. Return to Nuwara Eliya for a relaxed afternoon by Gregory Lake.</p></div></div><div class='day'><span class='n'>9</span><div><h3>Through the hills to Ella<small>Ella</small></h3><p>A beautiful drive winds down through tea estates and mountain villages to Ella, with stops at viewpoints along the way. Spend the afternoon exploring the village&#x27;s cafés and enjoying the valley views.</p></div></div><div class='day'><span class='n'>10</span><div><h3>Ella at leisure<small>Ella</small></h3><p>Walk up Little Adam&#x27;s Peak in the cool of the morning for sweeping views of the hills. Later, visit the Nine Arches Bridge and Ravana Falls, or simply relax.</p></div></div><div class='day'><span class='n'>11</span><div><h3>Down to the coast<small>Mirissa</small></h3><p>Leave the hills and drive south to Mirissa, a laid-back beach town lined with palms. Spend the afternoon on the sand.</p></div></div><div class='day'><span class='n'>12</span><div><h3>Whale watching<small>Mirissa</small></h3><p>Join an early-morning boat trip with a responsible operator in search of blue whales and dolphins (optional). Spend the rest of the day on the beach or at Coconut Tree Hill.</p></div></div><div class='day'><span class='n'>13</span><div><h3>Galle Fort<small>Mirissa</small></h3><p>Take a short trip along the coast to Galle Fort, a UNESCO World Heritage Site. Walk the ramparts, see the lighthouse and browse the boutiques, then return to Mirissa for a final sunset.</p></div></div><div class='day'><span class='n'>14</span><div><h3>Departure<small>Departure</small></h3><p>After breakfast, your chauffeur-guide drives you to the airport for your flight home.</p></div></div>
+  <p class="note" style="margin-top:3mm"><b>Optional on request:</b> Swap the day 9 drive for the scenic hill-country train to Ella, subject to seat availability.</p>
+  <div class="cols"><div><h2>Included</h2><ul class="ticks"><li>Private air-conditioned vehicle (car, van or coach, depending on group size) with an English-speaking guide for the whole trip</li><li>All hotels as listed (or similar), with breakfast daily; standard check-in is 12:00</li><li>Meals and experiences named in the itinerary</li><li>Jeep safaris and boat trips named in the itinerary</li><li>Airport meet-and-greet, all transfers, and 1 litre of bottled water per person per day</li><li>A UK-based contact before you travel</li></ul></div>
+    <div><h2>Not included</h2><ul class="ticks"><li>International flights</li><li>Visa</li><li>Travel insurance</li><li>Entrance fees, unless stated</li><li>Tips</li></ul>
+    <h2>Price</h2><p>On request, for your clients’ dates and group size.</p></div></div>
+  
+<div class="contact">
+  <div><p class="eyebrow">Talk to us</p>
+    <p class="who">Yasintha Agampodi<span>Founder</span></p>
+    <p>+44 7818 792995 &nbsp;·&nbsp; WhatsApp<br>info@zeilanparadise.com<br>zeilanparadise.com</p></div>
+  <div class="qr"><img src="qr-agents.svg" alt=""><span>Agent enquiries<br>zeilanparadise.com/agents</span></div>
+</div>
+</section></body></html>

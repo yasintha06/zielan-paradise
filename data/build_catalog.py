@@ -12,6 +12,10 @@ import os
 import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+
+# Bump when catalogue content is rewritten: "Import catalogue" in the admin then replaces database
+# copies saved under an older revision (items edited in the admin keep the revision they were imported with).
+CATALOG_REV = 2
 ROOT = os.path.dirname(HERE)
 
 
@@ -30,6 +34,7 @@ def clean_tour(t):
     t.pop('link', None)
     t.pop('durationLabel', None)
     t.setdefault('isActive', True)
+    t['catalogRev'] = CATALOG_REV
     return t
 
 
@@ -39,7 +44,10 @@ destinations = []
 for d in load('destinations.json'):
     d = dict(d)
     d.setdefault('id', 'dest-' + slug(d['name']))
+    d['catalogRev'] = CATALOG_REV
     destinations.append(d)
+with open(os.path.join(HERE, 'retired.json'), encoding='utf8') as f:
+    retired = json.load(f)
 
 ts = f"""/**
  * Built-in copy of the tour and destination catalogue.
@@ -66,6 +74,10 @@ import json
 CATALOG_TOURS = json.loads({json.dumps(json.dumps(round_tours + day_tours, ensure_ascii=False), ensure_ascii=False)})
 
 CATALOG_DESTINATIONS = json.loads({json.dumps(json.dumps(destinations, ensure_ascii=False), ensure_ascii=False)})
+
+# Old catalogue ids that "Import catalogue" hides (never deletes).
+RETIRED_TOUR_IDS = {retired['tours']!r}
+RETIRED_DESTINATION_IDS = {retired['destinations']!r}
 '''
 with open(os.path.join(ROOT, 'backend', 'catalog_data.py'), 'w', encoding='utf8') as f:
     f.write(py)
@@ -73,7 +85,7 @@ with open(os.path.join(ROOT, 'backend', 'catalog_data.py'), 'w', encoding='utf8'
 # ── Sitemap ──
 journal_ts = open(os.path.join(ROOT, 'frontend', 'src', 'app', 'data', 'journal.ts'), encoding='utf8').read()
 articles = re.findall(r"slug: '([^']+)'", journal_ts)
-pages = ['', 'round-tours', 'day-tours', 'destinations', 'experiences', 'tailor-made', 'about', 'journal', 'faq', 'contact',
+pages = ['', 'round-tours', 'day-tours', 'destinations', 'experiences', 'tailor-made', 'about', 'agents', 'journal', 'faq', 'contact',
          'privacy', 'terms-and-conditions']
 pages += [f"tours/{t['id']}" for t in round_tours + day_tours if t.get('isActive', True)]
 pages += [f'journal/{slug}' for slug in articles]

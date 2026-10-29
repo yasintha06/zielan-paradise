@@ -1,57 +1,91 @@
 [
   {
-    "id": "day-tour-yala",
-    "title": "Yala National Park Safari",
-    "category": "wildlife",
+    "id": "day-tour-colombo-city",
+    "title": "Colombo City & Culture",
+    "category": "cultural",
+    "type": "day",
+    "duration": "Half Day",
+    "badge": {
+      "text": "Half Day",
+      "class": "teal"
+    },
+    "image": "images/tours/daytour-colombo-galle-face-01.jpg",
+    "description": "Colombo's temples, markets and colonial streets in an easy half day: Gangaramaya Temple, Pettah market by tuk-tuk, the Old Dutch Hospital and sunset at Galle Face Green.",
+    "highlights": [
+      "Gangaramaya Temple",
+      "Pettah market by tuk-tuk",
+      "Old Dutch Hospital",
+      "Sunset at Galle Face Green"
+    ],
+    "bestTime": "All year",
+    "guests": "Private, any group size",
+    "price": null,
+    "pricingType": "bespoke",
+    "priceType": "Bespoke Quote",
+    "priceDisplay": "Tailor-made",
+    "sortOrder": 1
+  },
+  {
+    "id": "day-tour-kandy-temple-tooth",
+    "title": "Kandy & the Temple of the Tooth",
+    "category": "cultural",
     "type": "day",
     "duration": "Full Day",
     "badge": {
       "text": "Full Day",
       "class": "teal"
     },
-    "image": "images/tours/day-tour-yala.jpg",
-    "description": "An exclusive private 4x4 safari through Sri Lanka's premier wildlife sanctuary, accompanied by an experienced tracker.",
-    "highlights": [
-      "Private open-top jeep",
-      "Leopard & elephant tracking",
-      "Picnic refreshment setup"
+    "image": "images/tours/kandy-temple-tooth-01.jpg",
+    "gallery": [
+      "images/tours/kandy-lake-view-01.jpg"
     ],
-    "startTime": "5:30 AM (Morning) or 2:00 PM (Afternoon)",
-    "guests": "Private (1 – 6 Guests)",
+    "description": "A full day from Colombo or Negombo to Sri Lanka's hill capital, with a spice garden on the way, the Temple of the Sacred Tooth Relic, Kandy Lake and the Royal Botanical Gardens at Peradeniya.",
+    "highlights": [
+      "Spice garden on the way",
+      "Temple of the Sacred Tooth Relic",
+      "Kandy Lake",
+      "Peradeniya Botanical Gardens"
+    ],
+    "bestTime": "All year",
+    "guests": "Private, any group size",
     "price": null,
     "pricingType": "bespoke",
     "priceType": "Bespoke Quote",
     "priceDisplay": "Tailor-made",
-    "link": "contact.html"
+    "sortOrder": 2
   },
   {
-    "id": "day-tour-sigiriya",
-    "title": "Sigiriya Citadel & Dambulla Cave Temples",
+    "id": "day-tour-sigiriya-dambulla",
+    "title": "Sigiriya & Dambulla",
     "category": "cultural",
     "type": "day",
     "duration": "Full Day",
     "badge": {
-      "text": "Full Day",
+      "text": "Long day",
       "class": ""
     },
-    "image": "images/tours/day-tour-sigiriya.jpg",
-    "description": "Ascend the ancient 5th-century Lion Rock fortress and explore the painted cave sanctuaries of Dambulla in a single cultural loop.",
-    "highlights": [
-      "UNESCO Sigiriya Fortress",
-      "Dambulla Cave Murals",
-      "Traditional village lunch"
+    "image": "images/tours/daytour-sigiriya-frescoes-01.jpg",
+    "gallery": [
+      "images/tours/sigiriya-rock-01.jpg",
+      "images/tours/daytour-dambulla-golden-buddha-01.jpg"
     ],
-    "startTime": "7:00 AM",
-    "guests": "Private (1 – 8 Guests)",
+    "description": "A long, early-starting day from Colombo or Negombo: climb Sigiriya Rock, share a village lunch, then visit the Dambulla cave temple.",
+    "highlights": [
+      "Early start for Sigiriya Rock",
+      "Village lunch",
+      "Dambulla cave temple"
+    ],
+    "bestTime": "All year",
+    "guests": "Private, any group size",
     "price": null,
     "pricingType": "bespoke",
     "priceType": "Bespoke Quote",
     "priceDisplay": "Tailor-made",
-    "link": "contact.html"
+    "sortOrder": 3
   },
   {
-    "id": "day-tour-whale",
-    "title": "Mirissa Ocean Whale Expedition",
+    "id": "day-tour-galle-fort-walk",
+    "title": "Galle Fort Walking Tour",
     "category": "coast",
     "type": "day",
     "duration": "Half Day",
@@ -59,166 +93,145 @@
       "text": "Half Day",
       "class": "teal"
     },
-    "image": "images/tours/day-tour-whale.jpg",
-    "description": "Set sail at dawn into the deep southern waters to observe migrating blue whales, sperm whales, and spinner dolphins.",
-    "highlights": [
-      "Blue whale & dolphin sightings",
-      "Marine safety equipment",
-      "Refreshments at sea"
+    "image": "images/tours/galle-fort-street-01.jpg",
+    "gallery": [
+      "images/tours/daytour-galle-clock-tower-01.jpg",
+      "images/tours/daytour-galle-cafe-01.jpg",
+      "images/tours/galle-ramparts-sunset-01.jpg"
     ],
-    "startTime": "6:00 AM (Seasonal: Nov – Apr)",
-    "guests": "2 – 8 Guests",
+    "description": "A half-day walk from Galle, Unawatuna or Mirissa around the UNESCO-listed fort: the ramparts, lighthouse, Dutch church, boutiques and cafés, finishing with sunset on the walls.",
+    "highlights": [
+      "The ramparts and lighthouse",
+      "The Dutch church",
+      "Boutiques and cafés",
+      "Sunset on the walls"
+    ],
+    "bestTime": "December – April",
+    "guests": "Private, any group size",
     "price": null,
     "pricingType": "bespoke",
     "priceType": "Bespoke Quote",
     "priceDisplay": "Tailor-made",
-    "link": "contact.html"
+    "sortOrder": 4
   },
   {
-    "id": "day-tour-kandy",
-    "title": "Kandy Royal Heritage & Tea Trails",
-    "category": "cultural",
+    "id": "day-tour-udawalawe-safari",
+    "title": "Udawalawe Elephant Safari",
+    "category": "wildlife",
     "type": "day",
     "duration": "Full Day",
     "badge": {
       "text": "Full Day",
-      "class": ""
+      "class": "teal"
     },
-    "image": "images/tours/day-tour-kandy.jpg",
-    "description": "Experience the sacred rituals of the Temple of the Tooth, wander the Royal Botanic Gardens, and explore a working mountain tea estate.",
-    "highlights": [
-      "Temple of the Sacred Tooth Relic",
-      "Peradeniya Botanic Gardens",
-      "Orthodox tea factory tour & tasting"
+    "image": "images/tours/daytour-udawalawe-jeep-01.jpg",
+    "gallery": [
+      "images/tours/udawalawe-transit-home-01.jpg",
+      "images/tours/udawalawe-elephants-01.jpg",
+      "images/tours/daytour-udawalawe-reservoir-01.jpg"
     ],
-    "startTime": "8:00 AM",
-    "guests": "Private (1 – 8 Guests)",
+    "description": "A full day from Mirissa or Galle: feeding time at the Elephant Transit Home, then an afternoon jeep safari among the wild herds of Udawalawe.",
+    "highlights": [
+      "Feeding time at the Elephant Transit Home",
+      "Afternoon jeep safari",
+      "Wild elephant herds"
+    ],
+    "bestTime": "All year",
+    "guests": "Private, any group size",
     "price": null,
     "pricingType": "bespoke",
     "priceType": "Bespoke Quote",
     "priceDisplay": "Tailor-made",
-    "link": "contact.html"
+    "sortOrder": 5
   },
   {
-    "id": "day-tour-galle",
-    "title": "Galle Fort & Southern Maritime Heritage",
+    "id": "day-tour-mirissa-whales",
+    "title": "Whale Watching from Mirissa",
     "category": "coast",
     "type": "day",
-    "duration": "Full Day",
+    "duration": "Half Day",
     "badge": {
-      "text": "Full Day",
-      "class": ""
+      "text": "December – April",
+      "class": "teal"
     },
-    "image": "images/tours/day-tour-galle.jpg",
-    "description": "Stroll the 17th-century ramparts of this living Dutch citadel, cruise the coastal mangrove lagoons, and visit a sea turtle sanctuary.",
-    "highlights": [
-      "UNESCO Galle Fort walking tour",
-      "Madu Ganga river safari",
-      "Marine turtle conservation project"
+    "image": "images/tours/daytour-mirissa-blue-whale-01.jpg",
+    "gallery": [
+      "images/tours/daytour-mirissa-harbour-01.jpg",
+      "images/tours/activity-whale-watching-01.jpg",
+      "images/tours/mirissa-blue-whale-01.jpg"
     ],
-    "startTime": "8:30 AM",
-    "guests": "Private (1 – 6 Guests)",
+    "description": "An early-morning boat with a responsible operator in search of blue whales, with breakfast on board and the afternoon free on the beach. Runs December to April only.",
+    "highlights": [
+      "Early boat with a responsible operator",
+      "Breakfast on board",
+      "Beach afternoon"
+    ],
+    "bestTime": "December – April only",
+    "startTime": "Early morning",
+    "guests": "Private, any group size",
     "price": null,
     "pricingType": "bespoke",
     "priceType": "Bespoke Quote",
     "priceDisplay": "Tailor-made",
-    "link": "contact.html"
+    "sortOrder": 6
   },
   {
-    "id": "day-tour-tea",
-    "title": "Nuwara Eliya Highlands & High Tea",
-    "category": "highlands",
+    "id": "day-tour-madu-ganga-turtles",
+    "title": "Madu Ganga River & Turtle Conservation",
+    "category": "coast",
     "type": "day",
-    "duration": "Full Day",
+    "duration": "Half Day",
     "badge": {
-      "text": "Full Day",
+      "text": "Half Day",
       "class": "teal"
     },
-    "image": "images/tours/day-tour-tea.jpg",
-    "description": "Journey into the misty tea country, walk through heritage rolling estates, and experience classic Ceylon high tea.",
-    "highlights": [
-      "Colonial architecture of 'Little England'",
-      "Factory processing masterclass",
-      "Fine highland tea tasting"
+    "image": "images/tours/bentota-madu-ganga-01.jpg",
+    "gallery": [
+      "images/tours/water-monitor-01.jpg",
+      "images/tours/activity-turtle-watching-01.jpg"
     ],
-    "startTime": "7:30 AM",
-    "guests": "Private (1 – 6 Guests)",
+    "description": "A half day from Bentota: a boat through the mangroves of the Madu Ganga to a cinnamon island, then a visit to a turtle conservation project. Runs all year.",
+    "highlights": [
+      "Boat through the mangroves",
+      "Cinnamon island",
+      "Turtle conservation project"
+    ],
+    "bestTime": "December – April",
+    "guests": "Private, any group size",
     "price": null,
     "pricingType": "bespoke",
     "priceType": "Bespoke Quote",
     "priceDisplay": "Tailor-made",
-    "link": "contact.html"
+    "sortOrder": 7
   },
   {
-    "id": "day-tour-ella",
-    "title": "Ella: Nine Arches & Little Adam's Peak",
-    "category": "highlands",
+    "id": "day-tour-minneriya-kaudulla-safari",
+    "title": "Minneriya or Kaudulla Elephant Safari",
+    "category": "wildlife",
     "type": "day",
-    "duration": "Full Day",
+    "duration": "Half Day",
     "badge": {
-      "text": "Full Day",
+      "text": "Half Day",
       "class": "teal"
     },
-    "image": "images/destinations/ella.jpg",
-    "description": "An easy hike to Little Adam's Peak for views across Ella Gap, then the Nine Arches Bridge as a train crosses.",
-    "highlights": [
-      "Little Adam's Peak",
-      "Nine Arches Bridge",
-      "Ravana Falls"
+    "image": "images/tours/daytour-minneriya-gathering-01.jpg",
+    "gallery": [
+      "images/tours/family-safari-elephants-01.jpg",
+      "images/tours/activity-jeep-safari-01.jpg"
     ],
-    "startTime": "7:00 AM",
-    "guests": "Private (1 – 6 Guests)",
+    "description": "An afternoon jeep safari from Sigiriya, Habarana or Kandy. Your guide picks the park where the elephant herds are gathering; the great gathering peaks from July to October.",
+    "highlights": [
+      "Afternoon jeep safari",
+      "Your guide picks the park where the herds are",
+      "Peak elephant gathering July – October"
+    ],
+    "bestTime": "All year",
+    "startTime": "Afternoon",
+    "guests": "Private, any group size",
     "price": null,
     "pricingType": "bespoke",
     "priceType": "Bespoke Quote",
-    "priceDisplay": "Tailor-made"
-  },
-  {
-    "id": "day-tour-dambulla",
-    "title": "Dambulla Cave Temples & Village Life",
-    "category": "cultural",
-    "type": "day",
-    "duration": "Full Day",
-    "badge": {
-      "text": "Full Day",
-      "class": "teal"
-    },
-    "image": "images/destinations/dambulla.jpg",
-    "description": "The painted cave temples of Dambulla, then a village afternoon with a bullock-cart ride and a home-cooked lunch.",
-    "highlights": [
-      "Dambulla cave temples",
-      "Bullock-cart ride",
-      "Village lunch"
-    ],
-    "startTime": "8:00 AM",
-    "guests": "Private (1 – 6 Guests)",
-    "price": null,
-    "pricingType": "bespoke",
-    "priceType": "Bespoke Quote",
-    "priceDisplay": "Tailor-made"
-  },
-  {
-    "id": "day-tour-anuradhapura",
-    "title": "Anuradhapura Sacred City",
-    "category": "cultural",
-    "type": "day",
-    "duration": "Full Day",
-    "badge": {
-      "text": "Full Day",
-      "class": "teal"
-    },
-    "image": "images/destinations/anuradhapura.jpg",
-    "description": "By bicycle or vehicle through Sri Lanka's first great capital: vast stupas, the sacred Bodhi tree and ancient reservoirs.",
-    "highlights": [
-      "Ruwanwelisaya stupa",
-      "Sri Maha Bodhi tree",
-      "Cycling the ruins"
-    ],
-    "startTime": "7:30 AM",
-    "guests": "Private (1 – 6 Guests)",
-    "price": null,
-    "pricingType": "bespoke",
-    "priceType": "Bespoke Quote",
-    "priceDisplay": "Tailor-made"
+    "priceDisplay": "Tailor-made",
+    "sortOrder": 8
   }
 ]

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, NgZone, OnDestroy, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
@@ -23,11 +23,21 @@ export class PageHeroComponent implements AfterViewInit, OnDestroy {
   @Input() subtitle = '';
   @Input() crumbs: Crumb[] = [];
   @Input() size: 'tall' | 'medium' = 'medium';
+  /** Optional looping clip from /video ({name}-720|1080.mp4); the image stays as poster and fallback. */
+  @Input() video = '';
 
   private el = inject(ElementRef<HTMLElement>);
   private zone = inject(NgZone);
   private motion = inject(MotionService);
   private ctx: gsap.Context | null = null;
+
+  /** Photos only for reduced motion or data-saver, like the homepage film. */
+  canPlayVideo = signal(!this.motion.reducedMotion && !(navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData);
+  playing = signal(false);
+
+  get videoSrc(): string {
+    return `video/${this.video}-${window.innerWidth < 900 ? 720 : 1080}.mp4`;
+  }
 
   ngAfterViewInit(): void {
     if (this.motion.reducedMotion) return;
@@ -37,10 +47,10 @@ export class PageHeroComponent implements AfterViewInit, OnDestroy {
         const split = SplitText.create(root.querySelector('.ph-title'), { type: 'lines', mask: 'lines' });
         gsap.set(split.lines, { yPercent: 110 });
         gsap.set('.ph-fade', { opacity: 0, y: 24 });
-        gsap.set('.ph-media img', { scale: 1.18 });
+        gsap.set('.ph-media img, .ph-media video', { scale: 1.18 });
         this.motion.introDone.then(() => {
           gsap.timeline({ defaults: { ease: 'expo.out' } })
-            .to('.ph-media img', { scale: 1.06, duration: 2.2 }, 0)
+            .to('.ph-media img, .ph-media video', { scale: 1.06, duration: 2.2 }, 0)
             .to(split.lines, { yPercent: 0, duration: 1.4, stagger: 0.1 }, 0.1)
             .to('.ph-fade', { opacity: 1, y: 0, duration: 1.2, stagger: 0.08 }, 0.4);
         });

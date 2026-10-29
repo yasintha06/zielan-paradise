@@ -1,6 +1,11 @@
-<footer class="zp-footer">
-  <div class="container">
-    @if (showCta()) {
+<footer class="zp-footer" [class.zp-footer--film]="showCta() && isHome()">
+  @if (showCta()) {
+  <div class="zp-footer-cta-wrap">
+    @if (isHome()) {
+      <app-bg-video class="zp-footer-cta-bg" name="tea-pickers" />
+      <div class="zp-footer-cta-shade"></div>
+    }
+    <div class="container">
     <div class="zp-footer-cta">
       <p class="eyebrow">Begin the conversation</p>
       <h2 class="zp-footer-title">Let's design your<br /><em>Sri Lankan story.</em></h2>
@@ -9,8 +14,11 @@
         <a [href]="site.whatsappHref" target="_blank" rel="noopener noreferrer" class="btn btn-ghost-light btn-lg">WhatsApp Us</a>
       </div>
     </div>
-    }
+    </div>
+  </div>
+  }
 
+  <div class="container">
     <div class="zp-footer-grid">
       <div class="zp-footer-brand">
         <img src="logo-light.png" alt="Zeilan Paradise" width="400" height="341" loading="lazy" />
@@ -32,6 +40,7 @@
         <h3>Company</h3>
         <ul>
           <li><a routerLink="/about">About Us</a></li>
+          <li><a routerLink="/agents">For Travel Agents</a></li>
           <li><a routerLink="/journal">Journal</a></li>
           <li><a routerLink="/faq">FAQ</a></li>
           <li><a routerLink="/contact">Contact</a></li>

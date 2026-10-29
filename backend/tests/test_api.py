@@ -49,7 +49,7 @@ def test_tours_are_seeded_and_filterable(client):
     rounds = client.get('/api/tours?type=round').get_json()
     days = client.get('/api/tours?type=day').get_json()
     assert len(rounds) == 10 and all(t['type'] == 'round' for t in rounds)
-    assert len(days) == 9
+    assert len(days) == 8
     assert all('_id' not in t for t in rounds)
 
 
@@ -85,7 +85,7 @@ def test_admin_routes_require_login(client, method, url):
 
 def test_old_unprotected_tour_routes_are_gone(client):
     assert client.post('/api/tours', json={'title': 'x'}).status_code in (404, 405)
-    assert client.delete('/api/tours/tour-grand-island-odyssey').status_code in (404, 405)
+    assert client.delete('/api/tours/tour-grand-explorer').status_code in (404, 405)
 
 
 def test_login_locks_after_repeated_failures(client):
@@ -172,12 +172,30 @@ def test_tour_crud_and_hidden_tours(client, auth_headers):
     assert client.post('/api/admin/tours', headers=auth_headers, json={'title': ''}).status_code == 400
 
 
-def test_catalog_import_only_adds_missing(client, auth_headers):
+def test_catalog_import_adds_missing_and_keeps_current_edits(client, auth_headers):
     client.delete('/api/admin/tours/tour-east-coast-summer', headers=auth_headers)
-    client.put('/api/admin/tours/tour-grand-island-odyssey', headers=auth_headers, json={'title': 'My Edited Title'})
+    client.put('/api/admin/tours/tour-grand-explorer', headers=auth_headers, json={'title': 'My Edited Title'})
     res = client.post('/api/admin/catalog/import', headers=auth_headers).get_json()
     assert res['addedTours'] == ['East Coast Summer Escape']
-    assert client.get('/api/tours/tour-grand-island-odyssey').get_json()['title'] == 'My Edited Title'
+    assert client.get('/api/tours/tour-grand-explorer').get_json()['title'] == 'My Edited Title'
+
+
+def test_catalog_import_refreshes_old_copies_and_hides_retired(client, auth_headers):
+    db = db_module.db
+    # The live database as it was before the October 2026 rewrite: old content, no catalogRev.
+    db.tours.update_one({'id': 'tour-ayurveda-wellness'}, {'$set': {'title': 'Old title'}, '$unset': {'catalogRev': ''}})
+    db.tours.insert_one({'id': 'tour-grand-island-odyssey', 'title': 'The Grand Island Odyssey', 'type': 'round'})
+    db.tours.insert_one({'id': 'tour-my-own', 'title': 'Added in the admin', 'type': 'round'})
+    db.destinations.insert_one({'name': 'Galle Fort', 'tagline': 'old'})
+    res = client.post('/api/admin/catalog/import', headers=auth_headers).get_json()
+    assert res['updatedTours'] == ['Ayurveda & Wellness Retreat']
+    assert res['hiddenTours'] == ['The Grand Island Odyssey'] and res['hiddenDestinations'] == ['Galle Fort']
+    assert client.get('/api/tours/tour-grand-island-odyssey').status_code == 404
+    assert db.tours.count_documents({'id': 'tour-grand-island-odyssey'}) == 1  # hidden, not deleted
+    assert client.get('/api/tours/tour-my-own').status_code == 200
+    assert client.get('/api/tours/tour-ayurveda-wellness').get_json()['title'] == 'Ayurveda & Wellness Retreat'
+    again = client.post('/api/admin/catalog/import', headers=auth_headers).get_json()
+    assert not any(again.values())
 
 
 def test_destination_crud_including_legacy_without_id(client, auth_headers):
@@ -202,7 +220,7 @@ def test_quotes_crud(client, auth_headers):
 def test_overview_counts(client, auth_headers):
     client.post('/api/enquiries', json={'firstName': 'Jo', 'email': 'jo@example.com'})
     body = client.get('/api/admin/overview', headers=auth_headers).get_json()
-    assert body['enquiries'] == 1 and body['enquiriesByStatus'] == {'New': 1} and body['tours'] == 19
+    assert body['enquiries'] == 1 and body['enquiriesByStatus'] == {'New': 1} and body['tours'] == 18
 
 
 def test_login_rejects_non_object_json(client):
@@ -225,3 +243,78 @@ def test_email_settings_accept_smtp_password(monkeypatch):
     monkeypatch.setenv('SMTP_PASSWORD', 'secret')
     monkeypatch.setenv('ADMIN_NOTIFICATION_EMAIL', 'info@example.com')
     assert enquiries.email_configured()
+
+
+# ── Enquiry emails (nothing is really sent: the SMTP step is replaced) ───────────
+@pytest.fixture()
+def outbox(monkeypatch):
+    """Runs the email step immediately and collects the messages instead of sending them."""
+    from routes import enquiries
+    sent = []
+
+    class NowThread:
+        def __init__(self, target, args=(), daemon=None):
+            self.target, self.args = target, args
+
+        def start(self):
+            self.target(*self.args)
+
+    for k in ('ADMIN_NOTIFICATION_EMAIL', 'ADMIN_EMAIL'):
+        monkeypatch.delenv(k, raising=False)
+    monkeypatch.setattr(enquiries.threading, 'Thread', NowThread)
+    monkeypatch.setattr(enquiries, '_send', lambda messages: sent.extend(messages))
+    enquiries._confirm_log.clear()
+    return sent
+
+
+def _text(msg):
+    part = msg.get_payload()[0] if msg.is_multipart() else msg
+    return part.get_payload(decode=True).decode('utf8')
+
+
+def test_contact_enquiry_emails_the_business_only(client, outbox):
+    res = client.post('/api/enquiries', json={'type': 'contact', 'firstName': 'Jane', 'lastName': 'Doe',
+                                              'email': 'jane@example.com', 'message': 'Two weeks in March'})
+    assert res.status_code == 201
+    assert len(outbox) == 1
+    msg = outbox[0]
+    assert msg['To'] == 'info@zeilanparadise.com' and msg['Reply-To'] == 'jane@example.com'
+    assert msg['Subject'] == 'Enquiry: Jane Doe' and 'Two weeks in March' in _text(msg)
+
+
+def test_agent_enquiry_is_saved_and_confirmed(client, auth_headers, outbox):
+    res = client.post('/api/enquiries', json={
+        'type': 'agent', 'firstName': 'Sam Agent', 'company': 'Example Travel Ltd', 'email': 'sam@agency.example',
+        'phone': '+44 20 0000 0000', 'message': 'Classic Ceylon & Coast, 4 guests, February'})
+    assert res.status_code == 201
+    lead = client.get('/api/admin/inquiries', headers=auth_headers).get_json()[0]
+    assert lead['kind'] == 'agent' and lead['company'] == 'Example Travel Ltd'
+
+    notification, confirmation = outbox
+    assert notification['To'] == 'info@zeilanparadise.com'
+    assert notification['Subject'] == 'Agent enquiry: Sam Agent (Example Travel Ltd)'
+    assert 'Example Travel Ltd' in _text(notification) and 'Travel agent form' in _text(notification)
+    assert confirmation['To'] == 'sam@agency.example' and confirmation['Reply-To'] == 'info@zeilanparadise.com'
+    assert confirmation.get_content_type() == 'text/plain'
+    body = _text(confirmation)
+    assert body.startswith('Dear Sam Agent,') and 'Classic Ceylon' not in body  # never echoes the message
+
+
+def test_agent_enquiry_needs_a_company(client, outbox):
+    res = client.post('/api/enquiries', json={'type': 'agent', 'firstName': 'Sam', 'email': 'sam@agency.example'})
+    assert res.status_code == 400 and outbox == []
+
+
+def test_agent_honeypot_sends_nothing(client, auth_headers, outbox):
+    res = client.post('/api/enquiries', json={'type': 'agent', 'firstName': 'Bot', 'company': 'X',
+                                              'email': 'victim@example.com', 'website': 'spam.com'})
+    assert res.status_code == 201 and outbox == []
+    assert client.get('/api/admin/inquiries', headers=auth_headers).get_json() == []
+
+
+def test_agent_confirmations_are_capped(client, outbox):
+    for _ in range(5):
+        client.post('/api/enquiries', json={'type': 'agent', 'firstName': 'Sam', 'company': 'X',
+                                            'email': 'same@agency.example'})
+    confirmations = [m for m in outbox if m['To'] == 'same@agency.example']
+    assert len(confirmations) == 3 and len(outbox) == 8  # every enquiry still reaches the business

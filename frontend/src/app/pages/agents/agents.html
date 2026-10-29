@@ -1,0 +1,135 @@
+<app-page-hero
+  image="img/sigiriya-rock-01-2000.webp"
+  alt="Sigiriya rock rising above the forest"
+  eyebrow="For travel agents"
+  title="Private Sri Lanka journeys"
+  titleEm="for your clients"
+  [subtitle]="'Zeilan Paradise is an inbound Sri Lanka tour business for UK travellers and travel agents. We offer ' + roundCount() + ' private round tours and ' + dayCount() + ' day tours.'"
+  [crumbs]="[{ label: 'For travel agents' }]">
+  <button type="button" class="btn btn-gold" (click)="toForm()">Send an agent enquiry</button>
+</app-page-hero>
+
+<section class="pg-section">
+  <div class="container ag-intro">
+    <div appScrollReveal>
+      <p class="eyebrow">Who we work with</p>
+      <h2 class="section-title">Travel agents and <em>their clients</em></h2>
+    </div>
+    <div class="ag-intro-text" appScrollReveal>
+      <p class="pg-lead">We work with travel agents who are planning Sri Lanka for UK travellers, and with travellers who book with us directly.</p>
+      <p>Every journey is private. Our {{ roundCount() }} round tours and {{ dayCount() }} day tours are starting points: we tailor the route, hotels and pace to each client.</p>
+      <div class="ag-intro-links">
+        <a routerLink="/round-tours" class="pg-link">See the round tours <span aria-hidden="true">&rarr;</span></a>
+        <a routerLink="/day-tours" class="pg-link">See the day tours <span aria-hidden="true">&rarr;</span></a>
+        @if (hasFactSheet()) {
+          <a [href]="agents.factSheetPdf" class="btn btn-teal btn-sm" download>Agent fact sheet (PDF)</a>
+        }
+        @if (hasSamplePdf()) {
+          <a [href]="agents.samplePdf" class="btn btn-outline-teal btn-sm" download>Download sample itinerary (PDF)</a>
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="pg-section pg-section--sand">
+  <div class="container">
+    <header class="pg-head" appScrollReveal>
+      <p class="eyebrow">How it works</p>
+      <h2 class="section-title">Three <em>simple steps</em></h2>
+    </header>
+    <ol class="ag-steps">
+      @for (s of steps; track s.title; let i = $index) {
+        <li appScrollReveal [style.transition-delay.ms]="i * 100">
+          <span class="ag-num">0{{ i + 1 }}</span>
+          <h3>{{ s.title }}</h3>
+          <p>{{ s.text }}</p>
+        </li>
+      }
+    </ol>
+    @if (agents.responseTime) { <p class="ag-note" appScrollReveal>{{ agents.responseTime }}</p> }
+  </div>
+</section>
+
+<section class="pg-section">
+  <div class="container ag-cols">
+    <div appScrollReveal>
+      <p class="eyebrow">What a quote contains</p>
+      <h2 class="section-title">Everything your clients <em>need to decide</em></h2>
+      <ul class="ticks ag-ticks">
+        @for (c of quoteContents; track c) { <li>{{ c }}</li> }
+      </ul>
+      @if (agents.ratesPolicy) { <p class="ag-note">{{ agents.ratesPolicy }}</p> }
+    </div>
+    <div appScrollReveal>
+      <p class="eyebrow">Questions from agents</p>
+      <ul class="ag-faq">
+        @for (f of faqs; track f.q; let i = $index) {
+          <li [class.is-open]="open() === i">
+            <button type="button" (click)="toggle(i)" [attr.aria-expanded]="open() === i" [attr.aria-controls]="'ag-faq-' + i">
+              <span>{{ f.q }}</span><i aria-hidden="true"></i>
+            </button>
+            <div class="ag-faq-answer" [id]="'ag-faq-' + i"><div><p>{{ f.a }}</p></div></div>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="pg-section pg-section--sand" id="agent-form">
+  <div class="container ct-layout">
+    <div class="ct-form" appScrollReveal>
+      @if (submitted()) {
+        <div class="ct-done">
+          <p class="eyebrow">Enquiry sent</p>
+          <h2 class="section-title">Thank you, {{ form.name }}.<br /><em>We have your enquiry.</em></h2>
+          <p>We will reply to <strong>{{ form.email }}</strong>. A confirmation email is on its way to that address.</p>
+          <button type="button" class="btn btn-outline-teal" (click)="reset()">Send another enquiry</button>
+        </div>
+      } @else {
+        <h2 class="section-title">Agent <em>enquiry</em></h2>
+        <form (ngSubmit)="submit()" novalidate class="ct-grid">
+          <input class="ct-hp" type="text" name="website" [(ngModel)]="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <label class="ct-field"><span>Your name *</span>
+            <input type="text" name="name" autocomplete="name" required [(ngModel)]="form.name" /></label>
+          <label class="ct-field"><span>Company *</span>
+            <input type="text" name="company" autocomplete="organization" required [(ngModel)]="form.company" /></label>
+          <label class="ct-field"><span>Email *</span>
+            <input type="email" name="email" autocomplete="email" required [(ngModel)]="form.email" /></label>
+          <label class="ct-field"><span>Phone</span>
+            <input type="tel" name="phone" autocomplete="tel" [(ngModel)]="form.phone" /></label>
+          <label class="ct-field ct-field--full"><span>Which tours or dates?</span>
+            <textarea name="message" rows="5" [(ngModel)]="form.message"
+                      placeholder="e.g. Classic Ceylon & Coast for 4 clients in February"></textarea></label>
+
+          @if (error()) {
+            <div class="ct-error ct-field--full" role="alert">
+              <p>{{ error() }}</p>
+              @if (sendFailed()) {
+                <div class="ct-error-actions">
+                  <a class="btn btn-outline-teal btn-sm" [href]="mailLink()">Send by email instead</a>
+                </div>
+              }
+            </div>
+          }
+
+          <div class="ct-field--full ct-submit">
+            <button type="submit" class="btn btn-gold btn-lg" [disabled]="submitting()" appMagnetic>
+              {{ submitting() ? 'Sending…' : 'Send enquiry' }}
+            </button>
+            <p>We only use your details to reply to you. <a routerLink="/privacy">Privacy policy</a></p>
+          </div>
+        </form>
+      }
+    </div>
+
+    <aside class="ct-side">
+      <dl class="ct-list" appScrollReveal>
+        <div><dt>Contact</dt><dd>{{ business.founder.name }}<br /><small>{{ business.founder.role }}</small></dd></div>
+        <div><dt>Email</dt><dd><a [href]="'mailto:' + site.email">{{ site.email }}</a></dd></div>
+        <div><dt>Call</dt><dd><a [href]="site.phoneHref">{{ site.phoneDisplay }}</a></dd></div>
+      </dl>
+    </aside>
+  </div>
+</section>

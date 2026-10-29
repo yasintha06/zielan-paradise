@@ -7,7 +7,7 @@
         @for (c of film; track c.video; let i = $index) {
           <figure class="zp-hero-slide" [class.is-active]="i === activeSlide()">
             <video muted playsinline disablepictureinpicture preload="none" aria-hidden="true"
-                   [attr.poster]="'video/' + c.video + '.webp'" (ended)="nextClip()" (error)="filmFailed()"></video>
+                   [attr.poster]="isNearClip(i) ? 'video/' + c.video + '.webp' : null" (ended)="nextClip()" (error)="filmFailed()"></video>
           </figure>
         }
       } @else {
@@ -26,7 +26,7 @@
       <h1 class="zp-hero-title" data-hero-title>Where the island<br /><em>reveals itself</em></h1>
       <p class="zp-hero-sub" data-hero-fade>
         Bespoke journeys through ancient kingdoms, misty tea country and wild southern shores,
-        planned with you from the UK and guided by our own team on the island.
+        planned with you from the UK and guided by your own private chauffeur-guide.
       </p>
       <div class="zp-hero-ctas" data-hero-fade>
         <a routerLink="/tailor-made" class="btn btn-gold btn-lg" appMagnetic>
@@ -77,7 +77,7 @@
         <p class="zp-manifesto-lead" data-scrub-words>
           We don't sell packages. We listen first, then compose a private journey around the way you love to travel:
           the ancient kingdoms at dawn, a quiet tea estate at dusk, a leopard in the long grass at Yala.
-          Every detail is held by a team who calls this island home.
+          Every journey is planned around you.
         </p>
         <a routerLink="/about" class="zp-link">Our story <span aria-hidden="true">&rarr;</span></a>
       </div>
@@ -196,7 +196,7 @@
 
   <!-- ═════════════ PROMISE ═════════════ -->
   <section class="zp-promise" aria-labelledby="promise-heading">
-    <img class="zp-promise-bg" src="img/tour-grand-odyssey-2000.webp" alt="" loading="lazy" data-parallax="15" />
+    <app-bg-video class="zp-promise-bg" name="coast-aerial" />
     <div class="zp-promise-shade"></div>
     <div class="container zp-promise-inner">
       <header class="zp-head" appScrollReveal>
@@ -263,6 +263,17 @@
           }
         </div>
       }
+    </div>
+  </section>
+
+  <!-- ═════════════ FOR TRAVEL AGENTS ═════════════ -->
+  <section class="zp-agents" aria-label="For travel agents">
+    <div class="container zp-agents-inner" appScrollReveal>
+      <div>
+        <p class="eyebrow">For travel agents</p>
+        <h2 class="section-title">Private Sri Lanka journeys <em>for your clients</em></h2>
+      </div>
+      <a routerLink="/agents" class="btn btn-gold" appMagnetic>Agent information <span aria-hidden="true">&rarr;</span></a>
     </div>
   </section>
 </div>

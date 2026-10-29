@@ -7,7 +7,7 @@ import { filter } from 'rxjs/operators';
 const ORIGIN = 'https://zeilanparadise.com';
 const DEFAULT_IMAGE = `${ORIGIN}/img/og-zeilan-paradise.jpg`;
 const DEFAULT_DESCRIPTION =
-  'Private, tailor-made journeys across Sri Lanka, planned with you from the UK and guided by our own team on the island.';
+  'Private, tailor-made journeys across Sri Lanka, planned with you from the UK and guided by your own private chauffeur-guide.';
 
 export interface SeoData {
   title?: string;

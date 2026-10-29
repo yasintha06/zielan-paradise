@@ -32,7 +32,7 @@ export const ARTICLES: Article[] = [
     updated: '2026-10-01',
     related: [
       { label: 'East Coast Summer Escape', link: '/tours/tour-east-coast-summer' },
-      { label: 'The Grand Island Odyssey', link: '/tours/tour-grand-island-odyssey' },
+      { label: 'Classic Ceylon & Coast', link: '/tours/tour-classic-ceylon-coast' },
     ],
     body: [
       { p: 'Sri Lanka has two monsoons that arrive at different times on different coasts. That sounds complicated, but it is actually good news: whatever month you travel, part of the island is in its best season.' },
@@ -56,7 +56,7 @@ export const ARTICLES: Article[] = [
       } },
       { h: 'Wildlife timing' },
       { list: [
-        'Blue whales: off Mirissa from roughly November to April; off Trincomalee from roughly March to August.',
+        'Blue whales: off Mirissa from December to April; off Trincomalee from roughly March to August.',
         'Elephant gathering: Minneriya and Kaudulla in the dry season, usually July to October.',
         'Leopards: Yala and Wilpattu are good much of the year; check Yala’s annual closure if you travel in September or October.',
       ] },
@@ -71,7 +71,7 @@ export const ARTICLES: Article[] = [
     category: 'Itineraries',
     readMinutes: 5,
     updated: '2026-10-01',
-    related: [{ label: 'See the full Grand Island Odyssey', link: '/tours/tour-grand-island-odyssey' }],
+    related: [{ label: 'See the full Classic Ceylon & Coast', link: '/tours/tour-classic-ceylon-coast' }],
     body: [
       { p: 'Fourteen days is the sweet spot for a first visit. It lets you see the island’s four great themes (history, tea country, wildlife and the coast) without long drives every day.' },
       { h: 'The route at a glance' },
