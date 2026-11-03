@@ -35,7 +35,7 @@ import { PageHeroComponent } from '../../components/page-hero/page-hero';
     .jr-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem); }
     .jr-card { display: flex; flex-direction: column; color: var(--ink); }
     .jr-card--lead { grid-column: 1 / -1; display: grid; grid-template-columns: 1.3fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: center; }
-    .jr-img { aspect-ratio: 16 / 10; overflow: hidden; border-radius: 2px; margin-bottom: 1.4rem; }
+    .jr-img { aspect-ratio: 16 / 10; overflow: hidden; border-radius: 4px; margin-bottom: 1.4rem; }
     .jr-card--lead .jr-img { margin: 0; aspect-ratio: 4 / 3; }
     .jr-img img { width: 100%; height: 100%; object-fit: cover; }
     .jr-meta { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-dark); }

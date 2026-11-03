@@ -190,7 +190,6 @@
   transition: opacity 0.8s calc(0.3s + var(--i) * 0.07s), transform 0.9s var(--ease-out) calc(0.3s + var(--i) * 0.07s), color 0.3s;
 }
 .zp-menu-links a:hover { color: var(--gold); }
-.zp-menu-num { font-size: 0.7rem; letter-spacing: 0.2em; color: var(--gold); }
 .zp-menu-label {
   font-family: var(--ff-head);
   font-size: clamp(2.2rem, 9vw, 3.6rem);

@@ -49,7 +49,6 @@
     <ol class="ab-strengths">
       @for (s of strengths; track s.title; let i = $index) {
         <li appScrollReveal [style.transition-delay.ms]="(i % 3) * 100">
-          <span class="ab-num">0{{ i + 1 }}</span>
           <h3>{{ s.title }}</h3>
           <p>{{ s.text }}</p>
         </li>

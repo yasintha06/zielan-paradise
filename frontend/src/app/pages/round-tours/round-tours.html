@@ -29,7 +29,7 @@
 
     <div class="rt-grid">
       @for (t of filtered(); track t.id; let i = $index) {
-        <app-tour-card [tour]="t" [index]="i" appScrollReveal [style.transition-delay.ms]="(i % 2) * 120" />
+        <app-tour-card [tour]="t" appScrollReveal [style.transition-delay.ms]="(i % 3) * 110" />
       } @empty {
         <div class="pg-empty">
           <p>No journeys of this length right now.</p>
@@ -52,7 +52,6 @@
     <ul class="rt-included">
       @for (item of included; track item.title; let i = $index) {
         <li appScrollReveal [style.transition-delay.ms]="i * 100">
-          <span class="rt-included-num">0{{ i + 1 }}</span>
           <h3>{{ item.title }}</h3>
           <p>{{ item.text }}</p>
         </li>

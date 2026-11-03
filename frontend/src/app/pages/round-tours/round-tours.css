@@ -10,11 +10,10 @@
 }
 .rt-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  column-gap: clamp(2rem, 5vw, 5rem);
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: clamp(1.5rem, 2.5vw, 2.5rem);
   row-gap: clamp(3.5rem, 6vw, 6rem);
 }
-.rt-grid > :nth-child(even) { margin-top: clamp(0rem, 8vw, 8rem); }
 .rt-grid .pg-empty { grid-column: 1 / -1; }
 
 .rt-included {
@@ -24,17 +23,16 @@
 }
 .rt-included li { padding: 2rem 1.75rem 0 0; }
 .rt-included li + li { padding-left: 1.75rem; border-left: 1px solid rgba(10, 31, 28, 0.12); }
-.rt-included-num { font-family: var(--ff-head); font-size: 1.1rem; color: var(--gold-dark); }
 .rt-included h3 { font-size: 1.6rem; font-weight: 500; margin: 0.6rem 0; }
 .rt-included p { font-size: 0.92rem; color: var(--text-soft); }
 
 @media (max-width: 1000px) {
+  .rt-grid { grid-template-columns: 1fr 1fr; }
   .rt-included { grid-template-columns: 1fr 1fr; row-gap: 2.5rem; }
   .rt-included li:nth-child(3) { padding-left: 0; border-left: 0; }
 }
 @media (max-width: 720px) {
   .rt-grid { grid-template-columns: 1fr; }
-  .rt-grid > :nth-child(even) { margin-top: 0; }
   .rt-included { grid-template-columns: 1fr; }
   .rt-included li, .rt-included li + li { padding: 1.75rem 0 0; border-left: 0; }
 }

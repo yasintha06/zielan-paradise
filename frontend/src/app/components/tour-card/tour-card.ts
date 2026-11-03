@@ -14,7 +14,8 @@ import { ParallaxDirective } from '../../directives/parallax';
 })
 export class TourCardComponent {
   @Input({ required: true }) tour!: Tour;
-  @Input() index = 0;
+  /** Longer routes end in "+X more", so cards keep the same height. */
+  readonly maxStops = 4;
 
   get image(): string {
     return imageUrl(this.tour.image, 900, this.tour.id);

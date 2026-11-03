@@ -37,6 +37,5 @@ export class About {
     'No elephant rides or shows. We watch wildlife in the wild, with respect.',
     'We favour locally owned hotels, restaurants and guides.',
     'Fair pay and proper rest for the chauffeur-guides who look after you.',
-    'Plastic-light travel: refillable water on every journey.',
   ];
 }

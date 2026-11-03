@@ -3,6 +3,7 @@ import { RouterLink } from '@angular/router';
 import gsap from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import { MotionService } from '../../services/motion.service';
+import { clipUrl } from '../../utils/video';
 
 export interface Crumb { label: string; link?: string; }
 
@@ -23,7 +24,7 @@ export class PageHeroComponent implements AfterViewInit, OnDestroy {
   @Input() subtitle = '';
   @Input() crumbs: Crumb[] = [];
   @Input() size: 'tall' | 'medium' = 'medium';
-  /** Optional looping clip from /video ({name}-720|1080.mp4); the image stays as poster and fallback. */
+  /** Optional looping clip from /video (see utils/video.ts); the image stays as poster and fallback. */
   @Input() video = '';
 
   private el = inject(ElementRef<HTMLElement>);
@@ -36,7 +37,7 @@ export class PageHeroComponent implements AfterViewInit, OnDestroy {
   playing = signal(false);
 
   get videoSrc(): string {
-    return `video/${this.video}-${window.innerWidth < 900 ? 720 : 1080}.mp4`;
+    return clipUrl(this.video);
   }
 
   ngAfterViewInit(): void {

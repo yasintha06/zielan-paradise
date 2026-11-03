@@ -18,7 +18,7 @@
 .ab-story-text p:not(.eyebrow):not(.pg-lead) { color: var(--text-soft); margin-top: 1.25rem; max-width: 560px; }
 .ab-story-text .pg-lead { margin-top: 0.5rem; }
 .ab-story-media { position: relative; height: clamp(440px, 46vw, 620px); }
-.ab-img { position: absolute; border-radius: 2px; }
+.ab-img { position: absolute; border-radius: 4px; }
 .ab-img img { width: 100%; height: 100%; object-fit: cover; }
 .ab-img--tall { top: 0; right: 0; width: 70%; height: 82%; }
 .ab-img--small { bottom: 0; left: 0; width: 46%; height: 44%; outline: 10px solid var(--ivory); }
@@ -29,7 +29,6 @@
 .ab-pillars p:not(.eyebrow) { color: var(--text-soft); }
 
 .ab-strengths { list-style: none; display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem clamp(2rem, 4vw, 4rem); }
-.ab-num { font-family: var(--ff-head); font-size: 1.1rem; color: var(--gold-dark); }
 .ab-strengths h3 { font-size: 1.7rem; font-weight: 500; margin: 0.5rem 0; }
 .ab-strengths p { color: var(--text-soft); font-size: 0.95rem; }
 
