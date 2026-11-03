@@ -197,7 +197,7 @@
             </header>
             <div class="td-related">
               @for (r of related(); track r.id; let i = $index) {
-                <app-tour-card [tour]="r" [index]="i" appScrollReveal [style.transition-delay.ms]="i * 110" />
+                <app-tour-card [tour]="r" appScrollReveal [style.transition-delay.ms]="i * 110" />
               }
             </div>
           </div>

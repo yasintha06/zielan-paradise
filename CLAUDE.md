@@ -29,7 +29,7 @@ and ask before changing business claims (prices, licences, guarantees, terms).
 - Contact details: `frontend/src/app/config/site.ts` (phone +44 7818 792995, info@zeilanparadise.com).
 - Routes: `frontend/src/app/app.routes.ts`; SEO + JSON-LD: `services/seo.service.ts`.
 - Homepage hero film: `pages/home/home.ts` (`HERO_FILM`), clips in `frontend/public/video/` (`{name}-1080.mp4`,
-  `{name}-720.mp4`, `{name}.webp`; compress with FFmpeg, ~2 MB per clip). Falls back to photos for reduced motion/data-saver.
+  `{name}-720.mp4`, `{name}.webp`; compress with FFmpeg, ~2 MB per clip). Upright phones get a tall cut from the originals, `{name}-phone.mp4` (`utils/video.ts`). Falls back to photos for reduced motion/data-saver.
 - Tours without a photo get a library fallback via `utils/image.ts` (`imageUrl(src, size, tourId)`).
 - Admin costing calculator: `pages/admin/quotes/quote-model.ts` (ATFL course method; spec reproduces course workbooks).
 - FAQ answers (`pages/faq/faq.ts`) must stay consistent with the Terms page.

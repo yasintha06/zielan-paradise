@@ -25,7 +25,7 @@
 
     <div class="dt-grid">
       @for (t of filtered(); track t.id; let i = $index) {
-        <app-tour-card [tour]="t" [index]="i" appScrollReveal [style.transition-delay.ms]="(i % 3) * 110" />
+        <app-tour-card [tour]="t" appScrollReveal [style.transition-delay.ms]="(i % 3) * 110" />
       } @empty {
         <div class="pg-empty">
           <p>Nothing in this theme right now.</p>

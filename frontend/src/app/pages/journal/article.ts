@@ -67,7 +67,7 @@ import { SeoService } from '../../services/seo.service';
     th { text-align: left; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-dark); padding: 0.75rem 1rem 0.75rem 0; border-bottom: 1px solid var(--gold); }
     td { padding: 0.9rem 1rem 0.9rem 0; border-bottom: 1px solid var(--pearl-dark); vertical-align: top; color: var(--ink); }
     td:first-child { font-weight: 600; white-space: nowrap; }
-    .ar-tip { margin: 2rem 0; padding: 1.5rem 1.75rem; background: var(--sand); border-left: 3px solid var(--gold); border-radius: 2px; }
+    .ar-tip { margin: 2rem 0; padding: 1.5rem 1.75rem; background: var(--sand); border-left: 3px solid var(--gold); border-radius: 4px; }
     .ar-tip strong { display: block; font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.4rem; }
     .ar-tip p { margin: 0; color: var(--ink); }
     .ar-updated { font-size: 0.8rem; margin-top: 2rem; }

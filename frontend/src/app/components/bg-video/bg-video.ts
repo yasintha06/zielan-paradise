@@ -1,8 +1,9 @@
 import { AfterViewInit, Component, ElementRef, Input, OnDestroy, inject, signal } from '@angular/core';
 import { MotionService } from '../../services/motion.service';
+import { clipUrl } from '../../utils/video';
 
 /**
- * Quiet, muted background loop from /video ({name}-720|1080.mp4, {name}.webp poster).
+ * Quiet, muted background loop from /video (see utils/video.ts; {name}.webp poster).
  * The poster shows first; the clip only loads when the section is near the screen, pauses when it
  * scrolls away, and never plays for reduced motion or data-saver (the poster stays instead).
  */
@@ -36,7 +37,7 @@ export class BgVideoComponent implements AfterViewInit, OnDestroy {
   playing = signal(false);
 
   get src(): string {
-    return `video/${this.name}-${window.innerWidth < 900 ? 720 : 1080}.mp4`;
+    return clipUrl(this.name);
   }
 
   ngAfterViewInit(): void {

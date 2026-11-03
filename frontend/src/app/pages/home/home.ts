@@ -10,6 +10,7 @@ import { ScrollRevealDirective } from '../../directives/scroll-reveal';
 import { MagneticDirective } from '../../directives/magnetic';
 import { TourCardComponent } from '../../components/tour-card/tour-card';
 import { BgVideoComponent } from '../../components/bg-video/bg-video';
+import { clipUrl, isUprightPhone } from '../../utils/video';
 
 const SLIDE_MS = 6500;
 
@@ -49,8 +50,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     { image: 'tour-southern-coast', place: 'Stilt fishermen · South Coast', alt: 'Stilt fishermen on the southern coast' },
     { image: 'tour-grand-odyssey', place: 'The Hill Country', alt: 'Lake and green hills in the Sri Lankan highlands' },
   ];
-
-  readonly marquee = ['Sigiriya', 'Kandy', 'Ella', 'Nuwara Eliya', 'Yala', 'Galle', 'Mirissa', 'Anuradhapura', 'Dambulla'];
 
   readonly facts = [
     { value: 8, suffix: '', label: 'UNESCO World Heritage Sites' },
@@ -230,8 +229,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     return Array.from(this.el.nativeElement.querySelectorAll('.zp-hero-slide video'));
   }
 
-  private clipSrc(name: string): string {
-    return `video/${name}-${window.innerWidth < 900 ? '720' : '1080'}.mp4`;
+  /** Still shown while a clip loads: tall on upright phones, matching the tall film. */
+  clipPoster(name: string): string {
+    return `video/${name}${isUprightPhone() ? '-phone' : ''}.webp`;
   }
 
   /** Start clip i from the beginning, preload the one after it, pause the rest. */
@@ -243,7 +243,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     videos.forEach((v, k) => {
       v.muted = true; // as a property too: browsers only autoplay videos they know are silent
       if ((k === i || k === next) && !v.getAttribute('src')) {
-        v.src = this.clipSrc(this.film[k].video);
+        v.src = clipUrl(this.film[k].video);
         v.preload = 'auto';
       }
       if (k === i) {
@@ -323,15 +323,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     gsap.to(q('.zp-hero-slide img, .zp-hero-slide video'), {
       yPercent: 12, ease: 'none',
       scrollTrigger: { trigger: '.zp-hero', start: 'top top', end: 'bottom top', scrub: true },
-    });
-
-    // ── Manifesto: words light up as you read ──
-    q('[data-scrub-words]').forEach((p: HTMLElement) => {
-      const words = SplitText.create(p, { type: 'words' }).words;
-      gsap.fromTo(words, { opacity: 0.14 }, {
-        opacity: 1, stagger: 0.08, ease: 'none',
-        scrollTrigger: { trigger: p, start: 'top 80%', end: 'bottom 50%', scrub: true },
-      });
     });
 
     // ── Generic image parallax ──

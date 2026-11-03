@@ -318,3 +318,11 @@ def test_agent_confirmations_are_capped(client, outbox):
                                             'email': 'same@agency.example'})
     confirmations = [m for m in outbox if m['To'] == 'same@agency.example']
     assert len(confirmations) == 3 and len(outbox) == 8  # every enquiry still reaches the business
+
+
+def test_each_page_gets_its_own_address_for_search_engines():
+    import website
+    page = '<link rel="canonical" href="https://zeilanparadise.com/"><meta property="og:url" content="https://zeilanparadise.com/">'
+    out = website.with_page_address(page, 'agents')
+    assert 'href="https://zeilanparadise.com/agents"' in out and 'content="https://zeilanparadise.com/agents"' in out
+    assert '"><script>' not in website.with_page_address(page, '"><script>')

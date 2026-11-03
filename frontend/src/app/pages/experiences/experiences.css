@@ -17,14 +17,14 @@
   row-gap: clamp(3rem, 5vw, 4.5rem);
 }
 .ex-card { display: flex; flex-direction: column; }
-.ex-img { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 2px; margin-bottom: 1.25rem; }
+.ex-img { position: relative; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 4px; margin-bottom: 1.25rem; }
 .ex-img img { width: 100%; height: 100%; object-fit: cover; }
 .ex-theme {
   position: absolute;
   top: 1rem;
   left: 1rem;
   padding: 0.4rem 0.85rem;
-  border-radius: 999px;
+  border-radius: 4px;
   background: rgba(247, 243, 234, 0.92);
   font-size: 0.62rem;
   font-weight: 700;

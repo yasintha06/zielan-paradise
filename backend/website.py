@@ -6,16 +6,21 @@ exists, WhiteNoise serves its files (pre-compressed, with cache headers) and any
 non-API path falls back to index.html so the Angular router can handle it.
 Locally, without a build, the API runs exactly as before.
 """
+import html
 import os
 import re
 
-from flask import abort, send_from_directory
+from flask import Response, abort, redirect
 from whitenoise import WhiteNoise
 
 STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
 
 # Angular output files carry a content hash, e.g. main-IORFJ7TF.js, so they never change.
 HASHED_FILE = re.compile(r'-[A-Za-z0-9_]{8}\.(js|css)$')
+
+ORIGIN = 'https://zeilanparadise.com'
+# Short addresses people are likely to type.
+REDIRECTS = {'journeys': '/round-tours', 'terms': '/terms-and-conditions'}
 
 SECURITY_HEADERS = {
     'X-Content-Type-Options': 'nosniff',
@@ -32,6 +37,14 @@ def _file_headers(headers, path, url):
         headers['Cache-Control'] = 'no-cache'
     elif url.startswith(('/img/', '/images/', '/assets/', '/video/')):
         headers['Cache-Control'] = 'public, max-age=2592000'
+
+
+def with_page_address(page, path):
+    """Put this page's own address in the HTML, so search engines see it before any JavaScript runs."""
+    url = html.escape(f"{ORIGIN}/{path}".rstrip('/'), quote=True)
+    return (page
+            .replace(f'<link rel="canonical" href="{ORIGIN}/">', f'<link rel="canonical" href="{url}">')
+            .replace(f'<meta property="og:url" content="{ORIGIN}/">', f'<meta property="og:url" content="{url}">'))
 
 
 def _redirect_www(wsgi_app):
@@ -69,7 +82,10 @@ def attach_website(app):
         # Unknown API routes and missing files (anything with an extension) are real 404s.
         if path.startswith('api/') or os.path.splitext(path)[1]:
             abort(404)
-        response = send_from_directory(STATIC_DIR, 'index.html')
+        if path.rstrip('/') in REDIRECTS:
+            return redirect(REDIRECTS[path.rstrip('/')], code=301)
+        with open(os.path.join(STATIC_DIR, 'index.html'), encoding='utf8') as f:
+            response = Response(with_page_address(f.read(), path), mimetype='text/html')
         response.headers['Cache-Control'] = 'no-cache'
         for name, value in SECURITY_HEADERS.items():
             response.headers[name] = value

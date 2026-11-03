@@ -54,3 +54,9 @@
   line-height: 1.8;
   color: rgba(246, 240, 226, 0.82);
 }
+
+/* Desktop: banners leave room for the page itself. Phones keep the taller shape. */
+@media (min-width: 900px) {
+  .ph { min-height: 62svh; }
+  .ph--tall { min-height: 76svh; }
+}
