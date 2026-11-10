@@ -1,13 +1,8 @@
-name: Deploy website + API to Azure App Service
+name: Deploy website + API to Azure App Service (manual, old host)
 
-# One App Service (zeilan-backend) serves both the Angular website and the Flask API.
+# The live site now runs on Render (see render.yaml and DEPLOYMENT.md), which deploys itself on every push to main.
+# This Azure deploy only runs when started by hand from the Actions tab.
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'frontend/**'
-      - 'backend/**'
-      - '.github/workflows/main_zeilan-backend.yml'
   workflow_dispatch:
 
 jobs:
