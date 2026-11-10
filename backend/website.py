@@ -18,7 +18,8 @@ STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
 # Angular output files carry a content hash, e.g. main-IORFJ7TF.js, so they never change.
 HASHED_FILE = re.compile(r'-[A-Za-z0-9_]{8}\.(js|css)$')
 
-ORIGIN = 'https://zeilanparadise.com'
+# Render's domain settings make www the main address (the plain domain redirects to it).
+ORIGIN = 'https://www.zeilanparadise.com'
 # Short addresses people are likely to type.
 REDIRECTS = {'journeys': '/round-tours', 'terms': '/terms-and-conditions'}
 

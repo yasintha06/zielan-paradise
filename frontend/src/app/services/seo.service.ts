@@ -4,7 +4,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
-const ORIGIN = 'https://zeilanparadise.com';
+const ORIGIN = 'https://www.zeilanparadise.com';
 const DEFAULT_IMAGE = `${ORIGIN}/img/og-zeilan-paradise.jpg`;
 const DEFAULT_DESCRIPTION =
   'Private, tailor-made journeys across Sri Lanka, planned with you from the UK and guided by your own private chauffeur-guide.';

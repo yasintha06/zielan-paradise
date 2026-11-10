@@ -322,7 +322,7 @@ def test_agent_confirmations_are_capped(client, outbox):
 
 def test_each_page_gets_its_own_address_for_search_engines():
     import website
-    page = '<link rel="canonical" href="https://zeilanparadise.com/"><meta property="og:url" content="https://zeilanparadise.com/">'
+    page = '<link rel="canonical" href="https://www.zeilanparadise.com/"><meta property="og:url" content="https://www.zeilanparadise.com/">'
     out = website.with_page_address(page, 'agents')
-    assert 'href="https://zeilanparadise.com/agents"' in out and 'content="https://zeilanparadise.com/agents"' in out
+    assert 'href="https://www.zeilanparadise.com/agents"' in out and 'content="https://www.zeilanparadise.com/agents"' in out
     assert '"><script>' not in website.with_page_address(page, '"><script>')

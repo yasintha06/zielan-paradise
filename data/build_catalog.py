@@ -89,7 +89,7 @@ pages = ['', 'round-tours', 'day-tours', 'destinations', 'experiences', 'tailor-
          'privacy', 'terms-and-conditions']
 pages += [f"tours/{t['id']}" for t in round_tours + day_tours if t.get('isActive', True)]
 pages += [f'journal/{slug}' for slug in articles]
-urls = ''.join(f'  <url><loc>https://zeilanparadise.com/{p}</loc></url>\n' for p in pages)
+urls = ''.join(f'  <url><loc>https://www.zeilanparadise.com/{p}</loc></url>\n' for p in pages)
 with open(os.path.join(ROOT, 'frontend', 'public', 'sitemap.xml'), 'w', encoding='utf8') as f:
     f.write('<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + '</urlset>\n')
