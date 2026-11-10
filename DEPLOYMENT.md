@@ -1,7 +1,7 @@
 # Deploying Zeilan Paradise (Render + MongoDB Atlas)
 
 ```
-Visitor ──► Render web service "zeilan-paradise"   zeilanparadise.com
+Visitor ──► Render web service "zeilan-paradise-site"   zeilanparadise.com
               ├─ /            Angular website (built into backend/static by the Dockerfile)
               └─ /api/...     Flask API
                     │

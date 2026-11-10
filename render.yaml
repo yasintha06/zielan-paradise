@@ -2,7 +2,7 @@
 # Secrets are marked sync: false, so Render asks for them in its dashboard; they are never stored in Git.
 services:
   - type: web
-    name: zeilan-paradise
+    name: zeilan-paradise-site
     runtime: docker
     plan: starter
     region: frankfurt

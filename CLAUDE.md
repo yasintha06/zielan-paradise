@@ -7,7 +7,7 @@ and ask before changing business claims (prices, licences, guarantees, terms).
 - `frontend/`: Angular 22 standalone components + signals, GSAP/Lenis animation. State set in HTTP
   callbacks must use signals (plain fields don't re-render in this app).
 - `backend/`: Flask API, MongoDB Atlas, JWT admin auth; WhiteNoise serves the built site from `backend/static`.
-- Hosting: Render web service `zeilan-paradise` (Docker, `Dockerfile` + `render.yaml`, Starter plan). Secrets live only in
+- Hosting: Render web service `zeilan-paradise-site` (Docker, `Dockerfile` + `render.yaml`, Starter plan). Secrets live only in
   Render environment variables (JWT_SECRET_KEY, ADMIN_PASSWORD, MONGO_URI, SMTP_*); never in code or chat.
   The old Azure App Service `zeilan-backend` is retired (its workflow is manual-only).
 - Deploy: push to `main` → Render builds the Docker image and deploys (~5 min). Run the tests locally before pushing.
