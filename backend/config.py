@@ -15,7 +15,7 @@ class Config:
     """Centralized configuration for the Flask application."""
     MONGO_URI = os.getenv('MONGO_URI', 'mongodb://localhost:27017/zeilanparadise')
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY', _DEFAULT_JWT_SECRET)
-    JWT_ACCESS_TOKEN_EXPIRES = 86400  # 24 hours in seconds
+    JWT_ACCESS_TOKEN_EXPIRES = 43200  # 12 hours in seconds
     FLASK_ENV = os.getenv('FLASK_ENV', 'production' if _ON_AZURE else 'development')
     FLASK_PORT = int(os.getenv('FLASK_PORT', 5000))
     ADMIN_USERNAME = os.getenv('ADMIN_USERNAME', 'admin')
@@ -28,6 +28,8 @@ class Config:
 
 
 if Config.FLASK_ENV == 'production':
+    if len(Config.ADMIN_PASSWORD) < 12:
+        print("  [WARN] ADMIN_PASSWORD is shorter than 12 characters. Set a longer one in Render.", flush=True)
     _missing = [k for k in ('MONGO_URI', 'JWT_SECRET_KEY', 'ADMIN_PASSWORD') if not os.getenv(k)]
     if _missing and not _ON_AZURE:
         raise RuntimeError(f"Missing required production settings: {', '.join(_missing)}")

@@ -23,7 +23,7 @@ from email.mime.text import MIMEText
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import jwt_required
 
-from api_utils import ApiError, id_query, new_id, now_iso, public, require_db
+from api_utils import ApiError, client_ip, id_query, new_id, now_iso, public, require_db
 from db import get_db
 
 enquiries_bp = Blueprint('enquiries', __name__)
@@ -226,6 +226,24 @@ def _confirmation_allowed(*keys):
     return True
 
 
+# A person sends one or two enquiries; a script sends hundreds. Per visitor address, per server process.
+SUBMIT_LIMIT = 6
+SUBMIT_WINDOW = 600
+_submit_log = {}
+
+
+def _submission_allowed(ip):
+    now = time.time()
+    recent = [t for t in _submit_log.get(ip, []) if now - t < SUBMIT_WINDOW]
+    for key in [k for k, v in _submit_log.items() if not v or now - v[-1] > SUBMIT_WINDOW]:
+        del _submit_log[key]
+    if len(recent) >= SUBMIT_LIMIT:
+        _submit_log[ip] = recent
+        return False
+    _submit_log[ip] = recent + [now]
+    return True
+
+
 def emails_for(lead, ip=''):
     """Every email an enquiry triggers: the business notification, plus a receipt for agents."""
     messages = [build_notification(lead)]
@@ -260,8 +278,11 @@ def submit_inquiry():
     if not EMAIL_RE.match(lead['email']):
         raise ApiError("Please enter a valid email address.")
 
+    ip = client_ip()
+    if not _submission_allowed(ip):
+        raise ApiError("You've sent several messages in a short time. Please wait a few minutes, "
+                       "or contact us by WhatsApp or email.", 429)
     lead.update(id=new_id('enq'), status='New', notes='', createdAt=now_iso())
-    ip = (request.headers.get('X-Forwarded-For') or request.remote_addr or '').split(',')[0].strip()
 
     db = get_db()
     if db is not None:

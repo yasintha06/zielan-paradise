@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime, timezone
 
 from bson import ObjectId
-from flask import jsonify
+from flask import jsonify, request
 
 from db import get_db
 
@@ -20,6 +20,19 @@ def register_error_handler(app):
     @app.errorhandler(ApiError)
     def _handle(err):
         return jsonify({"error": err.message}), err.status
+
+
+def client_ip():
+    """
+    The visitor's address, for rate limits. Render serves the site through Cloudflare, which sets
+    CF-Connecting-IP itself, so a visitor can't fake it. Without it (local runs), use the last
+    X-Forwarded-For entry: earlier entries can be typed in by the visitor.
+    """
+    ip = request.headers.get('CF-Connecting-IP', '').strip()
+    if not ip:
+        forwarded = request.headers.get('X-Forwarded-For', '')
+        ip = forwarded.split(',')[-1].strip() if forwarded else (request.remote_addr or 'unknown')
+    return (ip.rsplit(':', 1)[0] if ip.count(':') == 1 else ip)[:64]
 
 
 def require_db():

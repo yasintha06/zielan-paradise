@@ -29,6 +29,9 @@ def client(monkeypatch):
     flask_app.config['TESTING'] = True
     from routes import auth
     auth._failures.clear()
+    auth._all_failures.clear()
+    from routes import enquiries
+    enquiries._submit_log.clear()
     return flask_app.test_client()
 
 
@@ -326,3 +329,56 @@ def test_each_page_gets_its_own_address_for_search_engines():
     out = website.with_page_address(page, 'agents')
     assert 'href="https://www.zeilanparadise.com/agents"' in out and 'content="https://www.zeilanparadise.com/agents"' in out
     assert '"><script>' not in website.with_page_address(page, '"><script>')
+
+
+# ── Security hardening ───────────────────────────────────────────────────
+def test_enquiry_floods_are_limited(client, auth_headers):
+    codes = [client.post('/api/enquiries', json={'firstName': 'A', 'email': 'a@example.com'}).status_code for _ in range(8)]
+    assert codes[:6] == [201] * 6 and codes[6:] == [429, 429]
+    assert len(client.get('/api/admin/inquiries', headers=auth_headers).get_json()) == 6
+
+
+def test_enquiry_limit_ignores_a_faked_forwarded_address(client):
+    for i in range(7):
+        res = client.post('/api/enquiries', json={'firstName': 'A', 'email': 'a@example.com'},
+                          headers={'X-Forwarded-For': f'9.9.9.{i}, 127.0.0.1'})
+    assert res.status_code == 429
+
+
+def test_login_has_a_site_wide_cap(client):
+    from routes import auth
+    for i in range(auth.MAX_FAILURES_ALL):
+        client.post('/api/admin/login', json={'username': 'x', 'password': 'x'}, headers={'CF-Connecting-IP': f'10.0.{i}.1'})
+    res = client.post('/api/admin/login', json={'username': Config.ADMIN_USERNAME, 'password': PASSWORD},
+                      headers={'CF-Connecting-IP': '10.9.9.9'})
+    assert res.status_code == 429
+
+
+def test_page_rules_allow_only_the_sites_own_scripts():
+    import website
+    policy = website.content_security_policy('<script>var a=1;</script><script src="main.js"></script>')
+    assert "script-src 'self' 'sha256-" in policy and "object-src 'none'" in policy and "'unsafe-eval'" not in policy
+
+
+def test_known_pages_match_the_frontend_routes():
+    import re
+    import website
+    routes = open(os.path.join(os.path.dirname(__file__), '..', '..', 'frontend', 'src', 'app', 'app.routes.ts'), encoding='utf8').read()
+    firsts = {p.split('/')[0] for p in re.findall(r"path: '([^'*]*)'", routes)}
+    assert firsts <= website.KNOWN_PAGES, firsts - website.KNOWN_PAGES
+
+
+HAS_BUILD = os.path.isfile(os.path.join(os.path.dirname(__file__), '..', 'static', 'index.html'))
+
+
+@pytest.mark.skipif(not HAS_BUILD, reason='needs a website build in backend/static')
+def test_hidden_files_and_unknown_pages_are_real_404s(client):
+    for path in ('/.env', '/.git/config', '/backend/.env', '/wp-login.php'):
+        res = client.get(path)
+        assert res.status_code == 404 and b'<app-root' not in res.data, path
+    missing = client.get('/no-such-page')
+    assert missing.status_code == 404 and b'<app-root' in missing.data  # still shows the site's own "not found" page
+    page = client.get('/agents')
+    assert page.status_code == 200 and 'Content-Security-Policy' in page.headers
+    assert page.headers['Strict-Transport-Security'].startswith('max-age=')
+    assert client.get('/api/health').headers['X-Content-Type-Options'] == 'nosniff'

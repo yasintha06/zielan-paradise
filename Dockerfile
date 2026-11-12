@@ -17,5 +17,7 @@ COPY backend/ ./
 RUN rm -rf static .env
 COPY --from=web /app/frontend/dist/frontend/browser ./static
 RUN python -m whitenoise.compress static
+RUN useradd --create-home --uid 10001 app && chown -R app:app /app
+USER app
 EXPOSE 10000
-CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT} --workers 2 --timeout 120 'app:create_app()'"]
+CMD ["sh", "-c", "gunicorn --bind 0.0.0.0:${PORT} --workers 2 --timeout 120 --access-logfile - 'app:create_app()'"]
