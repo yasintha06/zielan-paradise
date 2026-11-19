@@ -326,3 +326,22 @@ def test_each_page_gets_its_own_address_for_search_engines():
     out = website.with_page_address(page, 'agents')
     assert 'href="https://www.zeilanparadise.com/agents"' in out and 'content="https://www.zeilanparadise.com/agents"' in out
     assert '"><script>' not in website.with_page_address(page, '"><script>')
+
+
+def test_each_page_gets_its_own_title_description_and_image():
+    import website
+    page = ('<title>Home | Zeilan Paradise</title><meta name="description" content="Home text">'
+            '<meta property="og:title" content="Home"><meta property="og:description" content="Home text">'
+            '<meta property="og:image" content="https://www.zeilanparadise.com/img/og.jpg">'
+            '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">')
+    out = website.with_page_address(page, 'tours/x', {'title': 'Tour & "more" | Zeilan Paradise',
+                                                     'description': 'A <private> tour', 'image': '/img/x-900.webp'})
+    assert '<title>Tour &amp; &quot;more&quot; | Zeilan Paradise</title>' in out
+    assert 'content="A &lt;private&gt; tour"' in out and 'Home text' not in out
+    assert 'content="https://www.zeilanparadise.com/img/x-900.webp"' in out and 'og:image:width' not in out
+
+
+def test_every_public_page_has_server_meta():
+    import website
+    for path in ['', 'round-tours', 'agents', 'tours/tour-sri-lanka-highlights', 'journal/best-time-to-visit-sri-lanka']:
+        assert website.PAGE_META[path]['title'].strip()
