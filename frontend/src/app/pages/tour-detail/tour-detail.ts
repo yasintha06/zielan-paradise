@@ -1,3 +1,4 @@
+import { tourSeoTitle } from '../../utils/seo-title';
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { switchMap, catchError, of, map } from 'rxjs';
@@ -43,7 +44,7 @@ export class TourDetail implements OnInit {
       this.openDay.set(0);
       if (!tour) return;
       this.seo.set({
-        title: `${tour.title} | Zeilan Paradise`,
+        title: `${tourSeoTitle(tour.title, tour.duration)} | Zeilan Paradise`,
         description: tour.description || `${tour.duration} private journey: ${tour.route ?? ''}. ${tour.targetAudience ?? ''}`.trim(),
         image: imageUrl(tour.image, 900, tour.id),
       });

@@ -7,8 +7,8 @@ const SUFFIX = ' | Zeilan Paradise';
 // The home page ships in the main bundle; every other page loads on demand.
 export const routes: Routes = [
   {
-    path: '', component: HomeComponent, title: 'Zeilan Paradise | Luxury Tailor-Made Sri Lanka Holidays',
-    data: { description: 'Private, tailor-made journeys across Sri Lanka, planned with you from the UK and guided by your own private chauffeur-guide.' },
+    path: '', component: HomeComponent, title: 'Private Sri Lanka Tours, Ready-Made or Tailor-Made | Zeilan Paradise',
+    data: { description: 'Private tours across Sri Lanka, planned from London: ready-made round tours or a trip built around you, with your own vehicle and English-speaking chauffeur-guide.' },
   },
   {
     path: 'round-tours', title: 'Sri Lanka Round Tours' + SUFFIX,
@@ -41,7 +41,7 @@ export const routes: Routes = [
   },
   {
     path: 'about', title: 'About Us' + SUFFIX,
-    data: { description: 'A UK-based Sri Lanka specialist. Private, responsible, tailor-made journeys.' },
+    data: { description: 'Zeilan Paradise is a Sri Lankan travel company with its planning base in London, creating private Sri Lanka tours for UK travellers and travel agents.' },
     loadComponent: () => import('./pages/about/about').then((m) => m.About),
   },
   {
@@ -68,8 +68,8 @@ export const routes: Routes = [
     data: { description: 'Talk to Zeilan Paradise by WhatsApp, phone or email, or send us a message to start planning your Sri Lanka journey.' },
     loadComponent: () => import('./pages/contact/contact').then((m) => m.Contact),
   },
-  { path: 'privacy', title: 'Privacy Policy' + SUFFIX, loadComponent: () => import('./pages/privacy-policy/privacy-policy').then((m) => m.PrivacyPolicy) },
-  { path: 'terms-and-conditions', title: 'Terms & Conditions' + SUFFIX, loadComponent: () => import('./pages/terms/terms').then((m) => m.Terms) },
+  { path: 'privacy', title: 'Privacy Policy' + SUFFIX, data: { description: 'How Zeilan Paradise collects, uses and protects your personal information.' }, loadComponent: () => import('./pages/privacy-policy/privacy-policy').then((m) => m.PrivacyPolicy) },
+  { path: 'terms-and-conditions', title: 'Terms & Conditions' + SUFFIX, data: { description: 'Booking terms and conditions for private Sri Lanka tours with Zeilan Paradise.' }, loadComponent: () => import('./pages/terms/terms').then((m) => m.Terms) },
   { path: 'admin/login', title: 'Admin' + SUFFIX, loadComponent: () => import('./pages/admin/admin-login/admin-login').then((m) => m.AdminLoginComponent) },
   {
     path: 'admin', title: 'Admin' + SUFFIX, canActivate: [adminGuard],

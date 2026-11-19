@@ -3,6 +3,8 @@ Builds the built-in tour/destination catalogue from data/*.json (the single sour
   - frontend/src/app/data/catalog.ts   (shown when the API is unreachable)
   - backend/catalog_data.py            (seeds an empty database / serves when MongoDB is down)
   - frontend/public/sitemap.xml        (every public page, tour and journal article)
+  - backend/page_meta.json             (title, description and image of every public page, put into the
+                                        HTML by the server so search engines and link previews see them)
 
 Run after editing any data/*.json file:
     python data/build_catalog.py
@@ -89,10 +91,53 @@ pages = ['', 'round-tours', 'day-tours', 'destinations', 'experiences', 'tailor-
          'privacy', 'terms-and-conditions']
 pages += [f"tours/{t['id']}" for t in round_tours + day_tours if t.get('isActive', True)]
 pages += [f'journal/{slug}' for slug in articles]
-urls = ''.join(f'  <url><loc>https://www.zeilanparadise.com/{p}</loc></url>\n' for p in pages)
+today = __import__('datetime').date.today().isoformat()
+urls = ''.join(f'  <url><loc>https://www.zeilanparadise.com/{p}</loc><lastmod>{today}</lastmod></url>\n' for p in pages)
 with open(os.path.join(ROOT, 'frontend', 'public', 'sitemap.xml'), 'w', encoding='utf8') as f:
     f.write('<?xml version="1.0" encoding="UTF-8"?>\n'
             '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + urls + '</urlset>\n')
+
+# ── Page meta for the server (backend/website.py) ──
+SUFFIX = ' | Zeilan Paradise'
+routes_ts = open(os.path.join(ROOT, 'frontend', 'src', 'app', 'app.routes.ts'), encoding='utf8').read()
+meta = {}
+for m in re.finditer(r"path: '([^':*]*)', (?:component: \w+, )?title: '([^']*)'( \+ SUFFIX)?,(?:\s*data: \{ description: '([^']*)' \})?", routes_ts):
+    path, title, suffix, desc = m.groups()
+    if path.startswith('admin'):
+        continue
+    meta[path] = {'title': title + (SUFFIX if suffix else ''), 'description': desc or ''}
+OG_DIR = os.path.join(ROOT, 'frontend', 'public', 'img', 'og')
+
+
+def web_image(src):
+    """A 1200x630 JPEG for link previews (LinkedIn and WhatsApp do not show WebP reliably)."""
+    name = os.path.splitext(os.path.basename(src))[0]
+    out = os.path.join(OG_DIR, f'{name}.jpg')
+    if not os.path.exists(out):
+        from PIL import Image  # only needed when a new preview image must be made
+        source = os.path.join(ROOT, 'frontend', 'public', 'img', f'{name}-2000.webp')
+        im = Image.open(source).convert('RGB')
+        w, h = 1200, 630
+        r = max(w / im.width, h / im.height)
+        im = im.resize((round(im.width * r), round(im.height * r)), Image.LANCZOS)
+        left, top = (im.width - w) // 2, (im.height - h) // 2
+        os.makedirs(OG_DIR, exist_ok=True)
+        im.crop((left, top, left + w, top + h)).save(out, quality=82, optimize=True, progressive=True)
+    return f'/img/og/{name}.jpg'
+for t in round_tours + day_tours:
+    if t.get('isActive', True):
+        desc = t.get('description') or f"{t.get('duration', '')} private journey: {t.get('route', '')}."
+        days = re.match(r'(\d+)\s*Days?', t.get('duration', ''), re.I)
+        seo_title = f"{t['title']}: {days.group(1)}-Day Private Tour" if days else f"{t['title']}: Private Day Tour"
+        meta[f"tours/{t['id']}"] = {'title': seo_title + SUFFIX, 'description': desc, 'image': web_image(t['image'])}
+for m in re.finditer(r"slug: '([^']+)',\s*title: '((?:[^'\\]|\\.)*)',\s*excerpt: '((?:[^'\\]|\\.)*)',\s*image: '([^']+)'", journal_ts):
+    slug_, title, excerpt, image = (g.replace("\\'", "'") for g in m.groups())
+    meta[f'journal/{slug_}'] = {'title': title + SUFFIX, 'description': excerpt, 'image': web_image(image)}
+missing = [p for p in pages if p not in meta]
+assert not missing, f'pages without meta: {missing}'
+with open(os.path.join(ROOT, 'backend', 'page_meta.json'), 'w', encoding='utf8') as f:
+    json.dump(meta, f, ensure_ascii=False, indent=1)
+print(f'{len(meta)} pages with server meta')
 
 print(f'{len(pages)} sitemap URLs')
 print(f'{len(round_tours)} round tours, {len(day_tours)} day tours, {len(destinations)} destinations')
