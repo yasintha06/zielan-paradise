@@ -18,8 +18,8 @@ and ask before changing business claims (prices, licences, guarantees, terms).
 - Catalogue: edit `data/*.json`, then `python data/build_catalog.py` (regenerates `frontend/src/app/data/catalog.ts`,
   `backend/catalog_data.py`, `frontend/public/sitemap.xml`, and `backend/page_meta.json` + `frontend/public/img/og/*.jpg`,
   which the server puts into each page's HTML so Google and link previews see the right title, description and image).
-  New routes need a `title` and `data.description` in `app.routes.ts`; unknown addresses answer 404 (tours/* excepted). They reach the live DB via
-  Admin → Overview → "Update catalogue": adds new ids, replaces copies with an older `CATALOG_REV`
+  New routes need a `title` and `data.description` in `app.routes.ts`; unknown addresses answer 404 (tours/* excepted).
+  Catalogue changes reach the live DB via Admin → Overview → "Update catalogue": adds new ids, replaces copies with an older `CATALOG_REV`
   (bump it in `build_catalog.py` when content is rewritten), hides ids in `data/retired.json` (never deletes).
 - Photos: originals go in `media-originals/` (git-ignored, never in `frontend/public`); web copies are
   `frontend/public/img/{name}-900.webp` and `-2000.webp` (FFmpeg, libwebp q74), referenced as `images/tours/{name}.jpg`.
